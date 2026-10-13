@@ -11,6 +11,7 @@
     * [Desks and Custom Workspaces](superdesk-user-guide/workspace-and-search/desks-and-custom-workspaces.md)
     * [Dashboards and Widgets](superdesk-user-guide/workspace-and-search/dashboards-and-widgets.md)
     * [Monitoring Tab](superdesk-user-guide/workspace-and-search/monitoring-tab.md)
+    * [Master Desk](superdesk-user-guide/workspace-and-search/master-desk.md)
     * [Searching Content in Superdesk](superdesk-user-guide/workspace-and-search/searching-content-in-superdesk.md)
     * [Highlights](superdesk-user-guide/workspace-and-search/highlights.md)
   * [Content management](superdesk-user-guide/content-management/README.md)
