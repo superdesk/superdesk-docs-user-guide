@@ -4,4 +4,3 @@
 
 * [Navigation](navigation.md)
 * [Icons and User Experience](icons-and-user-experience.md)
-
