@@ -1,173 +1,241 @@
 # Desk Creation and Desk Management
 
-New Desks can be created, and existing Desks can be edited in the Hamburger Menu by Superdesk admins, or users with the appropriate permissions. To get started with Desk configuration, select Hamburger Menu > Settings > Desks.
+Desks are the teams of your newsroom. Each desk has its own stages, members, default template and settings. Administrators, and users whose role has the **Desk Management** privilege, create and edit desks in **Settings** > **Desks**.
 
-![](<../../.gitbook/assets/image203 5d0e1bba0fd157949812b25af7af4cdc.png>)
+To get there, open the **Main menu** (also called the hamburger menu) in the top-left corner, click **Settings**, and then click **Desks** under **Workflow**.
 
-In the Desk Management pane, you can create a new Desk by clicking on the ‘+ ADD NEW’ button in the top right corner of the pane.
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/desk-management.png" alt="The Desk management page with one card per desk" width="999"><figcaption><p>The Desk management page</p></figcaption></figure>
 
-![](<../../.gitbook/assets/image132 2ef83abda5dd905bd745cae08747ed85.png>)
+The **Desk management** page shows one card per desk. Each card lists the desk's stages, its people and its desk type. It also shows the desk language, and "Published Content: Not Expired" when that option is on. Use the search field at the top to find a desk by name.
 
-This panel is also where you can edit existing Desks. Click the Action menu icon in the top right corner of the desk name to edit an existing Desk.
+## Creating and editing a desk
 
-![](https://superdesk.github.io/superdesk-docs/docs/Base64-Image-Removed)
+To create a desk, click **+ Add New** in the top-right corner. The **Add New Desk** window opens.
 
-In the Action menu, select the Edit option and a new window will open.
+To edit a desk, click the actions menu (the three dots) on the desk's card and choose **Edit**. The same menu has **Monitoring settings** and **Remove**, described further down this page.
 
-Whether creating a new Desk, or editing an existing desk, you will see the same window:
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/desk-actions-menu.png" alt="The actions menu of a desk card with Edit, Monitoring settings and Remove" width="626"><figcaption><p>The actions menu of a desk</p></figcaption></figure>
 
-![](<../../.gitbook/assets/image296 8914a3692cb2bae8f0fa181e1f64149c.png>)
+The desk window has four tabs: **General**, **Stages**, **People** and **Macros**. **Save & Continue** (or **Continue** on the Stages tab) saves your changes and opens the next tab. **Done** saves and closes the window.
 
-**General Desk Settings Tab**
+A new desk always starts with two stages, **Working Stage** and **Incoming Stage**. You can rename them and add more stages on the **Stages** tab.
 
-DESK NAME allows you to change the name of the selected desk. This is the name all users within Superdesk will see. The maximum length for a desk name is 40 characters.
+### General tab
 
-DESK DESCRIPTION provides information to other users about the desk.
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/general-tab.png" alt="The General tab of the desk window with name, description, source, email, content expiry, desk type and language" width="458"><figcaption><p>The General tab</p></figcaption></figure>
 
-SOURCE FOR USER CREATED ARTICLES is a field used to populate the Source field in every article created in that desk. The text that you input in the SOURCE FOR USER CREATED ARTICLES text box will appear in the metadata for all the articles produced from this Desk.
+**Desk name** is the name all users see. It is required, can be up to 40 characters long and must be unique.
 
-CONTENT EXPIRY sets the amount of time before any item in the desk is deleted. Deleted items can no longer be seen in a desk and cannot be searched in the archive. If an expiry is set to 0 days, 0 hours and 0 mins, it will be preserved indefinitely. The content expiry can be switched on and off using the blue content expiry toggle.
+**Desk description** tells other users what the desk is for.
 
-DESK TYPE can be set to either Authoring or Production. An authoring desk only produces content but does not publish it directly. For articles on an authoring desk to be published, they will need to be sent to a production desk first.
+**Source for User Created Articles** is required. Superdesk puts this text in the Source field of every article created on this desk.
 
-DESK LANGUAGE can be configured here. This will set the default language field for content created on this Desk.
+**Desk Email** is an email address for the desk. See [Desk email and Slack channel](#desk-email-and-slack-channel).
 
-DEFAULT MONITORING VIEW. You can choose the default content view of your desk. Use only if you want to override individual users' monitoring view preferences, but the user can manually change it. Select "None" if you want to let users decide.
+**Content Expiry** sets how long items stay on the desk before Superdesk removes them. Turn the switch on and enter days, hours and minutes. If you leave all three at 0, or turn the switch off, the desk uses the system default, and the label next to the switch shows **Using System default**. If your installation has no system default, the label shows **OFF** and items do not expire. A stage can set its own expiry, which then wins over the desk's.
 
-DEFAULT CONTENT TEMPLATE Selecting a Template from this drop-down menu will make that Content Profile available by clicking the Create icon in the Desk’s Monitoring pane and all content created on this desk will have the information in this template filled in.
+**Preserve Published Content** only appears when your installation removes published content after a while. Turn it on to keep the content published from this desk.
 
-DEFAULT CONTENT PROFILE Selecting a Content Profile from this drop-down menu will apply this Content Profile to all new items created on this Desk that aren’t created from a Template. Additionally, news items that are fetched to this Desk will receive this Content Profile.
+**Desk Type** is required. Choose **authoring** or **production**. An authoring desk is for writing content. A production desk is where content is edited and published. Your administrator can block publishing from authoring desks. In that case Superdesk shows a note when you pick **authoring**. You cannot change the type of a desk that already has articles.
 
-**Stages Tab**
+**Desk language** sets the language of new items created on this desk.
 
-In the Edit Desk / Add New Desk window, you will also find a Stages tab. Stages reflect the workflow of each Desk. Sometimes Stages are steps an article must go through in order to be published. For example, an article might go through more than one phase of editing before it is sent off to be published.
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/general-tab-defaults.png" alt="The lower part of the General tab with default monitoring view, default template, default content profile, Disallow sending items to this desk and preferred vocabulary values" width="458"><figcaption><p>Defaults, sending restriction and preferred values on the General tab</p></figcaption></figure>
 
-![](<../../.gitbook/assets/image161 1c42c6cc278f3413f7bbdb8d243403fc.png>)
+**Default monitoring view** decides how the desk's lists look in Monitoring. Choose **Swimlane View** or **Photo Grid View** to open the desk in that view for everyone, whatever view each user picked. Users can still switch views while they work, but the next time they select the desk, its default view comes back. Choose **None** to let each user decide (**List View** currently has the same effect). **Swimlane View** is only offered when your installation has it turned on. See [Monitoring Tab](../workspace-and-search/monitoring-tab.md).
 
-From this Stages tab, you can make new Stages to a Desk by clicking the grey ‘+’ button in the Work Stages section. If you add a new Stage, the maximum length for the name is 40 characters.
 
-![](<../../.gitbook/assets/image357 23984b9b584c6eac3fd0b1b33470949e.png>)
+**Default Content Template** is required. When users work on this desk, the create menu shows this template under **Default desk template**. If the list is empty, check that at least one content profile exists: Superdesk creates a template with the same name every time a profile is created.
 
-You can edit the current Stages by hovering over the stage you wish to edit and clicking the pencil icon that appears to the right of the Stage name.
+**Default Content Profile** is required. Superdesk gives this content profile to text items fetched to this desk from ingest. To create profiles, see [Content profiles](content-configuration/content-profiles.md).
 
-The GLOBAL READ toggle allows items that are in this Stage to be read by all users. If GLOBAL READ is turned off, only users assigned to the Desk will be able to see content from that stage. If GLOBAL READ is turned on, the Stage will be available for use in any Monitoring view on any Desk. You can also use the LOCAL READ ONLY toggle to ensure that items in this Stage cannot be edited.
+### Restricting sending to a desk
 
-![](<../../.gitbook/assets/image189 4ce75b1fbecbef49abd8298c57367d52.png>)
+*Available since Superdesk 2.7.*
 
-If the WORKING STAGE toggle is set to blue, it indicates that any news item or package created in this Desk will be sent to this Stage.
+Turn on **Disallow sending items to this desk** on the **General** tab to remove the desk from the destinations in the **Send to** panel. Users can then no longer send items to it. Use it for desks that should only get content in other ways, for example through ingest routing or by fetching.
 
-If INCOMING STAGE toggle is blue, any item that is fetched to this desk will be put into this Stage.
+See [Sending, scheduling and publishing items](../content-management/sending-scheduling-and-publishing.md).
 
-The CONTENT EXPIRY can be set to a number of days, hours or minutes to ensure that the most current news is being published. When the content expiry limit is reached, the article is permanently deleted and can no longer be accessed. Leaving the expiry at 0 days, 0 hours and 0 minutes will mean that the content will be there indefinitely.
+### Preferred vocabulary values
 
-The INCOMING RULE drop-down menu allows for standardised modifications to be made on articles that are being fetched to this Desk. This could include modifications like automatically filling in a dateline or an abstract, or converting currencies. These rules are set up in the Macros tab of the Edit Desk window. An example of a standard Incoming Rule would be ‘validate for publishing’ which would check to see if all the required fields are filled out and that it meets other standards for publishing, as mandated by your organization.
+Under **Preferred values for vocabularies** on the **General** tab, you can pick the values this desk uses most for each vocabulary, for example a handful of categories. When users on this desk open that field in an item, the dropdown has a **Desk** entry that lists only these values. **All** shows the full list again.
 
-The OUTGOING RULE and MOVED ONTO STAGE RULE will also apply a selected macro to any item that leaves the Stage, or is sent to the Stage from another Stage, respectively.
+Users can also set their own preferred values in their profile. When a user has their own values for a vocabulary, the dropdown opens on the **User** list first. See [Your profile and preferences](../navigating-superdesk/your-profile-and-preferences.md).
 
-**People Tab**
+Only vocabularies marked **Available in user/desk preferences** appear here. If none is marked, the section says "There are no vocabularies configured." See [For administrators](#for-administrators).
 
-In the People tab of the Edit Desk window, you can add or remove users from the Desk. To add a user, type their name into the search bar. When you select the name of the person, they will be automatically added to the Desk, just click the ‘SAVE & CONTINUE’ button to confirm the team changes.
+### Desk email and Slack channel
 
-![](<../../.gitbook/assets/image33 dc93279e40e39a55defb3677b8d20cd1.png>)
+**Desk Email** stores an email address for the desk (since Superdesk 2.7). Superdesk does not send email to it by itself. When the Planning component is set up to add extended information to its output, coverages assigned to the desk include this address.
 
-To remove a user from a Desk, hover over the user and click the x that appears on the right.
+**Slack Channel Name** only appears when your installation has Slack notifications turned on. Enter the channel name without the leading #. The Planning component posts its desk notifications to this channel.
 
-**Macros Tab**
+### Stages tab
 
-The final tab in the Edit Desk window is for Macros. All of the available macros are displayed here. You will need the assistance of a programmer to create your Macros.
+Stages reflect the workflow of a desk. An article can go through several stages, for example a first edit and a second edit, before it is published.
 
-![](<../../.gitbook/assets/image31 26c35d477a1c6e7a59cd3d863d6e6791.png>)
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/stages-tab.png" alt="The Stages tab with the list of work stages on the left and the stage details on the right" width="818"><figcaption><p>The Stages tab</p></figcaption></figure>
 
-When you choose a Macro for your incoming rule in the General Tab, it will be one of these Macros.
+The **Work stages** list is on the left. Click a stage to see its settings under **Stage Details** on the right.
 
-### Desk Routing
+* To add a stage, click the **+** button below the list, type a name and click **Save**. A stage name can be up to 40 characters long and must be unique on the desk.
+* To edit a stage, hover over it and click the pencil icon.
+* To change the order of the stages, drag a stage up or down.
+* To remove a stage, hover over it and click the trash icon. You cannot remove the working stage or the incoming stage, a stage that still has items, or a stage that an ingest routing scheme uses.
 
-The Desk Routing feature allows Desks to be temporarily closed, and the incoming content to be marked for another Desk until the Desk is reopened.
+When you edit a stage, these options appear:
 
-The Desk which is going to be closed is called Source Desk and the Desk for which the content is marked for is called Target Desk in the following description.
+![The stage options while editing a stage](<../../.gitbook/assets/image189 4ce75b1fbecbef49abd8298c57367d52.png>)
 
-The purpose is to allow journalists to temporarily close their Desk and make sure all incoming content is highlighted (marked) for another Desk until the Desk is reopened. The content stays in the Source Desk all the time, it is only marked for another Desk. If the target desk is closed too, the content is marked for its own target desk - i.e. if content is "routed" from desk A to B and B is closed and the content is marked for C, the content from A is marked for C.
+**Global Read** lets users who are not members of the desk see the items in this stage, for example in their own monitoring views and in search. Turn it off to show the stage's items only to desk members. The incoming stage must keep **Global Read** on.
 
-#### Source Desk Configuration
+**Local Read Only** stops desk members from editing items while they are in this stage.
+
+**Working Stage** marks the stage where new items created on this desk start. **Incoming Stage** marks the stage where items fetched or routed to the desk arrive. Each desk has exactly one of each. When you turn either option on for another stage, Superdesk moves it there.
+
+**Stage description** is optional text for other users.
+
+**Content Expiry** sets how long items stay in this stage. It works like the desk's content expiry. If you leave it at 0 or off, the stage uses the desk's expiry, or the system default when the desk has none.
+
+**Incoming Rule**, **Moved onto stage Rule** and **Outgoing Rule** run a macro on an item automatically:
+
+* **Incoming Rule** runs when an item arrives in the stage, for example when it is sent, fetched or routed there.
+* **Moved onto stage Rule** runs after an item has been moved onto the stage from another stage.
+* **Outgoing Rule** runs when an item leaves the stage.
+
+A macro can, for example, fill in a dateline, check that required fields are filled in, or convert currencies. The **Desk Routing** macro is used to close a desk, see [Desk routing](#desk-routing). Which macros you can choose depends on your installation.
+
+### People tab
+
+On the **People** tab you add or remove the members of the desk. Members see the desk in their **Desks menu** and can work on its items.
+
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/people-tab.png" alt="The People tab with the search field and the list of desk members" width="835"><figcaption><p>The People tab</p></figcaption></figure>
+
+To add a user, type their name in the search field at the top and select them. To remove a user, hover over them and click the **x** on the right. Disabled and inactive users stay in the list, greyed out. Click **Save & Continue** or **Done** to keep your changes.
+
+### Macros tab
+
+The **Macros** tab lists the macros available on this desk, with their access type and action type. These are the macros you can choose as stage rules. Macros are written by a developer and installed on the server. You cannot create them here. See [Macros](content-configuration/templates-macros-and-dictionaries.md#macros).
+
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/macros-tab.png" alt="The Macros tab listing the available macros" width="746"><figcaption><p>The Macros tab</p></figcaption></figure>
+
+## Monitoring settings of a desk
+
+The monitoring settings decide which groups users see when they open the desk in Monitoring: stages, desk outputs and saved searches, their order and their size. To change them, open the desk's actions menu and choose **Monitoring settings**.
+
+The setup has four steps: **Desks**, **Saved Searches**, **Reorder Sections** and **Items Count**. Use **Next** and **Previous** to move between them, and **Done** to save.
+
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/monitoring-settings.png" alt="The Monitoring settings window for a desk on the Desks step" width="483"><figcaption><p>Monitoring settings for a desk</p></figcaption></figure>
+
+* **Desks**: turn on the stages and outputs of this desk, or of other desks, that the desk's monitoring should show. The outputs are **Output/Scheduled**, **Output/Published** and **Output/Sent**.
+* **Saved Searches**: turn on global saved searches to show their results as groups.
+* **Reorder Sections**: drag the groups into the order you want.
+* **Items Count**: set how many items each group shows.
+
+See [Monitoring Tab](../workspace-and-search/monitoring-tab.md) for how users work with these groups.
+
+## Removing a desk
+
+Open the desk's actions menu, choose **Remove** and confirm. Superdesk does not remove a desk that:
+
+* has articles, or is referenced by versions of articles,
+* is the default desk of one or more users,
+* is used by an ingest routing scheme.
+
+In that case an error message explains why, and the desk stays.
+
+## Desk routing
+
+Desk routing lets you close a desk for a while, for example overnight, and point its incoming content to another desk. The desk being closed is called the source desk. The desk that takes over is called the target desk.
+
+The content stays on the source desk. Superdesk only marks it for the target desk, so that the target desk's users can find it and work on it. If the target desk is closed too, the content is marked for that desk's own target. For example, if desk A routes to B, and B is closed and routes to C, content arriving on A is marked for C.
+
+To choose the target desk and to start or stop routing, you need the **Desk routing** privilege. Other users see the routing status but cannot change it.
+
+Setting up routing takes five steps. The first three are on the source desk, the last two on the target desk.
 
 {% stepper %}
 {% step %}
-### Select routing macro for the Desk Stage
+### Add the routing macro to the source desk's stages
 
-You need to activate the Desk Routing macro for each stage of the Source Desk which is expected to receive new content when the desk is "closed". The macro is run on incoming content and it checks the status (open/closed) of the Desk and if the Desk is closed, it marks the content for the Target Desk.
+Go to **Settings** > **Desks**, open the source desk with **Edit**, and click the **Stages** tab. For each stage that receives new content while the desk is closed, edit the stage and choose **Desk Routing** as its **Incoming Rule**. Click **Save**.
 
-To add a routing macro, select Hamburger menu > Settings > Desks. Select your Source Desk and then click the Stages tab in the Edit Desk window.
+The macro runs on every item that arrives in the stage. When the desk is open, it does nothing. When the desk is closed, it marks the item for the target desk.
 
-![](<../../.gitbook/assets/image389 292e9dd9ac672b15bf071c2494c2e062.png>)
-
-Click the edit icon for each Stage of the Source Desk that will receive content. In the INCOMING RULE drop-down menu select the Desk Routing macro, then click the SAVE button.
-
-![](<../../.gitbook/assets/image300 4ff395a6d253aa1cf753c5af21fefe16.png>)
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/routing-incoming-rule.png" alt="Editing a stage with Desk Routing selected as Incoming Rule" width="529"><figcaption><p>Desk Routing as the incoming rule of a stage</p></figcaption></figure>
 {% endstep %}
 
 {% step %}
-### Add Desk Router widget to the Source Desk Dashboard
+### Add the Desk Router widget to the source desk's dashboard
 
-Add the Desk Router widget to the Source Desk’s Dashboard by clicking the Create icon in the top-right corner of the Dashboard pane. This will open a new window from which you should select the Desk Router widget:
+Select the source desk and open the **Dashboard**. Click the **Add widget** button in the top-right corner, choose **Desk Router** and click **Add This Widget**. The widget works on a desk's dashboard, not on a custom workspace.
 
-![](<../../.gitbook/assets/image12 dbfbe820bfeeb1a55698cb7718b35e4b.png>)
+See [Dashboards and Widgets](../workspace-and-search/dashboards-and-widgets.md).
 {% endstep %}
 
 {% step %}
-### Select the Target Desk in the Desk Router widget
+### Choose the target desk
 
-In the Desk Router Dashboard widget, select the Target Desk from the list under “route incoming content to”. In the example below, the Target Desk is called “National”:
+In the **Desk Router** widget, choose the target desk under **Route incoming content to**.
 
-![](<../../.gitbook/assets/image344 a7f0230fa5729bb0c8b2ace7881a49cc.png>)
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/desk-router-widget.png" alt="The Desk Router widget with a target desk selected and the Start routing button" width="548"><figcaption><p>The Desk Router widget</p></figcaption></figure>
+{% endstep %}
+
+{% step %}
+### Create a saved search for the target desk
+
+The target desk needs a saved search that finds the content marked for it. Open **Search** and the search parameters. Under **Marked Desks**, select the target desk and run the search. Click **Save Search**, give it a name and turn on **Make global**, so that the search can be added to the desk's monitoring.
+
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/marked-desks-search.png" alt="The search parameters with the target desk selected under Marked Desks" width="550"><figcaption><p>Searching for content marked for the target desk</p></figcaption></figure>
+{% endstep %}
+
+{% step %}
+### Add the saved search to the target desk's monitoring
+
+Go to **Settings** > **Desks**, open the target desk's actions menu and choose **Monitoring settings**. On the **Saved Searches** step, turn on the search you created. On **Reorder Sections** you can move it to the top.
+
+Users of the target desk now see the routed items in that group. Items marked for a desk show a bell icon. Click it to see which desks the item is marked for.
 {% endstep %}
 {% endstepper %}
 
-#### Target Desk Configuration
+### Closing the source desk
 
-You need to create a Saved Search for content which is marked for the Target Desk and add it to the Monitoring pane or the Dashboard of the Target Desk.
+Open the source desk's dashboard, check that the target desk is selected in the **Desk Router** widget, and click **Start routing**. From now on, all content that arrives in the stages with the routing macro is marked for the target desk.
 
-{% stepper %}
-{% step %}
-### Create a Saved Search
+While the desk is closed, the top bar of the source desk shows **Routing to:** and the name of the target desk. The top bar of the target desk shows **Routed from:** and the names of the closed desks that route to it. In the **Desks menu**, closed desks and desks that receive routed content are highlighted.
 
-On the Target Desk, select Search → Advanced Search and find Marked Desks in Parameters tab.
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/routing-top-bar.png" alt="The top bar of a closed desk showing Routing to and the target desk" width="1536"><figcaption><p>A closed desk shows where its content goes</p></figcaption></figure>
 
-![](https://superdesk.github.io/superdesk-docs/docs/Base64-Image-Removed)
+On the target desk, the **Desk Router** widget lists under **Routed from** every desk that has this desk as its target, and shows whether each of them is closed and routing now.
 
-Select the Target Desk from the list of available Desks, click "Search", and then "Save Search". Name the search, and do not forget to make it “global”.
+### Reopening the source desk
 
-![](<../../.gitbook/assets/image152 640dfc9065baee2001c6ed88ea02160c.png>)
-{% endstep %}
+Open the source desk's dashboard and click **Stop routing** in the **Desk Router** widget.
 
-{% step %}
-### Add the Saved Search to the Target Desk’s Monitoring View
+Superdesk removes the marks that routing added to the desk's items. Marks that users added by hand stay.
 
-Go to Hamburger menu > Settings > Desks, and open Monitoring Settings of the Target Desk.
+<figure><img src="../../.gitbook/assets/desk-creation-and-desk-management/desk-router-stop.png" alt="The Desk Router widget on a closed desk with the Stop routing button" width="548"><figcaption><p>Reopening a closed desk</p></figcaption></figure>
 
-![](<../../.gitbook/assets/image150 1d105529f7f07e638700030b0a9f63cd.png>)
+## For administrators
 
-Open the Saved Searches tab and activate the search that you created in the previous step. You can also select the Reorder Sections tab to place the Saved Search at the top of the screen, if needed.
+**Privileges.** Set them in [User Management and User Roles](user-management-and-user-roles.md).
 
-Users will see the following in the monitoring:
+| Privilege | Allows |
+| --- | --- |
+| **Desk Management** | Creating, editing and removing desks and stages in **Settings** > **Desks** |
+| **Desk routing** | Choosing the target desk and starting or stopping routing in the **Desk Router** widget |
+| **Mark items for desks** | Marking items for desks by hand |
 
-![](<../../.gitbook/assets/image4 a512346f78ecb5168556857424fc8b67.png>)
+**Configuration.**
 
-The articles from the Source Desk will have the bell icon next to them and clicking it you can see for which Desk(s) the story has been marked.
-{% endstep %}
-{% endstepper %}
+| Setting | Where | What it does |
+| --- | --- | --- |
+| `CONTENT_EXPIRY_MINUTES` | Server | The system default content expiry, used by desks and stages that have none. |
+| `PUBLISHED_CONTENT_EXPIRY_MINUTES` | Server | Removes published content after this many minutes. When it is set, desks show **Preserve Published Content**. |
+| `features.noPublishOnAuthoringDesk` | Client | Blocks publishing from desks of type **authoring**. |
+| `features.swimlane` | Client | Offers **Swimlane View** in Monitoring and as a desk's default monitoring view. |
+| `features.slackNotifications` | Client | Shows **Slack Channel Name** in the desk settings. |
+| `features.hideRoutedDesks` | Client | On a target desk, the top bar shows **Routed from other desks** instead of the names of the closed desks. |
 
-#### Closing the Source Desk
-
-Go to the Source Desk dashboard and click the ‘Start Routing’ button in the desk router widget. Make sure the Target Desk is selected. From now on all incoming content will be marked for the Target Desk.
-
-![](<../../.gitbook/assets/image358 a7f0230fa5729bb0c8b2ace7881a49cc.png>)
-
-Users of the Target Desk can check the same widget to see from which desk the content is being "routed". In the picture above, there is an active routing from Adelaide and an inactive from Broadcast desk.
-
-#### Reopening the Source Desk
-
-Go to Desk Dashboard and click the ‘Stop Routing’ button in the desk router widget:
-
-<img src="../../.gitbook/assets/unknown (25).png" alt="Desk Router Widget" height="264" width="338">
-
-The "marked for" attribute of all stories which were marked by this feature (i.e. not the ones marked manually by users) will be removed by this action.
+**Preferred values.** To make a vocabulary available for desk and user preferred values, edit it in **Settings** > **Metadata** and tick **Available in user/desk preferences**.
