@@ -1,79 +1,203 @@
 # Collaboration tools
 
-Superdesk offers various tools to collaborate and communicate on the article content.
+Superdesk has several tools for working on content together:
 
-#### Mark for User <a href="#docs-internal-guid-3fe0218f-7fff-4b85-cbea-24309c7a930d" id="docs-internal-guid-3fe0218f-7fff-4b85-cbea-24309c7a930d"></a>
+* **Mark for user** brings an item to a colleague's attention.
+* **Comments** are notes about the whole item, in the widget bar.
+* **Inline comments** are notes on a piece of text in the body.
+* **Suggestions** let you propose changes to the body that someone else accepts or rejects.
+* **Mentions** tag a colleague or a desk in a comment, so they get a notification.
 
-As of Superdesk version 1.33, Superdesk now includes a ‘Mark for User’ feature. This allows users to keep track of news items that require their attention. News items can be marked for users in several ways:
+For the editor itself, see [Creating and Editing Content Items](README.md).
 
-* From the action menu of an item in any list view (such as Monitoring or Highlights).
-* From the action menu of an item in the Editor or Preview pane.
-* Using the icons at the top of the Monitoring pane if multiple items are selected.
+## Mark for user
 
-<div align="left"><img src="../../../.gitbook/assets/unknown (19).png" alt=""></div>
+Mark for user brings an item to a colleague's attention without changing where it sits in the workflow. It works like Mark for desk, but for one person.
 
-Users can access items that are marked for them directly from the menu to the left of their user icon, or by clicking on the ‘Marked for Me’ button at the top of the Monitoring pane for their current Desk.  The info bubble on the ‘Marked for Me’ button lets you know how many items have been assigned to you in general, or within your current Desk on the Monitoring pane.
+{% hint style="info" %}
+If you do not see **Mark for user**, your Superdesk does not use it or your role does not have the privilege. Ask your administrator.
+{% endhint %}
 
-<img src="../../../.gitbook/assets/unknown (20).png" alt="" height="40" width="139">
+### Marking an item for a colleague
 
-Clicking on an item in the ‘Marked for Me’ list will open it in the Editor, unless the item is locked by another user.&#x20;
+{% stepper %}
+{% step %}
+### Choose Mark for user
 
-_**Note**: Spiked items and locked items cannot be marked, and only users with the mark for user privileges will be able to use this action._&#x20;
+You can start from several places:
 
-When marking content for a user, the online status indicator is shown on the user avatars in the list of users, so that the user can easily see whether the target user is currently online or not. The marked user will receive a notification in the Superdesk interface, as well as an email notification. When an item is marked for a user, a new version of the content item is automatically created. By doing so, Superdesk makes sure that the user receives the latest copy of the item and that "dirty changes" are not lost on the way.
+* In any list, such as Monitoring or Highlights, hover over the item, click the **Item actions** icon (three vertical dots) and choose **Mark for user**.
+* In the preview pane, open the **More actions** menu and choose **Mark for user**.
+* In the editor, open the **More actions** menu in the top bar and choose **Mark for user**.
+* To mark several items, select them and click **Mark for user** in the bar at the top of the list. If the items are already marked for different users, the window says so.
+{% endstep %}
 
-**Using the Suggestions Mode**
+{% step %}
+### Pick the user
 
-When adding text in the Body HTML field, users have the option to toggle the Suggestions Mode using the button displayed above.&#x20;
+The **Mark for user** window opens with the user list and a search field. Type a name to filter the list. Each user's avatar shows whether they are online.
+{% endstep %}
 
-<div align="left"><img src="../../../.gitbook/assets/unknown (9).png" alt=""></div>
+{% step %}
+### Confirm
 
-When Suggestions Mode is active (blue), text that is added will appear in green, and text that is deleted will appear in red with a strikethrough. Changes in formatting will be highlighted in green.
+Click **Mark for user**. To also move the item to the next stage of its desk, click **Mark and send** instead. If the item is in the last stage, **Mark and send** moves it to the first stage. **Mark and send** is not available while the item is open for editing.
+{% endstep %}
+{% endstepper %}
 
-<img src="../../../.gitbook/assets/unknown (11).png" alt="" height="177" width="315">
+<figure><img src="../../../.gitbook/assets/collaboration-tools/mark-for-user-modal.png" alt="The Mark for user window with the user list open and the Cancel, Mark for user and Mark and send buttons" width="944"><figcaption><p>Marking an item for a user</p></figcaption></figure>
 
-Changes can be accepted or rejected by clicking on the altered text and selecting ‘accept’ or ‘reject’ in the pop-up that appears. Suggesting Mode is a great tool for editors and journalists to work together to create quality content.
+The mark is saved straight away, even when the item is open in the editor.
 
-**Inline Comments (tab)**
+### Seeing who an item is marked for
 
-* View inline comments submitted for the item (these are not transmitted on publication).
-* To add inline comments: highlight text in the Body HTML field, click the Comments icon and submit. Use @username to notify specific users.
-* For information to be transmitted with the content beyond publication, use the Editor’s notes field in the metadata header.
+A marked item shows the avatar of the marked user in lists and in the top bar of the editor. Click the avatar to open the **Mark for user** window, where you can change or remove the mark.
 
-<figure><img src="../../../.gitbook/assets/grafik (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/collaboration-tools/marked-user-indicator.png" alt="An item in the Monitoring list with the avatar of the user it is marked for" width="1480"><figcaption><p>An item marked for a user</p></figcaption></figure>
 
-**Using the Inline Comments feature**
+### Finding items marked for you
 
-Users can add comments to the body of news articles using the Inline Comments feature in the toolbar at the top of the Body HTML field.
+You can see the items marked for you in three places:
 
-To add a Comment, highlight some text in the Body HTML field of an article, then click the Comments button in the toolbar above.&#x20;
+* **Marked for me** in the top bar. The badge shows how many items are marked for you. Click it to see the items grouped by desk, then click an item to open it. Published items are not listed.
+* The **Marked for me** button in the Monitoring toolbar. It shows only the items on the current desk that are marked for you. See [Monitoring Tab](../../workspace-and-search/monitoring-tab.md#marked-for-me).
+* The **Marked for me** section of your Personal Space.
 
-<div align="left"><img src="../../../.gitbook/assets/unknown (12).png" alt=""></div>
+<figure><img src="../../../.gitbook/assets/collaboration-tools/marked-for-me-dropdown.png" alt="The Marked for me menu in the top bar, listing marked items grouped by desk" width="796"><figcaption><p>Items marked for you</p></figcaption></figure>
 
-Type your Comment in the pop-up provided. Use the @ symbol and the username to notify them of Comments that need immediate attention. Upon submitting the Comment, the tagged user might be notified through the Superdesk-internal notifications or by email, depending on the user’s preferences.&#x20;
+An item opened from the **Marked for me** menu opens read-only. Click **Edit** in its top bar to start editing, unless someone else is working on it.
 
-All of the Comments, both resolved and unresolved, can be viewed by clicking the Comments icon in the Editor Sidebar when an article is open for editing.
+### Changing or removing a mark
 
-<div align="left"><img src="../../../.gitbook/assets/unknown (15).png" alt="" height="418" width="307"></div>
+Open the item's action menu (three vertical dots). For a marked item it offers **Unmark user** and **Mark for other user**. You can also click **Unmark** in the **Mark for user** window.
 
-The two buttons at the top of the Inline Comments pane allow you to view both resolved and unresolved Comments.&#x20;
+### Notifications
 
-<div align="left"><img src="../../../.gitbook/assets/unknown (16).png" alt="" height="199" width="318"></div>
+When you mark an item, the user gets a notification in Superdesk with an **open item** link. They also get an email if they have not turned off **Send Mark for User notifications** in their preferences. See [Your profile and preferences](../../navigating-superdesk/your-profile-and-preferences.md#notifications).
 
-To resolve a Comment, click on the highlighted text in the Body HTML field and click the RESOLVE button, or write a reply in the textbox provided.
+When you mark the item for someone else, the previously marked user is notified too. When you remove the mark, the user who was marked is notified.
 
-#### Comments <a href="#docs-internal-guid-dafb9660-7fff-f45c-4f3e-a58f42e08c3c" id="docs-internal-guid-dafb9660-7fff-f45c-4f3e-a58f42e08c3c"></a>
+### What cannot be marked
 
-When an article is open for editing, users can add Comments to each news item with Twitter-like @mentions.&#x20;
+You cannot mark items that are in a Personal Space, published, archived or spiked, or items that another user has open for editing. Spiking an item removes its mark. A duplicate of a marked item is not marked.
 
-<div><img src="../../../.gitbook/assets/unknown (17).png" alt="" height="139" width="323"> <img src="../../../.gitbook/assets/unknown (18).png" alt="" height="80" width="269"></div>
+## Comments
 
-\
-This feature is useful for alerting other Desks or users to the content in a hurry.
+Use comments for notes about the whole item, for example to ask a colleague to check a fact. Comments are visible to everyone who opens the item and are never published.
 
-<div align="left"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABkCAYAAAB5CTUuAAADOElEQVR4Xu2bPXLyMBCGZRouQAcVdFBxCCip4B5cww3DISipKDkEdHRQcQkqvk9MPJMhY8zKq139vMwwhJDdlZ5HK9uJU2w2m2en0zH2WRTF6/X9vf1+9TT/H/br36+vN3g4ESggwIkbW1BRluWTLRsSkQlAABkZbwC2IF6e5GwQQEbGGwABvDzJ2SCAjIw3AAJ4eZKzQQAZGW8ABPDyJGeDADIy3gAI4OVJzgYBZGS8ARDAy5OcDQLIyHgDIICXJzkbBJCR8QZAAC9PcjYIICPjDYAAXp7kbBBARsYbAAG8PMnZIICMjDcAAnh5krNBABkZbwAE8PIkZ4MAMjLeAAjg5UnOBgFkZLwBEMDLk5wNAsjIeANUBNzvd3M+n831euWdjWO20WhkptOpGQwGjhncw8QFHI9Hc7lc3EfsMXI8Hpv5fO6xwt/UogJChl+hkZYgJsBuO/v9XnR1uRZbLpdi25GYgMPhYG63mysT0bjhcGgWi4VITTEB2+1WZEJcRdbrNVeqj3kgoAYPBIisv/oi2QnwNWHXrc/XeN6VB7MF+ZowBPwodwWhtRP5WhDBdoAW6Lq62QmQmnAFvKkjpcaT/DGgboVDQGh7ztt4suuA0HxkJ8B1wk1biatY1/FQ60V/DICAL5X7AvVlefKPZdcBZEKeA7ITwD3hth3HPZ669RL9McD1PL+pgbIT0ARE+nMIkCaOCzFl4qkLiOmP8v1+36xWK5EVIXYQjum2lNlsZiaTSVoC7GxiuDFLcvVbJmIdUC2nkCVY+PZ+oG63K7L6VQTYonY7Op1OwdyoZcHbWxKltp3fdsU7oGlpfXMFK33/ZtOY23wenYCU4KttQZ9WzKcOSA1+VAJShB+NgFThRyEgZfjBC0gdftACJP9Jos1pZNvYIE9De73e65dhklekbUG6xgcnYLfbZQM/yC3o8XhksfKrjgmuA1xbOdY4CFA2BwEQoExAuTw6AAKUCSiXRwdAgDIB5fLoAAhQJqBcHh0AAcoElMujAyBAmYByeXQABCgTUC6PDoAAZQLK5dEBEKBMQLk8OgAClAkol0cHQIAyAeXy6ABtAWVZPpXHkHX5AgJ0/f8DagLWnMHbbHMAAAAASUVORK5CYII=" alt=" This is the Comments button in the Editor Sidebar." height="46" width="44"></div>
+{% stepper %}
+{% step %}
+### Open the Comments widget
 
-Comments can be viewed in the Editor Sidebar, when an article is open for editing, using the Comments button displayed above.&#x20;
+With the item open, click the **Comments** icon in the widget bar. The widget lists the comments on the item.
+{% endstep %}
 
-Comments can be added to the Body of a news item using the Inline Comments feature.
+{% step %}
+### Write your comment
 
+Type in the box at the bottom. To mention a colleague or a desk, type `@` and pick them from the list. See [Mentioning colleagues and desks](#mentioning-colleagues-and-desks).
+{% endstep %}
+
+{% step %}
+### Post it
+
+Click **Post**. If you tick **Post on 'Enter'**, pressing Enter posts the comment. Click **Clear** to empty the box.
+{% endstep %}
+{% endstepper %}
+
+<figure><img src="../../../.gitbook/assets/collaboration-tools/comments-widget.png" alt="The Comments widget in the widget bar with a comment being written and the list of users to mention" width="453"><figcaption><p>The Comments widget</p></figcaption></figure>
+
+## Inline comments
+
+Inline comments are attached to a piece of text in the body. Use them to ask a question about a sentence or to explain a change. Inline comments are not published with the item. For information that must travel with the item, use the **Ed. Note** field.
+
+### Adding an inline comment
+
+{% stepper %}
+{% step %}
+### Select the text
+
+In the body of an item you are editing, select the words you want to comment on.
+{% endstep %}
+
+{% step %}
+### Click the Comment button
+
+Click **Comment** in the toolbar above the body. A box opens under the button with the placeholder "Type your comment...".
+{% endstep %}
+
+{% step %}
+### Write and submit
+
+Type your comment. To notify a colleague, type `@` and pick their name. Click **Submit**.
+{% endstep %}
+
+{% step %}
+### Save the item
+
+The commented text is now highlighted. Save the item. Colleagues you mentioned are notified when the item is saved.
+{% endstep %}
+{% endstepper %}
+
+The **Comment** button only works when text is selected.
+
+### Reading, replying to and resolving inline comments
+
+Click highlighted text in the body to open its comment. The comment shows the author, the date and the text.
+
+<figure><img src="../../../.gitbook/assets/collaboration-tools/inline-comment-popup.png" alt="An inline comment open over the body text, with a mention of a colleague, the Reply box and the Resolve button" width="1252"><figcaption><p>An inline comment</p></figcaption></figure>
+
+* To **reply**, type in the **Reply** box and click **Reply**.
+* To **edit** or **delete** your comment or reply, click the three dots next to it and choose **Edit** or **Delete**. Superdesk asks you to confirm a delete.
+* To **resolve** the comment when it has been dealt with, click **Resolve**. The highlight disappears from the text, but the comment is kept.
+
+### The Inline comments widget
+
+Click the **Inline comments** icon in the widget bar to see all inline comments on the item, grouped by field. Each comment shows the commented text, the replies and, for resolved comments, who resolved it and when. Switch between **Unresolved** and **Resolved** at the top of the widget. The widget opens on the **Resolved** list.
+
+<figure><img src="../../../.gitbook/assets/collaboration-tools/inline-comments-widget.png" alt="The Inline comments widget with the Unresolved option selected and one comment with its selected text" width="462"><figcaption><p>The Inline comments widget</p></figcaption></figure>
+
+## Suggestions
+
+In suggestions mode, your changes to the body are not applied directly. They are kept as suggestions that you or a colleague accept or reject later. This works like tracking changes in a word processor.
+
+### Making suggestions
+
+Click **Toggle Suggestions Mode** in the toolbar above the body. While it is on:
+
+* text you add is shown in green,
+* text you delete stays in place, in red with a line through it,
+* formatting changes are highlighted.
+
+Some tools, such as **Remove formatting** and the uppercase and lowercase buttons, are not available while suggestions mode is on. Click **Toggle Suggestions Mode** again to go back to normal editing.
+
+### Accepting or rejecting a suggestion
+
+Click a suggestion in the body. A box shows who made it, when, and what it changes, for example **Replace:** old text **with:** new text. Click **Accept** to apply the change or **Reject** to discard it.
+
+<figure><img src="../../../.gitbook/assets/collaboration-tools/suggestion-popup.png" alt="A suggested replacement in the body, with deleted text in red and added text in green, and the box with the Accept and Reject buttons" width="1252"><figcaption><p>Accepting or rejecting a suggestion</p></figcaption></figure>
+
+{% hint style="warning" %}
+An item with open suggestions cannot be published. Superdesk shows "Article cannot be published. Please accept or reject all suggestions first." Accept or reject every suggestion, then publish.
+{% endhint %}
+
+The **Suggestions** widget in the widget bar lists the suggestions that have been resolved, with **Accepted by** or **Rejected by**, the user and the date.
+
+## Mentioning colleagues and desks
+
+You can tag colleagues in comments so they know you need them.
+
+* In the **Comments** widget, type `@` and pick a user or a desk from the list. A user appears as `@username`, a desk as `#Desk_Name`.
+* In an **inline comment**, type `@` and pick a user. The list also offers desks after `#`, but only mentioned users get a notification from an inline comment.
+
+A mentioned user gets a notification in the **Notifications** panel (the bell in the top bar) saying that you mentioned them, with a link that opens the item. They also get an email if email notifications are turned on in their preferences. See [Your profile and preferences](../../navigating-superdesk/your-profile-and-preferences.md#notifications).
+
+When a desk is mentioned in the Comments widget, the desk's members see a number badge in the Monitoring view. See [Monitoring Tab](../../workspace-and-search/monitoring-tab.md#groups-in-the-monitoring-view).
+
+## For administrators
+
+This section is for administrators.
+
+* **Mark for user** is a client extension, `markForUser`. The default Superdesk build loads it. Users need the **Mark items for users** privilege (**Settings** > **User Roles**) to mark and unmark items. Everyone can see the items marked for them.
+* **Comment and suggestion buttons.** The **Comment** and **Toggle Suggestions Mode** buttons appear when the `comments` and `suggestions` formatting options are turned on for the body field in the content profile (**Settings** > **Content Profiles**).
+* **Sidebar widgets.** The **Comments**, **Inline comments** and **Suggestions** widgets can be hidden per content profile on the profile's **Widgets** tab. The **Inline comments** and **Suggestions** widgets only appear for profiles that have a body field, and the client settings `features.editorInlineComments` and `features.editorSuggestions` set to `false` hide them for everyone. See [Metadata and fields](metadata-and-fields.md#client-configuration).
