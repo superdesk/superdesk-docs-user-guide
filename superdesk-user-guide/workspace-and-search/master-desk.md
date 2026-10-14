@@ -136,6 +136,8 @@ The Assignments tab is only there if your Superdesk uses the [Planning component
 
 The counts update by themselves as assignments change. The cards on this tab do not open a single desk view.
 
+<figure><img src="../../.gitbook/assets/master-desk/assignments-tab.png" alt="Master Desk Assignments tab with To Do, In Progress and Completed counts per desk" width="999"><figcaption><p>The Assignments tab: planning assignments per desk by status</p></figcaption></figure>
+
 ## For administrators
 
 Access to Master Desk is controlled by the **Master Desk** privilege ("User can access master desk"). Users without it do not see the icon in the Workspace Panel.
@@ -144,7 +146,7 @@ Access to Master Desk is controlled by the **Master Desk** privilege ("User can 
 {% step %}
 ### Open the role privileges
 
-Open the Hamburger Menu, go to **Settings** > **User Roles** and select the **Roles privileges** tab.
+Open the Main menu, go to **Settings** > **User Roles** and select the **Roles privileges** tab.
 {% endstep %}
 
 {% step %}
