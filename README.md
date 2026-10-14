@@ -66,7 +66,7 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 
 * [Superdesk API](superdesk-user-guide/integrations-and-advanced-features/superdesk-api.md)
 * [Ingesting News Items and Events](superdesk-user-guide/integrations-and-advanced-features/ingesting-news-items-and-events.md)
-* [Superdesk Planning Component](superdesk-user-guide/superdesk-planning-component.md)
+* [Superdesk Planning Component](superdesk-user-guide/superdesk-planning-component/README.md)
 
 #### Reference
 
