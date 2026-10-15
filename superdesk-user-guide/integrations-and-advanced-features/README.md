@@ -9,6 +9,7 @@ Connect Superdesk to other systems and extend the core workflow with optional mo
 * [Content lists](content-lists.md)
 * [AI features](ai-features.md)
 
+* [Analytics](analytics.md)
 ### Related sections
 
 * [Superdesk Planning Component](../superdesk-planning-component/README.md)
