@@ -4,7 +4,7 @@
 Welcome to Superdesk. Much like the software itself, the documentation is undergoing constant revision. Screenshots may not represent the most current version and some functions may work differently to how they are explained. If you find inconsistencies, grammar issues, or have general feedback about the documentation, please email us at [contact@sourcefabric.org](mailto:contact@sourcefabric.org).
 {% endhint %}
 
-This guide describes Superdesk 3.6 and later. It is written for journalists, editors and newsroom administrators.
+This guide describes Superdesk 3.6 and later versions. It is written for journalists, editors and newsroom administrators.
 
 When a feature was added after Superdesk 2.0, its section starts with a line such as *Available since Superdesk 2.8.* If you use an older version, that feature may be missing or work differently.
 
