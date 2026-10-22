@@ -42,10 +42,6 @@ In **General** you can change:
 
 Your **Username** cannot be changed. Your **Role** is shown but only an administrator can change it. The labels under your name show your role and whether you are an author or an administrator.
 
-{% hint style="info" %}
-If your Superdesk checks logins against your organisation's user directory (LDAP), fields that come from the directory, such as your name or email, are read-only here. Change them in the directory instead.
-{% endhint %}
-
 ### Changing your avatar
 
 {% stepper %}
@@ -113,8 +109,6 @@ Click **Save password**. Superdesk shows "The password has been changed."
 {% endstepper %}
 
 If your current password is wrong, the window says so and nothing changes. If you forgot your password, sign out and use **Forgot password?** on the login page. See [Logging in and single sign-on](../getting-started/logging-in-and-single-sign-on.md#forgot-your-password).
-
-The **Change password** button is not there when your Superdesk checks passwords against your organisation's directory (LDAP). In that case, change your password the way your organisation tells you to.
 
 <figure><img src="../../.gitbook/assets/your-profile-and-preferences/change-password.png" alt="The Change password window with Current, New and Confirm fields" width="656"><figcaption><p>Changing your password</p></figcaption></figure>
 

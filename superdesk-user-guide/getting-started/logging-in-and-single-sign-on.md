@@ -24,8 +24,6 @@ Click **Log In**. Superdesk opens, with your default desk selected.
 {% endstep %}
 {% endstepper %}
 
-If your organisation connects Superdesk to its user directory (LDAP), use the same username and password as for your other work systems. In that case the **Forgot password?** link is not shown.
-
 <figure><img src="../../.gitbook/assets/logging-in-and-single-sign-on/login-page.png" alt="The Superdesk login page with username and password fields, the Log In button and the Forgot password link" width="634"><figcaption><p>The login page</p></figcaption></figure>
 
 ### If you cannot log in
@@ -95,7 +93,6 @@ When your session ends, Superdesk unlocks the items you had open for editing, so
 
 <figure><img src="../../.gitbook/assets/logging-in-and-single-sign-on/session-expired.png" alt="The login page with the message Your session has expired. Please log in again." width="634"><figcaption><p>Logging in again after your session expired</p></figcaption></figure>
 
-
 ## Single sign-on
 
 With single sign-on you log in with the account you already use at your organisation, for example your Microsoft or Google work account. You do not need a separate Superdesk password. Your administrator decides which options you see. They appear under the password form, after the word "or".
@@ -156,8 +153,6 @@ This section lists the server settings behind each login method. They are set in
 * `RESET_PASSWORD_TOKEN_TIME_TO_LIVE` (environment variable `RESET_PASS_TTL`): days a password reset link stays valid. Default `1`.
 * `ACTIVATE_ACCOUNT_TOKEN_TIME_TO_LIVE` (environment variable `ACTIVATE_TTL`): days the link in the new account email stays valid. Default `7`.
 * Reset and account emails need a working mail server (`MAIL_SERVER`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD` and related settings).
-
-**Directory login (LDAP)**: set `LDAP_SERVER` and the other `LDAP_*` settings. Superdesk then checks usernames and passwords against the directory. The **Forgot password?** link and the **Change password** button disappear, because passwords are managed in the directory.
 
 **Session timeout**: `SESSION_EXPIRY_MINUTES`, the minutes without activity after which a session ends. Default `240`.
 
