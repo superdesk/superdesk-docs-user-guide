@@ -67,7 +67,7 @@ The icons only change the view. They do not close the items you have open. Your 
 
 ### Giving the editor more room
 
-When you edit an item, it opens next to the list. To hide the list and give the editor the whole screen, click the highlighted icon of the view you are in, for example **Monitoring**. Click it again to bring the list back. This does the same as the **Full width mode** button in the editor. See [Monitoring Tab](../workspace-and-search/monitoring-tab.md#full-width-mode).
+When you edit an item, it opens next to the list. To hide the list and give the editor the whole screen, you can click on the highlighted **Monitoring** icon. Click it again to bring the list back. This does the same as the **Full width mode** button in the editor. See [Monitoring Tab](../workspace-and-search/monitoring-tab.md#full-width-mode).
 
 ### Searching other sources
 

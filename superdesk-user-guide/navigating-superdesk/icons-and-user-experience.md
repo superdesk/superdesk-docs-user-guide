@@ -133,7 +133,7 @@ When you open an item for editing, Superdesk locks it for you. Other users can s
 
 <figure><img src="../../.gitbook/assets/icons-and-user-experience/locked-item-authoring.png" alt="A locked item opened read-only, with the avatar, Locked by and the Unlock button in the editor top bar" width="778"><figcaption><p>A locked item opened read-only</p></figcaption></figure>
 
-### Releasing and unlocking
+### Unlocking
 
 A lock ends when the user who has it closes the item, signs out or their session expires. Items that stay open in the bar at the bottom of the screen stay locked. If you need an item that someone else has locked, ask them to close it, or hover over the **Locked by** notice in the preview and click **Unlock** if your role allows it. See [Creating and Editing Content Items](../content-management/creating-and-editing-content-items/README.md#locks).
 

@@ -136,10 +136,6 @@ When you log in this way, Superdesk may update your name and email from your org
 
 Click **Log In with Google**. A new window opens with the Google sign-in page. Choose your account and sign in. The window closes and Superdesk opens.
 
-### Secure login with XMPP
-
-This option is rarely used. Some installations confirm logins through a messaging app that uses the XMPP (Jabber) protocol. Your administrator gives you a separate login address for it. Type your Jabber ID in **JID**, check that the number on the page matches the one shown on your device, and click **Secure Log In**. Your Jabber ID must be saved in your profile, in the **Jabber Identifier (JID)** field.
-
 ## Login page language
 
 *Available since Superdesk 3.1.*
@@ -174,8 +170,6 @@ This section lists the server settings behind each login method. They are set in
 **Google**: set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. The login button appears when both are set. In the Google API console, add `<server URL>/api/login/google_authorized` as an authorised redirect URI.
 
 **Creating users on first single sign-on** (SAML): `USER_EXTERNAL_CREATE` turns it on, `USER_EXTERNAL_DESK` adds new users to a desk, and `USER_EXTERNAL_USERNAME_STRIP_DOMAIN` removes the domain from usernames. Without `USER_EXTERNAL_CREATE`, an administrator must create each user first, with the same email address as in the identity provider.
-
-**XMPP secure login**: set `XMPP_AUTH_URL` (and `XMPP_AUTH_DOMAIN`, default "Superdesk"). The login page for it is `<client URL>/#/secure-login/`, and the **Jabber Identifier (JID)** field appears in user profiles.
 
 **Login page language**: when nobody has signed out in a browser yet, the login page uses `DEFAULT_LANGUAGE`. The languages users can pick come from the client setting `profileLanguages`.
 

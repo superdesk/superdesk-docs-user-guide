@@ -183,7 +183,7 @@ Superdesk only fills in a field that is still empty. Items you fetch from ingest
 
 ### Categories
 
-Tick the categories you work with under **Preferred Categories**. When you set the categories of an item, the menu only offers these categories, plus any categories the item already has. Use **all**, **none** or **default** to change many boxes at once.
+Tick the categories you work with under **Preferred Categories**. When you set the categories of an item, the menu only offers these categories, plus any categories the item already has. Use **all**, **none** or **default** to change many boxes at once. **default** ticks the categories your administrator has put in the **Default Categories** vocabulary, under **Settings** > **Metadata**.
 
 If you save with no category ticked, Superdesk warns you and selects the default set of categories for you.
 
@@ -195,7 +195,7 @@ Click the desks you send items to most under **Preferred Desks**; selected desks
 
 ### Vocabulary values
 
-Some vocabularies let you pick preferred values. Your administrator decides which ones. Pick the values you use most for each vocabulary listed here. When you open that field on an item, the list starts with a **User** group with your values. If your desk also has preferred values, a **Desk** group shows them. Click **All** to see every value.
+Some vocabularies let you pick preferred values. Your administrator decides which ones: a vocabulary appears here when **Available in user/desk preferences** is ticked in its settings under **Settings** > **Metadata**, see [Preferred vocabulary values](../administration/desk-creation-and-desk-management.md#preferred-vocabulary-values). Pick the values you use most for each vocabulary listed here. When you open that field on an item, the list starts with a **User** group with your values. If your desk also has preferred values, a **Desk** group shows them. Click **All** to see every value.
 
 If no vocabulary allows it, the section says "There are no vocabularies configured."
 
@@ -209,9 +209,17 @@ This section only appears if your Superdesk uses the [Planning component](../sup
 
 Each field only appears when there is at least one calendar, agenda or filter to choose from.
 
+{% hint style="warning" %}
+In Superdesk 3.6, **Clear filters** in the planning list does not clear the default agenda, and the default events and planning filter is not applied when the list opens. Pick the filter in the list instead.
+{% endhint %}
+
 ### View formats
 
-Here you pick the default layout of two lists. You can still switch the layout in each list. The section shows each list by its internal name: **archive** for content lists such as search results, and **contacts** for the contacts list. For each one, pick the grid layout (labelled **mgrid**) or **List View**. The view you choose in Monitoring is remembered on its own, see [Monitoring Tab](../workspace-and-search/monitoring-tab.md).
+Here you pick the default layout of two lists, shown by their internal names: **archive** for content lists such as search results, and **contacts** for the contacts list. For each one, pick the grid layout (labelled **mgrid**) or **List View**. You can still switch the layout in each list. The view you choose in Monitoring is remembered on its own, see [Monitoring Tab](../workspace-and-search/monitoring-tab.md).
+
+{% hint style="warning" %}
+In Superdesk 3.6 the **archive** setting has no effect: search results always open in list view until you switch the layout in the list itself.
+{% endhint %}
 
 ### Feature preview
 

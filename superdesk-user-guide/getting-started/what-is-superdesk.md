@@ -9,12 +9,12 @@ Many people work in Superdesk at the same time. Work is organised in desks, and 
 This manual covers the Superdesk core and its optional modules. Your newsroom may use some of these modules, all of them, or none. If you do not see a module described here, ask your administrator. The optional modules are:
 
 * [Planning](../superdesk-planning-component/README.md): plan events and coverage, and hand out assignments.
-* [Broadcasting](../broadcasting-shows-and-rundowns.md): manage shows and build rundowns for radio and TV.
-* [Availability management](../availability-management/README.md): track when freelancers are available for work.
-* [Asset management](../integrations-and-advanced-features/asset-management.md): store and reuse images, video and other files across items.
-* [Content lists](../integrations-and-advanced-features/content-lists.md): curate lists of articles for your websites and apps.
-* [AI features](../integrations-and-advanced-features/ai-features.md): suggest headlines, summaries, translations and tags.
 * [Analytics](../integrations-and-advanced-features/analytics.md): run reports on your content and newsroom activity.
+* [Availability management](../availability-management/README.md): track when freelancers are available for work.
+* [AI features](../integrations-and-advanced-features/ai-features.md): suggest headlines, summaries, translations and tags.
+* [Content lists](../integrations-and-advanced-features/content-lists.md): curate lists of articles for your websites and apps.
+* [Asset management](../integrations-and-advanced-features/asset-management.md): store and reuse images, video and other files across items.
+* [Broadcasting](../broadcasting-shows-and-rundowns.md): manage shows and build rundowns for radio and TV.
 
 If a term in this guide is new to you, look it up in the [Superdesk Glossary and Terminology Guide](../reference/superdesk-glossary-and-terminology-guide.md).
 
