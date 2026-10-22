@@ -48,6 +48,8 @@ Click **Toggle filters** (the funnel at the left of the header) to open the adva
 
 At the top of the **Advanced Search** tab, four buttons choose which content is searched: **Ingest**, **Production**, **Published** and **Archived**. A highlighted button is included in the search. Click a button to include or exclude that content. For example, to search only newly ingested content, leave only **Ingest** highlighted.
 
+The four buttons match the places where Superdesk keeps content. **Ingest** holds items that arrived from feeds and have not been fetched to a desk yet. **Production** holds the items on desks and in personal spaces. **Published** holds published items for as long as their expiry time runs. When that time is up, Superdesk moves them to **Archived**, a separate long-term store where they stay searchable. Your administrator sets the expiry times, see [Content expiry](../administration/defining-publishing-in-superdesk/publish-queue-legal-archive-and-content-expiry.md#content-expiry).
+
 Below these buttons are two tabs, **Parameters** and **Filters**.
 
 {% tabs %}

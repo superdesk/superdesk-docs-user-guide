@@ -48,9 +48,9 @@ The highlight view lists the items of the highlight, like a Monitoring group. Cl
 
 ### Creating a highlights package
 
-Click **Create** in the highlight view to create a highlights package. The package is named after the highlight and already holds the items of the highlight that are within its time window. It opens for editing, and from there you edit, send and publish it like any other package. See [Packages](../content-management/packages.md).
+Click **Create** in the highlight view to create a highlights package. The package is named after the highlight and already holds the items of the highlight that are within its time window, whether they are published yet or not. It opens for editing, and from there you edit, send and publish it like any other package. Publishing the package also publishes the items in it that are not published yet. See [Packages](../content-management/packages.md).
 
-To turn the package into a single article, click **Export** in the top bar of the package. Superdesk creates a text item from the package, formatted with the highlight's template, and opens it.
+To turn the package into a single article, click **Export** in the top bar of the package. Superdesk creates a text item from the package, formatted with the highlight's template, and opens it. Export only works when every item in the package is published and nobody has one of them open for editing. Otherwise Superdesk refuses with "Locked or not published items in highlight list".
 
 You need the privilege to mark items for highlights to see the **Create** button.
 

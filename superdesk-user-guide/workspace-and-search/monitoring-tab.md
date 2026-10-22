@@ -22,11 +22,11 @@ Stages are set up by an administrator in the desk settings, so they can differ f
 
 To work with one group only, click its name in the group header. Click the desk name to see all of that desk's items in one list, or the stage name to see that stage alone. The **Monitoring** dropdown in the toolbar also lists all groups, so you can jump straight to one. To go back, click the arrow at the left of the toolbar (**Back to original view**).
 
-If the header of a desk's incoming stage shows a number badge, someone mentioned the desk in a comment. Click the badge to open the **Notification list**. From there you can open the item or click **Acknowledge**.
+The number after a group name is the number of items in that group. The incoming stage of a desk can show a second, separate badge next to it: it appears when someone mentions the desk in a comment and counts the unread mentions. Click that badge to open the **Notification list**. From there you can open the item or click **Acknowledge**.
 
 ### Changing the order of groups
 
-Open the **More actions** menu (three vertical dots) at the right of the second toolbar row and choose **Rearrange Groups**. Drag the groups into the order you want and click **Done**. When a desk is selected, the new order is saved as your personal preference. It does not change the order other desk members see.
+Open the **More actions** menu (three vertical dots) at the right of the second toolbar row and choose **Rearrange Groups**. Drag the groups into the order you want and click **Done**. The new order is saved as your personal preference for that desk or custom workspace and stays after you log out. It does not change the order other desk members see.
 
 In a custom workspace, the same menu also has **Rename workspace** and **Delete workspace**. The gear icon (**Monitoring settings**) in the toolbar opens the workspace setup, with the steps **Desks**, **Saved Searches**, **Reorder Sections** and **Items Count**.
 

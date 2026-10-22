@@ -2,7 +2,7 @@
 
 Desks are the basic organisational units in Superdesk. Desks are like the departments that you might find in a traditional newsroom. Desks could be separated by topic, function, media type or seniority, etc. Desks are configurable and customizable to suit the needs of your organization.
 
-All users are assigned to a Desk, and some users are assigned to several. News items that users create, fetch, edit, spike or publish become associated with their current Desk.
+All users are assigned to a Desk, and some users are assigned to several. Your current desk is the one you have selected in the Desks menu, out of the desks you are assigned to. News items that users create, fetch, edit, spike or publish become associated with their current Desk.
 
 <figure><img src="../../.gitbook/assets/desks-and-custom-workspaces/desks-menu.png" alt="The Desks menu open, listing desks, custom workspaces and the Create new workspace button" width="670"><figcaption><p>The Desks menu</p></figcaption></figure>
 
