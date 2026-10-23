@@ -1,71 +1,71 @@
 # How to set it up
 
-#### Before you start
+## Before you start
 
-The Availability Manager module must be enabled in your Superdesk installation. It is included in the default modules list (`apps.user_availability`). In case of doubt, reach out to your Superdesk Admin to make sure its enabled.
+Availability Management is part of the standard Superdesk installation. If you do not see it, ask your administrator to check that it is enabled.
 
-#### Required Privileges for Availability Managers and users
+## Privileges for availability managers and users
 
-Three privilege levels control access to the Availability Manager. You can set them as Superdesk admin by opening the burger menu Settings/User Roles and provide the respective user types with the access they require:
+Three privileges control access to Availability Management. Administrators give them to roles in **Settings** > **User Roles**:
 
 1. **Availability - view** (`user_availability`)
-   * Allows viewing the availability dashboard
-   * Required for monitoring, checking team availability
+   * Shows the **Availability Management** dashboard.
+   * Give it to people who need to check the team's availability.
 2. **Availability - manage** (`user_availability_manage`)
-   * Allows Availability adminis to override or modify any user's availability settings
-   * Used by Availability Managers for manual adjustments and management
+   * Lets availability managers change the availability of any user.
+   * Give it to the people who plan coverage and need to make manual changes.
 3. **Availability - manage own availability** (`user_availability_manage_own`)
-   * Allows users to configure their own availability settings
-   * Recommended for all team members who need to set their availability
+   * Shows the **Availability** section in the user's own profile, where they set their availability.
+   * Give it to everyone who should enter their availability.
 
-#### For Administrators: Enable the Feature
+## For administrators: enable the feature
 
-**Step 1: Grant User Privileges**
+### Step 1: Grant the privileges
 
-1. Navigate to **User Roles, Roles Priviliges** in the Admin panel
-2. Select or edit a role
-3. Under **Privileges**, assign:
-   * Availability Manage own - enables personal availability management
-   * Availability View - enables viewing team availability (optional, for dashboards)
-   * Availability Manage - enables admin overrides (for admin users only)
+{% stepper %}
+{% step %}
+### Open the role privileges
 
-**Step 2: Verify Module Loading**
+Open the Main menu, click **Settings** and then **User Roles**. Click the **Roles privileges** tab.
+{% endstep %}
 
-The feature auto-loads if included in the SUPERDESK\_APPS configuration:
+{% step %}
+### Tick the privileges
 
-Python
+Find the three **Availability** rows and tick them in the column of each role that needs them:
 
-```
-SUPERDESK_APPS = [
-    # ... other apps ...
-    "apps.user_availability",
-    # ... other apps ...
-]
-```
+* **Availability - manage own availability** for everyone who sets their own availability.
+* **Availability - view** for people who check the dashboard.
+* **Availability - manage** only for availability managers.
+{% endstep %}
 
-**Step 3: Automated Availability Generation**
+{% step %}
+### Save
 
-The system automatically generates availability records:
+Click **Save**.
+{% endstep %}
+{% endstepper %}
 
-* **Schedule**: Daily at 1:40 AM (configurable via Celery Beat)
-* **Duration**: Generates 12 weeks of recurring schedules (configurable via `AVAILABILITY_GENERATE_WEEKS`)
-* **Scope**: Only for active users with enabled availability settings
-* **Trigger**: Automatically runs when a user updates their default working days or languages
+### Step 2: Set up the tasks and subtasks
 
-No additional setup is required for automation once the module is enabled.
+Tasks and subtasks are the things a person can be assigned to, for example a type of coverage, or a province and its regions. They live in a controlled vocabulary.
 
-**Step 4: Controlled Vocabulary**
+1. Open the Main menu, click **Settings** and then **Metadata**.
+2. Find the vocabulary with the ID `availability_manager_tags`. Its name is what people see in the dashboard and in their profile, so you can rename it to suit your newsroom.
+3. Add the items. The vocabulary has two levels, such as Task and Subtask, or Province and Region.
 
-Navigate to Settings/Metadata and look for a Controlled Vocabulary to manage the features Tasks and Subtasks to be assigned to the Freelancers or Correspondents using the feature to track and share their Availability. It can also be used to manage Coverage of Provinces and its Regions for example.
+Availability also uses the `languages` vocabulary for the language filter and the language field. Both vocabularies must exist, or Availability Management does not start. See [Manage Availability](manage-availability.md#manage-the-tasks-and-subtasks) for an example.
 
-* The CV needs to have the ID availability\_manager\_tags and its name shows up in the Frontend View
-* The CV works with two levels like Task and Subtask or Province and Region.
+### Step 3: Check the server setup
 
-#### For Users: Initial Setup
+The backend module (`apps.user_availability`) is on by default, so there is usually nothing to do here. Every night Superdesk fills in the coming 12 weeks for each active user from their default schedule. It also does this straight away when someone changes their default schedule or language. Entries that someone set by hand are never overwritten. Your system administrator can change the number of weeks with the `AVAILABILITY_GENERATE_WEEKS` setting. The dashboard link sits in the Main menu by default; it can be moved to the Workspace Panel with the extension's `dashboard.addLinkToSideMenu` option.
 
-Once your administrator has granted `user_availability_manage_own` privilege:
+## For users: initial setup
 
-1. Open your **User Profile** (usually via account menu)
-2. Navigate to the **Availability** section
-3. You should now see options to enable and configure your availability
-4. Without the checkbox switched on in the user profile the user will not be displayed in the Availability views
+Once your administrator has given you the **Availability - manage own availability** privilege:
+
+1. Click your avatar in the top-right corner and click **Manage profile**.
+2. Click the **Availability** tab at the top of your profile.
+3. Tick **Enabled**. The language, task and calendar options appear.
+
+You only show up on the Availability Management dashboard while **Enabled** is ticked. See [View and edit Availability](view-and-edit-availability.md) for the next steps.
