@@ -73,7 +73,10 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 
 #### Superdesk Planning Component
 
-* [Superdesk Planning Component](superdesk-user-guide/superdesk-planning-component.md)
+* [Events](superdesk-user-guide/superdesk-planning-component/events.md)
+* [Planning items and coverages](superdesk-user-guide/superdesk-planning-component/planning-items-and-coverages.md)
+* [Assignments](superdesk-user-guide/superdesk-planning-component/assignments.md)
+* [Planning administration](superdesk-user-guide/superdesk-planning-component/planning-administration.md)
 
 #### Integrations and advanced features
 
