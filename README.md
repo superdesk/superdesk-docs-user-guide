@@ -79,6 +79,8 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 
 * [Superdesk API](superdesk-user-guide/integrations-and-advanced-features/superdesk-api.md)
 * [Ingesting News Items and Events](superdesk-user-guide/integrations-and-advanced-features/ingesting-news-items-and-events.md)
+* [Content lists](superdesk-user-guide/integrations-and-advanced-features/content-lists.md)
+* [AI features](superdesk-user-guide/integrations-and-advanced-features/ai-features.md)
 
 #### Availability Management
 
