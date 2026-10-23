@@ -1,59 +1,102 @@
 # Highlights
 
-Highlights are collections of news items from a desk. Highlights are most commonly used for content indexes, top-10 lists, section features and all manner of user-curated lists. Highlights can be automatically generated against user-defined metadata, or manually curated. They can also easily be published as a unit using the bulk edit actions described in the following sections.
+Highlights are lists of news items collected on a desk. They are most commonly used for content indexes, top-10 lists, section features and other user-curated lists. You add items to a highlight by hand. You can then turn the highlight into a highlights package and publish it as a unit.
 
-<div align="left"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAuCAYAAABu3ppsAAAEFElEQVRoQ+2ZX0hTURzHv9NKndWYWrNlLjVKylyWaSZlgkmRPliURX8o9qIv6UNQ0IsvSsEeqhefpIiiKPoDGUkJmqH2R62ZlYXTVmYuLdFSpzbtXNMay7t7zrmTuOB5G/ec3/l9zu/vOVNZrdYxKHioZgD+s/VmLPCfDQCvWcD+3YHmLz/Q9rUfnX1D6BkcgePn6Dif/ywfaANmI3S+HyKCAxG9cC508/y9wi4b4ImtB7Xvv6GVKM4yIglI0tIgJBq0LMv+mcsNYOnoxb3XdnT0OWQpoJ/vj+0rdTDqNVxyuACuNrSjhpy6N8dGYo29a8OYRTIB9BK/Pv/sA1q72dyFVqvIkEAcWR8ODYkX2kENIChfXN0m22WkFBNcKjc5ghqCGuBMlXXaTt4dSrBE/uYoKdbx71QA0+HzUtrRxoQkgJBtSh7bpPab+ntyEgpGa1FQy7fctMEgmZ0kAU6Vv+P0ezVyDqUjA60wXWyEnYNBiIcTacs9rvQIIBSpy/UfObYmSwzxKNkdBh0GUHn9PsycRty/bonHYucR4MxDEriMFXaS1piRjsJo9fhPe3M1TKVdXAchVOz8FPGAFgUQepvCB++4NiXHj4LcOMQHTizvt+NccS3uc0o7uXW5aO8kCvDQ2o0blg6+LZM242ZyEOb8We1Ec/UdHOMM5l1GPVKiQqbURRTgwlMbGtp7GQDUMK4IgtYXiE2IR7r7ft02mJ8SN3IO4c3bLqagXhumweEEAxuA5+yjR86BWKQHk5Lv64s5PgycrlNHnRh2Av1fbSi+1IgaETGespGoBY7feYXBESJddOhg2heHrMXy+vqeTy04e6UJdR52Cpjti9OZq9gskHfrJcbGpB4s1NiSlojcNRpMxiu9LUZgfWFBUXm7pDupVCqczVo9HQC/ZUYlkYqbqIN2FqX6Px2oeyJUaLoY4wKQdiE3ZaNiYN62DNEBEhCD33CrrAolVkpYMo3LhXhaiKw9O2AK99zL939oQva1FnrtyUyuIGZPo2GkeMX/LV5iKpKiZiZFrZIBgSuNMhcyQwLpffSk95EaA6ghvVERQ2/EVciYW4nUVJSuc72YO2FvayEnvQRZEWqXqgxY628jr0IK9O93rlZCWM7SzB3cn4nsRaQMkzHc24W7j56jpHlg/LcuOgZHN0XAqJn4/vktdl5+Q0XA3cwJ0unb6Qn/93PAYmnCuYqpcjupGalxMBkXQDtEHwey2mkBgiobkd7fnApUltWhtFPiYEMjcWwbeT6pqJK8I8i+0AiqyLpSUjmJ+CSvXCkF8Yq+1E+ej6KfVQQIxT9sTUIo9mnRNdSmIyZoH7LcQ17yXUgsRyj6ed0VSrF/cLhbRrF/McmsVbKXc8eA7J29JGAGwEsHyS1G8Rb4BXsDREH2SYlfAAAAAElFTkSuQmCC" alt="The Higlights icon" height="46" width="48"></div>
+If you are unable to add articles to a highlight, or create a new one, ask your administrator to check that your role has the right privileges. New highlights can only be created in **Settings**. See [Creating a highlight configuration](#creating-a-highlight-configuration).
 
-If you are unable to add articles to a Highlight, or create a new one, check with your Superdesk admin to verify your account has the correct privileges. New Highlights can only be created in the Hamburger menu.
+## Viewing highlights
 
-<div align="left"><img src="../../.gitbook/assets/image38 aee3c5ad326e12d0f942a80122c0c908.png" alt=""></div>
+Hover over or click the star-shaped **Highlights** icon in the Workspace Panel, or press **Ctrl+Alt+H**. Under **Choose highlight list** you see the highlights that are available on your current desk. Click one to open it. If there are none, the list says **No available highlights**.
 
-You can view the Highlights for your desk by clicking on the star-shaped Highlights icon in the Workspace Panel. This will then prompt you to choose from a list of available highlights. In the example above, there’s only one highlight list available: Top Stories.
+<figure><img src="../../.gitbook/assets/highlights/choose-highlight-list.png" alt="The Highlights icon in the Workspace Panel with the Choose highlight list menu open" width="628"><figcaption><p>Choosing a highlight list</p></figcaption></figure>
 
-You can have several Highlights at a time to deliver relevant content organised by priority, topic or interest. Articles can be added to Highlights from various stages such as published articles, rough drafts, or simply items that have been recently fetched to a desk. Note that newly ingested articles must be first _fetched_ to a Desk before they can be included in a Highlight.
+You can have several highlights at a time, organised by priority, topic or interest. Articles can be added to highlights from various stages, such as published articles, drafts or items that have just been fetched to a desk. Newly ingested articles must first be fetched to a desk before they can be added to a highlight.
 
-#### Adding articles to a Highlight List
+## Adding articles to a highlight
 
-<div align="left"><img src="../../.gitbook/assets/s-terminologyguide5.png" alt="This is the Action Menu." height="55" width="60"></div>
+To add a news item to a highlight, find it in the Monitoring view, in a custom workspace or in Search.
 
-To add a news item to a Highlight List, find the article that you wish to add in either the Monitoring, Search or Content sections of the Workspace Panel. When you hover over the news item, the Action menu will appear.
+{% stepper %}
+{% step %}
+### Open the Actions menu
 
-<div align="left"><img src="../../.gitbook/assets/s-highlightactions.png" alt="The action &#x22;Mark for Highlight&#x22;" height="242" width="189"></div>
+Hover over the item and click the **Item actions** icon (three vertical dots) at the right of the row.
+{% endstep %}
 
-When you find a news item you would like to add to a Highlight, hover over the article to display the Action Menu on the right. Hover over “_Mark for highlight_” and choose the Highlight to which you’d like to add the article. Note that Highlights can only be created (and curated) by users with the correct permissions in the Settings menu.
+{% step %}
+### Choose the highlight
 
-<div align="left"><img src="../../.gitbook/assets/image64 085baa8c05df6516fc54e5e82c4362d6.png" alt=""></div>
+Hover over **Mark for highlight** and click the highlight you want to add the item to. Superdesk confirms with "Item marked".
+{% endstep %}
+{% endstepper %}
 
-A single article can be part of multiple Highlights. A star will appear beside the article title to let you know that the article has been added to a Highlight list. If the article appears in more than one Highlight list, you will see a double star beside the article title.
+<figure><img src="../../.gitbook/assets/highlights/mark-for-highlight.png" alt="The Actions menu of an article with the Mark for highlight submenu open" width="1140"><figcaption><p>Adding an article to a highlight</p></figcaption></figure>
 
-#### Actions for news items in Highlight Lists
+You can only add text items that are on a desk you are a member of. Items in your Personal space, and spiked, killed or scheduled items, cannot be added. To add several items at once, select them and click **Add to highlight** in the bulk actions bar. See [Selecting several items](monitoring-tab.md#selecting-several-items).
 
-As with the Monitoring list view, clicking on news items in the Highlights pane will prompt an action menu on the right. Users with appropriate permissions can perform actions, just as they would be able to do from the Monitoring view.
+A single article can be part of several highlights. A star appears next to the article title once it is in a highlight. If it is in more than one highlight, you see a double star. The star is red while the item is within the time window of the highlight (see [Creating a highlight configuration](#creating-a-highlight-configuration)). A black star means the item is older than the window: it stays marked, but **Create** does not add it to the package.
 
-<div align="left"><img src="../../.gitbook/assets/image218 6b7ae430eedb56a2e92087f9fbc78819.png" alt=""></div>
+Click the star to see which highlights the item belongs to. Click **REMOVE** next to a highlight to take the item out of it.
 
-It’s also possible to select multiple items in the Highlights by using the icons on the left side of the entry as checkboxes.
+<figure><img src="../../.gitbook/assets/highlights/highlight-star.png" alt="Articles in a Monitoring list, one with a star and one with a double star next to the title" width="1480"><figcaption><p>The star shows that an article is in a highlight</p></figcaption></figure>
 
-Once you have selected items using the checkboxes, you can click the icons that appear in the top right of the pane to perform actions such as export, multi-edit, spike, send to, publish, create packages and mark for user — provided you have the permission to do so
+## Working with the items in a highlight
 
-* Export — Download the news item to a Superdesk-external location.&#x20;
-* Multiedit — Select items to open side-by-side for simultaneous editing.
-* Spike — Remove the selected item from the desk workflow.&#x20;
-* Send to — Move the news item from its current stage to another desk or stage.&#x20;
-* Publish — Publish this item.&#x20;
-* Create Package — Combine the selected items into a new package.&#x20;
-* Highlight Item — Add the selected item to a different Highlight.&#x20;
-* Mark for User — The user will receive a notification to follow up on the selected item.&#x20;
-* Duplicate — Make a copy in the same location, or a different location.&#x20;
+The highlight view lists the items of the highlight, like a Monitoring group. Click an item to preview it. The **Item actions** menu of each item and the bulk actions bar work the same way as in the Monitoring view, within the limits of your role. See [Item actions](monitoring-tab.md#item-actions) and [Selecting several items](monitoring-tab.md#selecting-several-items).
 
-#### Creating a new Highlight Configuration in the Settings menu
+<figure><img src="../../.gitbook/assets/highlights/highlight-view.png" alt="The highlight view with the items of one highlight and the Create button" width="999"><figcaption><p>The items of a highlight</p></figcaption></figure>
 
-New Highlights are created in the Hamburger Menu. Not all users will be able to make Highlights. To make a Highlight, select Hamburger Menu > Settings > Highlights.
+### Creating a highlights package
 
-<figure><img src="../../.gitbook/assets/grafik (6).png" alt=""><figcaption></figcaption></figure>
+Click **Create** in the highlight view to create a highlights package. The package is named after the highlight and already holds the items of the highlight that are within its time window, whether they are published yet or not. It opens for editing, and from there you edit, send and publish it like any other package. Publishing the package also publishes the items in it that are not published yet. See [Packages](../content-management/packages.md).
 
-Click the CREATE CONFIGURATION icon in the top right corner of the pane. This will open a new window where you can set up your new Highlight settings.
+To turn the package into a single article, click **Export** in the top bar of the package. Superdesk creates a text item from the package, formatted with the highlight's template, and opens it. Export only works when every item in the package is published and nobody has one of them open for editing. Otherwise Superdesk refuses with "Locked or not published items in highlight list".
 
-<figure><img src="../../.gitbook/assets/grafik (8).png" alt=""><figcaption></figcaption></figure>
+You need the privilege to mark items for highlights to see the **Create** button.
 
-Name your Highlight. Select a Template. (This type of Template can be created in the Hamburger Menu > Settings > Templates). Choose Desks that have access to your new Highlight. Upon creation, you can have certain items automatically inserted into your Highlights using the drop-down menu at the bottom of the window.
+## Creating a highlight configuration
+
+Highlights are set up in **Settings**. Not all users can do this.
+
+{% stepper %}
+{% step %}
+### Open the highlight settings
+
+Open the Main menu (also called the hamburger menu), go to **Settings** and click **Highlights** under **Content config**. The **Highlights configurations** page lists the existing highlights.
+{% endstep %}
+
+{% step %}
+### Create a configuration
+
+Click **Create configuration** at the top right of the page. The **Create highlight configuration** window opens.
+{% endstep %}
+
+{% step %}
+### Fill in the settings
+
+* **Configuration name**: the name of the highlight. It must be unique and can have up to 40 characters.
+* **Template**: the template used when you export a highlights package to a single article. Leave **default template** or pick a highlights template. See [Highlights templates](../administration/content-configuration/templates-macros-and-dictionaries.md#highlights-templates).
+* **Assigned desks**: tick the desks on which the highlight is available.
+* **Automatically insert items from**: **Today**, **This week** or the last few hours. This is the time window of the highlight. When you create a highlights package, only the marked items that changed within this window are added to it.
+{% endstep %}
+
+{% step %}
+### Save
+
+Click **Save**. The new highlight appears in the list.
+{% endstep %}
+{% endstepper %}
+
+<figure><img src="../../.gitbook/assets/highlights/highlights-settings.png" alt="The Highlights configurations page in Settings with the Create configuration button" width="999"><figcaption><p>The Highlights configurations page</p></figcaption></figure>
+
+<figure><img src="../../.gitbook/assets/highlights/create-highlight-configuration.png" alt="The Create highlight configuration window with Configuration name, Template, Assigned desks and Automatically insert items from" width="480"><figcaption><p>Creating a highlight configuration</p></figcaption></figure>
+
+To change or remove a highlight, hover over it in the list and click the pencil icon (**Edit configuration**) or the bin icon (**Remove configuration**).
+
+## For administrators
+
+Highlights use three privileges, set per role in **Settings** > **User Roles**:
+
+* **Highlights - read** shows the **Highlights** icon in the Workspace Panel and lets users open highlights.
+* **Mark items for Highlights/Summary Lists** lets users add items to highlights and create highlights packages.
+* **Highlights/Summary List Management** gives access to **Settings** > **Highlights**.
