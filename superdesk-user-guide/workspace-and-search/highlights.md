@@ -34,7 +34,7 @@ Hover over **Mark for highlight** and click the highlight you want to add the it
 
 You can only add text items that are on a desk you are a member of. Items in your Personal space, and spiked, killed or scheduled items, cannot be added. To add several items at once, select them and click **Add to highlight** in the bulk actions bar. See [Selecting several items](monitoring-tab.md#selecting-several-items).
 
-A single article can be part of several highlights. A star appears next to the article title once it is in a highlight. If it is in more than one highlight, you see a double star. The star is red while the item is within the time window of the highlight (see [Creating a highlight configuration](#creating-a-highlight-configuration)).
+A single article can be part of several highlights. A star appears next to the article title once it is in a highlight. If it is in more than one highlight, you see a double star. The star is red while the item is within the time window of the highlight (see [Creating a highlight configuration](#creating-a-highlight-configuration)). A black star means the item is older than the window: it stays marked, but **Create** does not add it to the package.
 
 Click the star to see which highlights the item belongs to. Click **REMOVE** next to a highlight to take the item out of it.
 
