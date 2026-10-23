@@ -1,53 +1,123 @@
 # Spiked Items
 
-Spiked items are articles and news items that have been removed from the current Desk’s workflow. Spiking an item is different from killing an article: published articles cannot be spiked and must be killed instead. Spiking an item is reversible, unless the item is spiked from your Personal Space — in that case spiking permanently removes it from Superdesk.
+Spiked items are articles and other content items that have been removed from a desk's workflow. Spiking is different from killing: published items cannot be spiked and must be killed instead. Spiking an item from a desk is reversible. Spiking an item from your Personal Space deletes it.
 
-<div align="left"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAtCAYAAADsvzj/AAABUklEQVRoQ2O8d+/ef4YhCl69esXAzc0NxoyjHhkEsTgaI4MgElCcMBojozFCoxAYTVo0CliyjR2NEbKDjkYaR2OERgFLtrE0j5HmUy8Y1t59D3ZgsLIAQ62ZJNmOxaeRph6ZeOE1w8SLr1Dsz9cXY8g3EKW6Z6jmEe9Ndxmuv/9BlgO1hDgYtvgqk6UXpolqHlFaeJUih9yL16ZIP9U8QpErqKCZqh4hN1YojQ1QOIx6BFtqgMVIm5U0WLrq2FMwTYg/aGOEkMPR5Uc9gpQsaJJHRmOEgmJ4NEZGSy0sxfFoqTVaahEoVYZNza6/7DrD59//SCpEpblZGQ6HqJGkB5tiqha/J158ZSg98pTh6dffRDkM5IluG2kGCwluotQPWFeXYteRYABVY4QEe6mudNQjVA9SCg0cjREKA5Dq2kdjhOpBSqGBozFCYQBSXfuwjBEA/iHXIncpNaAAAAAASUVORK5CYII=" alt="Spiked Items icon" height="45" width="50"></div>
+Spiked items are not kept forever. By default Superdesk deletes a spiked item 30 days after it was spiked. Your administrator can change this period.
 
-Spiked items from your Desk can be viewed by clicking on the Spike icon in the Workspace Panel. Each Desk has its own associated Spike tab.
+## The Spiked Items view
 
-<div align="left"><img src="../../.gitbook/assets/image138 7e64179db8f2c06abe938171e6fa6735.png" alt=""></div>
+Click the **Spiked Items** icon in the Workspace Panel, or press **Ctrl+Alt+K**. The view lists the items spiked from the desk that is selected in the Desks menu at the top left. To see the spiked items of another desk, select that desk.
 
-Items can be spiked from any list view (for example, the Monitoring pane, your Custom Workspace, or your Personal Space). Articles spiked from your Personal Space will never be shown in the Spiked Items tab — they will be permanently deleted.
+<figure><img src="../../.gitbook/assets/spiked-items/spiked-items-view.png" alt="The Spiked Items view of the Politics desk with one spiked article, the search box and the type and sort controls" width="1504"><figcaption><p>The Spiked Items view</p></figcaption></figure>
 
-<div align="left"><img src="../../.gitbook/assets/s-terminologyguide5 (1).png" alt="The action menu icon" height="55" width="60"></div>
+The view has:
 
-## Important
+* the **Spiked Items** heading with the number of items,
+* a search box to search the spiked items by keyword,
+* buttons to filter by item type (**All**, text, picture and the other types),
+* a sort control, showing the current sort field such as **Updated** and the direction.
+
+Click an item to preview it. Double-click it to open it read-only. See [Opening a spiked item](#opening-a-spiked-item).
+
+## Spiking an item
 
 {% hint style="warning" %}
-Spiking an item from your Personal Space permanently removes it from Superdesk. Spiking items from a Desk is reversible.
+Spiking an item from your Personal Space deletes it. Superdesk asks "Do you want to delete the item permanently?" before it does. Spiking an item from a desk is reversible.
 {% endhint %}
-
-## How to spike or unspike an item
 
 {% stepper %}
 {% step %}
-### Spike an item
+### Open the item actions
 
-* Hover over the item in any list view.
-* Click the Action menu that appears on the right side of the article entry.
-* From the Action menu, select the _Spike Item_ option.
-
-Notes:
-
-* Items can be spiked from any Stage prior to publishing (published items cannot be spiked and must be killed instead).
-* It is not possible to spike an item that is part of a package — remove it from the package first.
-* You cannot spike items that are currently open or locked by another user.
+In any list, such as the Monitoring view, a custom workspace, Search or your Personal Space, hover over the item and click the **Item actions** button (three vertical dots) at the right of the row.
 {% endstep %}
 
 {% step %}
-### Unspike an item
+### Choose Spike Item
 
-* Open the Spike tab for your Desk (click the Spike icon in the Workspace Panel).
-* Hover over the spiked article; the Action menu will appear.
-* From the Action menu, choose the _Unspike Item_ option.
+Click **Spike Item**. You can also select the item and press **Ctrl+Shift+#**.
+{% endstep %}
 
-This returns the article to the Stage and Desk from which it was spiked.
+{% step %}
+### Confirm
+
+Superdesk asks "Are you sure you want to spike the item?" Click **Spike**. The item disappears from the list and appears in the desk's Spiked Items view.
 {% endstep %}
 {% endstepper %}
 
+To spike several items at once, select them and click **Spike** in the bar at the top of the list. See [Selecting several items](../workspace-and-search/monitoring-tab.md#selecting-several-items).
+
+You cannot spike an item that:
+
+* is published, scheduled, corrected or killed. Deschedule a scheduled item first. Kill a published item instead.
+* is part of a package. Remove it from the package first.
+* is open for editing by another user.
+
+If you spike an item that you have open with unsaved changes, Superdesk first asks what to do with those changes.
+
+### What happens when you spike an item
+
+* The item is unlocked and closed for everyone who has it open.
+* If the item was marked for a user, the mark is removed. See [Collaboration tools](creating-and-editing-content-items/collaboration-tools.md#mark-for-user).
+* If the item is a translation, it is no longer linked to the original item.
+* If the item is a package, the items in it are released from the package. Unspiking the package puts them back.
+
+## Unspiking an item
+
+*Available since Superdesk 2.7.*
+
+When you unspike an item, you choose the desk and stage it goes to.
+
+{% stepper %}
+{% step %}
+### Open Spiked Items
+
+Click the **Spiked Items** icon in the Workspace Panel and select the desk the item was spiked from.
+{% endstep %}
+
+{% step %}
+### Choose Unspike Item
+
+Hover over the item, click the **Item actions** button and choose **Unspike Item**. To unspike several items, select them and click **Unspike** in the bar at the top of the list.
+{% endstep %}
+
+{% step %}
+### Choose the destination
+
+The **Unspike** panel opens. Under **Destination**, pick the desk, then the **Stage**.
+{% endstep %}
+
+{% step %}
+### Click Unspike
+
+The item goes back to its state before it was spiked, on the desk and stage you chose.
+{% endstep %}
+{% endstepper %}
+
+<figure><img src="../../.gitbook/assets/spiked-items/unspike-panel.png" alt="The Unspike panel with the Destination desk dropdown, the Stage options and the Unspike button" width="495"><figcaption><p>Choosing where an unspiked item goes</p></figcaption></figure>
+
+{% hint style="info" %}
+The panel preselects the desk you last sent an item to, or otherwise your current desk, and that desk's incoming stage. This is not always the desk and stage the item was spiked from, so check the destination before you click **Unspike**. To put an item back exactly where it was, open it and use the **Unspike** button in its top bar instead.
+{% endhint %}
+
+## Opening a spiked item
+
+*Available since Superdesk 2.10.*
+
+Double-click a spiked item in the Spiked Items view to open it. Spiked items always open read-only, so you can check the content but not change it.
+
+The top bar of a spiked item has an **Unspike** button. Click it to return the item to the desk and stage it was spiked from, without choosing a destination.
+
+<figure><img src="../../.gitbook/assets/spiked-items/spiked-item-read-only.png" alt="A spiked article open read-only with the Unspike button in the top bar" width="794"><figcaption><p>A spiked item opened read-only</p></figcaption></figure>
+
 ## Searching spiked items
 
-You can search through spiked items using the article type filter buttons or by clicking the search icon and typing keywords into the text box. Spiked items are desk-specific, so you will only see items spiked from your current Desk (as denoted by your Desks menu).
+Use the search box and the type buttons in the Spiked Items view to find an item spiked from the current desk.
 
-<div align="left"><img src="../../.gitbook/assets/image198 12bb068b3fe91833374caef86cbe8064.png" alt=""></div>
+To search spiked items on every desk you have access to, use [Search](../workspace-and-search/searching-content-in-superdesk.md). On the **Parameters** tab of the advanced search, set **Spiked Content** to **Spiked only content**, or to **Include spiked content** to search them together with other items.
+
+## For administrators
+
+* **Privileges** (in **Settings** > **User Roles**): **Spike** lets users spike items, **Spike view** shows the Spiked Items icon, and **Unspike** lets users unspike items.
+* **Server configuration**: `SPIKE_EXPIRY_MINUTES` sets how long spiked items are kept before they are deleted. The default is 43200 minutes (30 days). When it is set to `None`, the content expiry of the item's desk or stage is used instead.
+* **Client configuration**: `confirm_spike: false` in `superdesk.config.js` skips the spike confirmation. Superdesk still asks when there is a warning to show, and always asks before deleting from Personal Space.
