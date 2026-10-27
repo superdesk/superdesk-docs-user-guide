@@ -106,7 +106,7 @@ Lists in Monitoring and Search can show translation links on the second line of 
 * A translation shows a **Translation** label. Click it to see the item it was translated from.
 * An item with translations shows a link such as **(1) Translation** or **(3) Translations**. Click it to see the translations made from that item.
 
-In the list that opens, click an item to show it in the preview.
+The list that opens shows the language and headline of each item.
 
 <figure><img src="../../.gitbook/assets/translating-content/list-translation-labels.png" alt="Two items in a Monitoring list: the original with a (1) Translation link and the translation with a Translation label" width="1179"><figcaption><p>Translation links in the list view</p></figcaption></figure>
 

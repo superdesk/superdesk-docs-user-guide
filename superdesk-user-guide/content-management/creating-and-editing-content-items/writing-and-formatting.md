@@ -200,11 +200,13 @@ When a field has a maximum length, the character count shows the limit too. Clic
 
 Your choice is saved for that field and applies to every item.
 
+The maximum length is a hard limit. Superdesk checks it again when you publish, and if the text is still over the limit, publishing stops with an error such as "BODY_HTML is too long". Shorten the text and publish again.
+
 ### Soft limits
 
 *Available since Superdesk 3.1.*
 
-A field can also have a maximum soft length. You can keep typing past it, but the text beyond the soft limit is highlighted, so you see that the text is longer than your newsroom wants.
+A field can also have a maximum soft length. You can keep typing past it, but the text beyond the soft limit is highlighted, so you see that the text is longer than your newsroom wants. Unlike the maximum length, a soft limit does not stop publishing.
 
 ### Floating character count
 
@@ -229,6 +231,8 @@ Click the **spell checker** button in the status bar, or press **Alt+S** (**Opti
 The same switch is in **More actions** > **Spell Checker** > **Run automatically**. When automatic checking is off, click **Check spelling** in that menu to check the item once.
 
 The button and the menu entries only appear when a spell checker is available for the item's language.
+
+Some installations use an external proofing service instead of the built-in dictionaries, for example Tansa. The checks then follow that service's dictionaries and rules, and the buttons can look a little different. Ask your administrator which one your newsroom uses.
 
 ### Correcting a word
 

@@ -79,7 +79,7 @@ When you mark the item for someone else, the previously marked user is notified 
 
 ### What cannot be marked
 
-You cannot mark items that are in a Personal Space, published, archived or spiked, or items that another user has open for editing. Spiking an item removes its mark. A duplicate of a marked item is not marked.
+You cannot mark items that are in a Personal Space, published, archived or spiked, or items that another user has open for editing. Spiking an item removes its mark. A duplicate of a marked item is not marked. The same goes for a translation, because Superdesk creates it as a copy of the original.
 
 ## Comments
 
@@ -110,6 +110,8 @@ Click **Post**. If you tick **Post on 'Enter'**, pressing Enter posts the commen
 ## Inline comments
 
 Inline comments are attached to a piece of text in the body. Use them to ask a question about a sentence or to explain a change. Inline comments are not published with the item. For information that must travel with the item, use the **Ed. Note** field.
+
+Inline comments are only available in fields where your administrator has turned on the **comments** formatting option in the content profile. See [Formatting options](../../administration/content-configuration/content-profiles.md#formatting-options).
 
 ### Adding an inline comment
 
@@ -160,6 +162,8 @@ Click the **Inline comments** icon in the widget bar to see all inline comments 
 ## Suggestions
 
 In suggestions mode, your changes to the body are not applied directly. They are kept as suggestions that you or a colleague accept or reject later. This works like tracking changes in a word processor.
+
+Suggestions are only available in fields where your administrator has turned on the **suggestions** formatting option in the content profile. See [Formatting options](../../administration/content-configuration/content-profiles.md#formatting-options).
 
 ### Making suggestions
 

@@ -124,6 +124,8 @@ Items in Personal space have a **Copy** action instead, which makes a copy next 
 
 You need the **Duplicate Content within a Desk** privilege for **Duplicate in place** and **Duplicate To**. Locked items cannot be duplicated.
 
+The copy stays linked to the original. In the **Versions/History** widget, the copy's **Item history** tab has a **Duplicated by** entry with a **View source item** link to the original, and the original's history shows **Duplicate created by** with a link to the copy. The copy also keeps the id of the original as its **Original Id** in the metadata. See [Versions and history](#versions-and-history).
+
 ## Opening an existing item
 
 Items are listed in Monitoring, Search and Personal space. To open one:
@@ -169,10 +171,9 @@ The **More actions** menu holds the less frequent actions. What you see depends 
 | Entry | What it does |
 | --- | --- |
 | **Save as template** | Saves the item as a template. See [Saving an item as a template](#saving-an-item-as-a-template). |
-| **Live suggestions** | Shows related content suggestions while you write, when your installation provides them. |
 | **Mark for user** | Brings the item to a colleague's attention. See [Collaboration tools](collaboration-tools.md#mark-for-user). |
 | **Compare versions** | Shows two versions of the item side by side. See [Versions and history](#versions-and-history). |
-| **Multiedit** | Opens a submenu to open the item next to other items so you can edit them side by side. |
+| **Multiedit** | Opens a submenu listing the other items you have open, the ones shown in the bar at the bottom of the screen. Pick one to edit it next to this item, side by side. It only works when you have another item open. |
 | **Export** | Downloads the item in a chosen format. See [Exporting an item](#exporting-an-item). |
 | **Planning** | Planning actions, when Superdesk Planning is installed. |
 | **Highlights**, **Marked for desks** | Adds the item to a highlight or marks it for a desk. See [Highlights](../../workspace-and-search/highlights.md). |
@@ -189,7 +190,7 @@ On the right of the status bar are the view controls:
 
 * **Preview** (an eye icon) opens a printable preview of the item. It only appears if your administrator turned previews on, and only for text and picture items. See [Previewing and printing](#previewing-and-printing).
 * **Toggle theme** switches the editor between your default theme and your proofreading theme.
-* The **spell checker** button turns spell checking on and off. See [Checking spelling](writing-and-formatting.md#checking-spelling).
+* The **spell checker** button turns spell checking on and off (since 3.5). See [Checking spelling](writing-and-formatting.md#checking-spelling).
 * The settings button next to them opens **Configure Editor themes**. For each theme you choose a font, a colour scheme and the text size (S, M or L) of the headline, the abstract and the body. Click **Save** to keep your choice.
 
 <figure><img src="../../../.gitbook/assets/creating-and-editing-content-items/status-bar.png" alt="The status bar with the In Progress label, the Created and Modified information, and the Preview, Toggle theme, spell checker and theme settings buttons" width="957"><figcaption><p>The status bar and view controls</p></figcaption></figure>
@@ -199,6 +200,8 @@ On the right of the status bar are the view controls:
 *Available since Superdesk 2.8.*
 
 Click the arrow at the far left of the top bar to hide the list and give the editor the whole width of the screen. The tooltip reads "Full width mode". Click it again ("Leave full width mode") to bring the list back. Switching back and forth keeps your place in the item and any text you have not saved yet (since 3.6).
+
+The icons in the left toolbar do the same. Click the highlighted icon of the view you are in, for example **Monitoring**, to hide the list, and click it again to bring the list back. See [Giving the editor more room](../../navigating-superdesk/navigation.md#giving-the-editor-more-room).
 
 ## Saving, autosave and locks
 
@@ -295,6 +298,7 @@ These keys go in the Superdesk client configuration (`superdesk.config.js`).
 | --- | --- |
 | `features.preview` | Shows the **Preview** button in the status bar, and with it the **Original** button for pictures. Off by default. |
 | `features.customAuthoringTopbar` | Adds the shortcut buttons to the top bar. See [Sending, scheduling and publishing items](../sending-scheduling-and-publishing.md#for-administrators). |
+| `features.hideLiveSuggestions` | Hides the **Live suggestions** entry of the **More actions** menu. The entry only does something in installations with a custom suggestions service, so set it to `true` unless you have one. |
 
 ### Privileges
 

@@ -139,7 +139,7 @@ The **Publish** tab can show these sections, depending on your configuration:
 
 * **From**: the desk the item is published from. It decides which desk output the published item appears in. See [Publishing from another desk](#publishing-from-another-desk).
 * **Embargo** and **Publish schedule**: see [Embargo and publish schedule](#embargo-and-publish-schedule).
-* **Target**: limits who receives the item. **Target subscribers** picks specific subscribers, **Target regions** and **Target types** restrict the item by region and by subscriber type. Leave them empty to send the item to every subscriber whose filters match.
+* **Target**: limits who receives the item. **Target subscribers** picks specific subscribers, **Target regions** and **Target types** restrict the item by region and by subscriber type. Leave them empty to send the item to every subscriber that has a product whose content filter matches the item.
 
 If one of your subscribers has a preview address set up, a **Preview** button also appears. It shows how the item will look for that subscriber before you publish.
 
@@ -175,6 +175,8 @@ Your administrator can turn this option off. Then the **From** section and the *
 ### When publishing fails
 
 Before publishing, Superdesk checks the item against its content profile. If a required field is empty or a value is not allowed, publishing stops. An error message names the field, for example "HEADLINE is a required field". The item stays open, so you can fix it and click **Publish** again.
+
+The pictures, video and audio attached to the item are checked as well, against their own media profiles. If one of them has an empty required field, for example a missing description, the whole article is held back and the error names the media field. Open the media item, fill in the field and publish again.
 
 Other checks can also stop publishing. For example, the embargo or the publish schedule is in the past, or a picture or other media item in the article has been killed or spiked, or has its own embargo.
 
@@ -378,7 +380,7 @@ If you have unsaved changes, these buttons save the item first. The buttons are 
 
 *Available since Superdesk 3.1.*
 
-**Send & duplicate** puts a copy of the item on a desk and stage that your administrator has chosen, and keeps the original where it is. This helps when every story also has to go to a second desk, for example a translation or regional desk.
+**Send & duplicate** sends a copy of the item to a desk and stage that your administrator has chosen, and keeps the original open where it is. It is made for newsrooms that produce several versions of the same story. For example, an editor writes the web version of a story with the web content profile and clicks **Send & duplicate** to hand that version to the proofreading desk, which reviews and publishes it. The editor keeps working on the original, for example switching it to the broadcast content profile to write the broadcast version.
 
 {% stepper %}
 {% step %}

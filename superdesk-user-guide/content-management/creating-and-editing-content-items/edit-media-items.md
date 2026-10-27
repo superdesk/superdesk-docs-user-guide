@@ -214,42 +214,6 @@ If you think a field is missing or should not be required, ask your administrato
 
 Your administrator can set Superdesk up to write the item's metadata into the picture or video file when you publish it. The caption, credit, byline, copyright notice and other fields you filled in then travel with the file itself, in IPTC and XMP form, and stay there in every crop. Agencies and photo desks rely on this, because many systems read a picture's caption from the file and not from the article.
 
-## The video editor
-
-{% hint style="info" %}
-This is an optional module. If you do not see it, ask your administrator.
-{% endhint %}
-
-*Available since Superdesk 2.1.*
-
-The video editor lets you shorten and crop a video without leaving Superdesk. It needs a separate video server, so it only works for videos that were processed by that server.
-
-{% stepper %}
-{% step %}
-### Open the editor
-
-Open the video item and click **Edit video**.
-{% endstep %}
-
-{% step %}
-### Make your changes
-
-In the **Edit Video** window, drag the handles on the timeline to cut the start or the end. Use the crop list to crop the picture to another shape, the rotate button to turn it, and **Quality:** to choose the resolution.
-{% endstep %}
-
-{% step %}
-### Choose a thumbnail
-
-Under **Video thumbnail**, click **Use current frame** to use the frame shown in the player, or **Upload image** to use an image file. Click the check mark (**Save change**) to keep the new thumbnail, or the cross (**Reset change**) to go back to the old one.
-{% endstep %}
-
-{% step %}
-### Save
-
-Click **Save**. Superdesk shows "Video is editing, please wait..." while the video server works. Click **Done** to close the window.
-{% endstep %}
-{% endstepper %}
-
 ## For administrators
 
 This section is for administrators.
@@ -268,10 +232,5 @@ This section is for administrators.
 | `features.validatePointOfInterestForImages` | Client | Requires a point of interest that lies inside every crop before crops can be saved. |
 | `features.editFeaturedImage` | Client | Set to `false` to stop users from uploading or editing media in featured media and gallery fields. |
 | `features.preview` | Client | Shows the **Preview** button, and with it the **Original** button for pictures. |
-| `VIDEO_SERVER_ENABLED`, `VIDEO_SERVER_URL` | Server | Connects Superdesk to the video server used by the video editor. |
 
 The metadata already embedded in an uploaded picture (EXIF) is kept when Superdesk makes the crops (since 3.6).
-
-### Video editor
-
-The video editor is the `videoEditor` client extension, which the default build does not load. It also needs the video server above. When `VIDEO_SERVER_ENABLED` is on, every video uploaded to Superdesk is sent to the video server instead of the normal media storage. The **Edit video** button only shows for videos the video server has processed, so videos uploaded before you turned it on cannot be edited.
