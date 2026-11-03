@@ -1,0 +1,121 @@
+[
+  {
+    "file": "system-messages/message-shown-to-users.png",
+    "caption": "An active system message, as every user sees it",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md)",
+      "The three seeded system messages exist (seed.py, SYSTEM_MESSAGES) and 'Planned maintenance tonight' is the only active one: run `python3 seed.py --api-url http://localhost:5011/api --system-message-on` before this page's shots and `python3 seed.py --api-url http://localhost:5011/api` right after, because an active message is a toast on every page of every other shot"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      {
+        "action": "wait",
+        "target": ".sd-toast.sd-toast--warning",
+        "state": "visible"
+      },
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 320
+      }
+    },
+    "highlight": "none",
+    "notes": "Messages are rendered by SystemMessagesComponent (scripts/apps/system-messages/components/system-messages.tsx, mounted in scripts/core/menu/views/superdesk-view.html) as superdesk-ui-framework toasts at position 'top', class sd-toast sd-toast--<type>. They have no duration, so they stay until closed. The message must be active before the page loads, or be created while the page is open (websocket resource:created triggers a re-render). Any logged-in user sees it; admin is used only because the journalist test user has no monitoring access. The message text must stay under 200 characters including HTML (server maxlength)."
+  },
+  {
+    "file": "system-messages/new-message-form.png",
+    "caption": "Creating a system message",
+    "route": "#/settings/system-messages",
+    "user": "admin",
+    "preconditions": [
+      "Logged in user has the system_messages privilege (admin has all)"
+    ],
+    "steps": [
+      "Open #/settings/system-messages and wait for [data-test-id=\"list-page--add-item\"] to be visible",
+      "Click [data-test-id=\"list-page--add-item\"]",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"item-view-edit\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"item-view-edit\"] label",
+        "text": "Active"
+      },
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"item-view-edit\"] .sd-input:has([data-test-id=\"gform-input--type\"])",
+        "value": "Warning"
+      },
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"item-view-edit\"] [data-test-id=\"gform-input--message_title\"]",
+        "value": "Planned maintenance tonight"
+      },
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"item-view-edit\"] .public-DraftEditor-content",
+        "value": "Superdesk will be unavailable from 22:00 to 22:30 for an upgrade. Save your work before then."
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x640",
+    "crop": "full",
+    "highlight": "none",
+    "cleanup": [
+      "Click [data-test-id=\"item-view-edit--cancel-save\"]",
+      {
+        "action": "click",
+        "target": ".p-dialog button",
+        "text": "Don't save",
+        "optional": true
+      }
+    ],
+    "notes": "Form config is in scripts/apps/system-messages/components/system-messages-settings.tsx: Active (checkbox), Style (select: Info, Success, Warning, Alert; the select has data-test-id gform-input--type), Title (plain text, gform-input--message_title), Message (Editor3 with bold, italic, underline and link). The side panel heading is 'Details' and the toolbar shows Cancel and Save. Do not save: the shot shows the filled, unsaved form. The Active checkbox is a styled checkbox; if clicking the label does not tick it, click its input with force. The Style select may default to empty, which is fine to replace."
+  },
+  {
+    "file": "system-messages/message-list.png",
+    "caption": "The list of system messages",
+    "route": "#/settings/system-messages",
+    "user": "admin",
+    "preconditions": [
+      "The three seeded system messages exist (seed.py, SYSTEM_MESSAGES), all inactive: capture this shot with the plain seed (no --system-message-on), otherwise the active message's toast covers the list. The list shows no active/inactive marker, so nothing is lost."
+    ],
+    "steps": [
+      "Open #/settings/system-messages and wait for [data-test-id=\"list-page--items\"] to be visible",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"list-page--items\"] .sd-list-item",
+        "state": "visible"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"list-page--items\"] .sd-list-item",
+        "text": "Planned maintenance tonight"
+      },
+      {
+        "action": "settle"
+      }
+    ],
+    "viewport": "1440x600",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"list-page--items\"] .sd-list-item:has-text(\"Planned maintenance tonight\") button[aria-label=\"Edit\"]",
+      "[data-test-id=\"list-page--items\"] .sd-list-item:has-text(\"Planned maintenance tonight\") button[aria-label=\"Remove\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "The active warning message also shows as a toast at the top of this page; that is fine and shows the result, or close it before the shot with the toast's close button (button.sd-toast__actions). The list is sorted by title, ascending. Each row shows the title, the message as plain text and a coloured style label (Info, Success, Warning, Alert); Edit (pencil) and Remove (bin) icons appear in the row's action area. The list page uses data-test-ids from the generic list page (scripts/core/ui/components/ListPage/generic-list-page.tsx)."
+  }
+]

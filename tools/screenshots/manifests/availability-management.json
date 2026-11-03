@@ -1,0 +1,175 @@
+[
+  {
+    "file": "availability-management/day-view.png",
+    "caption": "The day view",
+    "route": "#/availability-management",
+    "user": "admin",
+    "preconditions": [
+      "Newsroom seed from tools/screenshots/SEED.md has run (users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt exist and are active)",
+      "Availability data seeded by seed.py (SEED.md, AVAILABILITY_TAGS, AVAILABILITY, AVAILABILITY_OVERRIDES): vocabulary 'availability_manager_tags' ('Regions': North Aldmark with Arlenport and Kestrel Bay, South Aldmark with Saltmere, Eastbrook and Vennhaven), default weeks for the six seeded users and admin with available, partial and unavailable days, and tomasvidal's entry for tomorrow set to unavailable by admin",
+      "Today is a weekday (Mon-Fri) so the rows show a mix of Available all day, partial hours and Unavailable"
+    ],
+    "steps": [
+      "Open #/availability-management and wait for [data-test-id=\"day-view\"] to be visible",
+      "Make sure the 'Day' option in [data-test-id=\"filter-type\"] is selected (it is the default)",
+      "Wait until [data-test-id=\"day-view\"] shows 'Maren Holt'"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Replaces .gitbook/assets/availability_dailyview.png, which was taken on a customer staging server and shows the customer's name and real people. Rows are coloured by status (success/warning/alert). Filters in the header: Languages, Status, Regions (the vocabulary display name). Do not use the e2e 'availability-management' snapshot: its users are named after TV characters and its dates are in 1970 (the e2e specs fix the clock to 1970-02-03)."
+  },
+  {
+    "file": "availability-management/week-view.png",
+    "caption": "The week view",
+    "route": "#/availability-management",
+    "user": "admin",
+    "preconditions": [
+      "Newsroom seed from tools/screenshots/SEED.md has run (users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt exist and are active)",
+      "Availability data seeded by seed.py (SEED.md, AVAILABILITY_TAGS, AVAILABILITY, AVAILABILITY_OVERRIDES): vocabulary 'availability_manager_tags' ('Regions': North Aldmark with Arlenport and Kestrel Bay, South Aldmark with Saltmere, Eastbrook and Vennhaven), default weeks for the six seeded users and admin with available, partial and unavailable days, and tomasvidal's entry for tomorrow set to unavailable by admin"
+    ],
+    "steps": [
+      "Open #/availability-management and wait for [data-test-id=\"day-view\"] to be visible",
+      "In [data-test-id=\"filter-type\"] click 'Week'",
+      "Wait for [data-test-id=\"week-view\"] to be visible",
+      "Wait until [data-test-id=\"week-view\"] shows 'Maren Holt'"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Replaces .gitbook/assets/availability_weeklyview.png (customer staging server, real names). Switching to Week moves the date to the start of the week in the user's locale. Seven columns, one row per person; elinesund shows empty Not set cells on Tue/Thu/Sat/Sun."
+  },
+  {
+    "file": "availability-management/profile-availability.png",
+    "caption": "The Availability section in your profile",
+    "route": "/#/profile",
+    "user": "admin",
+    "preconditions": [
+      "Newsroom seed from tools/screenshots/SEED.md has run (users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt exist and are active)",
+      "Availability data seeded by seed.py (SEED.md, AVAILABILITY_TAGS, AVAILABILITY, AVAILABILITY_OVERRIDES): vocabulary 'availability_manager_tags' ('Regions': North Aldmark with Arlenport and Kestrel Bay, South Aldmark with Saltmere, Eastbrook and Vennhaven), default weeks for the six seeded users and admin with available, partial and unavailable days, and tomasvidal's entry for tomorrow set to unavailable by admin"
+    ],
+    "steps": [
+      "Open /#/profile and wait for [data-test-id=\"page-sections\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"page-sections\"] button",
+        "text": "Availability"
+      },
+      "Wait for [data-test-id=\"availability-settings\"] to be visible",
+      "Wait until [data-test-id=\"availability-settings\"] contains at least one button[data-test-status]"
+    ],
+    "viewport": "1440x1000",
+    "crop": {
+      "element": "[data-test-id=\"availability-settings\"]",
+      "plus": [
+        "[data-test-id=\"page-sections\"]"
+      ],
+      "expand": {
+        "bottom": 12
+      }
+    },
+    "highlight": "none",
+    "notes": "Replaces .gitbook/assets/grafik.png (an older build whose modal title read 'Create Default schedule'; it is now 'Default schedule'). Shows the Enabled checkbox, Languages, Regions, the 'Availability schedule' heading with the Manage button and the month calendars with coloured days. If the crop is taller than 1.3x its width, set allowPortrait or limit with maxHeight to the first two months.",
+    "padding": 0
+  },
+  {
+    "file": "availability-management/edit-other-user.png",
+    "caption": "An availability manager edits another user's availability",
+    "route": "#/availability-management",
+    "user": "admin",
+    "preconditions": [
+      "Newsroom seed from tools/screenshots/SEED.md has run (users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt exist and are active)",
+      "Availability data seeded by seed.py (SEED.md, AVAILABILITY_TAGS, AVAILABILITY, AVAILABILITY_OVERRIDES): vocabulary 'availability_manager_tags' ('Regions': North Aldmark with Arlenport and Kestrel Bay, South Aldmark with Saltmere, Eastbrook and Vennhaven), default weeks for the six seeded users and admin with available, partial and unavailable days, and tomasvidal's entry for tomorrow set to unavailable by admin",
+      "Admin has the user_availability and user_availability_manage privileges (administrators have all privileges)"
+    ],
+    "steps": [
+      "Open #/availability-management and wait for [data-test-id=\"day-view\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"day-view\"] span",
+        "text": "Tomas Vidal"
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"] button[data-test-status]"
+      },
+      {
+        "action": "click",
+        "target": "[role=\"dialog\"] button[data-test-status=\"unavailable\"]",
+        "nth": "first"
+      },
+      "Wait for [data-test-id=\"working-day-view\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"working-day-view\"] button[aria-label=\"Edit\"]"
+      },
+      "Wait for [data-test-id=\"edit-workday\"] to be visible",
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"edit-workday\"]"
+    ],
+    "notes": "Replaces .gitbook/assets/grafik (13).png (customer instance, real names). Clicking the user's name or avatar opens a modal titled with the user's display name that contains their full availability settings; clicking a day with an entry opens the summary (Edit, Remove, Close icon buttons), Edit opens the 'Edit availability' modal with Available / Unavailable / Partially available and the Regions field. The IconButton's accessible name is 'Edit'; if button[aria-label=\"Edit\"] does not match, use role=button:Edit inside working-day-view. Leave the modal without saving; nothing to clean up. Capture: the user's modal has no [data-test-id=availability-settings] (that id is only on the profile page); the steps wait for the day buttons in [role=dialog] and open tomorrow, the first 'unavailable' day, which the seed set for tomasvidal (Modified by admin)."
+  },
+  {
+    "file": "availability-management/tasks-vocabulary.png",
+    "caption": "Manage the availability tasks and subtasks",
+    "route": "#/settings/vocabularies",
+    "user": "admin",
+    "preconditions": [
+      "Availability data seeded by seed.py (SEED.md, AVAILABILITY_TAGS, AVAILABILITY, AVAILABILITY_OVERRIDES): vocabulary 'availability_manager_tags' ('Regions': North Aldmark with Arlenport and Kestrel Bay, South Aldmark with Saltmere, Eastbrook and Vennhaven), default weeks for the six seeded users and admin with available, partial and unavailable days, and tomasvidal's entry for tomorrow set to unavailable by admin"
+    ],
+    "steps": [
+      "Open #/settings/vocabularies and wait for [data-test-id=\"metadata-content\"] to be visible",
+      "Hover [data-test-id=\"vocabulary-item\"] with text 'Regions'",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"vocabulary-item\"]:has-text(\"Regions\") [data-test-id=\"vocabulary-item--start-editing\"]"
+      },
+      "Wait for the vocabulary edit modal 'Edit Regions' to be visible",
+      "Click 'Items' in the modal's left navigation",
+      {
+        "action": "settle"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Replaces .gitbook/assets/grafik (14).png, which shows a customer's vocabulary names in the background. Full frame so the Settings > Metadata page shows behind the modal. Close the modal with Cancel afterwards; do not save. The items are the towns (Arlenport, Eastbrook, ...) with their region as parent; 'North Aldmark' is not an item label. The item names are input values, so there is no text to wait for; the step waits for the network to settle."
+  },
+  {
+    "file": "availability-management/dashboard-own-availability.png",
+    "caption": "Your availability on the dashboard",
+    "route": "#/availability-management",
+    "user": "admin",
+    "preconditions": [
+      "Newsroom seed from tools/screenshots/SEED.md has run (users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt exist and are active)",
+      "Availability data seeded by seed.py (SEED.md, AVAILABILITY_TAGS, AVAILABILITY, AVAILABILITY_OVERRIDES): vocabulary 'availability_manager_tags' ('Regions': North Aldmark with Arlenport and Kestrel Bay, South Aldmark with Saltmere, Eastbrook and Vennhaven), default weeks for the six seeded users and admin with available, partial and unavailable days, and tomasvidal's entry for tomorrow set to unavailable by admin",
+      "Today is a weekday (Mon-Fri) so the rows show a mix of Available all day, partial hours and Unavailable"
+    ],
+    "steps": [
+      "Open #/availability-management and wait for [data-test-id=\"day-view\"] to be visible",
+      "Make sure the 'Day' option in [data-test-id=\"filter-type\"] is selected (it is the default)",
+      "Wait until [data-test-id=\"day-view\"] shows 'Maren Holt'",
+      "Wait until [data-test-id=\"day-view\"] shows '@admin'"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"day-view\"] .boxed-list__item:has-text(\"@admin\")"
+    ],
+    "notes": "Used on view-and-edit-availability.md. Replaces .gitbook/assets/grafik (12).png, which was taken on a customer instance and shows real staff names. Admin's seeded schedule is Mon-Fri available (north-arlenport), so on a weekday the admin row is green with the Arlenport tag and 'Available all day'. Same seed and same frame as day-view.png; only the highlight differs. The highlight targets the BoxedListItem row (class boxed-list__item) that contains '@admin'; if it matches more than one row, narrow it with :has(span:text-is(\"@admin\"))."
+  }
+]

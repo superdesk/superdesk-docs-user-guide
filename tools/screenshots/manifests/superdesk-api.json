@@ -1,0 +1,144 @@
+[
+  {
+    "file": "superdesk-api/subscriber-content-api-tab.png",
+    "caption": "Products and tokens on the Content API tab of a subscriber",
+    "route": "#/settings/publish",
+    "user": "admin",
+    "preconditions": [
+      "Subscriber 'Content API client' (seeded by seed.py, SUBSCRIBERS) has the 'General news' product (type both) in api_products and no Content API token yet; the steps generate one. 'Subscriber 1' is not used here: it carries a seeded token for defining-publishing-in-superdesk/subscriber-content-api"
+    ],
+    "steps": [
+      "Open #/settings/publish and wait for [data-test-id=\"subscriber-item\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"subscriber-item\"][data-test-value=\"Content API client\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"subscriber-item\"][data-test-value=\"Content API client\"] [data-test-id=\"edit-subscriber-button\"]"
+      },
+      {
+        "action": "click",
+        "target": ".modal.sd-wizard .nav-tabs__link",
+        "text": "Content API"
+      },
+      {
+        "action": "click",
+        "target": ".modal.sd-wizard button",
+        "text": "Generate token"
+      },
+      {
+        "action": "wait",
+        "target": ".modal.sd-wizard .sd-list-item code",
+        "state": "visible"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal.sd-wizard .modal__dialog"
+    },
+    "highlight": [
+      ".modal.sd-wizard .subscriber-products",
+      ".modal.sd-wizard .sd-list-item:has(code)"
+    ],
+    "highlightStyle": "badge",
+    "mask": [
+      ".modal.sd-wizard .sd-list-item code"
+    ],
+    "cleanup": [
+      "Click the 'Cancel' button in the open modal"
+    ],
+    "notes": "Wizard step 'Content API' in scripts/apps/publish/views/subscribers.html: Products (sd-meta-terms, class subscriber-products, lists products of type API or Both), Authentication Token list with expiry and Revoke/Copy icons, 'Expire in' select (default 1 week) and 'Generate token' button. Generate token saves a subscriber_token on the server at once, without the Save button, so the token stays after Cancel; restore the snapshot to remove it. Mask the token value so a real token string is not published. Badges: 1 = Products, 2 = token row."
+  },
+  {
+    "file": "superdesk-api/production-api-keys-list.png",
+    "caption": "Production API keys in Settings",
+    "route": "#/settings/production-api-keys",
+    "user": "admin",
+    "preconditions": [
+      "Logged in user has the auth_server_clients privilege (admin has all)",
+      "Two Production API keys exist: 'Mobile reporting app' (ARCHIVE_READ, DESKS_READ) and 'Invoicing system' (USERS_READ), seeded by seed.py (API_KEYS)"
+    ],
+    "steps": [
+      "Open #/settings/production-api-keys and wait for [data-test-id=\"list-page--items\"] to be visible",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"production-api-keys\"]",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x600",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Settings page 'Production API' (scripts/apps/production-api-keys). Each row (data-test-id production-api-keys) shows the name, 'Last updated' and 'Created' dates, with Edit (pencil) and Delete (bin) icons. The list has no filter, sort or item count. The Settings left menu should be visible with 'Production API' active in the Workflow group."
+  },
+  {
+    "file": "superdesk-api/new-api-key-credentials.png",
+    "caption": "A new key right after saving: copy the Client Secret now",
+    "route": "#/settings/production-api-keys",
+    "user": "admin",
+    "preconditions": [
+      "Logged in user has the auth_server_clients privilege (admin has all)",
+      "No key named 'Meridian mobile app' exists (names must be unique, case-insensitive)"
+    ],
+    "steps": [
+      "Open #/settings/production-api-keys and wait for [data-test-id=\"list-page--items\"] to be visible",
+      "Click [data-test-id=\"list-page--add-item\"]",
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"item-view-edit\"] [data-test-id=\"gform-input--name\"]",
+        "value": "Meridian mobile app"
+      },
+      {
+        "action": "treeSelect",
+        "target": "[data-test-id=\"item-view-edit\"] [data-test-id=\"gform-input--scope\"]",
+        "value": [
+          "Archive",
+          "Desks"
+        ]
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"list-page--new-item\"] [data-test-id=\"item-view-edit--save\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"list-page--view-edit\"]",
+        "state": "visible"
+      },
+      {
+        "action": "settle"
+      },
+      {
+        "action": "wait",
+        "target": "text=The item has been created.",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x640",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"list-page--view-edit\"] [data-test-id=\"item-view-edit\"] .sd-input:has-text(\"Client Secret\")"
+    ],
+    "highlightStyle": "outline",
+    "cleanup": [
+      "Click [data-test-id=\"list-page--view-edit\"] [data-test-id=\"list-page-close\"]",
+      "Click [data-test-id=\"confirm-copy\"] [data-test-id=\"confirm-close\"]"
+    ],
+    "notes": "Flow from e2e/client/playwright/production-api-keys.spec.ts. Form config scripts/apps/production-api-keys/config.ts: Name, Scopes (Archive, Desks, Users, Contacts, Planning, Events, Assignments, Content lists), a warning alert about the one-time secret, and a 'Credentials' group with Client ID and Client Secret (CopyableTextBox, info text 'Copy this now, you won't be able to access it again.'). After save the panel switches to view mode and shows both values. The highlight should be a box around the whole Client Secret field; the CopyableTextBox has no test id, so resolve it from its label text and widen if needed. The secret on screen is a real credential of the throwaway e2e instance only; masking is optional. Closing asks 'Close this panel?' with 'Close anyway' / 'Go back' (data-test-id confirm-copy); the cleanup closes it. The key stays in the database until the snapshot is restored."
+  }
+]

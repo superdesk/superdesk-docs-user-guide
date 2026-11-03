@@ -1,0 +1,305 @@
+[
+  {
+    "file": "ai-features/ai-assistant-panel.png",
+    "caption": "The AI Assistant widget with its three tasks",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded demo data (SEED.md): ELECTION-BUDGET exists in Politics / Working, unpublished and not locked",
+      "The e2e client loads the ai-widget extension with stub generateHeadlines, generateSummary and translations.generateTranslations (CAPTURE.md, 'e2e client patch'); the stubs return the texts quoted in the next three entries",
+      "The Story content profile does not hide the 'Ai Assistant' widget (Settings > Content Profiles > Story > Widgets)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Politics'",
+      "Double-click the item with slugline 'ELECTION-BUDGET' in [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] to open it for editing",
+      "Wait for [data-test-id=\"navigation-tabs\"] to be visible",
+      "Click [data-test-id=\"authoring-widget\"][data-test-value=\"Ai Assistant\"]",
+      "Wait for [data-test-id=\"authoring-widget-panel\"][data-test-value=\"Ai Assistant\"] to show the buttons 'Headlines', 'Summary' and 'Translations'",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x820",
+    "crop": {
+      "region": {
+        "x": 806,
+        "y": 0,
+        "width": 634,
+        "height": 820
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"authoring-widget\"][data-test-value=\"Ai Assistant\"]",
+      [
+        "[data-test-id=\"authoring-widget-panel\"] button.illustration-button:has-text(\"Headlines\")",
+        "[data-test-id=\"authoring-widget-panel\"] button.illustration-button:has-text(\"Summary\")",
+        "[data-test-id=\"authoring-widget-panel\"] button.illustration-button:has-text(\"Translations\")"
+      ]
+    ],
+    "notes": "The demo stack has no AI service and the default host build does not load ai-widget. The e2e/host client index must add {id: 'ai-widget', load: () => import('superdesk-core/scripts/extensions/ai-widget').then((ext) => { ext.configure(() => ({generateHeadlines: () => Promise.resolve([...]), generateSummary: () => Promise.resolve('...'), translations: {generateTranslations: () => Promise.resolve('<p>...</p>'), translateActionIntegration: false}})); return ext; })}. Use the same stub texts as the next three shots. Without configure() the widget is not registered and a red 'You haven't registered any services for the Ai Assistant Widget!' toast appears on load. The widget label in the UI is spelled 'Ai Assistant'."
+  },
+  {
+    "file": "ai-features/headline-suggestions.png",
+    "caption": "Headline suggestions with Apply and Copy",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Same build and data as ai-features/ai-assistant-panel.png",
+      "generateHeadlines stub resolves to: ['Coalition budget promises tax relief for 1.2 million households', 'Election budget cuts family income tax and adds levy on holiday rentals', 'Opposition questions how coalition will pay for pre-election tax cuts']"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Politics'",
+      "Double-click the item with slugline 'ELECTION-BUDGET' to open it for editing",
+      "Click [data-test-id=\"authoring-widget\"][data-test-value=\"Ai Assistant\"]",
+      "Click the button with text 'Headlines' in [data-test-id=\"authoring-widget-panel\"]",
+      "Wait until three 'Apply' buttons are visible in the widget panel",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x820",
+    "crop": {
+      "region": {
+        "x": 806,
+        "y": 0,
+        "width": 634,
+        "height": 820
+      }
+    },
+    "highlight": [
+      [
+        "[data-test-id=\"authoring-widget-panel\"] button.btn:has-text(\"Apply\")",
+        "[data-test-id=\"authoring-widget-panel\"] button[aria-label=\"Copy\"]"
+      ]
+    ],
+    "notes": "Headlines are generated as soon as the Headlines task opens. The stub must resolve quickly, or wait for the loader overlay to go away. Do not click Apply: it changes the item's headline and leaves it dirty for later shots."
+  },
+  {
+    "file": "ai-features/summary.png",
+    "caption": "A generated summary",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Same build and data as ai-features/ai-assistant-panel.png",
+      "generateSummary stub resolves to: 'The governing coalition presented an election-year budget that cuts income tax for about 1.2 million households. Finance Minister Ilse Marrow said a new levy on short-term rentals and a freeze on defence spending would pay for it. The opposition Civic Union said the levy would raise less than half of the 900 million crowns the government expects.'"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Politics'",
+      "Double-click the item with slugline 'ELECTION-BUDGET' to open it for editing",
+      "Click [data-test-id=\"authoring-widget\"][data-test-value=\"Ai Assistant\"]",
+      "Click the button with text 'Summary' in [data-test-id=\"authoring-widget-panel\"]",
+      "Wait for the button 'Create article' to be visible in the widget panel",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x820",
+    "crop": {
+      "region": {
+        "x": 806,
+        "y": 0,
+        "width": 634,
+        "height": 820
+      }
+    },
+    "highlight": [
+      [
+        "[data-test-id=\"authoring-widget-panel\"] button[aria-label=\"Copy\"]",
+        "[data-test-id=\"authoring-widget-panel\"] button.btn:has-text(\"Create article\")"
+      ]
+    ],
+    "notes": "Do not click 'Create article': it creates and opens a new item."
+  },
+  {
+    "file": "ai-features/translation.png",
+    "caption": "Translating an item with the AI Assistant",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Same build and data as ai-features/ai-assistant-panel.png",
+      "The server has at least two languages configured (LANGUAGES setting, for example English 'en' and German 'de') so GET /api/languages returns both; ELECTION-BUDGET has language 'en'",
+      "generateTranslations stub resolves to: '<p>Die Regierungskoalition hat am Montag einen Wahlhaushalt vorgestellt, der die Einkommensteuer für rund 1,2 Millionen Haushalte senkt.</p><p>Finanzministerin Ilse Marrow sagte, die Entlastung werde durch eine neue Abgabe auf Kurzzeitvermietungen finanziert.</p>'"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Politics'",
+      "Double-click the item with slugline 'ELECTION-BUDGET' to open it for editing",
+      "Click [data-test-id=\"authoring-widget\"][data-test-value=\"Ai Assistant\"]",
+      "Click the button with text 'Translations' in [data-test-id=\"authoring-widget-panel\"]",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring-widget-panel\"] [data-test-id=\"open-popover\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"tree-select-popover\"] [data-test-id=\"option\"]",
+        "text": "Deutsch"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring-widget-panel\"] button.btn",
+        "text": "Translate"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"authoring-widget-panel\"] button",
+        "text": "Create article",
+        "state": "visible"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x820",
+    "crop": {
+      "region": {
+        "x": 806,
+        "y": 0,
+        "width": 634,
+        "height": 820
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"authoring-widget-panel\"] div:has(> span.label--primary)",
+      [
+        "[data-test-id=\"authoring-widget-panel\"] [data-test-id=\"open-popover\"]",
+        "[data-test-id=\"authoring-widget-panel\"] .widget-content__footer button.btn:has-text(\"Translate\")"
+      ]
+    ],
+    "notes": "The language field is a TreeSelect (use the treeSelect action). If /api/languages returns nothing, the footer shows 'Languages are not available.' and the shot cannot be taken. Do not click Create article or Apply."
+  },
+  {
+    "file": "ai-features/imatrics-tags.png",
+    "caption": "Suggested tags in the iMatrics tagging widget",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded demo data: ELECTION-BUDGET in Politics / Working, unpublished, not locked, with no iMatrics tags saved",
+      "The client build loads the auto-tagging-widget extension",
+      "User preferences run_automatically and show_images are off (the defaults)",
+      "POST /api/ai/ is mocked (see notes)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Politics'",
+      "Double-click the item with slugline 'ELECTION-BUDGET' to open it for editing",
+      "Click [data-test-id=\"authoring-widget\"][data-test-value=\"iMatrics tagging\"]",
+      "Wait for the text 'No tags yet' in [data-test-id=\"authoring-widget-panel\"]",
+      "Click the button with text 'Run'",
+      "Wait for the buttons 'Save' and 'Cancel' to be visible in the widget header and the button 'Refresh' at the bottom"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "the tag groups, the 'Save' and 'Cancel' buttons, and the 'Run automatically' switch",
+    "notes": "The demo stack has no iMatrics account, so the capture has to mock POST **/api/ai/ (body {service: 'imatrics', ...}) with page.route. Suggested response: {\"analysis\": {\"subject\": [{\"name\": \"economy, business and finance\", \"qcode\": \"04000000\", \"scheme\": \"mediatopic\", \"source\": \"imatrics\", \"altids\": {\"imatrics\": \"04000000\"}}, {\"name\": \"government budget\", \"qcode\": \"20000565\", \"parent\": \"04000000\", \"scheme\": \"mediatopic\", \"source\": \"imatrics\", \"altids\": {\"imatrics\": \"20000565\"}}, {\"name\": \"Elections\", \"qcode\": \"imx-elections\", \"scheme\": \"imatrics_topic\", \"source\": \"imatrics\", \"altids\": {\"imatrics\": \"imx-elections\"}}], \"person\": [{\"name\": \"Ilse Marrow\", \"qcode\": \"imx-p1\", \"source\": \"imatrics\", \"altids\": {\"imatrics\": \"imx-p1\"}, \"description\": \"Finance Minister of Aldmark\"}, {\"name\": \"Aron Pellow\", \"qcode\": \"imx-p2\", \"source\": \"imatrics\", \"altids\": {\"imatrics\": \"imx-p2\"}}], \"organisation\": [{\"name\": \"Civic Union\", \"qcode\": \"imx-o1\", \"source\": \"imatrics\", \"altids\": {\"imatrics\": \"imx-o1\"}}, {\"name\": \"National Assembly\", \"qcode\": \"imx-o2\", \"source\": \"imatrics\", \"altids\": {\"imatrics\": \"imx-o2\"}}], \"place\": [{\"name\": \"Arlenport\", \"qcode\": \"imx-pl1\", \"source\": \"imatrics\", \"altids\": {\"imatrics\": \"imx-pl1\"}}]}}. The capture tool has no route-mock support yet (CAPTURE.md lists no such extension), so this shot needs a small addition to capture.mjs or a stack with a real iMatrics account. Do not click Save: it writes the tags to the item and POSTs feedback to /api/ai_data_op/. Group titles without iMatricsFields config show the raw scheme ids ('mediatopic', 'imatrics_topic', 'entities'); set appConfig {\"iMatricsFields\": {\"entities\": {}, \"others\": {\"mediatopic\": {\"name\": \"Media topics\", \"order\": 1}, \"imatrics_topic\": {\"name\": \"Topics\", \"order\": 2}, \"entities\": {\"name\": \"Entities\", \"order\": 3}}}} for readable titles.",
+    "skip": "auto-tagging-widget is not loaded in the e2e client: it adds an empty IMATRICS field to the header of every authoring view (which would change every other authoring shot), and its build rewrites the tracked scripts/extensions/auto-tagging-widget/package.json. Needs a build that loads the extension, plus a mocked POST /api/ai/ (mockRoutes)."
+  },
+  {
+    "file": "ai-features/ai-providers-list.png",
+    "caption": "The AI Providers settings page",
+    "route": "#/settings/ai-providers",
+    "user": "admin",
+    "preconditions": [
+      "Two providers exist, seeded by seed.py (AI_PROVIDERS): 'OpenRouter' (active) and 'Newsroom local model' (inactive)",
+      "The admin user has the ai_studio privilege (administrators have all privileges)"
+    ],
+    "steps": [
+      "Open #/settings/ai-providers and wait for [data-test-id=\"ai-providers-page\"] to be visible",
+      "Wait until [data-test-id=\"list-page--items\"] contains two [data-test-id=\"ai-providers-item\"]",
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"ai-providers-item\"]",
+        "text": "Newsroom local model"
+      }
+    ],
+    "viewport": "1440x560",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"ai-providers-item--inactive\"]",
+      [
+        "[data-test-id=\"ai-providers-item\"]:has-text(\"Newsroom local model\") [data-test-id=\"test-connection\"]",
+        "[data-test-id=\"ai-providers-item\"]:has-text(\"Newsroom local model\") [data-test-id=\"delete\"]"
+      ],
+      "[data-test-id=\"list-page--add-item\"]"
+    ],
+    "notes": "Works on the demo stack: creating a provider does not contact the service. Do not click Test connection: the demo stack cannot reach the service and an error toast would cover the list. The providers persist until restore_record; delete them afterwards if other shots need a clean Settings page. Fictional provider names only, no customer names."
+  },
+  {
+    "file": "ai-features/ai-provider-form.png",
+    "caption": "Editing a provider and choosing its models",
+    "route": "#/settings/ai-providers",
+    "user": "admin",
+    "preconditions": [
+      "The 'OpenRouter' provider exists (seeded by seed.py, AI_PROVIDERS)",
+      "GET **/api/ai_providers/*/models is answered by the entry's mockRoutes with the four model names, so Default model is a select and Available models is editable"
+    ],
+    "steps": [
+      "Open #/settings/ai-providers and wait for [data-test-id=\"ai-providers-page\"]",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"ai-providers-item\"]",
+        "text": "OpenRouter"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"ai-providers-item\"]:has-text(\"OpenRouter\") [data-test-id=\"edit\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"list-page--view-edit\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"list-page--view-edit\"] [data-test-id=\"gform-input--available_models\"] [data-test-id=\"open-popover\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"tree-select-popover\"] [data-test-id=\"option\"]",
+        "text": "openai/gpt-4o-mini"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"list-page--view-edit\"] [data-test-id=\"gform-input--available_models\"] [data-test-id=\"open-popover\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"tree-select-popover\"] [data-test-id=\"option\"]",
+        "text": "anthropic/claude-3.5-haiku"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"tree-select-popover\"]",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"list-page--view-edit\"] [data-test-id=\"gform-alert--api_key_alert\"]",
+      "[data-test-id=\"list-page--view-edit\"] [data-test-id=\"gform-input--available_models\"]",
+      "[data-test-id=\"list-page--view-edit\"] [data-test-id=\"gform-input--default_model\"]"
+    ],
+    "notes": "Without the models mock the demo stack cannot reach the provider: Default model turns into a text input with a warning ([data-test-id=\"gform-message--default_model\"]) and Available models is read-only, which is not the state the caption describes. The e2e spec ai-providers.crud.spec.ts uses page.route for exactly this. The capture tool has no route-mock support yet, so this needs a small addition to capture.mjs. Do not save the form.",
+    "mockRoutes": [
+      {
+        "url": "**/api/ai_providers/*/models",
+        "method": "GET",
+        "json": {
+          "models": [
+            "openai/gpt-4o-mini",
+            "openai/gpt-4o",
+            "anthropic/claude-3.5-haiku",
+            "mistralai/mistral-small"
+          ]
+        }
+      }
+    ]
+  }
+]
