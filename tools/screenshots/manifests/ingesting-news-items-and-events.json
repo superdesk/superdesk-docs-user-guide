@@ -1,0 +1,175 @@
+[
+  {
+    "file": "ingesting-news-items-and-events/ftp-source-settings.png",
+    "caption": "FTP feed settings",
+    "route": "#/settings/ingest",
+    "user": "admin",
+    "preconditions": [
+      "Logged-in user has the ingest_providers privilege (admin has all)",
+      "No real FTP server is needed: the source is not saved"
+    ],
+    "steps": [
+      "Open #/settings/ingest and wait for [data-test-id=\"ingest-settings\"] to be visible",
+      "Make sure the 'Ingest Sources' tab is active",
+      "Click the 'Add New' button",
+      "Wait for [data-test-id=\"ingest-source-modal\"] to be visible",
+      "Fill [data-test-id=\"ingest-source-modal--field--name\"] with 'Regional wire FTP'",
+      "Fill #source-name with 'Regional wire'",
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"ingest-source-modal\"] .sd-line-input:has(#provider-feeding-service)",
+        "value": "FTP feed"
+      },
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"ingest-source-modal\"] .sd-line-input:has(#provider-feed-parser)",
+        "value": "News ML 2.0 Parser"
+      },
+      "Fill #ftp-host with 'ftp.example.com'",
+      "Fill #ftp-username with 'superdesk'",
+      "Fill #ftp-path with './incoming'",
+      "Fill #ftp-dest_path with '/tmp'",
+      "Click the switch #ftp-move so it is on",
+      "Fill #ftp-allowed_extension with 'xml,json'",
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.querySelector('[data-test-id=\"ingest-source-modal\"] .credentials').scrollIntoView({block: 'start'})"
+      },
+      "Do not click Save"
+    ],
+    "viewport": "1440x1100",
+    "crop": {
+      "element": "[data-test-id=\"ingest-source-modal\"] .credentials",
+      "maxHeight": 745
+    },
+    "highlight": [
+      "#ftp-move",
+      "#ftp-allowed_extension"
+    ],
+    "notes": "Field ids are '<feeding_service>-<field id>' (IngestSourcesContent.ts getConfigFieldId), from the FTP field list in superdesk-core superdesk/io/feeding_services/ftp.py: host, username, password, path, dest_path, passive, move, ftp_move_path, move_path_error, allowed_extension. 'Move ingested items to' and 'Move *NOT* ingested items (i.e. on error) to' only show once Move items after ingestion is on. The brief says the e2e snapshot has no ingest providers; e2e/client/playwright/ingest-provider.spec.ts expects an 'Antara news provider' in the main snapshot, which does not matter here. Cleanup: click 'Cancel' in the modal footer."
+  },
+  {
+    "file": "ingesting-news-items-and-events/gmail-source-login.png",
+    "caption": "Connecting a Gmail mailbox",
+    "route": "#/settings/ingest",
+    "user": "admin",
+    "preconditions": [
+      "No Google OAuth setup is needed for the shot: the Log-in with GMail button shows for any saved Gmail source that is not logged in",
+      "The source is created by the steps and removed in cleanup"
+    ],
+    "steps": [
+      "Open #/settings/ingest and wait for [data-test-id=\"ingest-settings\"] to be visible",
+      "Click the 'Add New' button",
+      "Wait for [data-test-id=\"ingest-source-modal\"] to be visible",
+      "Fill [data-test-id=\"ingest-source-modal--field--name\"] with 'Newsroom inbox'",
+      "Fill #source-name with 'Newsroom inbox'",
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"ingest-source-modal\"] .sd-line-input:has(#provider-feeding-service)",
+        "value": "Gmail"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"ingest-source-modal\"] .modal__footer button",
+        "text": "Save"
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog:has-text(\"Connect an account\") .p-dialog-footer button",
+        "text": "Close"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connect an account",
+        "state": "hidden"
+      },
+      "Wait for the modal to close and for [data-test-id=\"ingest-source\"] with text 'Newsroom inbox' to be visible",
+      "Hover [data-test-id=\"ingest-source\"] with text 'Newsroom inbox' and click its [data-test-id=\"ingest-source--edit\"]",
+      "Wait for the 'Log-in with GMail' button to be visible",
+      "Scroll to the 'Log-in with GMail' button",
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      }
+    ],
+    "viewport": "1440x1100",
+    "crop": {
+      "element": "[data-test-id=\"ingest-source-modal\"] .credentials",
+      "maxHeight": 296
+    },
+    "highlight": [
+      "button:has-text(\"Log-in with GMail\")"
+    ],
+    "notes": "Gmail fields (superdesk-core superdesk/io/feeding_services/gmail.py): 'email' (read-only, only after log-in), 'Log-in with GMail' (url_request button, only when provider._id is set and no email yet), 'Log-out', 'Mailbox' (default INBOX), 'Filter'. Saving a new Gmail source skips the config test because the service has url_request fields (shouldSkipConfigTest). If saving fails on the e2e server, mark the shot skipped. Do not click the log-in button. Cleanup: click 'Cancel', then remove the source with [data-test-id=\"ingest-source\"] 'Newsroom inbox' > button[title=\"Remove source\"] and confirm.",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"ingest-source-modal\"] .modal__footer button",
+        "text": "Cancel",
+        "optional": true
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"ingest-source\"]",
+        "text": "Newsroom inbox",
+        "optional": true
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"ingest-source\"]:has-text(\"Newsroom inbox\") button[title=\"Remove source\"]",
+        "optional": true
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"modal-confirm\"] button.btn--primary",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "file": "ingesting-news-items-and-events/routing-rule-fetch.png",
+    "caption": "Editing a routing rule",
+    "route": "#/settings/ingest",
+    "user": "admin",
+    "preconditions": [
+      "Seeded desk 'World' with stage 'Incoming' (SEED.md)",
+      "Optional: a content filter to pick under 'Add filter'; if none exists, leave 'No content filter defined'"
+    ],
+    "steps": [
+      "Open #/settings/ingest and wait for [data-test-id=\"ingest-settings\"] to be visible",
+      "Click the 'Ingest Routing' button",
+      "Click the 'Add New' button",
+      "Fill the input with placeholder 'Scheme name' with 'Agency wires'",
+      "Click [data-test-id=\"add-routing-rule-button\"]",
+      "Click [data-test-id=\"rule-handler--desk_fetch_publish\"]",
+      "Fill the input with placeholder 'Rule name' with 'World news to World desk'",
+      "Click the 'Add Fetch action' button",
+      {
+        "action": "choose",
+        "target": ".action-panel:visible",
+        "value": "World"
+      },
+      {
+        "action": "choose",
+        "target": ".action-panel:visible",
+        "value": "Incoming"
+      },
+      {
+        "action": "click",
+        "target": ".action-panel:visible button.btn--primary",
+        "text": "Add"
+      },
+      "Do not click Save"
+    ],
+    "viewport": "1440x1000",
+    "crop": {
+      "element": ".modal.add-scheme-modal .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces image99 (old General/Filter/Action/Schedule tabs and 'Add new rule' button, both gone on develop). On develop the rule editor shows Content Filter, Actions (Fetch, Publish, Exit, Preserve Desk) and Schedule (Days, All Day, Start Time (inclusive), End Time (exclusive), time zone) in one column next to 'Scheme rules' (scripts/apps/ingest/views/settings/ingest-routing-*.html). Flow and selectors from e2e/client/playwright/ingest-settings.spec.ts. The action picker (scripts/apps/desks/views/actionpicker.html) has selects labelled 'Desk', 'Stage', 'Macro'. Cleanup: click 'Cancel' twice (rule, then scheme) or close the modal."
+  }
+]

@@ -1,0 +1,97 @@
+[
+  {
+    "file": "metadata-and-fields/header-fields.png",
+    "caption": "The header fields",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "The story has slugline, category, subject, urgency and priority filled in by the seed"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Wait for [data-test-id=\"authoring\"] .authoring-header to be visible",
+      "move the mouse away from the list"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] .authoring-header",
+      "expand": {
+        "left": 12,
+        "right": 12,
+        "bottom": 12
+      }
+    },
+    "highlight": "none",
+    "notes": "Includes the summary line (item type icon, PROFILE, word count, SOURCE) and the header fields grid, plus the collapse arrow (.authoring-header__toggle) at the bottom. Template: scripts/apps/authoring/views/authoring-header.html.",
+    "padding": 0
+  },
+  {
+    "file": "metadata-and-fields/widget-pinned.png",
+    "caption": "A pinned widget",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "No widget pinned for admin before the shot (user preference editor:pinned_widget empty)"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-widget\"][data-test-value=\"Info\"]",
+      "Wait for [data-test-id=\"authoring-widget-panel\"] to be visible",
+      "Click [data-test-id=\"authoring-widget-panel\"] [data-test-id=\"pin-widget\"]",
+      "move the mouse away from the list"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring-widget-panel\"] [data-test-id=\"pin-widget\"]",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1920x1080",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"]",
+      "plus": [
+        "[data-test-id=\"authoring-widget-panel\"]",
+        "[data-test-id=\"navigation-tabs\"]"
+      ],
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "highlight": [
+      "[data-test-id=\"authoring-widget-panel\"] [data-test-id=\"pin-widget\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Pinning stores the user preference 'editor:pinned_widget'; cleanup unpins it so later shots are not affected. Expand left so part of the editor shows next to the pinned panel. Capture: 1920x1080 and a crop of the whole authoring area; at 1440 the pinned panel squeezes the editor so far that the status bar overlaps the panel title.",
+    "padding": 0
+  }
+]

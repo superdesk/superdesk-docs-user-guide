@@ -1,0 +1,329 @@
+[
+  {
+    "file": "your-profile-and-preferences/user-menu.png",
+    "caption": "The user menu under your avatar",
+    "route": "#/workspace/monitoring",
+    "user": "marenholt",
+    "preconditions": [
+      "Seed data loaded (tools/screenshots/seed.py): user marenholt (Maren Holt, Political Editor, role Editor, default desk Politics, password marenholt)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "click [data-test-id=\"my-profile\"]",
+      "wait for [data-test-id=\"my-profile-dropdown\"] .dropdown__menu to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"my-profile-dropdown\"] .dropdown__menu",
+      "plus": [
+        "#top-menu .top-menu__content-block--right"
+      ],
+      "expand": {
+        "left": 240,
+        "bottom": 24
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"my-profile-dropdown\"] a[href=\"#/profile/\"]",
+      "[data-test-id=\"my-profile-dropdown\"] .dropdown__menu button.btn--hollow",
+      [
+        "#top-menu button[aria-label=\"View notifications\"] i.icon-bell",
+        "#top-menu #unread-count"
+      ]
+    ],
+    "highlightStyle": "badge",
+    "notes": "Shows avatar dropdown (display name, username, 'Manage profile' link, 'Sign out' button) and the bell to its left (button aria-label 'View notifications'). Markup in scripts/core/menu/views/menu.html. 'marenholt' is not in the capture user map; it is used as a literal username with the same password (or add {\"marenholt\": \"marenholt\"} to users.json). Badges 1 Manage profile, 2 Sign out, 3 bell.",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "badgeAnchor": [
+      null,
+      null,
+      "below"
+    ]
+  },
+  {
+    "file": "your-profile-and-preferences/profile-overview.png",
+    "caption": "The Overview tab of your profile",
+    "route": "#/profile/",
+    "user": "marenholt",
+    "preconditions": [
+      "Seed data loaded (tools/screenshots/seed.py): user marenholt (Maren Holt, Political Editor, role Editor, default desk Politics, password marenholt)"
+    ],
+    "steps": [
+      "Open #/profile/ and wait for [data-test-id=\"user-details-form\"] to be visible",
+      "Wait for [data-test-id=\"page-title\"] to show 'My Profile'"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"page-sections\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Full page: tabs Overview / Personal preferences (data-test-id page-sections), left menu General, Password, Default desk, Language, Author info, the General card with avatar and name fields, and the Activity Stream on the right (scripts/apps/users/views/edit.html, edit-form.html). No Privileges tab because the Editor role has no 'users' privilege. If the Availability tab shows (availability-manager extension and user_availability_manage_own privilege), keep it.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "your-profile-and-preferences/change-avatar.png",
+    "caption": "Uploading a new avatar",
+    "route": "#/profile/",
+    "user": "marenholt",
+    "preconditions": [
+      "Seed data loaded (tools/screenshots/seed.py): user marenholt (Maren Holt, Political Editor, role Editor, default desk Politics, password marenholt)"
+    ],
+    "steps": [
+      "Open #/profile/ and wait for [data-test-id=\"user-details-form\"] to be visible",
+      "Hover (.profile-pic) so the change button shows",
+      "click (button[aria-label=\"Change avatar\"])",
+      {
+        "action": "wait",
+        "target": ".modal.upload-avatar .modal__dialog",
+        "state": "visible"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal.upload-avatar .modal__dialog"
+    },
+    "highlight": "none",
+    "cleanup": [
+      "press Escape"
+    ],
+    "notes": "The Change avatar window (scripts/apps/users/views/change-avatar.html, opened as activity modal with cssClass 'upload-avatar'). Leave 'Upload from computer' active so the drop zone and 'The minimum image resolution is 200x200 pixels.' are visible. Do not upload anything; close without saving. If the modal close does not react to Escape, click its close icon (.modal__header .icn-btn).",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "your-profile-and-preferences/change-password.png",
+    "caption": "Changing your password",
+    "route": "#/profile/",
+    "user": "marenholt",
+    "preconditions": [
+      "Seed data loaded (tools/screenshots/seed.py): user marenholt (Maren Holt, Political Editor, role Editor, default desk Politics, password marenholt)"
+    ],
+    "steps": [
+      "Open #/profile/ and wait for [data-test-id=\"user-details-form\"] to be visible",
+      "click (#password-change-trigger .change-btn)",
+      {
+        "action": "wait",
+        "target": ".modal__dialog:has(h3.modal__heading)",
+        "text": "Save password",
+        "state": "visible"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal__dialog:has(input[name=\"old\"][type=\"password\"])"
+    },
+    "highlight": "none",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".modal__dialog:has(input[name=\"old\"]) .modal__footer button.btn:not(.btn--primary)",
+        "text": "Cancel"
+      }
+    ],
+    "notes": "Modal with fields current / new / confirm and buttons Cancel / Save password (bottom of edit-form.html). Leave the fields empty. Cleanup clicks Cancel. The button only exists when the server has the reset_user_password resource (default DB auth).",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "your-profile-and-preferences/notifications.png",
+    "caption": "Choosing how you get notifications",
+    "route": "#/profile/",
+    "user": "marenholt",
+    "preconditions": [
+      "Seed data loaded (tools/screenshots/seed.py): user marenholt (Maren Holt, Political Editor, role Editor, default desk Politics, password marenholt)",
+      "Best taken on a build that loads the markForUser extension and superdesk-planning, so the per-type checkboxes 'Send Mark for User notifications' and 'Send Assignment notifications' appear under the email switch. The stock e2e client loads neither, so the list is empty there."
+    ],
+    "steps": [
+      "Open #/profile/ and wait for [data-test-id=\"user-details-form\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"page-section\"][data-test-value=\"preferences\"]"
+      },
+      "wait for (h3#notifications) to be visible",
+      {
+        "action": "click",
+        "target": ".preferences__navigation .sd-left-nav__btn",
+        "text": "Notifications"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "li.simple-list__item:has(> h3#notifications)"
+    },
+    "highlight": "none",
+    "notes": "Section with 'Send notifications via email' switch, the per-type checkbox list (sd-email-notifications-list) and 'Allow Desktop Notifications' switch (scripts/apps/users/views/user-preferences.html). The section only renders after preferences load (preferencesLoaded).",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "your-profile-and-preferences/preferred-desks.png",
+    "caption": "Choosing your preferred desks",
+    "route": "#/profile/",
+    "user": "marenholt",
+    "preconditions": [
+      "Seed data loaded (tools/screenshots/seed.py): user marenholt (Maren Holt, Political Editor, role Editor, default desk Politics, password marenholt)",
+      "Desks Politics, Business, World, Culture and Sports exist (seed)"
+    ],
+    "steps": [
+      "Open #/profile/ and wait for [data-test-id=\"user-details-form\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"page-section\"][data-test-value=\"preferences\"]"
+      },
+      {
+        "action": "click",
+        "target": ".preferences__navigation .sd-left-nav__btn",
+        "text": "Desks"
+      },
+      "wait for (h3#prefered-desks) to be visible",
+      {
+        "action": "click",
+        "target": "li.simple-list__item:has(> h3#prefered-desks) .sd-check__wrapper",
+        "text": "Politics"
+      },
+      {
+        "action": "click",
+        "target": "li.simple-list__item:has(> h3#prefered-desks) .sd-check__wrapper",
+        "text": "World"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "li.simple-list__item:has(> h3#prefered-desks)"
+    },
+    "highlight": "none",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".action-bar button.btn",
+        "text": "Cancel"
+      }
+    ],
+    "notes": "Desks section: heading 'Desks', sub-heading 'Preferred Desks', the help text and one checkbox per desk. Politics and World ticked. The sd-check elements are styled checkboxes; check them with force or click their label. Do not save: cleanup clicks Cancel in the action bar so the preference stays unchanged on the server. The desks are button-style sd-check toggles (.sd-check__wrapper); there is no sd-check element.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "your-profile-and-preferences/appearance-themes.png",
+    "caption": "Choosing a theme",
+    "route": "#/profile/",
+    "user": "marenholt",
+    "preconditions": [
+      "Seed data loaded (tools/screenshots/seed.py): user marenholt (Maren Holt, Political Editor, role Editor, default desk Politics, password marenholt)",
+      "marenholt's application:theme preference is light-ui (the default)"
+    ],
+    "steps": [
+      "Open #/profile/ and wait for [data-test-id=\"user-details-form\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"page-section\"][data-test-value=\"preferences\"]"
+      },
+      {
+        "action": "click",
+        "target": ".preferences__navigation .sd-left-nav__btn",
+        "text": "Appearance"
+      },
+      "wait for (h3#appearance) to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "li.simple-list__item:has(> h3#appearance)"
+    },
+    "highlight": [
+      "input.sd-theme-selector__input[value=\"dark-ui\"] ~ label"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Appearance > Themes with the three thumbnails Light, Dark, High Contrast (High Contrast radio is disabled). Light is selected. Outline the Dark option label.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "your-profile-and-preferences/dark-mode.png",
+    "caption": "Monitoring in the dark theme",
+    "route": "#/profile/",
+    "user": "marenholt",
+    "preconditions": [
+      "Seed data loaded (tools/screenshots/seed.py): user marenholt (Maren Holt, Political Editor, role Editor, default desk Politics, password marenholt)",
+      "Seeded items exist in Politics desk stages"
+    ],
+    "steps": [
+      "Open #/profile/ and wait for [data-test-id=\"user-details-form\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"page-section\"][data-test-value=\"preferences\"]"
+      },
+      {
+        "action": "click",
+        "target": ".preferences__navigation .sd-left-nav__btn",
+        "text": "Appearance"
+      },
+      {
+        "action": "check",
+        "target": "input.sd-theme-selector__input[value=\"dark-ui\"]"
+      },
+      {
+        "action": "click",
+        "target": ".action-bar button.btn--primary",
+        "text": "Save"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"modal-confirm\"] button",
+        "text": "OK",
+        "optional": true
+      },
+      {
+        "action": "wait",
+        "target": "body[data-theme=\"dark-ui\"]",
+        "state": "visible"
+      },
+      "Open #/workspace/monitoring",
+      "select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"article-item\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "cleanup": [
+      "Open #/profile/",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"page-section\"][data-test-value=\"preferences\"]"
+      },
+      {
+        "action": "click",
+        "target": ".preferences__navigation .sd-left-nav__btn",
+        "text": "Appearance"
+      },
+      {
+        "action": "check",
+        "target": "input.sd-theme-selector__input[value=\"light-ui\"]"
+      },
+      {
+        "action": "click",
+        "target": ".action-bar button.btn--primary",
+        "text": "Save"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"modal-confirm\"] button",
+        "text": "OK",
+        "optional": true
+      }
+    ],
+    "notes": "The theme is a server-side preference (application:theme), so it survives the per-shot reload: the cleanup switches marenholt back to Light. Run this shot last for the page. The theme radios are styled inputs; check them with force if needed. Saving applies the theme straight away (body data-theme). Saving preferences for a user without preferred categories asks 'No preferred categories selected ... A default set of categories will be selected for you.'; the steps answer OK (optional), which stores a default category set for marenholt.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  }
+]

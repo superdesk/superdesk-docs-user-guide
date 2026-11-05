@@ -1,0 +1,83 @@
+[
+  {
+    "file": "spiked-items/spiked-items-view.png",
+    "caption": "The Spiked Items view",
+    "route": "/#/workspace/spike-monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom: HEALTH-WAITLIST ('Hospital waiting lists fall for third straight month') is spiked from Politics / Incoming",
+      "Admin has the spike_read privilege"
+    ],
+    "steps": [
+      "Open /#/workspace/spike-monitoring",
+      "select desk 'Politics'",
+      "wait until [data-test-id=\"articles-list\"] contains at least one [data-test-id=\"article-item\"]",
+      "wait for [data-test-id=\"articles-list--heading\"] to show 'Spiked Items'",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x560",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Replaces image138, image198, the base64 Spike icon and s-terminologyguide5 (action menu icon). The list is ArticlesListByQueryWithFilters (scripts/core/ArticlesListByQueryWithFilters.tsx): heading with count badge, search bar, type buttons and Sort by. Capture: 560 px high (one item leaves the rest of the list empty) and no highlight: the outline round the toolbar ran off the right edge and over the top bar."
+  },
+  {
+    "file": "spiked-items/unspike-panel.png",
+    "caption": "Choosing where an unspiked item goes",
+    "route": "/#/workspace/spike-monitoring",
+    "user": "admin",
+    "preconditions": [
+      "HEALTH-WAITLIST is spiked from Politics (seeded)",
+      "Admin has the unspike privilege"
+    ],
+    "steps": [
+      "Open /#/workspace/spike-monitoring",
+      "select desk 'Politics'",
+      "hover [data-test-id=\"articles-list\"] [data-test-id=\"article-item\"][data-test-value=\"Hospital waiting lists fall for third straight month\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      "click 'Unspike Item' in [data-test-id=\"context-menu\"]",
+      "wait for [data-test-id=\"interactive-actions-panel\"] to be visible",
+      "In [data-test-id=\"stage-select\"] check the radio 'Incoming'",
+      "move the mouse away from the panel"
+    ],
+    "viewport": "1440x640",
+    "crop": {
+      "element": "[data-test-id=\"interactive-actions-panel\"]",
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "allowPortrait": true,
+    "highlight": [
+      [
+        "[data-test-id=\"destination-select\"]",
+        "[data-test-id=\"stage-select\"]"
+      ],
+      "[data-test-id=\"interactive-actions-panel\"] [data-test-id=\"unspike\"]"
+    ],
+    "notes": "New shot (matrix F-045). Do NOT click Unspike. If the row actions menu is not found, the same panel opens from the bulk route used in e2e spike.spec.ts: check the row's [data-test-id=\"multi-select-checkbox\"] and click [data-test-id=\"multi-actions-inline\"] 'Unspike'. Which desk is preselected depends on the user preference destination:active; select 'Politics' in [data-test-id=\"destination-select\"] if another desk shows.",
+    "padding": 0
+  },
+  {
+    "file": "spiked-items/spiked-item-read-only.png",
+    "caption": "A spiked item opened read-only",
+    "route": "/#/workspace/spike-monitoring",
+    "user": "admin",
+    "preconditions": [
+      "HEALTH-WAITLIST is spiked from Politics (seeded)"
+    ],
+    "steps": [
+      "Open /#/workspace/spike-monitoring",
+      "select desk 'Politics'",
+      "double-click [data-test-id=\"articles-list\"] [data-test-id=\"article-item\"][data-test-value=\"Hospital waiting lists fall for third straight month\"]",
+      "wait for [data-test-id=\"authoring-topbar\"] to show 'Unspike'",
+      "move the mouse away from the editor"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"authoring\"] top 360px",
+    "highlight": [
+      "[data-test-id=\"authoring-topbar\"] button:has-text(\"Unspike\")"
+    ],
+    "notes": "New shot. The Unspike button is in scripts/apps/authoring/views/authoring-topbar.html (ng-if item.state === 'spiked'). Do NOT click it. Close the item afterwards."
+  }
+]

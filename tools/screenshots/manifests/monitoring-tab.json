@@ -1,0 +1,403 @@
+[
+  {
+    "file": "monitoring-tab/monitoring-overview.png",
+    "caption": "The Monitoring view of a desk",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Politics' exists with its default stages (Incoming, Working) and desk output groups",
+      "At least 4 text items exist across 'Politics / Working' and 'Politics / Incoming' (seeded items)",
+      "Monitoring view preference is List view (no compact, swimlane or photo grid)",
+      "No monitoring filters active (localStorage keys starting with 'sd-filter' cleared)",
+      "Preview pane closed"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Replaces the old 'image378' screenshot. Should show the workspace dropdown at top left and the Workspace panel with the Monitoring icon.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ]
+  },
+  {
+    "file": "monitoring-tab/monitoring-toolbar.png",
+    "caption": "The Monitoring toolbar",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected",
+      "markForUser extension active (default build) so the 'Marked for me' button is visible",
+      "View is List view, no filters active"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "wait for [data-test-id=\"monitoring-filtering-item--Marked for me\"] to be visible",
+      {
+        "action": "evaluate",
+        "script": "const t = document.querySelector('[data-test-id=\"monitoring-view\"] .monitoring__toolbar-container'); t.style.marginTop = '56px'; t.style.marginBottom = '56px';"
+      },
+      {
+        "action": "settle"
+      },
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"monitoring-view\"] .monitoring__toolbar-container",
+      "expand": {
+        "top": 56,
+        "bottom": 56
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"filters-dropdown\"]",
+      ".monitoring__toolbar-container .dropdown__toggle:has-text(\"Monitoring\")",
+      ".monitoring__toolbar-container label[for=\"search-input\"]",
+      "[data-test-id=\"monitoring-filtering-item--Marked for me\"]",
+      "[data-test-id=\"content-create\"]",
+      [
+        ".monitoring__toolbar-container .button-list a.toggle-button:first-child",
+        ".monitoring__toolbar-container .button-list a.toggle-button:last-child"
+      ],
+      ".monitoring__toolbar-container .sortbar-container >> text=Sort by:",
+      "[data-test-id=\"monitoring-view\"] button.dropdown__toggle[aria-label$=\" View\"]",
+      ".monitoring__toolbar-container button.dropdown__toggle:has(i.icon-dots-vertical)"
+    ],
+    "notes": "Two toolbar rows. Callouts should match the order of the two bullet lists on the page. Capture: the toolbar is given 56 CSS px of empty margin above and below (inline style, toolbar itself unchanged) and cropped with that margin, so first-row badges sit above their control and second-row badges below it (badgeAnchor rows) without covering the header or the list. Numbered left to right per row.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "padding": 0,
+    "highlightStyle": "badge",
+    "badgeAnchor": "rows"
+  },
+  {
+    "file": "monitoring-tab/view-switcher.png",
+    "caption": "The view switcher",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected, all groups visible (not a single group view)",
+      "Client config has list.compactView and features.swimlane set (default host config does), so all four views are listed"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "open the view switcher",
+      "wait for the dropdown menu with buttons 'List view', 'Compact View', 'Swimlane View', 'Photo Grid View'"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: the open view switcher dropdown plus about 200px of toolbar to its left",
+    "highlight": "none",
+    "notes": "Labels come from scripts/apps/monitoring/directives/utils.ts getMonitoringViewOptions. Close the menu afterwards with Escape. Capture: appConfig is the client's default list config plus the host build's compactView, because TEST_APP_CONFIG replaces the whole list block.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "appConfig": {
+      "list": {
+        "priority": [
+          "priority",
+          "urgency"
+        ],
+        "firstLine": [
+          "wordcount",
+          "slugline",
+          "highlights",
+          "markedDesks",
+          "associations",
+          "publish_queue_errors",
+          "headline",
+          "versioncreated"
+        ],
+        "secondLine": [
+          "profile",
+          "state",
+          "scheduledDateTime",
+          "embargo",
+          "update",
+          "takekey",
+          "signal",
+          "broadcast",
+          "flags",
+          "updated",
+          "category",
+          "provider",
+          "expiry",
+          "desk",
+          "fetchedDesk",
+          "nestedlink",
+          "associatedItems"
+        ],
+        "compactView": {
+          "firstLine": [
+            "headline",
+            "slugline"
+          ],
+          "secondLine": []
+        }
+      }
+    }
+  },
+  {
+    "file": "monitoring-tab/compact-view.png",
+    "caption": "Compact View",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected with at least 6 items in visible groups",
+      "list.compactView configured (default host config: headline, slugline)"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "open the view switcher and click 'Compact View'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"monitoring-view\"] button.dropdown__toggle[aria-label=\"Compact View\"]"
+      },
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"monitoring-view\"]",
+    "highlight": "none",
+    "notes": "Switching the view saves the user preference 'monitoring:view'. Reset to 'List view' at the end so later shots are not affected. Capture: appConfig is the client's default list config plus the host build's compactView, because TEST_APP_CONFIG replaces the whole list block.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "appConfig": {
+      "list": {
+        "priority": [
+          "priority",
+          "urgency"
+        ],
+        "firstLine": [
+          "wordcount",
+          "slugline",
+          "highlights",
+          "markedDesks",
+          "associations",
+          "publish_queue_errors",
+          "headline",
+          "versioncreated"
+        ],
+        "secondLine": [
+          "profile",
+          "state",
+          "scheduledDateTime",
+          "embargo",
+          "update",
+          "takekey",
+          "signal",
+          "broadcast",
+          "flags",
+          "updated",
+          "category",
+          "provider",
+          "expiry",
+          "desk",
+          "fetchedDesk",
+          "nestedlink",
+          "associatedItems"
+        ],
+        "compactView": {
+          "firstLine": [
+            "headline",
+            "slugline"
+          ],
+          "secondLine": []
+        }
+      }
+    },
+    "cleanup": [
+      "open the view switcher and click 'List view'"
+    ],
+    "padding": 0
+  },
+  {
+    "file": "monitoring-tab/swimlane-view.png",
+    "caption": "Swimlane View",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected with items in at least 3 groups",
+      "features.swimlane configured (default host config: defaultNumberOfColumns 4)"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "open the view switcher and click 'Swimlane View'",
+      "wait for .sd-kanban-list to be visible and the 'Columns:' input to appear in the toolbar",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"monitoring-view\"]",
+    "highlight": [
+      ".monitoring__toolbar-container input[type=\"number\"]"
+    ],
+    "notes": "Reset to 'List view' at the end.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "cleanup": [
+      "open the view switcher and click 'List view'"
+    ],
+    "padding": 0
+  },
+  {
+    "file": "monitoring-tab/photo-grid-view.png",
+    "caption": "Photo Grid View",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "At least 4 picture items with real thumbnails exist in a 'Sports' stage (upload via Create new item > Upload media, or API)",
+      "Desk 'Sports' selected"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      {
+        "action": "click",
+        "target": ".monitoring__toolbar-container .toggle-button:has(i.filetype-icon-picture)"
+      },
+      "open the view switcher and click 'Photo Grid View'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"monitoring-view\"] button.dropdown__toggle[aria-label=\"Photo Grid View\"]"
+      },
+      "wait for all thumbnails to finish loading (img elements complete)",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"monitoring-view\"]",
+    "highlight": "none",
+    "notes": "The e2e snapshot has no pictures; seed images first. Reset view to 'List view' and clear the file type filter (click 'all') at the end.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".monitoring__toolbar-container .toggle-button:has(.toggle-button__text--all)"
+      },
+      "open the view switcher and click 'List view'"
+    ],
+    "padding": 0
+  },
+  {
+    "file": "monitoring-tab/filters-panel.png",
+    "caption": "The Filters panel and active filters",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected",
+      "At least two enabled content profiles exist (for example 'Story' and 'Brief')",
+      "Categories vocabulary has items (for example 'Sport')",
+      "No filters active at start"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "click [data-test-id=\"filters-dropdown\"]",
+      "In [data-test-id=\"filter-contentProfile\"] select 'Story', 'Text'",
+      "In [data-test-id=\"filter-anpa_category.qcode\"] select 'Politics'",
+      "keep the popover open so both the panel and the 'Filters:' tags under the toolbar are visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"monitoring-view\"] .monitoring__toolbar-container",
+      "plus": [
+        ".sd-popup-positioner"
+      ],
+      "expand": {
+        "bottom": 14
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"remove-all-filters\"]"
+    ],
+    "notes": "Filters persist in localStorage (keys 'sd-filter-*'). Click 'Clear filters' afterwards. Replaces the old 1.33 'Advanced Search icon' screenshot (image385). Capture: the filter popover opens over the start of the 'Filters:' tag row, so the first tags are hidden behind it; only Clear filters is highlighted.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "padding": 0
+  },
+  {
+    "file": "monitoring-tab/preview-pane.png",
+    "caption": "The preview pane",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected",
+      "Item 'test sports story' exists in 'Sports / Working' with a body and some item history"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "click [data-test-id=\"article-item\"][data-test-value=\"Coalition unveils election budget with tax cuts for families\"] once",
+      "wait for [data-test-id=\"authoring-preview\"] to be visible with tabs 'Content', 'Metadata', 'Item history'",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"authoring-preview\"] [role=\"tablist\"]",
+      "[data-test-id=\"authoring-preview\"] .close-preview"
+    ],
+    "notes": "Viewport must be wide enough (over 700px list width) for the side pane instead of the overlay.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ]
+  },
+  {
+    "file": "monitoring-tab/item-actions-menu.png",
+    "caption": "The Actions menu of an item",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected",
+      "Item 'story 2' in 'Sports / Working', not locked, not published",
+      "User has spike, duplicate, mark for user and packaging privileges"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "hover [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] [data-test-id=\"article-item\"][data-test-value=\"Coalition unveils election budget with tax cuts for families\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      "wait for [data-test-id=\"context-menu\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"context-menu\"] plus the item row",
+    "highlight": "none",
+    "notes": "Do not hover any submenu entry (Duplicate) so the full first level is visible.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "padding": 0
+  },
+  {
+    "file": "monitoring-tab/multi-action-bar.png",
+    "caption": "The bulk actions bar",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected",
+      "Items 'test sports story' and 'story 2' exist, unlocked and unpublished"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "hover [data-test-id=\"article-item\"][data-test-value=\"Coalition unveils election budget with tax cuts for families\"] [data-test-id=\"item-type-and-multi-select\"] and check its [data-test-id=\"multi-select-checkbox\"]",
+      "do the same for 'Party leaders agree to three TV debates before polling day'",
+      "wait for [data-test-id=\"multi-action-bar\"] to show '2 Items selected' and [data-test-id=\"multi-actions-inline\"]",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"monitoring-view\"] top 530px (bar plus the two selected rows)",
+    "highlight": [
+      "#multi-select-count",
+      "[data-test-id=\"multi-actions-inline\"]"
+    ],
+    "notes": "Click 'cancel' in the bar afterwards to clear the selection.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "padding": 0
+  }
+]

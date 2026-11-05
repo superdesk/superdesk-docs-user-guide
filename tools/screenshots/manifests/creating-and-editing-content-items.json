@@ -1,0 +1,387 @@
+[
+  {
+    "file": "creating-and-editing-content-items/create-menu.png",
+    "caption": "The Create menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md); desk 'Politics' has a default content template (seed sets the story template as desk default)",
+      "Admin has used at least one other template on Politics recently so 'Recent templates' shows (optional: create and close an item from another template first, then discard it)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "select desk 'Politics'",
+      "Click [data-test-id=\"content-create\"]",
+      "Wait for [data-test-id=\"content-create-dropdown\"] to be visible",
+      {
+        "action": "mouseAway"
+      },
+      "Do not click any entry"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"content-create-dropdown\"]",
+      "plus": [
+        "[data-test-id=\"content-create\"]"
+      ],
+      "expand": {
+        "left": 240,
+        "top": 60,
+        "bottom": 16
+      }
+    },
+    "highlight": "none",
+    "notes": "Dropdown is InitialView in scripts/core/ui/components/content-create-dropdown/initial-view.tsx: sections 'Default desk template', 'Recent templates', 'More templates...', 'Create package' (data-test-id create-package), 'Upload media' (data-test-id upload-media). The round + button sits in the Monitoring header (tooltip 'Create new item'). Expand left so the crop is landscape and shows part of the monitoring header for context."
+  },
+  {
+    "file": "creating-and-editing-content-items/save-as-template.png",
+    "caption": "Saving an item as a template",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "Admin has the Templates (content_templates) privilege, so the Desk template checkbox and Desk list show"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"actions-button\"]",
+      "Click 'Save as template' in [data-test-id=\"actions-list\"]",
+      "Wait for [data-test-id=\"modal-save-as-template\"] to be visible",
+      "Type 'Election budget' in [data-test-id=\"name-input\"]",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"modal-save-as-template\"] .sd-check__wrapper"
+      },
+      {
+        "action": "wait",
+        "target": "#template-desk"
+      },
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"modal-save-as-template\"]",
+        "value": "Politics"
+      },
+      "Do not click Save"
+    ],
+    "cleanup": [
+      "press Escape",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"modal-save-as-template\"]",
+    "highlight": "none",
+    "notes": "Modal template scripts/apps/templates/views/create-template.html: Name input, info line 'It will create a new template.', 'Desk template' checkbox, 'Desk' select, Cancel and Save. Dialog crop, portrait allowed.",
+    "padding": 0
+  },
+  {
+    "file": "creating-and-editing-content-items/authoring-overview.png",
+    "caption": "The parts of the authoring screen",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks"
+    ],
+    "steps": [
+      "select desk 'Politics'",
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] to be visible",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1920x1080",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"authoring-topbar\"]",
+      ".authoring-sticky",
+      ".authoring-header",
+      [
+        "[data-test-id=\"field--headline\"]",
+        "[data-test-id=\"authoring-field\"][data-test-value=\"abstract\"]"
+      ],
+      "[data-test-id=\"navigation-tabs\"]"
+    ],
+    "highlightStyle": "callout",
+    "notes": "Numbered callouts 1 to 5 must match the numbered list on the page: 1 top bar, 2 status bar (.authoring-sticky: state label, Created, Modified, view controls), 3 header fields (.authoring-header), 4 content fields (body field), 5 widget bar ([data-test-id=navigation-tabs]). Full screen so the monitoring list is visible on the left. If the Info panel covers too much, skip opening it. Capture: 1920x1080 so the header fields and the first content fields (headline, abstract) fit; callout 4 boxes the headline and abstract because the body is below the fold. The Info panel and a click into the body were dropped: both pushed the header out of view."
+  },
+  {
+    "file": "creating-and-editing-content-items/topbar.png",
+    "caption": "The top bar",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "No features.customAuthoringTopbar in the client config, so only the default buttons show"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Wait for [data-test-id=\"authoring-topbar\"] [data-test-id=\"open-send-publish-pane\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"field--headline\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "press",
+        "key": "End"
+      },
+      {
+        "action": "press",
+        "key": "Space"
+      },
+      "move the mouse away from the list"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"authoring-topbar\"]",
+    "highlight": "none",
+    "padding": 0,
+    "notes": "Shows, left to right: full width toggle ([data-test-id=toggle-full-width]), 'Politics / Working', Close, Save, Minimize, More actions (three dots, [data-test-id=actions-button]), Send to / Publish ([data-test-id=open-send-publish-pane]). Typing a space only makes Save active; cleanup discards it with Ignore."
+  },
+  {
+    "file": "creating-and-editing-content-items/more-actions-menu.png",
+    "caption": "The More actions menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "Done by seed.py: A dictionary exists for the item's language (en) so the Spell Checker section shows"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"actions-button\"]",
+      "Wait for [data-test-id=\"actions-list\"] to be visible"
+    ],
+    "cleanup": [
+      "press Escape",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"actions-list\"]",
+      "plus": [
+        "[data-test-id=\"actions-button\"]"
+      ],
+      "expand": {
+        "left": 120,
+        "bottom": 8
+      }
+    },
+    "highlight": "none",
+    "notes": "Menu in scripts/apps/authoring/views/authoring-topbar.html: Save as template, Compare versions, Multiedit, Export (needs content_export privilege), Highlights / Marked for desks, Translate item to (when translations are enabled), Spell Checker with 'Run automatically' and 'Check spelling'. Tall dropdown: set allowPortrait if the crop warns.",
+    "allowPortrait": true
+  },
+  {
+    "file": "creating-and-editing-content-items/status-bar.png",
+    "caption": "The status bar and view controls",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "appConfig": {
+      "features": {
+        "preview": 1
+      }
+    },
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "Done by seed.py: A spell checker (dictionary) is available for the item's language so the spell checker button shows",
+      "appConfig turns on features.preview so the Preview button shows; TEST_APP_CONFIG replaces the whole 'features' block, so add any other features the e2e config needs"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Wait for [data-test-id=\"authoring\"] .authoring-sticky to be visible",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1920x1000",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] .authoring-sticky",
+      "expand": {
+        "left": 8,
+        "right": 8,
+        "top": 8,
+        "bottom": 8
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"authoring\"] .authoring-sticky__theme-controls"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Left: StatusInfo state label (In Progress), 'Created ... by ...', 'Modified ...' (scripts/apps/authoring/authoring/authoring-topbar2-react.tsx). Right: Preview (.preview-toggle, eye icon), Toggle theme (.proofread-toggle), spell checker (.spellchecker-toggle), theme settings (sd-theme-select icon-switches button). Landscape strip; if the tooltip falls outside the crop, drop the hover. Capture: one outline around the view controls (.authoring-sticky__theme-controls: Preview, Toggle theme, spell checker, theme settings); three separate outlines on the 32px buttons overlapped.",
+    "padding": 0
+  },
+  {
+    "file": "creating-and-editing-content-items/locked-item.png",
+    "caption": "An item locked by another user",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom with locks (SEED.md LOCKS): 'Defence ministry delays patrol vessel order by a year' (DEFENCE-PROCUREMENT) in Politics / Working is locked by marenholt; rerun seed.py if the lock expired",
+      "Admin has the Unlock content privilege, so the Unlock button shows"
+    ],
+    "steps": [
+      "select desk 'Politics'",
+      {
+        "action": "openItem",
+        "name": "Defence ministry delays patrol vessel order by a year",
+        "desk": "Politics"
+      },
+      "Wait for [data-test-id=\"locked-info\"] to be visible",
+      "Do not click Unlock"
+    ],
+    "viewport": "1920x1000",
+    "crop": {
+      "element": "[data-test-id=\"authoring-topbar\"]",
+      "plus": [
+        "[data-test-id=\"authoring\"] .authoring-sticky"
+      ]
+    },
+    "highlight": [
+      "[data-test-id=\"locked-info\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Locked info block in authoring-topbar.html: avatar, 'Locked by', user name, Unlock button ([data-test-id=unlock]). Clicking Unlock would release marenholt's seeded lock and break the Master Desk shots.",
+    "padding": 0
+  },
+  {
+    "file": "creating-and-editing-content-items/versions-history.png",
+    "caption": "The Versions tab",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "The story has at least three saved versions; if the seed created only one, the steps add two"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Change the headline in [data-test-id=\"field--headline\"] to 'Coalition unveils election budget'",
+      "Click [data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"]",
+      {
+        "action": "settle"
+      },
+      {
+        "action": "sleep",
+        "ms": 1500
+      },
+      "Change the headline in [data-test-id=\"field--headline\"] to 'Coalition unveils election budget with tax cuts for families'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"]",
+        "state": "enabled"
+      },
+      "Click [data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"]",
+      {
+        "action": "settle"
+      },
+      {
+        "action": "sleep",
+        "ms": 1500
+      },
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-widget\"][data-test-value=\"Versions/History\"]",
+      "Wait until [data-test-id=\"authoring-widget-panel\"] contains at least one [data-test-id=\"article-version\"]"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring-widget-panel\"]",
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "highlight": [
+      "[data-test-id=\"authoring-widget-panel\"] [data-test-id=\"article-version\"]:nth-child(2) button"
+    ],
+    "highlightStyle": "outline",
+    "allowPortrait": true,
+    "notes": "Versions list scripts/apps/authoring/versioning/versions/views/versions.html; the 'revert' button shows on every version except the newest. The steps add two versions and restore the original headline, so the item text ends unchanged. Side panel, portrait allowed.",
+    "padding": 0
+  }
+]

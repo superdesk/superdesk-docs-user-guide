@@ -1,0 +1,232 @@
+[
+  {
+    "file": "searching-content-in-superdesk/search-page.png",
+    "caption": "The Search page",
+    "route": "/#/search",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/SEED.md) so the results list shows Meridian News Service items",
+      "User preference search:filters_panel_open is at its default (true), so the advanced search panel is open",
+      "Search view is List View (not Photo Grid View)"
+    ],
+    "steps": [
+      "Open /#/search",
+      "wait for [data-test-id=\"repo--ingest\"] to be visible (the advanced search panel is open by default)",
+      "click #parameters-tab so the Parameters tab is active",
+      "wait until [data-test-id=\"article-item\"] is visible",
+      {
+        "action": "evaluate",
+        "script": "document.querySelector('.subnav.subnav--absolute:has(header.search-page-header)').style.top = '88px'; document.querySelector('section.search-page-container').style.marginTop = '40px';"
+      },
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      ".filter-trigger",
+      "#repo-dropdown",
+      ".item-searchbar",
+      ".sortbar",
+      "[data-test-id=\"view-select\"]"
+    ],
+    "highlightStyle": "badge",
+    "notes": "Replaces image60, image73, image148 and the inline base64 Search and Advanced Search icons. Badges 1 to 5 follow the order of the header list on the page: Toggle filters, source dropdown, search box, total and sort, view switcher. Template: scripts/apps/search/views/search.html. The evaluate step moves the Search page down by 40 px so the badges sit in an empty band above each header control (badgeAnchor above); at the controls' corners they straddled the top bar and badge 2 looked as if it belonged to the filter button.",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "badgeAnchor": "above"
+  },
+  {
+    "file": "searching-content-in-superdesk/search-highlights.png",
+    "caption": "Search terms highlighted in the results",
+    "route": "/#/search?q=election",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom: several items mention 'election' (ELECTION-* sluglines, 'Coalition unveils election budget with tax cuts for families', 'Bond yields edge higher as investors weigh election risk')",
+      "features.elasticHighlight is true (the default host build sets it; the e2e client does not, so it is passed through appConfig)"
+    ],
+    "steps": [
+      "Open /#/search?q=election",
+      "click [data-test-id=\"view-select\"] and choose 'List View'",
+      "wait until [data-test-id=\"article-item\"] is visible",
+      "wait for .es-highlight to be visible",
+      "wait for [data-test-id=\"repo--ingest\"] to be visible, then click .filter-trigger to close the advanced search panel",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: #content-list top 460px",
+    "highlight": [
+      ".search-tags__list .tag-label",
+      "[data-test-id=\"article-item\"]:has-text(\"Coalition unveils\") .es-highlight:text-is(\"election\")"
+    ],
+    "appConfig": {
+      "features": {
+        "swimlane": {
+          "defaultNumberOfColumns": 4
+        },
+        "editor3": true,
+        "qumu": false,
+        "savedSearch": {
+          "subscriptions": true
+        },
+        "validatePointOfInterestForImages": true,
+        "hideRoutedDesks": false,
+        "showCharacterLimit": 40,
+        "elasticHighlight": true
+      },
+      "isTestEnvironment": false
+    },
+    "notes": "New shot. Highlights are <span class=\"es-highlight\"> elements merged into headline/slugline by SearchService.mergeHighlightFields. The appConfig features block is the e2e client's features plus elasticHighlight, because TEST_APP_CONFIG replaces whole top-level blocks. The search tag 'election' must be visible above the list.",
+    "padding": 8
+  },
+  {
+    "file": "searching-content-in-superdesk/advanced-search-filters.png",
+    "caption": "The Filters tab",
+    "route": "/#/search",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom so the aggregations have Content types, Desks, Category, Urgency and Priority values"
+    ],
+    "steps": [
+      "Open /#/search",
+      "wait for [data-test-id=\"repo--ingest\"] to be visible (the advanced search panel is open by default)",
+      "click #filters-tab",
+      "wait for #advanced_search_filters to show 'Content types'",
+      "wait for #advanced_search_filters to show 'Desks'",
+      "move the mouse away from the panel"
+    ],
+    "viewport": {
+      "width": 1440,
+      "height": 1100
+    },
+    "crop": {
+      "element": ".archive-sidebar"
+    },
+    "allowPortrait": true,
+    "highlight": "none",
+    "notes": "Replaces image67 and image87. The panel is a side panel, so a portrait crop is fine. Template: scripts/apps/search/views/search-filters.html. #advanced_search_filters is only the tab row; the filter list is in the .archive-sidebar column, which is the crop.",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "padding": 0
+  },
+  {
+    "file": "searching-content-in-superdesk/save-search.png",
+    "caption": "Saving a search",
+    "route": "/#/search?q=election",
+    "user": "admin",
+    "preconditions": [
+      "Admin has the saved_searches privilege (admin has all privileges)"
+    ],
+    "steps": [
+      "Open /#/search?q=election",
+      "wait for [data-test-id=\"repo--ingest\"] to be visible (the advanced search panel is open by default)",
+      "click #parameters-tab",
+      "wait for #save_search_init to be visible",
+      "click #save_search_init",
+      "wait for .save-search-panel to be visible",
+      "fill #search_name with 'Election coverage'",
+      "fill #search_description with 'Every item that mentions the election'",
+      "move the mouse away from the panel"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".save-search-panel"
+    },
+    "highlight": [
+      [
+        "#search_global",
+        ".save-search-panel label:has-text(\"Make global\")"
+      ]
+    ],
+    "notes": "Replaces s-searchfilters.png. Do NOT click Ok (#search_save): the shot must not create a saved search. The 'Search shortcut' switch only appears when Make global is on and features.searchShortcut is set, so it is not in this shot. Template: scripts/apps/search/views/save-search.html and save-search-dialog.html.",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "padding": 8
+  },
+  {
+    "file": "searching-content-in-superdesk/saved-searches.png",
+    "caption": "The Saved tab",
+    "route": "/#/search",
+    "user": "admin",
+    "preconditions": [
+      "Done by seed.py: Saved search 'Election coverage' (private, owned by admin): POST /api/saved_searches as admin with {\"name\": \"Election coverage\", \"description\": \"Every item that mentions the election\", \"is_global\": false, \"filter\": {\"query\": {\"q\": \"election\", \"repo\": \"archive,published\"}}}",
+      "Done by seed.py: Saved search 'Sports results' (global, owned by admin): same call with {\"name\": \"Sports results\", \"description\": \"Published sport from the last 24 hours\", \"is_global\": true, \"filter\": {\"query\": {\"q\": \"sport\", \"repo\": \"published\"}}}",
+      "Done by seed.py: Saved search 'Budget watch' (global, owned by marenholt): POST /api/saved_searches logged in as marenholt with {\"name\": \"Budget watch\", \"description\": \"Budget and tax stories\", \"is_global\": true, \"filter\": {\"query\": {\"q\": \"budget\", \"repo\": \"archive,published\"}}}",
+      "Done by seed.py: Admin is subscribed to 'Sports results' so one 'Subscribed' label shows: PATCH it with {\"subscribers\": {\"user_subscriptions\": [{\"user\": \"<admin id>\", \"scheduling\": \"0 8 * * *\"}], \"desk_subscriptions\": []}}, or subscribe through the UI before the shot"
+    ],
+    "steps": [
+      "Open /#/search",
+      "wait for [data-test-id=\"repo--ingest\"] to be visible (the advanced search panel is open by default)",
+      "click #saved_searches_tab",
+      "wait for .saved-searches to show 'My Saved Searches'",
+      "wait for .saved-searches to show 'Budget watch'",
+      {
+        "action": "hover",
+        "target": "li.saved-search-item:has-text(\"Election coverage\")"
+      },
+      {
+        "action": "wait",
+        "target": "li.saved-search-item:has-text(\"Election coverage\") .saved-search-subscriptions--action",
+        "state": "visible"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".archive-sidebar",
+      "maxHeight": 500,
+      "expand": {
+        "right": 260
+      }
+    },
+    "allowPortrait": true,
+    "highlight": [
+      "li.saved-search-item:has-text(\"Election coverage\") .saved-search-subscriptions--action"
+    ],
+    "notes": "New shot. 'My Saved Searches' lists the admin's own searches ('Sports results' marked [Global]); 'Global Saved Searches' lists other users' global searches with 'by Maren Holt'. Template: scripts/apps/search/views/saved-searches.html. Remove the three saved searches after capture, or restore the snapshot. The saved searches list is not inside #advanced_search_filters (that is only the tab row), so the crop is the .archive-sidebar column. The Subscribe link only shows while the pointer is over a saved search, so the last step hovers 'Election coverage'.",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "padding": 0
+  },
+  {
+    "file": "searching-content-in-superdesk/saved-search-subscription.png",
+    "caption": "Subscribing to a saved search",
+    "route": "/#/search",
+    "user": "admin",
+    "preconditions": [
+      "Done by seed.py: Saved search 'Election coverage' exists for admin, with no subscription (see the saved-searches entry)"
+    ],
+    "steps": [
+      "Open /#/search",
+      "wait for [data-test-id=\"repo--ingest\"] to be visible (the advanced search panel is open by default)",
+      "click #saved_searches_tab",
+      "wait for .saved-searches to show 'Election coverage'",
+      {
+        "action": "hover",
+        "target": "li.saved-search-item:has-text(\"Election coverage\")"
+      },
+      {
+        "action": "click",
+        "target": "li.saved-search-item:has-text(\"Election coverage\") .saved-search-subscriptions--action",
+        "text": "Subscribe"
+      },
+      "wait for the modal heading 'New subscription' to be visible",
+      "In .modal__body check the radio 'Select days'",
+      "move the mouse away from the modal"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal__content:has-text(\"New subscription\")"
+    },
+    "highlight": "none",
+    "notes": "New shot. Do NOT click Subscribe in the modal footer. Close with Cancel afterwards. Template: scripts/apps/search/views/saved-search-subscribe.html and edit-time-interval.html.",
+    "cleanup": [
+      "click 'Cancel' in .modal__footer"
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  }
+]
