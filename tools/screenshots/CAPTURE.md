@@ -4,10 +4,11 @@
 
 ## Setup
 
-The script has no dependencies of its own. It loads Playwright from the superdesk-client-core e2e install with `createRequire`, so there is no `npm install` here and no `NODE_PATH` to set.
+The script loads Playwright with `createRequire` from a folder that has `node_modules/playwright`; it has no build step and no `NODE_PATH` to set.
 
-- Default location: `../../../superdesk-client-core/e2e/client` relative to this folder (the sibling checkout).
-- Override with `--playwright-from <dir>` or `SUPERDESK_E2E_CLIENT=<dir>`. The folder must have `node_modules/playwright`.
+- Without a client-core checkout (cloud agents, CI): `npm ci` and `npx playwright install chromium` in this folder (`package.json` pins the same Playwright version as the e2e stack, 1.61.0), then pass `--playwright-from .`; `run-capture-autodocs.sh` does that on its own when `node_modules/playwright` is here.
+- Default location otherwise: `../../../superdesk-client-core/e2e/client` relative to this folder (the sibling checkout).
+- Override with `--playwright-from <dir>` or `SUPERDESK_E2E_CLIENT=<dir>`.
 - The browser revision has to match that Playwright version (1.61 wants Chromium revision 1228). `./e2e/scripts/e2e-up.sh` installs it; by hand it is `npx playwright install chromium` from `e2e/client`. If you only have another Chromium build around, pass it with `--executable-path` (or `CHROMIUM_PATH`).
 
 Node 24 is assumed (plain ESM, no build step).

@@ -1,0 +1,9 @@
+{
+  "name": "superdesk-docs-screenshots",
+  "private": true,
+  "description": "Playwright for capture.mjs when no superdesk-client-core e2e checkout is around (cloud agents, CI). Run `npm ci` and `npx playwright install chromium` here, then run-capture-autodocs.sh picks it up.",
+  "type": "module",
+  "dependencies": {
+    "playwright": "1.61.0"
+  }
+}

@@ -80,7 +80,7 @@ def main():
         for src in re.findall(r'<img src="([^"]+)"', text) + re.findall(r"!\[[^\]]*\]\(([^)]+)\)", text):
             # GitBook wraps paths with spaces in angle brackets: ![](<../a b.png>)
             src = src.strip("<>")
-            if src.startswith("http"):
+            if src.startswith("http") or src.startswith("data:"):
                 continue
             if strict and not os.path.exists(os.path.normpath(os.path.join(d, src))):
                 problems.append(f"{page}: image missing {src}")

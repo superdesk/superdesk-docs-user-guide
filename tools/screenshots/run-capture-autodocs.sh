@@ -13,6 +13,7 @@
 #   SNAPSHOT=autodocs-planning  Planning pages, browser in Australia/Sydney
 #   AUTODOCS_URL                instance URL
 #   E2E_CLIENT                  folder whose node_modules has playwright (capture.mjs --playwright-from)
+#   CHROMIUM_PATH               browser binary when it is not in the Playwright cache
 #
 # system-messages: run `python3 seed.py --api-url <instance>/api --system-message-on` before that page
 # and the plain seed right after, as on the e2e stack.
@@ -20,8 +21,18 @@ cd "$(dirname "$0")"
 URL=${AUTODOCS_URL:-https://sd-autodocs.test.superdesk.org}
 API="$URL/api"
 SNAPSHOT=${SNAPSHOT:-autodocs}
-E2E_CLIENT=${E2E_CLIENT:-/Users/eos87/code/SourceFabric/Superdesk/Core/superdesk-client-core-docs/e2e/client}
-EXE=$(ls -d ~/Library/Caches/ms-playwright/chromium_headless_shell-*/*/chrome-headless-shell | tail -1)
+# Playwright comes from this folder when `npm ci` was run here (package.json), otherwise from a
+# superdesk-client-core e2e checkout: $E2E_CLIENT, or the sibling checkout next to the docs repo.
+if [ -z "$E2E_CLIENT" ]; then
+  if [ -d node_modules/playwright ]; then
+    E2E_CLIENT=$(pwd)
+  else
+    E2E_CLIENT=$(cd ../../../superdesk-client-core/e2e/client 2>/dev/null && pwd)
+  fi
+fi
+# A Chromium other than the one `npx playwright install chromium` put in the Playwright cache:
+# $CHROMIUM_PATH, else the newest headless shell in the macOS cache, else Playwright's own lookup.
+EXE=${CHROMIUM_PATH:-$(ls -d ~/Library/Caches/ms-playwright/chromium_headless_shell-*/*/chrome-headless-shell 2>/dev/null | tail -1)}
 case "$SNAPSHOT" in
   autodocs-planning) TZ_NAME=Australia/Sydney ;;
   *) TZ_NAME=Europe/London ;;
@@ -40,5 +51,5 @@ if [ -n "$FRESH" ]; then
 fi
 node capture.mjs --manifests manifests --out out/raw \
   --base-url "$URL" --api-url "$API" \
-  --playwright-from "$E2E_CLIENT" \
-  --executable-path "$EXE" --timezone "$TZ_NAME" "${restore_args[@]}" ${only:+--only $only} "$@"
+  ${E2E_CLIENT:+--playwright-from "$E2E_CLIENT"} ${EXE:+--executable-path "$EXE"} \
+  --timezone "$TZ_NAME" "${restore_args[@]}" ${only:+--only $only} "$@"
