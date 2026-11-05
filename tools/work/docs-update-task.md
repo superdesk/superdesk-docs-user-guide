@@ -31,15 +31,15 @@ For a manual run (`claude` on a laptop, in this repo): `/docs-update https://git
   - `CHROMIUM_PATH=/usr/bin/google-chrome` (Chrome for Testing is preinstalled in the image, so Playwright downloads nothing)
   - `AUTODOCS_URL=https://sd-autodocs.test.superdesk.org`
   - `BASH_DEFAULT_TIMEOUT_MS=600000` (a capture run can take longer than the two-minute default)
-- Setup script (runs as root, cached when it finishes within five minutes):
+- Setup script (runs as root on a fresh image, before the environment variables exist and apparently outside the repo checkout, so it must not rely on either and must exit 0 or the session is aborted). The skill runs `npm ci` itself, so the script only preinstalls Pillow for the styling scripts:
 
   ```sh
-  pip install pillow
-  cd tools/screenshots && npm ci
+  pip install pillow || true
+  exit 0
   ```
 
 - The image has Node 22 first on PATH (20 and 21 under `/opt`), Python 3 with pip, `git` and `gh`. The GitHub proxy allows REST (`gh api`) and rejects GraphQL, so the skill never uses `gh pr`.
-- The repo's `.claude/skills/docs-update` loads in the session because the docs repo is the only repository of the task.
+- The repo's `.claude/skills/docs-update` loads in the session because the docs repo is the first and only full checkout of the task. The other sources (client-core, superdesk, superdesk-core) are sparse checkouts of a single file each; they exist only so the GitHub proxy lets `gh api` read those repositories.
 
 ## Rollout
 
