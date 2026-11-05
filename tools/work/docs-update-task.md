@@ -22,7 +22,24 @@ For a manual run (`claude` on a laptop, in this repo): `/docs-update https://git
 - Trigger: GitHub, repository `superdesk/superdesk-client-core`, event pull request closed with merged = true, base branch `develop`. Needs the Claude GitHub App on that repository (installed 3 Nov 2026) and GitHub connected to the Claude account that owns the routine.
 - Model: Opus. The judgement in step 1 and the page edits are the expensive part, not the tool calls.
 - Tools: Bash, Read, Write, Edit, Glob, Grep. No connectors needed.
-- Environment: needs Node 20 or newer, Python 3 with Pillow (`pip install pillow`), `gh` logged in with write access to the docs repo, and `npm ci && npx playwright install --with-deps chromium` in `tools/screenshots` (the skill runs it when missing; `--with-deps` needs root for the apt packages, so put them in the environment's setup script if the sandbox has no root). Outbound access to `https://sd-autodocs.test.superdesk.org`.
+- Environment: the cloud environment below. Needs outbound access to `https://sd-autodocs.test.superdesk.org`.
+
+## Cloud environment (claude.ai/code, environment settings)
+
+- Network access: Custom, with "Also include default list of common package managers" checked (GitHub, npm, PyPI, apt), plus one line: `sd-autodocs.test.superdesk.org`.
+- Environment variables (`.env` format):
+  - `CHROMIUM_PATH=/usr/bin/google-chrome` (Chrome for Testing is preinstalled in the image, so Playwright downloads nothing)
+  - `AUTODOCS_URL=https://sd-autodocs.test.superdesk.org`
+  - `BASH_DEFAULT_TIMEOUT_MS=600000` (a capture run can take longer than the two-minute default)
+- Setup script (runs as root, cached when it finishes within five minutes):
+
+  ```sh
+  pip install pillow
+  cd tools/screenshots && npm ci
+  ```
+
+- The image has Node 22 first on PATH (20 and 21 under `/opt`), Python 3 with pip, `git` and `gh`. The GitHub proxy allows REST (`gh api`) and rejects GraphQL, so the skill never uses `gh pr`.
+- The repo's `.claude/skills/docs-update` loads in the session because the docs repo is the only repository of the task.
 
 ## Rollout
 

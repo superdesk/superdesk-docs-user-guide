@@ -101,9 +101,9 @@ def main():
     if r.returncode and not skip_index:
         problems.append("indexes out of date with SUMMARY.md (run sync_indexes.py): " + r.stdout.strip().replace("\n", "; "))
 
-    for p in pending:
+    for p in sorted(pending):
         print(p)
-    for p in problems:
+    for p in sorted(problems):
         print(p)
     print(f"{len(problems)} problem(s) in {len(pages)} page(s)" + (f", {len(pending)} pending link(s)" if pending else ""))
     return 1 if problems else 0

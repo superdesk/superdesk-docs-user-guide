@@ -12,7 +12,10 @@
 #   SNAPSHOT=autodocs           newsroom and broadcasting pages (default), browser in Europe/London
 #   SNAPSHOT=autodocs-planning  Planning pages, browser in Australia/Sydney
 #   AUTODOCS_URL                instance URL
-#   E2E_CLIENT                  folder whose node_modules has playwright (capture.mjs --playwright-from)
+#   E2E_CLIENT                  folder whose node_modules has playwright (capture.mjs --playwright-from);
+#                               SUPERDESK_E2E_CLIENT is accepted as well
+#   MANIFESTS, OUT              manifest folder and raw output folder (default manifests, out/raw), for a
+#                               scratch manifest outside the repo
 #   CHROMIUM_PATH               browser binary when it is not in the Playwright cache
 #
 # system-messages: run `python3 seed.py --api-url <instance>/api --system-message-on` before that page
@@ -23,6 +26,7 @@ API="$URL/api"
 SNAPSHOT=${SNAPSHOT:-autodocs}
 # Playwright comes from this folder when `npm ci` was run here (package.json), otherwise from a
 # superdesk-client-core e2e checkout: $E2E_CLIENT, or the sibling checkout next to the docs repo.
+E2E_CLIENT=${E2E_CLIENT:-$SUPERDESK_E2E_CLIENT}
 if [ -z "$E2E_CLIENT" ]; then
   if [ -d node_modules/playwright ]; then
     E2E_CLIENT=$(pwd)
@@ -49,7 +53,7 @@ if [ -n "$FRESH" ]; then
   fi
   restore_args=()
 fi
-node capture.mjs --manifests manifests --out out/raw \
+node capture.mjs --manifests "${MANIFESTS:-manifests}" --out "${OUT:-out/raw}" \
   --base-url "$URL" --api-url "$API" \
   ${E2E_CLIENT:+--playwright-from "$E2E_CLIENT"} ${EXE:+--executable-path "$EXE"} \
   --timezone "$TZ_NAME" "${restore_args[@]}" ${only:+--only $only} "$@"
