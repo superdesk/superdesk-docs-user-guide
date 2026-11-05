@@ -26,8 +26,9 @@ function gitbookToHtml(md, pageDir) {
         .replace(/\{%\s*endtabs\s*%\}/g, '</div>')
         .replace(/\{%\s*tab\s+title="([^"]*)"\s*%\}/g, '<div class="tab"><div class="tab-title">$1</div>')
         .replace(/\{%\s*endtab\s*%\}/g, '</div>')
+        .replace(/!\[([^\]]*)\]\(<?([^)>]+)>?\)/g, (m, alt, src) => `<img src="${src}" alt="${alt}">`)
         .replace(/src="([^"]+)"/g, (m, src) => {
-            if (/^https?:/.test(src)) return m;
+            if (/^(https?:|data:|file:)/.test(src)) return m;
             const abs = path.resolve(pageDir, src);
             const exists = fs.existsSync(abs);
             return `src="file://${abs}" data-missing="${exists ? '' : '1'}"`;

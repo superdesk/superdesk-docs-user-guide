@@ -18,8 +18,9 @@
 #                               scratch manifest outside the repo
 #   CHROMIUM_PATH               browser binary when it is not in the Playwright cache
 #
-# system-messages: run `python3 seed.py --api-url <instance>/api --system-message-on` before that page
-# and the plain seed right after, as on the e2e stack.
+# system-messages: the restore would undo the active message, so for that page the script restores
+# first, turns the seeded message on (seed.py --system-message-on), captures without a restore and
+# runs the plain seed afterwards so the toast does not stay on the instance.
 cd "$(dirname "$0")"
 URL=${AUTODOCS_URL:-https://sd-autodocs.test.superdesk.org}
 API="$URL/api"
@@ -53,7 +54,22 @@ if [ -n "$FRESH" ]; then
   fi
   restore_args=()
 fi
+system_messages=
+case "$only" in system-messages*) system_messages=1 ;; esac
+if [ -n "$system_messages" ]; then
+  if [ -n "${restore_args[*]}" ]; then
+    curl -fsS -m 300 -X POST "$API/restore_record" -H 'Content-Type: application/json' \
+      -d "{\"name\": \"$SNAPSHOT\"}" > /dev/null || exit 1
+  fi
+  python3 seed.py --api-url "$API" --system-message-on || exit 1
+  restore_args=()
+fi
 node capture.mjs --manifests "${MANIFESTS:-manifests}" --out "${OUT:-out/raw}" \
   --base-url "$URL" --api-url "$API" \
   ${E2E_CLIENT:+--playwright-from "$E2E_CLIENT"} ${EXE:+--executable-path "$EXE"} \
   --timezone "$TZ_NAME" "${restore_args[@]}" ${only:+--only $only} "$@"
+status=$?
+if [ -n "$system_messages" ]; then
+  python3 seed.py --api-url "$API" > /dev/null || echo "warning: could not deactivate the system message" >&2
+fi
+exit $status
