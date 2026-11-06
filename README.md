@@ -68,8 +68,15 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 
 * [Desk Creation and Desk Management](superdesk-user-guide/administration/desk-creation-and-desk-management.md)
 * [User Management and User Roles](superdesk-user-guide/administration/user-management-and-user-roles.md)
-* [Defining Publishing in Superdesk](superdesk-user-guide/administration/defining-publishing-in-superdesk.md)
-* [Content Configuration](superdesk-user-guide/administration/content-configuration.md)
+* [System messages](superdesk-user-guide/administration/system-messages.md)
+* [Defining Publishing in Superdesk](superdesk-user-guide/administration/defining-publishing-in-superdesk/README.md)
+  * [Content Filters and Internal Destinations](superdesk-user-guide/administration/defining-publishing-in-superdesk/content-filters-and-internal-destinations.md)
+  * [Products and Subscribers](superdesk-user-guide/administration/defining-publishing-in-superdesk/products-and-subscribers.md)
+  * [Publish Queue, Legal Archive and Content Expiry](superdesk-user-guide/administration/defining-publishing-in-superdesk/publish-queue-legal-archive-and-content-expiry.md)
+* [Content Configuration](superdesk-user-guide/administration/content-configuration/README.md)
+  * [Content profiles](superdesk-user-guide/administration/content-configuration/content-profiles.md)
+  * [Metadata and custom fields](superdesk-user-guide/administration/content-configuration/metadata-and-custom-fields.md)
+  * [Templates, macros and dictionaries](superdesk-user-guide/administration/content-configuration/templates-macros-and-dictionaries.md)
 
 #### Superdesk Planning Component
 
