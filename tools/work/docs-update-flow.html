@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How merged PRs update the user guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,400&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f6f8fb;
+      --color-ink:     #263143;
+      --color-muted:   #4f5a6e;
+      --color-accent:  #157f4e;
+      --font-sans:     'Roboto', system-ui, sans-serif;
+      --font-serif:    'Merriweather', serif;
+      --font-mono:     'Roboto Mono', ui-monospace, monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--color-paper); color: var(--color-ink); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 3rem 2rem; }
+    .frame { max-width: 1280px; width: 100%; }
+    .diagram-container { width: 100%; overflow-x: auto; }
+    .eyebrow { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 0.5rem; }
+    h1 { font-family: var(--font-serif); font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem); font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-ink); margin-bottom: 1.5rem; }
+    svg { width: 100%; min-width: 1280px; display: block; }
+    @media print { .diagram-container { overflow-x: visible; } svg { min-width: 0; } }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Swimlane · Superdesk · SDESK-8055</p>
+    <h1>How merged PRs update the user guide</h1>
+    <div class="diagram-container">
+      <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="docs-automation-flow-title docs-automation-flow-desc">
+        <title id="docs-automation-flow-title">How merged PRs update the user guide</title>
+        <desc id="docs-automation-flow-desc">Swimlane showing a developer merging a labelled pull request, a GitHub Actions workflow firing the Docs update routine, the routine editing guide pages, the docs instance providing screenshots, and a draft pull request on the docs repository that a person reviews.</desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#263143"/></marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#157f4e"/></marker>
+          <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#237086"/></marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#f6f8fb"/>
+        <rect x="24" y="152" width="1216" height="112" fill="rgba(38,49,67,0.05)"/>
+        <rect x="24" y="376" width="1216" height="112" fill="rgba(38,49,67,0.05)"/>
+
+        <!-- Lanes: 5 rows of 112 from y=40 -->
+        <line x1="24" y1="40" x2="1240" y2="40" stroke="rgba(38,49,67,0.12)" stroke-width="1"/>
+        <line x1="24" y1="152" x2="1240" y2="152" stroke="rgba(38,49,67,0.12)" stroke-width="1"/>
+        <line x1="24" y1="264" x2="1240" y2="264" stroke="rgba(38,49,67,0.12)" stroke-width="1"/>
+        <line x1="24" y1="376" x2="1240" y2="376" stroke="rgba(38,49,67,0.12)" stroke-width="1"/>
+        <line x1="24" y1="488" x2="1240" y2="488" stroke="rgba(38,49,67,0.12)" stroke-width="1"/>
+        <line x1="24" y1="600" x2="1240" y2="600" stroke="rgba(38,49,67,0.12)" stroke-width="1"/>
+
+        <text x="24" y="100" fill="#263143" font-size="9" font-weight="700" font-family="'Roboto Mono', monospace" letter-spacing="0.18em">DEVELOPER</text>
+        <text x="24" y="212" fill="#263143" font-size="9" font-weight="700" font-family="'Roboto Mono', monospace" letter-spacing="0.18em">GITHUB ACTIONS</text>
+        <text x="24" y="324" fill="#263143" font-size="9" font-weight="700" font-family="'Roboto Mono', monospace" letter-spacing="0.18em">CLAUDE CODE CLOUD</text>
+        <text x="24" y="436" fill="#263143" font-size="9" font-weight="700" font-family="'Roboto Mono', monospace" letter-spacing="0.18em">DOCS INSTANCE</text>
+        <text x="24" y="548" fill="#263143" font-size="9" font-weight="700" font-family="'Roboto Mono', monospace" letter-spacing="0.18em">DOCS REPOSITORY</text>
+
+        <!-- Arrows first -->
+        <!-- 1 merge -> 3 workflow: down from bottom, then right into the left edge -->
+        <path d="M256,128 V200 a8,8 0 0 0 8,8 H376" fill="none" stroke="#263143" stroke-width="1.6" marker-end="url(#arrow)"/>
+        <!-- 2 by hand -> 3 workflow: straight down -->
+        <line x1="464" y1="128" x2="464" y2="176" stroke="#263143" stroke-width="1.6" marker-end="url(#arrow)"/>
+        <!-- 3 workflow -> 4 routine: API call -->
+        <path d="M552,208 H664 a8,8 0 0 1 8,8 V288" fill="none" stroke="#237086" stroke-width="1.6" marker-end="url(#arrow-link)"/>
+        <!-- 4 routine -> 5 screenshots -->
+        <path d="M760,320 H872 a8,8 0 0 1 8,8 V400" fill="none" stroke="#263143" stroke-width="1.6" marker-end="url(#arrow)"/>
+        <!-- 5 screenshots -> 6 draft PR (focal) -->
+        <path d="M968,432 H1080 a8,8 0 0 1 8,8 V512" fill="none" stroke="#157f4e" stroke-width="2" marker-end="url(#arrow-accent)"/>
+
+        <!-- Arrow labels -->
+        <rect x="282" y="186" width="76" height="12" rx="2" fill="#eceef2"/>
+        <text x="320" y="195" fill="#263143" font-size="8" font-weight="500" font-family="'Roboto Mono', monospace" text-anchor="middle" letter-spacing="0.12em">DOCS LABEL</text>
+
+        <rect x="476" y="158" width="52" height="12" rx="2" fill="#eceef2"/>
+        <text x="502" y="167" fill="#263143" font-size="8" font-weight="500" font-family="'Roboto Mono', monospace" text-anchor="middle" letter-spacing="0.12em">ANY PR</text>
+
+        <rect x="580" y="186" width="64" height="12" rx="2" fill="#eceef2"/>
+        <text x="612" y="195" fill="#237086" font-size="8" font-family="'Roboto Mono', monospace" text-anchor="middle" letter-spacing="0.12em">FIRE API</text>
+
+        <rect x="784" y="298" width="72" height="12" rx="2" fill="#f6f8fb"/>
+        <text x="820" y="307" fill="#263143" font-size="8" font-weight="500" font-family="'Roboto Mono', monospace" text-anchor="middle" letter-spacing="0.12em">RECAPTURE</text>
+
+        <rect x="984" y="410" width="88" height="12" rx="2" fill="#eceef2"/>
+        <text x="1028" y="419" fill="#157f4e" font-size="8" font-family="'Roboto Mono', monospace" text-anchor="middle" letter-spacing="0.12em">PUSH BRANCH</text>
+
+        <!-- 1 Developer: merges a labelled PR (input) -->
+        <rect x="168" y="64" width="176" height="64" rx="6" fill="#f6f8fb"/>
+        <rect x="168" y="64" width="176" height="64" rx="6" fill="rgba(94,169,200,0.22)" stroke="#2f8fb0" stroke-width="1.5"/>
+        <text x="256" y="92" fill="#263143" font-size="14" font-weight="700" font-family="'Roboto', sans-serif" text-anchor="middle">Merges a PR</text>
+        <text x="256" y="110" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif" text-anchor="middle">with the docs label, into develop</text>
+
+        <!-- 2 Developer: runs it by hand (input) -->
+        <rect x="376" y="64" width="176" height="64" rx="6" fill="#f6f8fb"/>
+        <rect x="376" y="64" width="176" height="64" rx="6" fill="rgba(94,169,200,0.22)" stroke="#2f8fb0" stroke-width="1.5"/>
+        <text x="464" y="92" fill="#263143" font-size="14" font-weight="700" font-family="'Roboto', sans-serif" text-anchor="middle">Runs it by hand</text>
+        <text x="464" y="110" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif" text-anchor="middle">Actions tab, any PR number</text>
+
+        <!-- 3 Workflow (backend) -->
+        <rect x="376" y="176" width="176" height="64" rx="6" fill="#eceef2"/>
+        <rect x="376" y="176" width="176" height="64" rx="6" fill="#ffffff" stroke="#263143" stroke-width="1.5"/>
+        <text x="464" y="204" fill="#263143" font-size="14" font-weight="700" font-family="'Roboto', sans-serif" text-anchor="middle">Docs update workflow</text>
+        <text x="464" y="222" fill="#4f5a6e" font-size="9" font-family="'Roboto Mono', monospace" text-anchor="middle">docs-update.yml</text>
+
+        <!-- 4 Routine (backend) -->
+        <rect x="584" y="288" width="176" height="64" rx="6" fill="#f6f8fb"/>
+        <rect x="584" y="288" width="176" height="64" rx="6" fill="#ffffff" stroke="#263143" stroke-width="1.5"/>
+        <text x="672" y="316" fill="#263143" font-size="14" font-weight="700" font-family="'Roboto', sans-serif" text-anchor="middle">Docs update routine</text>
+        <text x="672" y="334" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif" text-anchor="middle">reads the diff, edits the pages</text>
+
+        <!-- 5 Docs instance: screenshots (external) -->
+        <rect x="792" y="400" width="176" height="64" rx="6" fill="#eceef2"/>
+        <rect x="792" y="400" width="176" height="64" rx="6" fill="rgba(38,49,67,0.10)" stroke="rgba(38,49,67,0.55)" stroke-width="1.5"/>
+        <text x="880" y="428" fill="#263143" font-size="14" font-weight="700" font-family="'Roboto', sans-serif" text-anchor="middle">Fresh screenshots</text>
+        <text x="880" y="446" fill="#4f5a6e" font-size="9" font-family="'Roboto Mono', monospace" text-anchor="middle">sd-autodocs.test.superdesk.org</text>
+
+        <!-- 6 Docs repository: draft PR (focal) -->
+        <rect x="1000" y="512" width="176" height="64" rx="6" fill="#f6f8fb"/>
+        <rect x="1000" y="512" width="176" height="64" rx="6" fill="rgba(30,176,108,0.30)" stroke="#1eb06c" stroke-width="2"/>
+        <text x="1088" y="540" fill="#263143" font-size="14" font-weight="700" font-family="'Roboto', sans-serif" text-anchor="middle">Draft PR</text>
+        <text x="1088" y="558" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif" text-anchor="middle">a person reviews and merges</text>
+
+        <!-- Callouts with dotted leaders -->
+        <text x="560" y="336" fill="#263143" font-size="13" font-style="italic" font-family="'Merriweather', serif" text-anchor="end">Not user-facing? The run ends with a report and opens nothing.</text>
+        <path d="M564,328 Q576,322 580,320" fill="none" stroke="rgba(30,176,108,0.60)" stroke-width="1" stroke-dasharray="4,3"/>
+        <circle cx="582" cy="320" r="2" fill="#1eb06c"/>
+
+        <text x="968" y="548" fill="#263143" font-size="13" font-style="italic" font-family="'Merriweather', serif" text-anchor="end">Nothing reaches the published guide without a review.</text>
+        <path d="M972,544 Q984,544 996,544" fill="none" stroke="rgba(30,176,108,0.60)" stroke-width="1" stroke-dasharray="4,3"/>
+        <circle cx="998" cy="544" r="2" fill="#1eb06c"/>
+
+        <!-- Legend -->
+        <text x="24" y="652" fill="#4f5a6e" font-size="8" font-family="'Roboto Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+
+        <rect x="120" y="640" width="28" height="16" rx="4" fill="rgba(94,169,200,0.22)" stroke="#2f8fb0" stroke-width="1.5"/>
+        <text x="156" y="652" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif">people</text>
+
+        <rect x="240" y="640" width="28" height="16" rx="4" fill="#ffffff" stroke="#263143" stroke-width="1.5"/>
+        <text x="276" y="652" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif">automation</text>
+
+        <rect x="384" y="640" width="28" height="16" rx="4" fill="rgba(38,49,67,0.10)" stroke="rgba(38,49,67,0.55)" stroke-width="1.5"/>
+        <text x="420" y="652" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif">Superdesk test instance</text>
+
+        <rect x="576" y="640" width="28" height="16" rx="4" fill="rgba(30,176,108,0.30)" stroke="#1eb06c" stroke-width="2"/>
+        <text x="612" y="652" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif">what a person reviews</text>
+
+        <line x1="760" y1="648" x2="800" y2="648" stroke="#237086" stroke-width="1.6" marker-end="url(#arrow-link)"/>
+        <text x="808" y="652" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif">API call</text>
+
+        <line x1="888" y1="648" x2="928" y2="648" stroke="#263143" stroke-width="1.6" marker-end="url(#arrow)"/>
+        <text x="936" y="652" fill="#4f5a6e" font-size="10" font-family="'Roboto', sans-serif">handoff</text>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>

@@ -53,7 +53,7 @@ anthropic-version: 2026-10-21
 
 The `docs` label is the gate: a merge without it does nothing, so people opening user-facing PRs have to add it. Dependabot is excluded because its PRs never change the UI. The routine accepts 30 fires per hour.
 
-The token lives as the Actions secret `ROUTINE_FIRE_TOKEN` in each of the four repos (repository secrets, not an organisation secret). Rotating it means generating a new token on the routine and updating all four.
+The token lives as the organisation-level Actions secret `ROUTINE_FIRE_TOKEN` on the superdesk org, shared by the four repos. Rotating it means generating a new token on the routine and updating that one secret.
 
 ## Running it by hand
 
@@ -61,6 +61,10 @@ The token lives as the Actions secret `ROUTINE_FIRE_TOKEN` in each of the four r
 - From a laptop with the Claude Code CLI: `/docs-update https://github.com/superdesk/<repo>/pull/<number>` in a checkout of this repo. Same skill, local machine, no routine involved.
 
 A run shows up as a session on the routine page within a minute. It ends with a draft PR on this repo named `docs-update/<repo-short>-<number>`, or with a report saying the PR is not user-facing.
+
+## Diagram
+
+`docs-update-flow.html` next to this file is the swimlane used on the Confluence page (Superdesk Editorial Team space). It was made with the diagram-design plugin and the saved Superdesk profile; open it in a browser or render the `svg` element to PNG at 2x for the wiki.
 
 ## Rollout
 
