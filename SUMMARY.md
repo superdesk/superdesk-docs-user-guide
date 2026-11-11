@@ -39,5 +39,6 @@
     * [View and edit Availability](superdesk-user-guide/availability-management/view-and-edit-availability.md)
     * [Manage Availability](superdesk-user-guide/availability-management/manage-availability.md)
     * [The Production API endpoint](superdesk-user-guide/availability-management/the-production-api-endpoint.md)
+  * [Broadcasting: shows and rundowns](superdesk-user-guide/broadcasting-shows-and-rundowns.md)
   * [Reference](superdesk-user-guide/reference/README.md)
     * [Superdesk \\- Glossary and Terminology Guide](superdesk-user-guide/reference/superdesk-glossary-and-terminology-guide.md)
