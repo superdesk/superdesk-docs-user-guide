@@ -11,7 +11,7 @@ To make planning items visible outside Superdesk, see [Posting events and planni
 There are several ways to create a planning item:
 
 * **From scratch.** Click the plus icon in the toolbar and choose **Planning Item**. Fill in at least the **Slugline** and the **Planning Date**, add coverages and click **Create**.
-* **From an event in the list.** Open the event's action menu and choose **Create Planning Item**. The new planning item is linked to the event and gets its slugline, description, category and other details. **Create and Open Planning Item** does the same and opens the new item in the editor.
+* **From an event in the list.** Open the event's action menu and choose **Create Planning Item**. The new planning item is linked to the event and takes over its slugline, name, description, ed note, internal note, category, subject, place, language, location, priority and date. Calendars, contacts, files and links are not copied. This list is fixed. **Create and Open Planning Item** does the same and opens the new item in the editor.
 * **From the event editor.** See [Adding planning items from the event form](#adding-planning-items-from-the-event-form).
 * **From an article.** In Monitoring or in the editor, choose **Add to Planning** in the item's action menu. Pick an existing planning item and choose **Add to planning**, or create a new one with the plus icon. The article becomes a coverage of that planning item.
 
@@ -25,14 +25,14 @@ The default planning item form has these fields:
 * **Agendas**: the agendas the item belongs to.
 * **Ed Note**, **Category**, **Subject** and **Urgency**.
 * **Not For Publication**: turn this on for items that must never leave Superdesk. The **Post** button disappears. You can only set it before the item is posted for the first time.
-* **Forward Planning**: only shown when your Superdesk adds coverages to the workflow automatically. Turn it on to keep this item's coverages out of the workflow for now. See [Adding a coverage to the workflow](#adding-a-coverage-to-the-workflow).
+* **Forward Planning**: only shown when your Superdesk has been configured to add coverages to the workflow automatically. Turn it on to keep this item's coverages out of the workflow for now. See [Adding a coverage to the workflow](#adding-a-coverage-to-the-workflow).
 * **Related Events** and **Coverages**.
 
 ### Adding planning items from the event form
 
 *Available since Superdesk 2.3.*
 
-You can plan coverage without leaving the event. Save the event first, then click the **Add Planning Item** icon in the editor's left bar, or the plus button next to **Related Plannings**. A planning item card opens inside the event with the event's details already filled in. Planning items already linked to the event are listed there too. Use **Show more** and **Show less** to expand or collapse a card, and the card's own **Save** button to save it.
+You can plan coverage without leaving the event. Save the event first, then click the **Add Planning Item** icon in the editor's left bar, or the plus button next to **Related Plannings**. A planning item card opens inside the event with the event's details already filled in. The card shows only the planning fields your administrator marked **Show in embedded form**, plus the required ones; see [Fields](planning-administration.md#fields). Planning items already linked to the event are listed there too. Use **Show more** and **Show less** to expand or collapse a card, and the card's own **Save** button to save it.
 
 Add coverages to the card with the **Coverages** plus button, which lists the coverage types and an **Advanced mode** for the full coverage form. Each coverage shows as a card with its assignment and workflow state, for example **Unassigned** and **Draft**; open it to choose the desk and user. When you save the card, the planning item is saved and linked to the event.
 
@@ -48,7 +48,7 @@ If you planned coverage first and it turns out to be tied to an event, open the 
 
 Once a planning item is created, its **Related Events** section shows each linked event as a card. Click **Show more** on a card to see and edit the event's details without leaving the planning item, then save.
 
-To create a new event for the planning item, click the plus button next to **Related Events**. A new event is added with the planning item's details filled in. Complete its dates and save the planning item to create the event.
+To create a new event for the planning item, click the plus button next to **Related Events**. A new event is added with the planning item's details filled in. The card shows only the event fields your administrator marked **Show in embedded form**, plus the required ones. Complete its dates and save the planning item to create the event.
 
 ### Linking events and planning items
 
@@ -87,7 +87,7 @@ Click the plus button and pick the type, for example **Text**, **Picture** or **
 {% step %}
 ### Fill in the coverage
 
-Fill in the coverage fields: **Genre**, **Slugline**, **Ed Note**, **Internal Note**, the coverage **Status** and the **Due** date and time. A new coverage takes its slugline, notes and due date from the planning item, or its due time from the linked event.
+Fill in the coverage fields: **Genre**, **Slugline**, **Ed Note**, **Internal Note**, the coverage **Status** and the **Due** date and time. A new coverage takes its slugline, notes and due date from the planning item, or its due time from the linked event. Your administrator can choose the fields for each coverage type.
 {% endstep %}
 
 {% step %}
@@ -119,7 +119,7 @@ In the coverage, click **Assign**. The **Coverage Assignment Details** window op
 {% step %}
 ### Choose the desk and the person
 
-Pick the **Desk** (required). Then pick a user from that desk, or leave the user empty to give the work to the whole desk. If your newsroom works with stringers or freelancers, you can pick a **Coverage Provider** and an **Assigned Provider** from your media contacts instead of a user.
+Pick the **Desk** (required). Then pick a user from that desk, or leave the user empty to give the work to the whole desk. If your newsroom works with freelancers, you can pick a **Coverage Provider** and an **Assigned Provider** from your media contacts instead of a user.
 {% endstep %}
 
 {% step %}

@@ -75,7 +75,7 @@ Each row shows the item's main details. Your administrator decides which fields 
 
 * A green **P** badge on the left means the item is posted. A light, empty badge means it is not posted yet.
 * A red "no entry" icon in the same place means the planning item is marked **Not For Publication**.
-* A coloured bar on the left edge means someone has the item open for editing. Nobody else can edit it until they close it.
+* A red bar on the left edge means someone has the item open for editing. Nobody else can edit it until they close it.
 * On planning items, one icon per coverage shows the coverage type. Its colour tells you how far the work has got. Hover over the icon for the type, desk and status.
 * A state label such as **Scheduled**, **Cancelled**, **Postponed** or **Rescheduled** shows the item's workflow state.
 
@@ -117,7 +117,7 @@ Selecting several items is not available in **Events & Planning**.
 * While a search or filter is active, a red **Clear Filters** button appears in the toolbar. Click it to see the full list again.
 * Saved filters appear in the list filter menu under **Search Filters**.
 
-The **Language** filter is on for events by default. Your administrator can add it to the planning item and combined filters too.
+The **Language** filter is available for events by default. Your administrator can add it to the planning item and combined filters too.
 
 <figure><img src="../../.gitbook/assets/superdesk-planning-component/advanced-filters.png" alt="The Advanced filters panel open next to the planning list" width="999"><figcaption><p>Advanced filters for events</p></figcaption></figure>
 
@@ -127,9 +127,9 @@ Planning keeps the people involved informed:
 
 * When a coverage is added to the workflow, the assigned user, or every member of the assigned desk, gets a notification in Superdesk.
 * Assignees are also notified when an assignment is reassigned, removed or cancelled, when its due time changes, and when the event behind it is cancelled, postponed or rescheduled.
-* The planner is notified when work on an assignment starts and when it is completed.
+* The person who made the assignment is notified in Superdesk when work on it starts and when it is completed.
 
-Notifications appear under the bell icon in the top bar. Assigned users also get an email. You can turn off assignment emails while keeping others: see [Your profile and preferences](../navigating-superdesk/your-profile-and-preferences.md). If your Superdesk is connected to Slack, notifications can also go to Slack.
+Notifications appear under the bell icon in the top bar. Emails go out when an assignment is given, reassigned or accepted. Start and completion notifications are shown in Superdesk only. You can turn off assignment emails while keeping others: see [Your profile and preferences](../navigating-superdesk/your-profile-and-preferences.md). If your Superdesk is connected to Slack, notifications can also go to Slack.
 
 ## For administrators
 

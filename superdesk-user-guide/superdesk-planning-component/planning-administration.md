@@ -74,7 +74,7 @@ Event calendars, coverage types and the other lists used in Planning are vocabul
 | Vocabulary | Used for |
 |---|---|
 | Event Calendars | Grouping events, for example Sport, Finance or Entertainment. Users can filter the event list by calendar. |
-| Coverage content types | The coverage types users can add to a planning item (Text, Picture, Video and so on). There is one coverage profile per type. |
+| Coverage content types | The coverage types users can add to a planning item (Text, Picture, Video and so on). Each entry says which content item type it stands for, and several entries can stand for text, for example Text and Infographic. There is one coverage profile per entry. |
 | News Coverage Status | The status of a coverage, for example coverage intended or not intended. |
 | Event Occurence Status | How likely an event is to happen. |
 | Assignment Priority | The priority of an assignment. |
@@ -86,7 +86,7 @@ You can also add your own vocabularies and use them as fields in the planning fo
 
 ### Coverage providers
 
-A coverage can be given to an outside provider, such as a stringer or a freelancer, instead of a staff member. The coverage assignment form then shows a **Coverage Provider** field. Its options come from a vocabulary with the ID `coverage_providers`. This vocabulary is not part of the default data, so it has to be added to your Superdesk before the field has any options.
+A coverage can be given to an outside provider, such as a freelancer, instead of a staff member. The coverage assignment form then shows a **Coverage Provider** field. Its options come from a vocabulary with the ID `coverage_providers`. This vocabulary is not part of the default data, so it has to be added to your Superdesk before the field has any options.
 
 A provider can be linked to a contact type. If that contact type is marked as assignable, users can pick a specific contact from Media Contacts as the **Assigned Provider**.
 
@@ -279,7 +279,7 @@ Pick a **Frequency**: **Hourly**, **Weekly** or **Monthly**. For weekly exports 
 {% step %}
 ### Choose where the article goes
 
-Under **Destination**, pick the **Desk**, the **Article Template** used to create the article, and the **Custom Layout** that formats the list of items. Click **Save**.
+Under **Destination**, pick the **Desk**, the **Article Template** used to create the article, and the **Custom Layout** that formats the list of items. Click **Save**. The article is created on the working stage of that desk.
 {% endstep %}
 {% endstepper %}
 
@@ -289,7 +289,7 @@ Times use the server's default time zone. If the filter finds no items, no artic
 
 ## Custom layouts
 
-*Available since Superdesk 3.1.*
+*Managing custom layouts in the interface is available since Superdesk 3.1. Before that, layouts were set up in the server configuration.*
 
 Custom layouts decide how a list of events or planning items is written out when users export them as an article, download them, or when a scheduled export runs. Click **Actions** > **Manage Custom Layouts**.
 
@@ -297,7 +297,7 @@ Each layout has:
 
 * **Name**: a unique internal name,
 * **Type**: **Event**, **Planning** or **Combined**,
-* **Template Content**: the HTML template that renders the items,
+* **Template Content**: the template that renders the items. It is a Jinja template that produces HTML; `items` holds the exported items,
 * **Label**: the name users see when they pick a layout,
 * **Download**: when ticked, the layout is offered when users download events. When not ticked, it is offered in **Export as article**.
 
@@ -397,6 +397,20 @@ When a planning item is linked to an event, or the other way round, the preview 
 
 The fields offered in the advanced search panels and in the saved filter editor are configurable per list: events, planning, combined and assignments (the assignments list since 3.1). Fields can be hidden or reordered, and custom vocabularies can be added as filters.
 
+### Assignments button in the top bar
+
+*Available since Superdesk 2.5.*
+
+The **Assignments** button in the top bar is turned on with the `assignmentsTopBarWidget` option of the planning extension in the client configuration. Users also need the **Planning - Assignments** privilege. See [Assignments in the top bar](assignments.md#assignments-in-the-top-bar).
+
+### How events and planning items are linked
+
+The server setting `PLANNING_EVENT_LINK_METHOD` decides how many events a planning item can be linked to, and it changes how event dates are edited:
+
+* `one_primary` (the default): a planning item is linked to one event, its primary event. Cancelling, postponing, rescheduling or posting the event is passed on to the planning item. The dates of an existing event can only be changed with the **Update time** and **Reschedule** actions.
+* `many_secondary`: a planning item can be linked to any number of events, and nothing is passed on from the events to the planning item. Users change event dates directly in the event form, and the **Update time** action is not offered.
+* `one_primary_many_secondary`: the first linked event is the primary one and behaves as in `one_primary`; further events are secondary.
+
 ### Server settings
 
 | Setting | Effect |
@@ -409,7 +423,7 @@ The fields offered in the advanced search panels and in the saved filter editor 
 | `PLANNING_ALLOWED_COVERAGE_LINK_TYPES` | Limits which content types can be linked to a coverage. |
 | `PLANNING_SEND_NOTIFICATION_FOR_SELF_ASSIGNMENT` | Notifies users about assignments they give to themselves. |
 | `ASSIGNMENT_MANUAL_REASSIGNMENT_ONLY` | Turns off automatic user assignment for coverages. |
-| `PLANNING_EVENT_LINK_METHOD` | How many events a planning item can be linked to: `one_primary` (one event, the default), `many_secondary` or `one_primary_many_secondary`. |
+| `PLANNING_EVENT_LINK_METHOD` | How events and planning items are linked, see [How events and planning items are linked](#how-events-and-planning-items-are-linked). |
 | `MAX_RECURRENT_EVENTS` | The maximum number of events in a recurring series (200 by default). |
 | `PLANNING_EXPIRY_MINUTES`, `PLANNING_DELETE_SPIKED_MINUTES` | When old items expire and when spiked items are deleted. Off by default. |
 

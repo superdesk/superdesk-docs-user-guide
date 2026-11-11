@@ -16,14 +16,14 @@ Click the title of a group to show only that group. Click **Back to group list v
 
 The filter bar above the list has:
 
-* **Select Assignments From:** a dropdown with **My Assignments** (the assignments given to you on any desk), each of your desks, and **All Desks** if your setup allows it.
+* **Desk Assignments** or **My Assignments** (the assignments given to you on any desk). When you work in a custom workspace, this is a **Select Assignments From:** dropdown with **My Assignments** and each of your desks instead.
 * **Filter by day:** shows only assignments due on one day. The shortcuts **Today**, **Tomorrow** and **In 2 days** are at the top of the date picker (since 2.8).
 * **Order By:** sorts by **Created**, **Updated**, **Priority** or **Scheduled**. Each group also has its own sort direction icon.
 * **Search Assignments** in the toolbar, and the filter icon for advanced filters such as slugline, user, content type and priority.
 
 Seeing the assignments of a desk needs a privilege. Users without it only see their own assignments (since 3.6).
 
-Click an assignment to open its preview. It shows the coverage, the planning item and the event it belongs to, and a history of what happened to it.
+Click an assignment to open its preview. The **Assignment** tab shows the coverage, the planning item and the event it belongs to. The **Content** tab lists the linked article or media item, once there is one. **Item History** shows what happened to the assignment.
 
 ## Working on an assignment
 
@@ -54,6 +54,8 @@ Work on the article as usual; see [Creating and Editing Content Items](../conten
 {% endstepper %}
 
 If you need to close an assignment without publishing, use **Complete Assignment** in its action menu.
+
+A coverage can be set to **Multiple Content** when several items are expected for it, for example a series of pictures. Its coverage icon shows as a stack of pages. Publishing one item does not complete such an assignment: keep using **Start Working** or **Link to Assignment** for the next items, and double-click the assignment in the list to see all linked items. Close it with **Complete Assignment** when all content is in. Your administrator turns this option on per coverage type.
 
 ## Linking an existing article
 
@@ -87,4 +89,4 @@ An **Accepted** label on an assignment means the assignee confirmed it through a
 
 *Available since Superdesk 2.5.*
 
-Your administrator can add an **Assignments** button to the top bar. It shows how many assignments you have that are assigned, submitted or in progress. Click it to see them grouped by desk, and click one to open it.
+Your administrator can add an **Assignments** button to the top bar; see [Assignments button in the top bar](planning-administration.md#assignments-button-in-the-top-bar). It shows how many assignments you have that are assigned, submitted or in progress. Click it to see them grouped by desk, and click one to open it.

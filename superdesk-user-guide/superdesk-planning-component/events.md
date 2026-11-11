@@ -46,7 +46,7 @@ The event form is split into sections. Use the icons on the left of the editor t
 * If the time is not known yet, open the time picker and choose **To Be Confirmed**. The event shows **Time TBC** until you set the time.
 * An event that spans several days appears in the list on each of its days.
 
-You set the dates when you create an event. After that, change them with the **Update time** or **Reschedule** actions, so that linked planning items and assignments are updated too. See [Changing an event](#changing-an-event).
+You set the dates when you create an event. After that, change them with the **Update time** or **Reschedule** actions, so that linked planning items and assignments are updated too. See [Changing an event](#changing-an-event). If your Superdesk is set up to link a planning item to many events, you change the dates in the event form instead, and there is no **Update time** action. See [How events and planning items are linked](planning-administration.md#how-events-and-planning-items-are-linked).
 
 ## All-day events
 
@@ -106,7 +106,7 @@ If the place is not in the list, click **Search OpenStreetMap** to look it up on
 {% step %}
 ### Or add it by hand
 
-Click **Add a new location**. In the **Add New Event Location** window, fill in at least the name, address, city and country, and click **Create Location**. The location is saved for everyone to reuse.
+Click **Add a new location**. In the **Add New Event Location** window, fill in at least the name, address, city and country, and click **Create Location**. The location is saved for everyone to reuse. Administrators review and correct the stored locations under **Manage Locations**, see [Locations](planning-administration.md#locations).
 {% endstep %}
 {% endstepper %}
 
@@ -165,12 +165,12 @@ Posting makes an event or planning item visible outside Superdesk, for example t
 Unposting a planning item deletes the assignments of its coverages and puts the coverages back to draft. Anyone working on those assignments loses them.
 {% endhint %}
 
-When you post an event that has linked planning items, Superdesk can post the planning items too, depending on your setup. When you post or unpost one event of a recurring series, Superdesk asks whether to apply it to all events in the series or just this one.
+When you post an event that has linked planning items, Superdesk also posts the planning items that have not been posted yet, if your administrator turned on **Post planning items with Event** in the event profile. See [Fields](planning-administration.md#fields). When you post or unpost one event of a recurring series, Superdesk asks whether to apply it to all events in the series or just this one.
 
 Posting and unposting need their own privileges. If you do not see the buttons, ask your administrator.
 
 {% hint style="info" %}
-Newshub can hide coverage details from some customers. If a company in Newshub has **Restrict Coverage Info** turned on, its users only see the type, number and due date of coverages, not their names or status. This is set in Newshub, not in Superdesk.
+Newshub, Superdesk's news portal, can hide coverage details from some customers. If a company in Newshub has **Restrict Coverage Info** turned on, its users only see the type, number and due date of coverages, not their names or status. This is set in Newshub, not in Superdesk.
 {% endhint %}
 
 ## Exporting items as an article
