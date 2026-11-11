@@ -33,7 +33,7 @@ Search providers connect Superdesk to external archives and photo services, so u
 * **Is Default**: makes this provider the one selected first in Search.
 * **Open advanced search panel by default** and **Default view**: how the provider's results open.
 
-Once a user has fetched an item from a provider into a desk, you can no longer remove the provider, only close it by turning off **Status**. How users search providers is described in [Searching Content in Superdesk](../../workspace-and-search/searching-content-in-superdesk.md).
+Note for admin users: once a user has fetched an item from a provider into a desk, you can no longer remove the provider, only close it by turning off **Status**. How users search providers is described in [Searching Content in Superdesk](../../workspace-and-search/searching-content-in-superdesk.md).
 
 ## For administrators
 

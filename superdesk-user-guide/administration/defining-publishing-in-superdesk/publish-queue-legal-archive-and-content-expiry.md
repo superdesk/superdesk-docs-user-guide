@@ -49,7 +49,7 @@ Each entry has a unique name and a sequence number. Resending creates a new entr
 
 The **Processing time** column shows how long the item took from publishing until it was transmitted to that Destination (since 3.6). Use it to spot slow Destinations.
 
-If Superdesk can not format an item for one Destination, that entry gets the status **error** with the reason in the **Message** column (since 3.3). The other Subscribers still receive the item. Fix the cause, for example the Destination's settings, and resend the entry.
+If Superdesk can not format an item for one Destination, that entry gets the status **error** with the reason in the **Message** column (since 3.3). The other Subscribers still receive the item. Fix the cause and resend the entry. Resending from the Publish Queue sends the item as it was formatted at the time, to the Destination settings of that time. If you changed the Destination's settings, resend the item from the published items list instead (**Resend** in its action menu): that formats it again and uses the current settings.
 
 ### Previewing an entry
 

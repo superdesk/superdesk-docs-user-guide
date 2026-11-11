@@ -23,7 +23,7 @@ Fields on the **Product Details** tab:
 * **Product codes**: proprietary descriptors or designators for upstream use, separated by commas.
 * **Content Filter**: one filter per Product. If none is selected, every published item in the instance can be sent to the Product's Subscribers.
 * **Content Filter Type**: shown once a Content Filter is selected. **Permitting** allows only articles that match the conditions. **Blocking** prevents articles that match the conditions from being selected (all but Filter XY).
-* **Target Regions**: if configured, narrows the Product by region. Only the selected regions receive the Product.
+* **Target Regions**: if configured, narrows the Product by region. Only the selected regions receive the Product. The regions come from the vocabulary with the ID `geographical_restrictions`, which is not part of the default data. Create it in **Settings** > **Metadata** to use regions; see [Vocabularies](../content-configuration/metadata-and-custom-fields.md#vocabularies). Users pick the regions of an item in the **Target** panel of the editor.
 
 ### Which subscribers use a product
 
@@ -33,7 +33,7 @@ The **Subscribers** tab of the Product form lists every Subscriber that receives
 
 ### Testing products
 
-On the **Product Test** tab, paste an article GUID into **Story GUID**, choose a **Result Type** (**All**, **Match** or **No-Match**) and click **Test Products**. Superdesk lists the Products with the test result for each. For a Product that does not match, it also gives the reason.
+On the **Product Test** tab, paste an article GUID into **Story GUID**, choose a **Result Type** (**All**, **Match** or **No-Match**) and click **Test Products**. Superdesk lists the Products with the test result for each. For a Product that does not match, it also gives the reason. The test works for articles and media items only, not for events or planning items.
 
 ## Define Subscribers
 
@@ -46,7 +46,7 @@ Together, the Content flow settings define:
 * Destinations (where to send it)
 * Formats (how it should be sent)
 
-Subscribers are customers. Each Subscriber can receive multiple Products at any number of Destinations (for example a website and a mobile app).
+Subscribers are customers. Each Subscriber can receive multiple Products at any number of Destinations (for example an FTP server and an HTTP endpoint).
 
 The Subscribers list shows each Subscriber's state: **Active**, **Not Active**, **Active until** a date, or **Scheduled from** one date **to** another. You can search by name and filter the list by **Target Type** and by **Status** (**Active**, **Inactive** or **Both**). By default the list shows active Subscribers only.
 

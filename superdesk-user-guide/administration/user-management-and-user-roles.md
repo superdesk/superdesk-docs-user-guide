@@ -65,7 +65,7 @@ To see everything, click **View full profile** at the top of the pane. The full 
 * **Privileges**: extra privileges for this user, see [Privileges of a single user](#privileges-of-a-single-user).
 * **Availability**: only when your Superdesk uses Availability Management. See [View and edit Availability](../availability-management/view-and-edit-availability.md).
 
-The **Personal preferences** tab only appears on your own profile. The **Activity Stream** on the right lists what the user did recently.
+The **Personal preferences** tab only appears on your own profile, next to the **Overview** tab. The **Activity Stream** on the right lists what the user did recently.
 
 <figure><img src="../../.gitbook/assets/user-management-and-user-roles/user-profile-overview.png" alt="The full profile of a user on the Overview tab, with the section menu on the left and the Activity Stream on the right" width="999"><figcaption><p>The full profile of a user</p></figcaption></figure>
 
@@ -73,7 +73,7 @@ The **Overview** tab has a menu on the left with **General**, **Password**, **De
 
 **General** holds the name, username, email address, **Role**, phone number and other contact details. Changing a user's role changes their privileges. Only users with the **User Management** privilege can change a role.
 
-**Default desk** is the desk the user sees after logging in. You can choose one of the desks the user is a member of.
+**Default desk** is the desk the user sees after logging in. You can choose one of the desks the user is a member of. When users switch desks, Superdesk remembers the last desk until they log out. After the next login they start on the default desk again.
 
 **Language** is the language of the Superdesk interface for this user. See [Your profile and preferences](../navigating-superdesk/your-profile-and-preferences.md).
 
@@ -180,7 +180,7 @@ The list of privileges depends on the modules your Superdesk uses. These privile
 | **AI Studio** | Managing AI providers in **Settings** > **AI Providers**. See [AI features](../integrations-and-advanced-features/ai-features.md). | 3.7 |
 | **AI** | Using AI actions | 3.7 |
 
-When the Planning component is installed, the list also has privileges for agendas, events, planning items, assignments and planning settings. See [Planning administration](../superdesk-planning-component/planning-administration.md).
+When the Planning component is installed, the list also has privileges for agendas, events, planning items, assignments and planning settings. See [Planning administration](../superdesk-planning-component/planning-administration.md). The same goes for Analytics: its privileges appear when the server has the Analytics module installed. The **Availability** privileges are part of every Superdesk since 3.6, even when the Availability Management extension is not turned on in the client.
 
 ## Media Contacts
 

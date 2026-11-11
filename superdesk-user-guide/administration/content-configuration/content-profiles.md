@@ -137,7 +137,7 @@ The **Widgets** tab lists the widgets of the widget bar, such as comments, versi
 
 *Available since Superdesk 2.7.*
 
-Picture, video and audio items have their own content profiles, one for each type. You edit them the same way as text profiles. The fields you add to the profile, and mark as required, are the ones users see and must fill in when they upload media and when they edit the metadata of a media item. See [Edit Media Items](../../content-management/creating-and-editing-content-items/edit-media-items.md).
+Picture, video and audio items have their own content profiles, one for each type. You edit them the same way as text profiles. The fields of the picture profile are the ones users see in the upload window and when they edit the metadata of a media item (since 3.5), unless the client configuration defines its own set of media fields. Which fields must be filled in before an upload or a metadata edit is saved does not come from the profile but from the server setting `VALIDATOR_MEDIA_METADATA`, so the two can differ. The fields you mark as required in the profile are checked when the media item is published. See [Edit Media Items](../../content-management/creating-and-editing-content-items/edit-media-items.md)..
 
 Media profiles are not used by templates. Templates always use a text profile.
 

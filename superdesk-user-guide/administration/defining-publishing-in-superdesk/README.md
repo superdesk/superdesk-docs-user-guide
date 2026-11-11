@@ -8,7 +8,7 @@ Products are then created based on those Content Filters. The simplest Product i
 
 The next step is to set up Subscribers. Subscribers might be news agency customers, but in the world of digital publishing you can think of them as publications. For each Subscriber you define which Products it receives, and through its Destinations how (the output format and delivery method) and where the items are sent. Subscribers can also read content through the Content API instead of, or as well as, receiving it at a Destination.
 
-Once items are published, you can check what was sent and resend items from the Publish Queue. If your instance has the Legal Archive, every published item is also saved there.
+Once items are published, you can check what was sent and you can resend items from the Publish Queue. If your instance has the Legal Archive, every published item is also saved there.
 
 All of these settings are in the Main menu under **Settings**, in the **Content flow** group: **Content Filters**, **Internal Destinations**, **Products** and **Subscribers**. **Publish Queue** and **Legal Archive** are entries of the Main menu itself. Each of them needs its own privilege, see [Privileges](#privileges).
 

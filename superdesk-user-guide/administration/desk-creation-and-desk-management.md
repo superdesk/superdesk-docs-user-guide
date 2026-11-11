@@ -53,7 +53,7 @@ A new desk always starts with two stages, **Working Stage** and **Incoming Stage
 
 *Available since Superdesk 2.7.*
 
-Turn on **Disallow sending items to this desk** on the **General** tab to remove the desk from the destinations in the **Send to** panel. Users can then no longer send items to it. Use it for desks that should only get content in other ways, for example through ingest routing or by fetching.
+Turn on **Disallow sending items to this desk** on the **General** tab to remove the desk from the destinations in the **Send to** panel. Users can then no longer send items to it. Use it for desks that should only get content in other ways, for example through ingest routing or by fetching. You can also use it when a desk is not in use for a while, so that nobody sends content there by mistake.
 
 See [Sending, scheduling and publishing items](../content-management/sending-scheduling-and-publishing.md).
 
@@ -81,7 +81,7 @@ The **Work stages** list is on the left. Click a stage to see its settings under
 
 * To add a stage, click the **+** button below the list, type a name and click **Save**. A stage name can be up to 40 characters long and must be unique on the desk.
 * To edit a stage, hover over it and click the pencil icon.
-* To change the order of the stages, drag a stage up or down.
+* To change the order of the stages, drag a stage up or down. This order is also the order the **To Desk** button in the editor follows: it moves the item to the next stage of the desk, and from the last stage back to the first. The button is turned on in the client configuration.
 * To remove a stage, hover over it and click the trash icon. You cannot remove the working stage or the incoming stage, a stage that still has items, or a stage that an ingest routing scheme uses.
 
 When you edit a stage, these options appear:
