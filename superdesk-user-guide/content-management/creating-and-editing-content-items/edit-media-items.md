@@ -62,7 +62,7 @@ At the bottom of the **Metadata** panel, **Copy metadata** remembers the values 
 
 *Available since Superdesk 3.5.*
 
-The fields in the **Metadata** panel come from the picture content profile your administrator set up, and fields marked as required there are required in the upload window too. If there is no picture profile, Superdesk shows a default set of fields. See [Media content profiles](#media-content-profiles).
+The fields in the **Metadata** panel come from the picture content profile your administrator set up (since 3.5). Which of them you must fill in before uploading is set in the server configuration, so it can differ from the profile. If there is no picture profile, Superdesk shows a default set of fields. See [Media content profiles](#media-content-profiles).
 
 ## Editing a media item
 
@@ -204,7 +204,7 @@ Administrators create gallery fields in **Settings** > **Metadata** > **Related 
 
 *Available since Superdesk 2.7.*
 
-Like articles, media items have content profiles. A newsroom can have one profile for each media type: picture, video and audio. The profile decides which metadata fields you fill in and which of them are required before the media item can be published. The picture profile also sets the fields of the upload window and of the media editor.
+Like articles, media items have content profiles. A newsroom can have one profile for each media type: picture, video and audio. The profile decides which metadata fields you fill in and which of them are required before the media item can be published. The picture profile also sets the fields of the upload window and of the media editor, while the fields required for an upload come from the server configuration.
 
 If you think a field is missing or should not be required, ask your administrator. Profiles are set up in **Settings** > **Content Profiles**. See [Profiles for pictures, video and audio](../../administration/content-configuration/content-profiles.md#profiles-for-pictures-video-and-audio).
 
@@ -220,7 +220,7 @@ This section is for administrators.
 
 ### Media profiles and crop sizes
 
-* Create media profiles in **Settings** > **Content Profiles** by choosing **Picture**, **Video** or **Audio** as the **Content Type**. Only one profile per media type is allowed. The fields of the picture profile are used in the upload window and the media editor (since 3.5).
+* Create media profiles in **Settings** > **Content Profiles** by choosing **Picture**, **Video** or **Audio** as the **Content Type**. Only one profile per media type is allowed. The fields of the picture profile are used in the upload window and the media editor (since 3.5). The fields required before an upload or a metadata edit is saved come from the server setting `VALIDATOR_MEDIA_METADATA`, not from the profile.
 * Crop sizes are the items of the **Image Crop Sizes** vocabulary in **Settings** > **Metadata**. Without it, the **Edit crops** button is hidden.
 * Gallery fields are **Media gallery** fields on the **Related content** tab of **Settings** > **Metadata**, with the allowed media types, **Allow multiple items** and **Max. number of items**.
 
