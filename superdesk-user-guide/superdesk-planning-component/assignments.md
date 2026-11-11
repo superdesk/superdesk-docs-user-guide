@@ -83,8 +83,6 @@ The action menu of an assignment also has:
 
 <figure><img src="../../.gitbook/assets/superdesk-planning-component/assignment-actions-menu.png" alt="The action menu of an assignment with Start Working, Reassign, Edit Priority and Remove Assignment" width="1492"><figcaption><p>Actions for an assignment</p></figcaption></figure>
 
-An **Accepted** label on an assignment means the assignee confirmed it through an external system connected to your Superdesk. The person who gave the assignment gets a notification. Superdesk itself has no button to accept an assignment.
-
 ## Assignments in the top bar
 
 *Available since Superdesk 2.5.*

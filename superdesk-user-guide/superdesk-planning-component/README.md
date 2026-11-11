@@ -129,7 +129,7 @@ Planning keeps the people involved informed:
 * Assignees are also notified when an assignment is reassigned, removed or cancelled, when its due time changes, and when the event behind it is cancelled, postponed or rescheduled.
 * The person who made the assignment is notified in Superdesk when work on it starts and when it is completed.
 
-Notifications appear under the bell icon in the top bar. Emails go out when an assignment is given, reassigned or accepted. Start and completion notifications are shown in Superdesk only. You can turn off assignment emails while keeping others: see [Your profile and preferences](../navigating-superdesk/your-profile-and-preferences.md). If your Superdesk is connected to Slack, notifications can also go to Slack.
+Notifications appear under the bell icon in the top bar. Emails go out when an assignment is given or reassigned. Start and completion notifications are shown in Superdesk only. You can turn off assignment emails while keeping others: see [Your profile and preferences](../navigating-superdesk/your-profile-and-preferences.md). If your Superdesk is connected to Slack, notifications can also go to Slack.
 
 ## For administrators
 
