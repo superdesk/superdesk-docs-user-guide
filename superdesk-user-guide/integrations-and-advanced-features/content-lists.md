@@ -1,12 +1,14 @@
 # Content lists
 
-*Available since Superdesk 3.7.*
+*Available since Superdesk 3.7. The server side and the Production API endpoint are in Superdesk 3.6 already.*
 
 {% hint style="info" %}
 This is an optional module. If you do not see it, ask your administrator.
 {% endhint %}
 
-A content list is an ordered selection of articles that you curate by hand, for example the top stories on your homepage, a business briefing or the stories for an election special. You pick the articles, put them in the order you want, and pin the ones that must not move. Your website or app reads the list from Superdesk and shows the articles in that order.
+Content lists are for newsrooms whose website or app, typically a progressive web app (PWA), is fed by Superdesk. The app does not decide on its own which articles to show on its home page or in its sections: it reads a content list from Superdesk through the Production API and shows the articles in the order the list has. Editors control what readers see by editing the list in Superdesk.
+
+A content list is an ordered selection of articles that you curate by hand, for example the top stories on your homepage, a business briefing or the stories for an election special. You pick the articles, put them in the order you want, and pin the ones that must not move.
 
 Content lists do not change the articles themselves. An article can be in several lists at once, and it keeps its desk, stage and workflow status.
 
