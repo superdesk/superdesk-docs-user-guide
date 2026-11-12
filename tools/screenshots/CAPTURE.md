@@ -172,6 +172,16 @@ Actions: `goto` (`route`), `click`, `dblclick`, `hover`, `check` (`value: false`
 - Styled radio and checkbox inputs (Master Desk tabs, stage radios, multi-select) are checked with `force`, because their label intercepts a real click.
 - `data-test-value` on monitoring rows is the item's headline, not its slugline.
 
+## Lessons from the docs instance
+
+- Planning pages are captured on the docs instance with the `autodocs-planning` snapshot (`SNAPSHOT=autodocs-planning`, `FRESH=1` for shots that depend on today's dates), not on a local planning stack. The planning e2e stack is the fallback when the instance is down.
+- The full client loads extensions the e2e stacks do not: broadcasting dereferences the `rundown_item_types` vocabulary while loading and the whole client dies without it (nothing renders after login, no error on screen), and availability-manager shows administrators an "issues with instance configuration" modal without `availability_manager_tags`, which swallows every click. `seed_planning.py` creates both sets of vocabularies and `dismissInterruptions` closes the modal.
+- After a start with an empty database the instance seeds itself for a few minutes. A reseed from the laptop during that time wipes the seed under it; `run-capture-autodocs.sh` waits for the seed marker first.
+- A 403 from the instance (nginx, not Superdesk) means the instance is gone or stopped, not rebuilding: a Fireq restart brings it back, and with an empty database it seeds itself again.
+- Connections from a laptop to the instance stall for a minute or more now and then, with nothing in the server log. The seeds retry a stalled request three times; the login waits in `capture.mjs` grow with `--timeout`.
+- The Assignments route shows the custom-workspace dropdown instead of the Desk Assignments / My Assignments buttons when the page is opened directly by URL, because Planning reads the active desk once at start-up. Select a desk on Monitoring first (`select desk 'Politics'`).
+- The Playwright browser cache (`~/Library/Caches/ms-playwright`) can disappear between sessions; `npx playwright install chromium` from the e2e client folder puts the matching headless shell back.
+
 ## e2e client patch
 
 The client-core e2e client (`e2e/client/index.js` in the worktree that builds slot 1, `Core/superdesk-client-core-docs`) is patched locally and the change is not committed, so it has to be reapplied after a fresh checkout. The full diff of that worktree (index.js, `e2e/server/settings.py`, `e2e/server/Dockerfile`, against client-core 7e08bc457) is saved as `client-core-e2e-docs.patch` next to this file; apply it with `git apply` in a fresh worktree. Slots 2 and 3 used worktrees `-docs2` and `-docs3` with a subset of the same patch; they were removed on 2026-10-22, so `run-capture-s2.sh` and `run-capture-s3.sh` need a worktree recreated before they run again. Stock, `startApp` loads availability-manager, content-lists and the publishing-sections test extension. The patch adds, between content-lists and publishing-sections:

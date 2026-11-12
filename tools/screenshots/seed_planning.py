@@ -22,6 +22,8 @@ import urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from seed import ApiError, Client, SeedError, log, login  # noqa: E402
+import seed_broadcasting  # noqa: E402
+import seed_data  # noqa: E402
 
 from zoneinfo import ZoneInfo  # noqa: E402
 
@@ -481,6 +483,42 @@ class Seeder:
             self.prepopulate("vocabularies", [vocab])
             log("create", "cv", vocab["_id"])
 
+    def seed_host_client_vocabularies(self):
+        """Vocabularies that extensions of the full Superdesk client read at start-up. Without them the
+        client on the docs instance does not start at all (broadcasting reads `rundown_item_types` while
+        loading) or shows an "issues with instance configuration" modal to administrators that swallows
+        every click (availability-manager needs `availability_manager_tags`). The planning e2e stack does
+        not load those extensions, so it never needed them."""
+        for spec in seed_broadcasting.VOCABULARIES:
+            if self.c.get_optional("/vocabularies/" + spec["_id"]):
+                log("skip", "cv", spec["_id"])
+                continue
+            self.c.post("/vocabularies", {
+                "_id": spec["_id"],
+                "display_name": spec["display_name"],
+                "type": "manageable",
+                "unique_field": "qcode",
+                "selection_type": "do not show",
+                "schema": spec["schema"],
+                "items": [dict(item, is_active=True) for item in spec["items"]],
+            })
+            log("create", "cv", spec["_id"])
+        spec = seed_data.AVAILABILITY_TAGS
+        if self.c.get_optional("/vocabularies/" + spec["_id"]):
+            log("skip", "cv", spec["_id"])
+        else:
+            self.c.post("/vocabularies", {
+                "_id": spec["_id"],
+                "display_name": spec["display_name"],
+                "type": "manageable",
+                "selection_type": "multi selection",
+                "service": {"all": 1},
+                "unique_field": "qcode",
+                "schema": {"name": {"required": True}, "qcode": {"required": True}, "parent": {}},
+                "items": [dict(item, is_active=True) for item in spec["items"]],
+            })
+            log("create", "cv", spec["_id"])
+
     def seed_locations(self):
         for loc in LOCATIONS:
             if self.c.find_one("/locations", {"unique_name": loc["unique_name"]}):
@@ -712,6 +750,7 @@ class Seeder:
         self.seed_profile_and_template()
         self.seed_desks()
         self.seed_vocabularies()
+        self.seed_host_client_vocabularies()
         self.seed_locations()
         self.seed_agendas()
         self.seed_events()

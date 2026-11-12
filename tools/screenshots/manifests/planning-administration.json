@@ -5,7 +5,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -51,7 +51,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -105,7 +105,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -178,7 +178,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -277,7 +277,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -332,7 +332,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md).",
       "Apply the grouped planning profile first: `python3 seed_planning.py --scenario grouped-preview` (also adds the 'Budget vote coverage' item); remove it afterwards with `--reset` (planning_types has no DELETE)."
     ],
@@ -385,7 +385,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -436,7 +436,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -538,7 +538,7 @@
     "route": "#/planning",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -596,7 +596,7 @@
     "route": "#/locations",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [
@@ -636,7 +636,7 @@
     "route": "#/settings/user-roles",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, DEFAULT_TIMEZONE Australia/Sydney), captured with run-capture-planning.sh. The server image must be built from the same superdesk-planning checkout as the client (e2e-up.sh --rebuild), otherwise the Planning and Assignments workspaces do not load.",
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
     ],
     "steps": [

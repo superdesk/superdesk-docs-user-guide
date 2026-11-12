@@ -333,7 +333,7 @@ class Sessions {
         log(`logging in as ${creds.username} (manifest user "${creds.key}")`);
 
         try {
-            await login(page, creds, this.opts.baseUrl);
+            await login(page, creds, this.opts.baseUrl, loginTimeout(this.opts.timeout));
         } catch (e) {
             e.debugPage = page;
             e.debugContext = context;
@@ -405,12 +405,18 @@ async function fillLoginForm(page, creds) {
     await form.getByTestId('submit').click();
 }
 
-async function login(page, creds, baseUrl) {
+// Loading the app after login takes longer on a remote instance than on a local stack, so the login
+// waits stretch with --timeout but never go below the 60 s a local stack is tuned for.
+function loginTimeout(timeout) {
+    return Math.max(60000, timeout ?? 0);
+}
+
+async function login(page, creds, baseUrl, timeout = 60000) {
     await page.goto(`${baseUrl}/`, {waitUntil: 'domcontentloaded'});
 
     const username = page.getByTestId('login-page').getByTestId('username');
     const shell = page.locator(APP_SHELL);
-    const first = await waitForAny([username, shell], 60000);
+    const first = await waitForAny([username, shell], timeout);
 
     if (first === -1) {
         throw new Error(`neither the login form nor the app shell appeared at ${baseUrl}`);
@@ -419,7 +425,7 @@ async function login(page, creds, baseUrl) {
     if (first === 0) {
         await fillLoginForm(page, creds);
 
-        const result = await waitForAny([shell, page.getByTestId('login-error-401')], 60000);
+        const result = await waitForAny([shell, page.getByTestId('login-error-401')], timeout);
 
         if (result !== 0) {
             throw new Error(`login failed for ${creds.username}`);
@@ -443,6 +449,23 @@ async function dismissInterruptions(page, creds) {
 
     if (await skip.isVisible().catch(() => false)) {
         await skip.click().catch(() => {});
+    }
+
+    // Administrators get "There are issues with instance configuration" once per session when an
+    // extension cannot start (a vocabulary it needs is missing); its mask swallows every click.
+    const configIssue = page.locator('.p-dialog').filter({hasText: /issues with instance configuration/i})
+        .filter({visible: true}).first();
+
+    if (await configIssue.count() > 0) {
+        const close = configIssue.locator('button[aria-label="Close"], .p-dialog-header-close').first();
+
+        if (await close.count() > 0) {
+            await close.click().catch(() => {});
+        } else {
+            await page.keyboard.press('Escape').catch(() => {});
+        }
+
+        await sleep(300);
     }
 
     // "Item Unlocked: This item was unlocked by ..." shows when another session of the same
@@ -709,7 +732,8 @@ async function loadRoute(ctx, hash) {
 
     const username = ctx.page.getByTestId('login-page').getByTestId('username');
     const shell = ctx.page.locator(APP_SHELL);
-    let first = await waitForAny([shell, username], 60000);
+    const timeout = loginTimeout(ctx.timeout);
+    let first = await waitForAny([shell, username], timeout);
 
     if (first !== -1) {
         await sleep(1000);
@@ -722,14 +746,14 @@ async function loadRoute(ctx, hash) {
     if (first === 1) {
         ctx.log('    session was logged out; logging in again');
         await fillLoginForm(ctx.page, ctx.creds);
-        await username.waitFor({state: 'hidden', timeout: 60000});
+        await username.waitFor({state: 'hidden', timeout});
 
-        if (await waitForAny([shell], 60000) !== 0) {
+        if (await waitForAny([shell], timeout) !== 0) {
             throw new StepError('re-login did not reach the app');
         }
 
         await ctx.page.goto(url, {waitUntil: 'domcontentloaded'});
-        await ctx.page.locator(APP_SHELL).first().waitFor({state: 'visible', timeout: 60000});
+        await ctx.page.locator(APP_SHELL).first().waitFor({state: 'visible', timeout});
     } else if (first === -1) {
         throw new StepError(`the app did not render at ${url}`);
     }
