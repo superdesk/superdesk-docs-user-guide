@@ -1,0 +1,461 @@
+[
+  {
+    "file": "writing-and-formatting/body-statistics.png",
+    "caption": "Text statistics next to the body field",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "Done by seed.py: Story profile body field has a Maximum length (e.g. 2000) so the character count shows the limit and the settings button; optional: authoring.lineLength set to show the line count"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] to be visible",
+      "Scroll to [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"]"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"]",
+      "maxHeight": 220
+    },
+    "highlight": [
+      [
+        "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] .char-count__wrapper",
+        "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] .char-count-config-button"
+      ]
+    ],
+    "highlightStyle": "outline",
+    "notes": "Statistics come from TextStatistics (scripts/apps/authoring/authoring/components/text-statistics.tsx): optional 'n lines', 'n words', characters (with limit), 'n min read'; then CharacterCountConfigButton (gear, opens 'Character limit settings'). Keep the crop to the field label row and the first lines of text."
+  },
+  {
+    "file": "writing-and-formatting/editor-toolbar.png",
+    "caption": "The body editor toolbar",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "Done by seed.py: Story profile body field has these formatting options: h2, h3, bold, italic, underline, unordered list, ordered list, quote, link, embed, media, table, multi-line quote, remove format, comments, annotation, suggestions, formatting marks, undo, redo (Settings > Content Profiles > Story > body_html > Formatting options)"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] to be visible",
+      "Click into the first paragraph of the body text in [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]",
+      "Wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"toolbar\"] to be visible"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"toolbar\"]",
+      "expand": {
+        "left": 12,
+        "right": 12,
+        "top": 12,
+        "bottom": 70
+      }
+    },
+    "highlight": "none",
+    "notes": "Toolbar is scripts/core/editor3/components/toolbar/index.tsx; buttons carry data-test-id formatting-option-button (style buttons) or aria-label = tooltip (icon buttons). Expand down a little so the first line of body text shows under the toolbar.",
+    "padding": 0
+  },
+  {
+    "file": "writing-and-formatting/custom-block-menu.png",
+    "caption": "Choosing a custom block",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "Custom blocks 'Fact box' and 'Read more' exist (seeded by seed.py, CUSTOM_BLOCKS)",
+      "Story profile body field has the 'custom blocks' formatting option (seeded by seed.py, STORY_BODY)"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Click at the end of the last body paragraph in [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"toolbar\"] [aria-label=\"Custom block\"]",
+      {
+        "action": "wait",
+        "target": ".autocomplete.autocomplete--multi-select"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      "press Escape",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"toolbar\"]",
+      "plus": [
+        ".autocomplete.autocomplete--multi-select"
+      ],
+      "expand": {
+        "left": 12,
+        "right": 12,
+        "top": 12,
+        "bottom": 16
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"toolbar\"] [aria-label=\"Custom block\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "The button is an IconButton with tooltip/aria-label 'Custom block' and icon plus-large; it opens a TreeMenu listing vocabulary display names. Capture: the TreeMenu popup is .autocomplete.autocomplete--multi-select (superdesk-ui-framework TreeMenu); the mouse moves away so the 'Custom block' tooltip does not cover the menu.",
+    "padding": 0
+  },
+  {
+    "file": "writing-and-formatting/annotation-popup.png",
+    "caption": "Adding an annotation",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "Done by seed.py: Story profile body field has the 'annotation' formatting option",
+      "Done by the e2e client patch (CAPTURE.md): annotationsLibrary extension loaded (default host build) so the 'Annotations library' tab shows; the e2e client may need it added",
+      "annotation_types vocabulary has at least one entry"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Double-click the word 'levy' in the body of [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] to select it",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"toolbar\"] [aria-label=\"Annotation\"]",
+      "Wait for .annotation-input to be visible",
+      "Type 'A charge on short-term property rentals proposed in the budget.' in the Annotation Body editor inside .annotation-input",
+      "Do not click Submit"
+    ],
+    "cleanup": [
+      "press Escape",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1920x1080",
+    "crop": {
+      "element": ".annotation-input",
+      "expand": {
+        "left": 24,
+        "right": 24,
+        "top": 64,
+        "bottom": 16
+      }
+    },
+    "highlight": "none",
+    "notes": "Popup: AnnotationInput (scripts/core/editor3/components/annotations/AnnotationInput.tsx), tabs 'New annotation' and 'Annotations library', 'Annotation Type' select, 'Annotation Body' editor, Cancel / Submit. 'levy' is in the second body paragraph of the seeded story. Expand left/top so a bit of the highlighted text shows."
+  },
+  {
+    "file": "writing-and-formatting/spellchecker-menu.png",
+    "caption": "Spelling suggestions for an underlined word",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "Done by seed.py: An active English dictionary exists (Settings > Dictionaries) for the item's language, or use the e2e 'spellchecker' snapshot and its 'spellchecker test' item in Sports / Working",
+      "Automatic spell checking is on for admin"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const root = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]'); const block = root.querySelector('[data-block=\"true\"]'); const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT); let last = null; while (walker.nextNode()) { last = walker.currentNode; } const range = document.createRange(); range.setStart(last, last.length); range.collapse(true); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range); })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 300
+      },
+      {
+        "action": "press",
+        "key": "Space"
+      },
+      {
+        "action": "press",
+        "key": "M"
+      },
+      {
+        "action": "press",
+        "key": "o"
+      },
+      {
+        "action": "press",
+        "key": "s"
+      },
+      {
+        "action": "press",
+        "key": "t"
+      },
+      {
+        "action": "press",
+        "key": "Space"
+      },
+      {
+        "action": "press",
+        "key": "h"
+      },
+      {
+        "action": "press",
+        "key": "o"
+      },
+      {
+        "action": "press",
+        "key": "u"
+      },
+      {
+        "action": "press",
+        "key": "s"
+      },
+      {
+        "action": "press",
+        "key": "e"
+      },
+      {
+        "action": "press",
+        "key": "h"
+      },
+      {
+        "action": "press",
+        "key": "o"
+      },
+      {
+        "action": "press",
+        "key": "l"
+      },
+      {
+        "action": "press",
+        "key": "d"
+      },
+      {
+        "action": "press",
+        "key": "s"
+      },
+      {
+        "action": "press",
+        "key": "Space"
+      },
+      {
+        "action": "press",
+        "key": "r"
+      },
+      {
+        "action": "press",
+        "key": "e"
+      },
+      {
+        "action": "press",
+        "key": "c"
+      },
+      {
+        "action": "press",
+        "key": "i"
+      },
+      {
+        "action": "press",
+        "key": "e"
+      },
+      {
+        "action": "press",
+        "key": "v"
+      },
+      {
+        "action": "press",
+        "key": "e"
+      },
+      {
+        "action": "press",
+        "key": "d"
+      },
+      {
+        "action": "press",
+        "key": "Space"
+      },
+      {
+        "action": "press",
+        "key": "i"
+      },
+      {
+        "action": "press",
+        "key": "t"
+      },
+      {
+        "action": "press",
+        "key": "Space"
+      },
+      {
+        "action": "press",
+        "key": "c"
+      },
+      {
+        "action": "press",
+        "key": "a"
+      },
+      {
+        "action": "press",
+        "key": "l"
+      },
+      {
+        "action": "press",
+        "key": "m"
+      },
+      {
+        "action": "press",
+        "key": "l"
+      },
+      {
+        "action": "press",
+        "key": "y"
+      },
+      {
+        "action": "press",
+        "key": "."
+      },
+      "Wait until [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] contains at least one [data-test-id=\"spellchecker-warning\"]",
+      {
+        "action": "evaluate",
+        "script": "(() => { const el = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"spellchecker-warning\"]'); const r = el.getBoundingClientRect(); el.dispatchEvent(new MouseEvent('contextmenu', {bubbles: true, cancelable: true, clientX: r.left + 4, clientY: r.top + 4})); })()"
+      },
+      "Wait for [data-test-id=\"spellchecker-menu\"] to be visible"
+    ],
+    "cleanup": [
+      "press Escape",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]",
+      "plus": [
+        "[data-test-id=\"spellchecker-menu\"]"
+      ],
+      "expand": {
+        "left": 12,
+        "right": 12,
+        "bottom": 12
+      }
+    },
+    "highlight": "none",
+    "notes": "The menu opens on right-click (onContextMenu in SpellcheckerDecorator.tsx). capture.mjs has no right-click, so an evaluate step dispatches a 'contextmenu' MouseEvent on the first warning. Shows 'Suggestions' and 'Actions' (Add to dictionary, Ignore word). The steps put the caret at the end of the first body paragraph (DOM selection, which draft-js picks up) and type ' Most households recieved it calmly.' key by key; cleanup discards it with Ignore. Do not insert the text with execCommand: that does not mark the item dirty, so Close shows no prompt and the autosave is saved into the item.",
+    "padding": 0
+  },
+  {
+    "file": "writing-and-formatting/find-and-replace.png",
+    "caption": "Find and replace",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Politics' with the unpublished story 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, author marenholt, not locked",
+      "Story content profile used by the seeded desks",
+      "The body of the seeded story contains the word 'levy' twice"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-widget\"][data-test-value=\"Find and Replace\"]",
+      "Type 'levy' in the input #find-replace-what",
+      "Type 'rental levy' in the input #find-replace-with",
+      "Scroll to [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"]",
+      {
+        "action": "sleep",
+        "ms": 1000
+      }
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1920x1080",
+    "crop": {
+      "element": "[data-test-id=\"authoring-widget-panel\"]",
+      "plus": [
+        "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"]"
+      ],
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ],
+      "expand": {
+        "left": 24
+      }
+    },
+    "highlight": "none",
+    "notes": "Widget view scripts/apps/authoring/editor/views/find-replace.html: Find, Replace with, Case Sensitive switch, prev/next arrows, Replace, Replace All, Done. The Find input is debounced by 500 ms. Expand left so highlighted matches in the body are in frame. Do not click Replace.",
+    "padding": 0
+  }
+]

@@ -109,7 +109,7 @@ The Users tab shows who is working on what. There is one column per desk. Inside
 Next to a user's name you may see two numbers:
 
 * the lock icon shows how many items the user has locked, that is, has open for editing,
-* the assignment icon shows how many planning assignments the user has, in any status. This number only appears if your Superdesk uses the [Planning component](../superdesk-planning-component.md).
+* the assignment icon shows how many planning assignments the user has, in any status. This number only appears if your Superdesk uses the Planning component. See [Assignments](../superdesk-planning-component/assignments.md).
 
 <figure><img src="../../.gitbook/assets/master-desk/users-tab.png" alt="Master Desk Users tab with desk members grouped by role" width="999"><figcaption><p>The Users tab: desk members grouped by role, with locked items and assignments</p></figcaption></figure>
 
@@ -128,13 +128,13 @@ Click a user to open the **User Activity** panel on the right. It lists the user
 
 ## Assignments tab
 
-The Assignments tab is only there if your Superdesk uses the [Planning component](../superdesk-planning-component.md). It shows one card per desk with the number of **items in total**: the planning assignments given to that desk. A donut chart and three counts split them by status:
+The Assignments tab is only there if your Superdesk uses the Planning component. It shows one card per desk with the number of **items in total**: the planning assignments given to that desk. A donut chart and three counts split them by status:
 
 * **To Do**: assignments that are assigned or submitted and not yet started,
 * **In Progress**: assignments someone is working on,
 * **Completed**: assignments that are completed or cancelled.
 
-The counts update by themselves as assignments change. The cards on this tab do not open a single desk view.
+The counts update by themselves as assignments change. The cards on this tab do not open a single desk view. See [Assignments](../superdesk-planning-component/assignments.md) for how assignments work.
 
 <figure><img src="../../.gitbook/assets/master-desk/assignments-tab.png" alt="Master Desk Assignments tab with To Do, In Progress and Completed counts per desk" width="999"><figcaption><p>The Assignments tab: planning assignments per desk by status</p></figcaption></figure>
 

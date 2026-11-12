@@ -1,0 +1,592 @@
+[
+  {
+    "file": "collaboration-tools/mark-for-user-modal.png",
+    "caption": "Marking an item for a user",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e client patch (CAPTURE.md): markForUser extension loaded (see notes)",
+      "Seeded users exist (Maren Holt, Tomas Vidal, Priya Raman, ...)",
+      "'Coalition unveils election budget with tax cuts for families' in Politics / Working is not marked for anyone"
+    ],
+    "steps": [
+      "Open /#/workspace/monitoring",
+      "select desk 'Politics'",
+      "hover [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] [data-test-id=\"article-item\"][data-test-value=\"Coalition unveils election budget with tax cuts for families\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      "click 'Mark for user' in [data-test-id=\"context-menu\"]",
+      "wait for [role=\"dialog\"] to show 'Mark for user'",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "press",
+        "key": "m"
+      },
+      {
+        "action": "press",
+        "key": "a"
+      },
+      {
+        "action": "press",
+        "key": "r"
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"]",
+        "text": "Select a user"
+      },
+      {
+        "action": "wait",
+        "text": "@marenholt"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[role=\"dialog\"]"
+    },
+    "allowPortrait": false,
+    "highlight": [
+      [
+        "[role=\"dialog\"] [data-test-id=\"confirm\"]",
+        "[role=\"dialog\"] [data-test-id=\"mark-and-send\"]"
+      ]
+    ],
+    "notes": "Replaces 'unknown (19).png'. Needs the markForUser client extension. The default host build loads it; the stock e2e client does not, so add it to e2e/client/index.js or point --base-url at a host build. Modal: scripts/extensions/markForUser/src/get-mark-for-user-modal.tsx (SelectUser with online status on avatars). Do NOT confirm: close with [data-test-id=\"cancel\"]. The user list of SelectUser may render in a portal below the dialog; the crop is expanded downwards to include it. Capture: the user list opens on its own (SelectUser autoFocus) and the search field has the focus; clicking the field would close it. Typing 'mar' filters the list to Maren Holt so the list no longer covers the Cancel, Mark for user and Mark and send buttons.",
+    "cleanup": [
+      "press Escape",
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = document.querySelector('[role=\"dialog\"] [data-test-id=\"cancel\"]'); if (b) { b.click(); } })()"
+      }
+    ],
+    "padding": 0
+  },
+  {
+    "file": "collaboration-tools/marked-user-indicator.png",
+    "caption": "An item marked for a user",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e client patch (CAPTURE.md): markForUser extension loaded (see notes)",
+      "Seeded: PENSION-REFORM ('Pension reform bill clears first reading after late-night vote') in Politics / Ready for Review is marked for marenholt",
+      "Monitoring in List view"
+    ],
+    "steps": [
+      "Open /#/workspace/monitoring",
+      "select desk 'Politics'",
+      "wait for [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Ready for Review\"] [data-test-id=\"article-item\"][data-test-value=\"Pension reform bill clears first reading after late-night vote\"] [data-test-id=\"marked-for-user\"] to be visible",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Ready for Review\"]",
+      "maxHeight": 260
+    },
+    "highlight": [
+      "[data-test-id=\"article-item\"][data-test-value=\"Pension reform bill clears first reading after late-night vote\"] [data-test-id=\"marked-for-user\"]"
+    ],
+    "notes": "New shot (matrix F-031 marked-user indicator). Needs the markForUser client extension. The default host build loads it; the stock e2e client does not, so add it to e2e/client/index.js or point --base-url at a host build. The avatar comes from the articleListItemWidgets contribution (show-marked-user.tsx)."
+  },
+  {
+    "file": "collaboration-tools/marked-for-me-dropdown.png",
+    "caption": "Items marked for you",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e client patch (CAPTURE.md): markForUser extension loaded (see notes)",
+      "Seeded: SKIING-SEASON ('Early snow lets northern ski resorts open a week ahead of plan') and ATHLETICS-TRIALS ('Sprinters chase world championship places at national trials') on the Sports desk are marked for admin"
+    ],
+    "steps": [
+      "Open /#/workspace/monitoring",
+      "select desk 'Sports'",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"toggle-button\"]",
+        "text": "Marked for me"
+      },
+      {
+        "action": "wait",
+        "text": "SKIING-SEASON"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      "move the mouse away from the dropdown"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 740,
+        "y": 0,
+        "width": 700,
+        "height": 260
+      }
+    },
+    "allowPortrait": false,
+    "highlight": "none",
+    "notes": "Replaces 'unknown (20).png'. Needs the markForUser client extension. The default host build loads it; the stock e2e client does not, so add it to e2e/client/index.js or point --base-url at a host build. Component: scripts/extensions/markForUser/src/get-marked-for-me-component.tsx (TopMenuDropdownButton with badge, items grouped by desk). Close with Escape afterwards. Capture: [data-test-id=marked-for-me-dropdown] is only the top-bar button; the open list is a separate popup under it, so the crop is a region of the top-right corner (top bar, button, list).",
+    "cleanup": [
+      "press Escape"
+    ]
+  },
+  {
+    "file": "collaboration-tools/comments-widget.png",
+    "caption": "The Comments widget",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded item 'Party leaders agree to three TV debates before polling day' in Politics / Working, not locked by another user",
+      "Seeded user marenholt (Maren Holt) exists"
+    ],
+    "steps": [
+      "Open /#/workspace/monitoring",
+      "select desk 'Politics'",
+      {
+        "action": "openItem",
+        "name": "Party leaders agree to three TV debates before polling day",
+        "desk": "Politics"
+      },
+      "click [data-test-id=\"authoring-widget\"][data-test-value=\"Comments\"]",
+      "wait for [data-test-id=\"authoring-widget-panel\"][data-test-value=\"Comments\"] to be visible",
+      "click [data-test-id=\"new-comment-input\"]",
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"new-comment-input\"]",
+        "value": "Can we confirm the dates of all three debates before 16:00? "
+      },
+      {
+        "action": "press",
+        "key": "@"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "press",
+        "key": "m"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "press",
+        "key": "a"
+      },
+      {
+        "action": "sleep",
+        "ms": 1000
+      },
+      {
+        "action": "wait",
+        "target": ".mentio-menu"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x640",
+    "crop": {
+      "element": "[data-test-id=\"authoring-widget-panel\"][data-test-value=\"Comments\"]",
+      "plus": [
+        ".mentio-menu"
+      ]
+    },
+    "allowPortrait": true,
+    "highlight": "none",
+    "notes": "Replaces 'unknown (17).png', 'unknown (18).png' and the base64 Comments icon. Do NOT post: item comments cannot be deleted from the UI. The mention menu (mentio, trigger '@') lists users and desks. Template: scripts/apps/authoring/comments/views/comments-widget.html. Capture: type the mention slowly (a pause after each key); with fast key presses mentio hides its menu (display: none) although it has matches. The mention menu opens under the caret at the bottom of the panel and covers the Post button, so there is no highlight; the viewport is only 640 px high to keep the empty panel short, and the crop takes the panel plus the menu, which reaches over the opened-items bar.",
+    "padding": 0
+  },
+  {
+    "file": "collaboration-tools/inline-comment-popup.png",
+    "caption": "An inline comment",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded item 'Party leaders agree to three TV debates before polling day' in Politics / Working; its body contains the word 'Saltmere'",
+      "Done by seed.py: The body field of the Story content profile has the 'comments' formatting option (default)",
+      "Seeded user marenholt (Maren Holt) exists"
+    ],
+    "steps": [
+      "Open /#/workspace/monitoring",
+      "select desk 'Politics'",
+      {
+        "action": "openItem",
+        "name": "Party leaders agree to three TV debates before polling day",
+        "desk": "Politics"
+      },
+      "wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const root = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]'); const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); while (w.nextNode()) { const n = w.currentNode; const i = n.data.indexOf('Saltmere'); if (i >= 0) { const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + 8); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); return; } } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      "click the button named 'Comment' in [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"toolbar\"]",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"comment-input\"] textarea"
+      },
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"comment-input\"] [data-test-id=\"comment-textarea\"] textarea",
+        "value": "Can you confirm the venue, "
+      },
+      {
+        "action": "press",
+        "key": "@"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "press",
+        "key": "M"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "press",
+        "key": "a"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "press",
+        "key": "r"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "wait",
+        "target": ".mentions-input__suggestions"
+      },
+      "click 'Maren Holt' in .mentions-input__suggestions",
+      {
+        "action": "press",
+        "key": "?"
+      },
+      "click [data-test-id=\"comment-input\"] [data-test-id=\"submit\"]",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"comment-input\"] textarea",
+        "state": "hidden"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const root = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]'); const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); while (w.nextNode()) { const n = w.currentNode; const i = n.data.indexOf('Saltmere'); if (i >= 0) { const r = document.createRange(); r.setStart(n, i + 3); r.setEnd(n, i + 3); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); return; } } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"comment\"]"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1920x1080",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"]",
+      "plus": [
+        "[data-test-id=\"comment\"]"
+      ]
+    },
+    "highlight": [
+      "[data-test-id=\"comment\"] [data-test-id=\"add-reply\"]",
+      "[data-test-id=\"comment\"] [data-test-id=\"resolve\"]"
+    ],
+    "notes": "Flow follows e2e editor3.inline-comments.spec.ts. 'Saltmere' is selected with a DOM range (draft-js picks the selection up); a double-click on the paragraph selects whatever word sits in its centre. The comment popup opens under the Comment button, not at the word. The mention is typed slowly: with fast key presses the suggestions list does not appear. To open the saved comment, the caret is put inside 'Saltmere' (editor3 opens the comment popup from the selection). Adding an inline comment does not mark the item as changed, so Close saves it without asking (and Ignore never shows): cleanup therefore deletes the comment, saves and closes. This leaves ELECTION-DEBATE 'In progress' instead of 'Submitted' with a new version; run this page after the pages that show the Politics lists, or restore and seed.",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const root = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]'); const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); while (w.nextNode()) { const n = w.currentNode; const i = n.data.indexOf('Saltmere'); if (i >= 0) { const r = document.createRange(); r.setStart(n, i + 3); r.setEnd(n, i + 3); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); return; } } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      "wait for [data-test-id=\"comment\"] to be visible",
+      "click [data-test-id=\"comment\"] [data-test-id=\"highlight-actions-toggle\"]",
+      "click 'Delete' in [data-test-id=\"highlight-actions-menu\"]",
+      "click 'OK' in [data-test-id=\"modal-confirm\"]",
+      "click [data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"]",
+      {
+        "action": "settle"
+      },
+      {
+        "action": "sleep",
+        "ms": 1000
+      },
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]"
+    ]
+  },
+  {
+    "file": "collaboration-tools/inline-comments-widget.png",
+    "caption": "The Inline comments widget",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Same as inline-comment-popup"
+    ],
+    "steps": [
+      "Open /#/workspace/monitoring",
+      "select desk 'Politics'",
+      {
+        "action": "openItem",
+        "name": "Party leaders agree to three TV debates before polling day",
+        "desk": "Politics"
+      },
+      "wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const root = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]'); const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); while (w.nextNode()) { const n = w.currentNode; const i = n.data.indexOf('Saltmere'); if (i >= 0) { const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + 8); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); return; } } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      "click the button named 'Comment' in [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"toolbar\"]",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"comment-input\"] textarea"
+      },
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"comment-input\"] [data-test-id=\"comment-textarea\"] textarea",
+        "value": "Can you confirm the venue"
+      },
+      {
+        "action": "press",
+        "key": "?"
+      },
+      "click [data-test-id=\"comment-input\"] [data-test-id=\"submit\"]",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"comment-input\"] textarea",
+        "state": "hidden"
+      },
+      "click [data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"]",
+      {
+        "action": "settle"
+      },
+      {
+        "action": "sleep",
+        "ms": 1500
+      },
+      "click [data-test-id=\"authoring-widget\"][data-test-value=\"Inline comments\"]",
+      "wait for [data-test-id=\"authoring-widget-panel\"][data-test-value=\"Inline comments\"] to be visible",
+      "click [data-test-id=\"filter-unresolved\"]",
+      "wait for [data-test-id=\"inline-comment\"] to be visible",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x640",
+    "crop": {
+      "element": "[data-test-id=\"authoring-widget-panel\"][data-test-value=\"Inline comments\"]",
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "allowPortrait": true,
+    "highlight": [
+      [
+        "[data-test-id=\"filter-unresolved\"]",
+        "[data-test-id=\"filter-resolved\"]"
+      ]
+    ],
+    "notes": "Replaces 'unknown (15).png' and 'unknown (16).png'. This shot saves the seeded item with a comment, so cleanup deletes the comment and saves again. The widget opens on Resolved (InlineCommentsCtrl default), hence the click on Unresolved.",
+    "cleanup": [
+      "click [data-test-id=\"authoring-widget\"][data-test-value=\"Inline comments\"] to close the widget",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const root = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]'); const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); while (w.nextNode()) { const n = w.currentNode; const i = n.data.indexOf('Saltmere'); if (i >= 0) { const r = document.createRange(); r.setStart(n, i + 3); r.setEnd(n, i + 3); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); return; } } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      "wait for [data-test-id=\"comment\"] to be visible",
+      "click [data-test-id=\"comment\"] [data-test-id=\"highlight-actions-toggle\"]",
+      "click 'Delete' in [data-test-id=\"highlight-actions-menu\"]",
+      "click 'OK' in [data-test-id=\"modal-confirm\"]",
+      "click [data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"]",
+      {
+        "action": "settle"
+      },
+      {
+        "action": "sleep",
+        "ms": 1000
+      },
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]"
+    ],
+    "padding": 0
+  },
+  {
+    "file": "collaboration-tools/suggestion-popup.png",
+    "caption": "Accepting or rejecting a suggestion",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded item 'Party leaders agree to three TV debates before polling day'; its body contains the word 'Eastbrook'",
+      "Done by seed.py: The body field of the Story content profile has the 'suggestions' formatting option (default)"
+    ],
+    "steps": [
+      "Open /#/workspace/monitoring",
+      "select desk 'Politics'",
+      {
+        "action": "openItem",
+        "name": "Party leaders agree to three TV debates before polling day",
+        "desk": "Politics"
+      },
+      "wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] to be visible",
+      "click [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [data-test-id=\"formatting-option-button\"][data-test-value=\"suggestions\"]",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const root = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]'); const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); while (w.nextNode()) { const n = w.currentNode; const i = n.data.indexOf('Eastbrook'); if (i >= 0) { const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + 9); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); return; } } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "press",
+        "key": "N"
+      },
+      {
+        "action": "press",
+        "key": "o"
+      },
+      {
+        "action": "press",
+        "key": "r"
+      },
+      {
+        "action": "press",
+        "key": "t"
+      },
+      {
+        "action": "press",
+        "key": "h"
+      },
+      {
+        "action": "press",
+        "key": "g"
+      },
+      {
+        "action": "press",
+        "key": "a"
+      },
+      {
+        "action": "press",
+        "key": "t"
+      },
+      {
+        "action": "press",
+        "key": "e"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const root = document.querySelector('[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] [contenteditable=\"true\"]'); const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); while (w.nextNode()) { const n = w.currentNode; const i = n.data.indexOf('Northgate'); if (i >= 0) { const r = document.createRange(); r.setStart(n, i + 3); r.setEnd(n, i + 3); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); return; } } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "wait",
+        "target": "button",
+        "text": "Accept"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1920x1080",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"]",
+      "plus": [
+        ".editor-popup.editor-popup--open"
+      ]
+    },
+    "highlight": "none",
+    "notes": "Replaces 'unknown (9).png' and 'unknown (11).png'. Typing over a selection in suggestions mode creates a replace suggestion: 'Eastbrook' red and struck through, 'Northgate' green. The popup (scripts/core/editor3/components/suggestions/SuggestionPopup.tsx) shows 'Replace: Eastbrook with: Northgate' and Accept / Reject. It has no test id; locate it by the Accept button.  Capture: 'Eastbrook' is selected with a DOM range (a double-click on the paragraph hits whatever word is in its centre) and the popup is opened by putting the caret inside 'Northgate'. Suggestions, like inline comments, do not mark the item as changed, so Close saves them without asking: cleanup clicks Reject first, which leaves the text as it was (Close still adds a version and sets the item 'In progress').",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".editor-popup.editor-popup--open button",
+        "text": "Reject"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ]
+  }
+]

@@ -1,113 +1,120 @@
 # View and edit Availability
 
-#### Understanding Your Availability
+## Understanding your availability
 
-Your availability information consists of two parts:
+Your availability has two parts:
 
-* **Default Weekly Schedule**\
-  Your recurring template that defines when you typically work each week.
-* **Daily Records**\
-  Individual entries for specific dates that override or supplement your defaults.
+* **Default schedule**: your weekly pattern, the days and hours you usually work. Superdesk uses it to fill in the coming weeks for you.
+* **Daily entries**: your availability on one date. An entry you set by hand replaces the default schedule for that day.
 
-#### View Your Availability
+## View your availability
 
-**In Your Profile**
+### In your profile
 
-1. Go to **User Profile** → **Availability**
-2. View your default working schedule for each day of the week
-3. See upcoming generated availability (up to 12 weeks ahead)
-4. Check any manually added daily entries
+1. Click your avatar in the top-right corner and click **Manage profile**.
+2. Click the **Availability** tab.
+3. Under **Availability schedule** you see a calendar of the coming months. Each day is coloured by status: green for available, orange for partially available and red for unavailable. Days without a colour have no entry.
 
-**In the Dashboard**
+Superdesk fills in the next 12 weeks from your default schedule. Days you changed by hand are shown the same way.
 
-1. Navigate to the **Availability Dashboard** (if your organization has one)
-2. View your availability in calendar or list format
-3. See published articles and events per day (if tracked)
+### On the dashboard
 
-<figure><img src="../../.gitbook/assets/grafik (12).png" alt=""><figcaption><p>The availability dashboard</p></figcaption></figure>
+If your role has the **Availability - view** privilege, you can also see your availability next to everyone else's on the **Availability Management** dashboard. Open the Main menu and click **Availability Management**. See [Availability Management](README.md#availability-overview).
 
-#### Edit Default Working Schedule
+<figure><img src="../../.gitbook/assets/availability-management/dashboard-own-availability.png" alt="The Availability Management dashboard in the day view with your own row highlighted" width="999"><figcaption><p>Your availability on the dashboard</p></figcaption></figure>
 
-**General Settings: Select your Language and Tasks**
+## Edit your default schedule
 
-1. Specify your working language (e.g., English, French, Spanish) (currently this only works for one language per user). These are inherited by all daily records created from this schedule
-2. Add organizational tasks that you may take over (e.g., a certain Region or type of Coverage). This narrows down the list of tasks to select from when setting your schedule
+### Choose your language and tasks
 
-**Set or edit default working schedule**
+At the top of the **Availability** tab:
 
-Your default schedule sets the pattern for future automatic generation.
+1. Pick your working language in the language field. You can choose one language. Daily entries created from your default schedule get this language.
+2. Add the tasks you can take on, for example a region or a type of coverage, in the tasks field. The field is named after your newsroom's task list, for example "Regions". The tasks you pick here are the ones you can choose from when you set up your schedule.
 
-<figure><img src="../../.gitbook/assets/grafik (10).png" alt="Screenshot of the modal to set the users regular availability throughout a week."><figcaption><p>Edit your weekly Availability in this form.</p></figcaption></figure>
+Both fields are saved as soon as you change them.
 
-**Access Your Default Settings**
+### Set your weekly schedule
 
-1. Open your **User Profile**
-2. Go to **Availability** section
-3. Select **Edit Default Schedule**
+Your default schedule sets the pattern for the weeks that Superdesk fills in for you.
 
-**Configure Each Day**
+<figure><img src="../../.gitbook/assets/grafik (10).png" alt="The Default schedule window with one row per weekday, a status, tasks and working hours"><figcaption><p>Set your weekly availability in the Default schedule window</p></figcaption></figure>
 
-For each day of the week, specify the following. If you select partial availability, please also set the respective end and start time:
+{% stepper %}
+{% step %}
+### Open the Default schedule window
 
-| Field      | Required | Description                                             |
-| ---------- | -------- | ------------------------------------------------------- |
-| **Status** | Yes      | Available / Partial / Unavailable                       |
-| **Tags**   | Optional | Categorization (e.g., "regular", "morning", "training") |
+Click **Manage** next to **Availability schedule**. The **Default schedule** window opens.
+{% endstep %}
 
-**Example Default Schedule**
+{% step %}
+### Choose your working days
 
-Code
+Click the weekday buttons at the top (**Mon** to **Sun**) to add or remove days. Days you leave out get no entry and show as **Not set** on the dashboard.
+{% endstep %}
+
+{% step %}
+### Set each day
+
+For each day, choose the status: **Available**, **Partially available** or **Unavailable**. Add tasks for that day if you want. For **Partially available**, set the start and end time. Use the plus button to add a second time range and the minus button to remove one.
+{% endstep %}
+
+{% step %}
+### Save
+
+Click **Save**.
+{% endstep %}
+{% endstepper %}
+
+For example:
 
 ```
-Monday:     (Available)
-Tuesday:    (Available)
-Wednesday:  (Partial)        09:00 - 13:00  
-Thursday:   (Available)
-Friday:     (Available)
-Saturday:   (Unavailable)
-Sunday:     (Unavailable)
+Monday:     Available
+Tuesday:    Available
+Wednesday:  Partially available  09:00 - 13:00
+Thursday:   Available
+Friday:     Available
+Saturday:   Unavailable
+Sunday:     Unavailable
 ```
 
+When you save your default schedule or change your language, Superdesk fills in the next 12 weeks again straight away. It also does this every night. Only days that came from the default schedule are replaced. Days you set by hand keep their values.
 
+## Edit the availability of a single day
 
-**The system automatically**
+Use this for days that differ from your default schedule.
 
-* Regenerates future availability records (up to 12 weeks)
-* Only affects dates marked as `_generated: true`
-* Does NOT change manually-set daily entries
+<figure><img src="../../.gitbook/assets/grafik (11).png" alt="The availability calendar with the summary of one day open, showing the edit and delete icons"><figcaption><p>Click a date to see its summary, then edit or remove it</p></figcaption></figure>
 
-#### Edit Specific Day Availability
+{% stepper %}
+{% step %}
+### Click the date
 
-For dates different from your default schedule.
+On the **Availability** tab of your profile, click the date in the calendar. If the day has no entry yet, the **Edit availability** window opens. If it has one, a summary opens: click the pencil icon (**Edit**) to change it.
+{% endstep %}
 
-<figure><img src="../../.gitbook/assets/grafik (11).png" alt=""><figcaption><p>To edit specific availability on a give date - click on the date and either edit or discard the availability of this day</p></figcaption></figure>
+{% step %}
+### Change the day
 
-**Access Daily Records**
+The window shows the date at the top. Set:
 
-1. In your user profile. Go to the **Availability** tab
-2. Select the date you want to modify and click on it
-3. Find a layover to either discard individual Settings or **Edit** them
+* **Status**: **Available**, **Partially available** or **Unavailable**.
+* The start and end time, for **Partially available**.
+* The tasks for that day.
+{% endstep %}
 
-**Modify a Single Day**
+{% step %}
+### Save
 
-Update any of these fields:
+Click **Save**. The entry now counts as set by hand, so your default schedule no longer changes it.
+{% endstep %}
+{% endstepper %}
 
-| Field                                     | Description                                              |
-| ----------------------------------------- | -------------------------------------------------------- |
-| **Date**                                  | The specific date (read-only if editing existing record) |
-| **Status**                                | Available / Partial / Unavailable                        |
-| **Start Time (for partial availability)** | Your available start time (HH:MM format)                 |
-| **End Time (for partial availability)**   | Your available end time (HH:MM format)                   |
-| **Tags**                                  | Custom notes or categorization                           |
+If an availability manager changed one of your days, the day has an outline in your calendar and its summary reads "Modified by" with their name. See [Manage Availability](manage-availability.md).
 
-**Save Your Changes**
+## Delete a daily entry
 
-1. Click **Save** when finished
-2. The record is marked as manually-set (not auto-generated)
-3. Your manual entry overrides any auto-generated default
+1. Click the date in the calendar. The summary opens.
+2. Click the bin icon (**Remove**).
 
-#### Delete an Availability Record
-
-1. Select the record you wish to remove
-2. Click **Delete**
-
+If the day is part of your default schedule, Superdesk fills it in again from the schedule during the next nightly run. To mark a day off, set it to **Unavailable** instead of deleting it.

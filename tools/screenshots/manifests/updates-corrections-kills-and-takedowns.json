@@ -1,0 +1,598 @@
+[
+  {
+    "file": "updates-corrections-kills-and-takedowns/topbar-post-publish-buttons.png",
+    "caption": "Actions for a published item in the authoring top bar",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded data (SEED.md): CEASEFIRE-TALKS 'Talks on Dunmarra ceasefire to resume next week, mediators say' is published from desk World and shows in 'World desk output'",
+      "Admin has all privileges (rewrite, correct, takedown, unpublish, kill), so all five buttons show",
+      "Default client config: corrections_workflow off"
+    ],
+    "steps": [
+      "select desk 'World'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"World desk output\"] contains [data-test-id=\"article-item\"][data-test-value=\"Talks on Dunmarra ceasefire to resume next week, mediators say\"]",
+      "double-click [data-test-id=\"monitoring-group\"][data-test-value=\"World desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Talks on Dunmarra ceasefire to resume next week, mediators say\"]",
+      "wait for [data-test-id=\"authoring-topbar\"] to be visible and for the button with aria-label 'Kill' inside it",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring-topbar\"] [data-test-id=\"toggle-full-width\"]"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring-topbar\"]"
+    },
+    "highlight": [
+      [
+        "[data-test-id=\"authoring-topbar\"] button[aria-label=\"Update\"]",
+        "[data-test-id=\"authoring-topbar\"] button[aria-label=\"Kill\"]"
+      ]
+    ],
+    "highlightStyle": "outline",
+    "notes": "The item opens read-only (action 'view'). Buttons come from scripts/apps/authoring/views/authoring-topbar.html: Update, Correct, Takedown, Unpublish, Kill, each with aria-label equal to its text. Do not click any of them. If the top bar is too wide for a useful crop, crop to the right half of the top bar (the button stack .subnav__button-stack--default). Capture: while the monitoring list is visible the buttons collapse to their initials (U, C, T, UP, K) even at 1920 px, so the steps switch to Full width mode first; one outline marks the five buttons.",
+    "padding": 0,
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring-topbar\"] [data-test-id=\"toggle-full-width\"]",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "file": "updates-corrections-kills-and-takedowns/publishing-actions-menu.png",
+    "caption": "The Publishing actions submenu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded data: BOOK-PRIZE 'Vennhaven Book Prize goes to first-time novelist' is published from desk Culture and shows in 'Culture desk output'",
+      "The publish queue has at least one subscriber so 'Resend item' shows (the e2e snapshot has one)"
+    ],
+    "steps": [
+      "select desk 'Culture'",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Culture desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Vennhaven Book Prize goes to first-time novelist\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Culture desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Vennhaven Book Prize goes to first-time novelist\"] [data-test-id=\"context-menu-button\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"context-menu\"]"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Resend item"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"context-menu\"]",
+      "plus": [
+        "[data-test-id=\"context-menu\"] .dropdown.open .dropdown__menu"
+      ],
+      "expand": {
+        "left": 16,
+        "right": 16,
+        "top": 8,
+        "bottom": 8
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"context-menu\"] button:text-is(\"Publishing actions\")"
+    ],
+    "highlightStyle": "outline",
+    "notes": "The group is registered as 'corrections' with label 'Publishing actions' (scripts/apps/authoring/authoring/constants.ts). The submenu only renders after mouseenter on the parent; see executeSubmenuAction in e2e/client/playwright/page-object-models/monitoring.ts if a plain hover does not open it. Entry labels: Update, Correct item, Kill item, Takedown item, Unpublish, Resend item (order depends on priority). Capture: the submenu opens only after hover, mouse away, hover again (as monitoring.ts executeSubmenuAction in the e2e page objects)."
+  },
+  {
+    "file": "updates-corrections-kills-and-takedowns/correction-topbar.png",
+    "caption": "Correcting a published item",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded data: ELECTION-POLL 'Poll shows Civic Union narrowing gap to four points' is published from desk Politics and shows in 'Politics desk output'",
+      "Default client config: corrections_workflow off, so Correct opens the plain correction"
+    ],
+    "steps": [
+      "select desk 'Politics'",
+      "double-click [data-test-id=\"monitoring-group\"][data-test-value=\"Politics desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Poll shows Civic Union narrowing gap to four points\"]",
+      "wait for [data-test-id=\"authoring-topbar\"] to be visible",
+      "click the button with aria-label 'Correct' inside [data-test-id=\"authoring-topbar\"]",
+      "wait for #send-correction-btn to be visible",
+      "Change the headline in [data-test-id=\"authoring\"] [data-test-id=\"field--headline\"] to 'Poll shows Civic Union narrowing gap to three points'"
+    ],
+    "cleanup": [
+      "click #cancelAuthoringBtn",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring-topbar\"]",
+      "plus": [
+        "[data-test-id=\"authoring\"] [data-test-id=\"field--headline\"]"
+      ]
+    },
+    "highlight": [
+      "#send-correction-btn",
+      "#cancelAuthoringBtn"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Plain correction (action 'correct'): the top bar shows 'Send Correction' (#send-correction-btn) and 'Cancel' (#cancelAuthoringBtn) and no Save or Close button. The editor's note is replaced with 'In the story \"ELECTION-POLL\" sent at: ... This is a corrected repeat.' (OVERRIDE_EDNOTE_FOR_CORRECTIONS default True); include the editor's note field in the crop if it is in view. Never click Send Correction: it publishes a correction and changes the seeded data for later shots.",
+    "padding": 0
+  },
+  {
+    "file": "updates-corrections-kills-and-takedowns/correction-publish-tab.png",
+    "caption": "The Publish tab during a correction",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded data: CENTRAL-BANK-RATES 'Bank of Aldmark holds key rate at 3.25 percent' is published from desk Business with an embargo tomorrow 08:00 Europe/London, and shows in 'Business desk output'",
+      "Run capture with --timezone Europe/London so the embargo shows the seeded wall-clock time",
+      "Develop build (3.6): the Send to / Publish button is shown during a plain correction"
+    ],
+    "steps": [
+      "select desk 'Business'",
+      "double-click [data-test-id=\"monitoring-group\"][data-test-value=\"Business desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Bank of Aldmark holds key rate at 3.25 percent\"]",
+      "wait for [data-test-id=\"authoring-topbar\"] to be visible",
+      "click the button with aria-label 'Correct' inside [data-test-id=\"authoring-topbar\"]",
+      "wait for #send-correction-btn to be visible",
+      "click [data-test-id=\"authoring\"] [data-test-id=\"open-send-publish-pane\"]",
+      "wait for [data-test-id=\"interactive-actions-panel\"] to be visible with the tab 'Publish' selected in [data-test-id=\"tabs\"]",
+      "wait for [data-test-id=\"interactive-actions-panel\"] [data-test-id=\"embargo\"] to show tomorrow's date and 08:00"
+    ],
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"interactive-actions-panel\"] [data-test-id=\"close\"]",
+        "optional": true
+      },
+      "click #cancelAuthoringBtn",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"interactive-actions-panel\"]",
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "highlight": [
+      "[data-test-id=\"interactive-actions-panel\"] [data-test-id=\"embargo\"]",
+      "[data-test-id=\"interactive-actions-panel\"] [data-test-id=\"publish\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "The 'correct' tab is labelled 'Publish' (action-tabs.tsx) and renders PublishAction with action='correct', so the main button ([data-test-id=\"publish\"]) reads 'Send correction'. The panel also shows From, Publish schedule, Target and Time zone sections depending on config. Do not click Send correction.",
+    "padding": 0
+  },
+  {
+    "file": "updates-corrections-kills-and-takedowns/corrections-workflow-states.png",
+    "caption": "A correction in the working stage and the published item being corrected in the desk output",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "appConfig": {
+      "corrections_workflow": true
+    },
+    "preconditions": [
+      "Seeded data: SAILING-REGATTA 'Kestrel Cup regatta: home crew takes overall lead' is published from desk Sports and shows in 'Sports desk output'",
+      "Client config corrections_workflow true (set through appConfig, as e2e correct-item-corrections-workflow.spec.ts does). The server setting CORRECTIONS_WORKFLOW is not needed to create the correction, only to reset the Being Corrected entry when a correction is sent, which this shot does not do"
+    ],
+    "steps": [
+      "select desk 'Sports'",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Kestrel Cup regatta: home crew takes overall lead\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Kestrel Cup regatta: home crew takes overall lead\"] [data-test-id=\"context-menu-button\"]"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Correct item"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] [data-test-id=\"article-item\"][data-test-value=\"Kestrel Cup regatta: home crew takes overall lead\"]"
+      },
+      "Wait for [data-test-id=\"authoring-topbar\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring-topbar\"] [data-test-id=\"close\"]"
+      },
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "fill",
+        "target": "#search-input",
+        "value": "home crew"
+      },
+      {
+        "action": "press",
+        "key": "Enter"
+      },
+      {
+        "action": "settle"
+      },
+      {
+        "action": "sleep",
+        "ms": 1500
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Kestrel Cup regatta: home crew takes overall lead\"]",
+        "text": "Being Corrected"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] [data-test-id=\"article-item\"][data-test-value=\"Kestrel Cup regatta: home crew takes overall lead\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] [data-test-id=\"article-item\"][data-test-value=\"Kestrel Cup regatta: home crew takes overall lead\"] [data-test-id=\"context-menu-button\"]"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Cancel correction"
+      },
+      {
+        "action": "sleep",
+        "ms": 1500
+      },
+      {
+        "action": "fill",
+        "target": "#search-input",
+        "value": ""
+      },
+      {
+        "action": "press",
+        "key": "Enter"
+      }
+    ],
+    "viewport": "1440x1000",
+    "crop": {
+      "element": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"]",
+      "plus": [
+        "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"]"
+      ]
+    },
+    "highlight": [
+      "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] [data-test-id=\"article-item\"][data-test-value=\"Kestrel Cup regatta: home crew takes overall lead\"]",
+      "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Kestrel Cup regatta: home crew takes overall lead\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Mutates server state: the archive item moves to Sports / Working with state 'correction' and the published entry gets 'being_corrected'. The cleanup cancels the correction so later shots see SAILING-REGATTA as published again. If the monitoring layout puts the two groups far apart (swimlane), switch to list view or crop each group's row only. State labels come from scripts/apps/search/components/fields/state.tsx ('Correction', 'Being Corrected'). Capture: the monitoring search 'home crew' narrows every group to this story, so Sports / Working (Correction) and Sports desk output (Being Corrected) fit in one crop; cleanup cancels the correction and clears the search."
+  },
+  {
+    "file": "updates-corrections-kills-and-takedowns/kill-notice.png",
+    "caption": "Sending a kill notice",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded data: MINISTER-RESIGNS 'Transport minister resigns over ferry contract review' is published from desk Politics and shows in 'Politics desk output'",
+      "The snapshot's 'kill' template has the headline 'KILL NOTICE' and the body 'This story has been withdrawn for legal reasons. Please remove it from all platforms.' (seeded by seed.py, TEMPLATES)"
+    ],
+    "steps": [
+      "select desk 'Politics'",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Politics desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Transport minister resigns over ferry contract review\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Politics desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Transport minister resigns over ferry contract review\"] [data-test-id=\"context-menu-button\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"context-menu\"]"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Kill item"
+      },
+      "wait for #send-kill-btn to be visible",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"authoring\"] [data-test-id=\"field--headline\"]",
+        "text": "KILL NOTICE"
+      },
+      "Scroll to [data-test-id=\"authoring\"] [data-test-id=\"field--headline\"]",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      "click #cancelAuthoringBtn",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      }
+    ],
+    "viewport": "1440x1000",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"]",
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "highlight": [
+      "#send-kill-btn"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Same flow as e2e authoring.legacy.kill-template.spec.ts. Crop the top bar, the headline and the start of the body. Never click Send Kill: a kill is final and would break later shots and other pages' manifests that use MINISTER-RESIGNS.",
+    "padding": 0
+  },
+  {
+    "file": "updates-corrections-kills-and-takedowns/unpublish-confirm.png",
+    "caption": "Confirming an unpublish",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded data: STARTUP-FUNDING 'Arlenport battery start-up raises 40 million in funding round' is published from desk Business and shows in 'Business desk output'",
+      "Optional, NOT SEEDED: for the 'Unpublish related items:' list to appear, another published item in the same family is needed (for example a published translation or a published update of STARTUP-FUNDING). Without it the window shows only the question and the buttons, which is acceptable"
+    ],
+    "steps": [
+      "select desk 'Business'",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Business desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Arlenport battery start-up raises 40 million in funding round\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Business desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Arlenport battery start-up raises 40 million in funding round\"] [data-test-id=\"context-menu-button\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"context-menu\"]"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Unpublish"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog",
+        "text": "Confirm Unpublishing"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".p-dialog button",
+        "text": "Cancel"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog"
+    },
+    "highlight": "none",
+    "notes": "Modal from scripts/apps/authoring/authoring/components/unpublish-confirm-modal.tsx: header 'Confirm Unpublishing', text 'Are you sure you want to unpublish item \"<headline>\"?', buttons Cancel and Confirm. Never click Confirm."
+  },
+  {
+    "file": "updates-corrections-kills-and-takedowns/resend-dialog.png",
+    "caption": "Resending an item to selected subscribers",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded data: ELECTION-POLL 'Poll shows Civic Union narrowing gap to four points' is published from desk Politics and shows in 'Politics desk output'",
+      "At least two active targetable subscribers exist: 'Subscriber 1' (snapshot) plus 'Meridian Online' and 'Content API client' (seeded by seed.py, SUBSCRIBERS)"
+    ],
+    "steps": [
+      "select desk 'Politics'",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Politics desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Poll shows Civic Union narrowing gap to four points\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Politics desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Poll shows Civic Union narrowing gap to four points\"] [data-test-id=\"context-menu-button\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"context-menu\"]"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Publishing actions"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"context-menu\"] button",
+        "text": "Resend item"
+      },
+      {
+        "action": "wait",
+        "target": ".term-editor .dropdown__toggle"
+      },
+      {
+        "action": "click",
+        "target": ".term-editor .dropdown__toggle"
+      },
+      {
+        "action": "click",
+        "target": ".term-editor [data-test-id=\"dropdown__item\"] button",
+        "text": "Meridian Online"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "click",
+        "target": ".term-editor .dropdown__toggle"
+      },
+      {
+        "action": "click",
+        "target": ".term-editor [data-test-id=\"dropdown__item\"] button",
+        "text": "Subscriber 1"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "press",
+        "key": "Escape"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      "click #cancel-edit-btn in the 'Resend To' modal"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal__dialog:has(h3:text-is(\"Resend To\"))"
+    },
+    "highlight": "none",
+    "notes": "Template scripts/apps/archive/views/resend-configuration.html: heading 'Resend To', label 'Select Subscribers', buttons Resend (#save-edit-btn) and Cancel (#cancel-edit-btn). Never click Resend. Capture: picks 'Meridian Online' and 'Subscriber 1' from the term editor ([data-test-id=dropdown__item] buttons)."
+  }
+]

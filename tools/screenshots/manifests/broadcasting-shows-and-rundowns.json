@@ -1,0 +1,641 @@
+[
+  {
+    "file": "broadcasting-shows-and-rundowns/rundowns-list.png",
+    "caption": "The Broadcasting page lists all rundowns",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run): vocabularies, shows Meridian Tonight and Morning Briefing, one template each, seven rundowns listed with today's Meridian Tonight first",
+      "No rundown is locked"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x680",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "The page lists rundowns sorted by _updated descending; seed_broadcasting.py touches them so today's evening rundown is first, then today's morning one and the older ones. Each row shows the air time range, the Duration and Planned duration labels, the change time, the show label, Template and the rundown name. The header (search bar, settings icon, + button) and the filter icon sit above the list."
+  },
+  {
+    "file": "broadcasting-shows-and-rundowns/create-show.png",
+    "caption": "Creating a show",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run); no show called 'Weekend Sport' exists"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "button[aria-label=\"Create\"]"
+      },
+      {
+        "action": "click",
+        "target": "text=Create new Show"
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"]",
+        "text": "Create new show",
+        "state": "visible"
+      },
+      {
+        "action": "fill",
+        "target": "[role=\"dialog\"] input[type=\"text\"] >> nth=0",
+        "value": "Weekend Sport"
+      },
+      {
+        "action": "fill",
+        "target": "[role=\"dialog\"] input[type=\"text\"] >> nth=1",
+        "value": "Saturday sports round-up"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [role=\"dialog\"]",
+    "highlight": "none",
+    "notes": "Do not click Save; the shot only needs the filled form. Press Escape in cleanup so no show is created. The DurationInput has separate hour, minute and second boxes. Leave Planned duration at its default of 01:00:00.",
+    "cleanup": [
+      "press Escape"
+    ]
+  },
+  {
+    "file": "broadcasting-shows-and-rundowns/template-editor.png",
+    "caption": "A rundown template that creates a rundown every weekday",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run): template 'Weeknight edition' of Meridian Tonight with automatic creation on Mon to Fri as the editor shows them (by_day 1-5, see the comment in the seed), Before airtime 12:00:00 and three standard items"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-settings)"
+      },
+      {
+        "action": "click",
+        "target": "text=Manage Rundown Templates"
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"]",
+        "text": "Manage rundown templates",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[role=\"dialog\"] .p-dropdown",
+        "nth": "first"
+      },
+      {
+        "action": "click",
+        "target": ".p-dropdown-panel .p-dropdown-item",
+        "text": "Meridian Tonight"
+      },
+      {
+        "action": "sleep",
+        "ms": 2000
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"] .p-dropdown >> visible=true >> nth=0",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[role=\"dialog\"] .p-dialog-content span:text-is(\"Weeknight edition\")"
+      },
+      {
+        "action": "click",
+        "target": "[role=\"dialog\"] button.btn",
+        "text": "Edit"
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"]",
+        "text": "Create rundowns automatically",
+        "state": "visible"
+      }
+    ],
+    "viewport": "1440x1000",
+    "crop": "element: [role=\"dialog\"]",
+    "highlight": [
+      [
+        "label:has-text(\"Create rundowns automatically\")",
+        "[role=\"dialog\"] .sd-check-button__group",
+        "[role=\"dialog\"] .sd-input:has(.sd-input__duration-input) >> nth=1"
+      ]
+    ],
+    "notes": "Edit mode hides the template list and shows Planned duration, Air time and Air date, the checkbox with the weekday buttons and Before airtime, Template name, Generated name for created rundowns and the standard items. The weekday buttons number days from Sunday while the server reads 0 as Monday (see seed_broadcasting.py); the seed stores what picking Mon to Fri in this editor stores. Close the dialog in cleanup with Cancel, then the dialog close button.",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[role=\"dialog\"] button.btn",
+        "text": "Cancel",
+        "optional": true
+      },
+      "press Escape"
+    ]
+  },
+  {
+    "file": "broadcasting-shows-and-rundowns/create-rundown.png",
+    "caption": "Creating a rundown from a template",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run). Meridian Tonight has exactly one template, so it is preselected"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "button[aria-label=\"Create\"]"
+      },
+      {
+        "action": "click",
+        "target": "text=Rundown"
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"]",
+        "text": "Create rundown",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[role=\"dialog\"] .p-dropdown",
+        "nth": "first"
+      },
+      {
+        "action": "click",
+        "target": ".p-dropdown-panel .p-dropdown-item",
+        "text": "Meridian Tonight"
+      },
+      {
+        "action": "sleep",
+        "ms": 2000
+      },
+      {
+        "action": "click",
+        "target": "[role=\"dialog\"] .p-dropdown",
+        "nth": "first"
+      },
+      {
+        "action": "click",
+        "target": ".p-dropdown-panel .p-dropdown-item",
+        "text": "Meridian Tonight"
+      },
+      {
+        "action": "sleep",
+        "ms": 2000
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"] .p-dropdown >> visible=true >> nth=0",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": "[role=\"dialog\"]",
+        "text": "Template based settings",
+        "state": "visible"
+      },
+      {
+        "action": "fill",
+        "target": "[role=\"dialog\"] input.sd-input__input[type=\"text\"]",
+        "value": "Meridian Tonight // Election special"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [role=\"dialog\"]",
+    "highlight": "none",
+    "notes": "Do not click Create. The dialog shows Show, Template ('Weeknight edition' preselected), Rundown name, Airtime (today's date by default) and 'Template based settings' with the planned duration and air time labels. Press Escape in cleanup.",
+    "cleanup": [
+      "press Escape"
+    ]
+  },
+  {
+    "file": "broadcasting-shows-and-rundowns/rundown-editor.png",
+    "caption": "A rundown open for editing",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run): rundown 'Meridian Tonight // <today>' with nine items, not locked"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const d = new Intl.DateTimeFormat('en-GB', {timeZone: 'Europe/London', day: '2-digit', month: '2-digit', year: 'numeric'}).format(new Date()); for (const el of document.querySelectorAll('.sd-list-item__headline')) { if (el.textContent.trim() === 'Meridian Tonight // ' + d) { el.closest('.sd-list-item').setAttribute('data-docs-row', 'today-evening'); } } })()"
+      },
+      {
+        "action": "dblclick",
+        "target": ".sd-list-item[data-docs-row=\"today-evening\"]"
+      },
+      {
+        "action": "wait",
+        "target": "button.btn",
+        "text": "Save Rundown",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": ".table-list__item",
+        "text": "ELECTION DEBATE",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"workspace-navigation\"] [data-test-id=\"Broadcasting\"]"
+      },
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "state": "hidden"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x840",
+    "crop": "full",
+    "highlight": [
+      [
+        ".sd-editor-content .label-icon:has(.label-icon--inner-label:text-is(\"Airtime\"))",
+        ".sd-editor-content .label-icon:has(.label-icon--inner-label:text-is(\"Planned duration\"))"
+      ],
+      ".authoring-header__toggle"
+    ],
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".sd-content-wrapper__authoring-content-area .subnav button.btn:text-is(\"Close\")",
+        "optional": true
+      },
+      {
+        "action": "sleep",
+        "ms": 2000
+      }
+    ],
+    "notes": "Double-click opens the rundown in edit mode and locks it; Close unlocks it. Clicking the Broadcasting icon again hides the rundown list, so the item names (technical titles, as the e2e client patch sets getRundownItemDisplayName) are not cut off; with the list visible, the editor is too narrow at 1440 px. The shot shows the Close / Save Rundown / Actions header, the collapsed header toggle, the rundown name, the Airtime / Duration / Planned duration labels (Duration orange: 24 minutes against 30 planned) and the item list with status bars, item type and subitem labels, Planned and Duration labels."
+  },
+  {
+    "file": "broadcasting-shows-and-rundowns/add-item-menu.png",
+    "caption": "Adding an item: pick the item type",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run): rundown 'Meridian Tonight // <today>' not locked"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const d = new Intl.DateTimeFormat('en-GB', {timeZone: 'Europe/London', day: '2-digit', month: '2-digit', year: 'numeric'}).format(new Date()); for (const el of document.querySelectorAll('.sd-list-item__headline')) { if (el.textContent.trim() === 'Meridian Tonight // ' + d) { el.closest('.sd-list-item').setAttribute('data-docs-row', 'today-evening'); } } })()"
+      },
+      {
+        "action": "dblclick",
+        "target": ".sd-list-item[data-docs-row=\"today-evening\"]"
+      },
+      {
+        "action": "wait",
+        "target": "button.btn",
+        "text": "Save Rundown",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"workspace-navigation\"] [data-test-id=\"Broadcasting\"]"
+      },
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "state": "hidden"
+      },
+      {
+        "action": "click",
+        "target": ".table-list__add-item button[aria-label=\"Add item\"]"
+      },
+      {
+        "action": "wait",
+        "target": "#sd-dropdown-constainer .dropdown__menu",
+        "text": "(empty)",
+        "state": "visible"
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "wait",
+        "target": ".sd-popup-positioner .tooltip",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      },
+      {
+        "action": "wait",
+        "target": "#sd-dropdown-constainer .dropdown__menu",
+        "text": "(empty)",
+        "state": "visible"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "#sd-dropdown-constainer .dropdown__menu",
+      "plus": [
+        ".table-list__add-item"
+      ],
+      "expand": {
+        "left": 420,
+        "right": 420,
+        "top": 16,
+        "bottom": 8
+      }
+    },
+    "highlight": "none",
+    "cleanup": [
+      "press Escape",
+      {
+        "action": "click",
+        "target": ".sd-content-wrapper__authoring-content-area .subnav button.btn:text-is(\"Close\")",
+        "optional": true
+      },
+      {
+        "action": "sleep",
+        "ms": 2000
+      }
+    ],
+    "notes": "Do not pick an item type; that opens the item editor in creation mode. The rundown list is hidden (Broadcasting icon clicked again) so the item names are readable. The menu opens upwards from the + button and lists the rundown_item_types names, a divider and '(empty)'; the Add item tooltip is moved out of the way before the shot."
+  },
+  {
+    "file": "broadcasting-shows-and-rundowns/rundown-item-editor.png",
+    "caption": "The rundown item editor",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run): item 'Election debate: what each party promised' in today's Meridian Tonight (Report, camera K2, approved, duration 4:00, planned 3:30, three paragraphs, subitems Graphics and Lower third)"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const d = new Intl.DateTimeFormat('en-GB', {timeZone: 'Europe/London', day: '2-digit', month: '2-digit', year: 'numeric'}).format(new Date()); for (const el of document.querySelectorAll('.sd-list-item__headline')) { if (el.textContent.trim() === 'Meridian Tonight // ' + d) { el.closest('.sd-list-item').setAttribute('data-docs-row', 'today-evening'); } } })()"
+      },
+      {
+        "action": "dblclick",
+        "target": ".sd-list-item[data-docs-row=\"today-evening\"]"
+      },
+      {
+        "action": "wait",
+        "target": "button.btn",
+        "text": "Save Rundown",
+        "state": "visible"
+      },
+      {
+        "action": "dblclick",
+        "target": ".table-list__item",
+        "text": "ELECTION DEBATE"
+      },
+      {
+        "action": "wait",
+        "target": "button.btn",
+        "text": "Save item",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": "text=Technical information",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": ".side-panel__container [contenteditable]",
+        "text": "televised debates",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": ".side-panel__container [contenteditable]",
+        "text": "Election debate: what each party promised",
+        "state": "visible"
+      },
+      {
+        "action": "sleep",
+        "ms": 1000
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x1000",
+    "crop": "full",
+    "highlight": "none",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".side-panel__container button.icn-btn[aria-label=\"Close\"]",
+        "nth": "first",
+        "optional": true
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog button.btn",
+        "text": "Confirm",
+        "optional": true
+      },
+      {
+        "action": "sleep",
+        "ms": 2000
+      },
+      {
+        "action": "click",
+        "target": ".sd-content-wrapper__authoring-content-area .subnav button.btn:text-is(\"Close\")",
+        "optional": true
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog button.btn",
+        "text": "Confirm",
+        "optional": true
+      },
+      {
+        "action": "sleep",
+        "ms": 2000
+      }
+    ],
+    "notes": "Opening an item for editing hides the rundown list, so the rundown and the item editor share the width. The editor header shows Tech. title (read-only), Item Type, Camera, Status, Duration and Planned duration; the body shows Title, Content, Subitems (Technical information and Content per subitem) and Subitem attachments. The comment icons sit on the editor's right edge. Do not change any field, so no unsaved-changes dialog appears on close."
+  },
+  {
+    "file": "broadcasting-shows-and-rundowns/search-matching-items.png",
+    "caption": "Search results show matching items under their rundown",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run); only today's Meridian Tonight has items with 'election' in their title or content"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "fill",
+        "target": "input[placeholder=\"Search\"]",
+        "value": "election"
+      },
+      "press Enter",
+      {
+        "action": "wait",
+        "target": ".table-list__item",
+        "text": "ELECTION DEBATE",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".sd-content-wrapper",
+      "maxHeight": 520
+    },
+    "highlight": "none",
+    "notes": "Search is full text over rundown titles and the items' title, content and additional notes (items_data). The matching items render as a nested item list (rundown_items inner hits) under each rundown row. The search only runs on Enter. Make sure the search index has caught up with the seeded items before the shot.",
+    "skip": "The search cannot find rundown items on this stack (superdesk-client-core develop 7e08bc457 with superdesk-core 3.6.0.dev0): the client sends the search as source.query.bool.must[query_string], but RundownsService.get (apps/rundowns/rundowns.py) only adds the nested items_data query with inner_hits for source.query.filtered.query.query_string or the q parameter. So only rundown titles match and no item rows are nested under a rundown. GET /api/rundowns?q=election does return matching_items, so the server side works; the client query shape does not reach it."
+  },
+  {
+    "file": "broadcasting-shows-and-rundowns/export-menu.png",
+    "caption": "Exporting a rundown",
+    "route": "#/broadcasting",
+    "user": "admin",
+    "preconditions": [
+      "Done by the e2e stack patch: the server has apps.rundowns and the client loads the broadcasting extension (CAPTURE.md, 'Broadcasting on the e2e stack')",
+      "Done by seed_broadcasting.py (run it after seed.py, on the day of the capture; it also releases rundown locks left by an earlier run)"
+    ],
+    "steps": [
+      "Open #/broadcasting",
+      {
+        "action": "wait",
+        "target": ".sd-list-item__headline",
+        "text": "Meridian Tonight",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const d = new Intl.DateTimeFormat('en-GB', {timeZone: 'Europe/London', day: '2-digit', month: '2-digit', year: 'numeric'}).format(new Date()); for (const el of document.querySelectorAll('.sd-list-item__headline')) { if (el.textContent.trim() === 'Meridian Tonight // ' + d) { el.closest('.sd-list-item').setAttribute('data-docs-row', 'today-evening'); } } })()"
+      },
+      {
+        "action": "click",
+        "target": ".sd-list-item[data-docs-row=\"today-evening\"]"
+      },
+      {
+        "action": "wait",
+        "target": "button.btn",
+        "text": "Edit Rundown",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "button.sd-navbtn[aria-label=\"Actions\"]"
+      },
+      {
+        "action": "hover",
+        "target": "text=Export"
+      },
+      {
+        "action": "wait",
+        "target": "text=Technical PDF",
+        "state": "visible"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 800,
+        "y": 48,
+        "width": 640,
+        "height": 300
+      }
+    },
+    "highlight": "none",
+    "cleanup": [
+      "press Escape",
+      {
+        "action": "click",
+        "target": ".sd-content-wrapper__authoring-content-area .subnav button.btn:text-is(\"Close\")",
+        "optional": true
+      },
+      {
+        "action": "sleep",
+        "ms": 2000
+      }
+    ],
+    "notes": "Do not click a format; it triggers a file download. The export options come from GET /api/rundown_export (Prompter PDF, Technical CSV, Technical PDF). The Export submenu renders outside the menu container, so the crop is a fixed region of the top right of the rundown panel: the Close / Edit Rundown / Actions header, the Actions menu with Export and its submenu."
+  }
+]

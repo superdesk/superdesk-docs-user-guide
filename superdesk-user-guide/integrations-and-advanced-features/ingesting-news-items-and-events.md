@@ -277,7 +277,18 @@ Actions of an **Autopost Planning** rule:
 * **Calendars**: adds these calendars to ingested events.
 * **Agendas**: adds these agendas to ingested planning items.
 
-Superdesk checks the rules of a scheme in order, from the top. Drag a rule to change its place in the list. Click a rule to see a summary of its filter, actions and schedule.
+### How the rules are applied
+
+A scheme can have as many rules as you need, each with its own content filter, actions and schedule. Click **Add Rule** again for every content filter you want to route on, for example one rule per desk or per Gmail label. Drag a rule to change its place in the list. Click a rule to see a summary of its filter, actions and schedule.
+
+For each ingested item, Superdesk goes through the rules of the scheme in order, from the top:
+
+* A rule whose schedule does not cover the current time is skipped.
+* If the item does not match the rule's content filter, nothing happens and Superdesk moves on to the next rule.
+* If the item matches, the rule's actions run and Superdesk still moves on to the next rule. So an item can match several rules and be fetched to several desks, once per matching rule.
+* If a matching rule has **Exit** switched on, Superdesk stops after that rule and ignores the rules below it. Put such a rule above the more general ones.
+
+An item that matches no rule stays in Ingest, where users can fetch it by hand.
 
 To use the scheme, select it in the **Routing Scheme** field of an ingest source.
 

@@ -1,0 +1,414 @@
+[
+  {
+    "file": "desk-creation-and-desk-management/desk-management.png",
+    "caption": "The Desk management page",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "move the mouse away from the cards"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"add-new-desk\"]",
+      "[data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]"
+    ],
+    "highlightStyle": "callout",
+    "notes": "Replaces the old Settings menu image (image203) and the desk list image (image132), which predate 2.6 and showed customer desk names. The left Settings menu with 'Desks' under 'Workflow' should be visible in the full-page shot."
+  },
+  {
+    "file": "desk-creation-and-desk-management/desk-actions-menu.png",
+    "caption": "The actions menu of a desk",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "wait for [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--options\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"desk--Politics\"]",
+      "plus": [
+        "[data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--options\"]"
+      ],
+      "expand": {
+        "right": 24
+      }
+    },
+    "highlight": "none",
+    "notes": "Replaces the broken 'Base64-Image-Removed' image. The dropdown shows Actions: Edit, Monitoring settings, Remove. If the dropdown renders outside the card, the 'plus' part keeps it in the crop."
+  },
+  {
+    "file": "desk-creation-and-desk-management/general-tab.png",
+    "caption": "The General tab",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "Desk 'Politics' has a description, e.g. 'Domestic politics, parliament and elections'",
+      "Done by seed.py: Desk 'Politics' has Desk Email 'politics@meridian.example' (set it through the API or type it in the steps without saving)"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "wait for [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--options\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--edit\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] to be visible",
+      "Make sure the 'General' tab is active",
+      "move the mouse away from the form"
+    ],
+    "cleanup": [
+      "click [data-test-id=\"desk-config-modal\"] a.close-modal",
+      "Optionally click 'Discard' in [data-test-id=\"modal-confirm\"]"
+    ],
+    "viewport": "1440x1100",
+    "crop": {
+      "element": "[data-test-id=\"desk-config-modal\"] .modal__dialog"
+    },
+    "highlight": "none",
+    "allowPortrait": true,
+    "notes": "Top of the General tab: Desk name, Desk description, Source for User Created Articles, Desk Email, Content Expiry, Desk Type, Desk language. Slack Channel Name only shows with features.slackNotifications; leave it off. Do not save. Replaces image296 (old General tab with a removed 'Service' field)."
+  },
+  {
+    "file": "desk-creation-and-desk-management/general-tab-defaults.png",
+    "caption": "Defaults, sending restriction and preferred values on the General tab",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "Done by seed.py: The 'categories' vocabulary has 'Available in user/desk preferences' ticked (Settings > Metadata, or PATCH /api/vocabularies/categories with {\"preffered_items\": true})",
+      "Done by seed.py: Desk 'Politics' has preferred categories Politics and National (desk field preferred_cv_items = {\"categories\": [{\"qcode\": <Politics qcode>}, {\"qcode\": <National qcode>}]})"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "wait for [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--options\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--edit\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] to be visible",
+      "Make sure the 'General' tab is active",
+      "Scroll to [data-test-id=\"field--default-content-template\"]",
+      {
+        "action": "settle"
+      },
+      "move the mouse away from the form"
+    ],
+    "cleanup": [
+      "click [data-test-id=\"desk-config-modal\"] a.close-modal",
+      "Optionally click 'Discard' in [data-test-id=\"modal-confirm\"]"
+    ],
+    "viewport": "1440x1100",
+    "crop": {
+      "element": "[data-test-id=\"desk-config-modal\"] .modal__dialog"
+    },
+    "highlight": "none",
+    "allowPortrait": true,
+    "notes": "Lower part of the General tab: Default monitoring view (None, List View, Photo Grid View; Swimlane View only with features.swimlane), Default Content Template, Default Content Profile, the 'Disallow sending items to this desk' switch and 'Preferred values for vocabularies'. The modal body scrolls; scroll it so the monitoring view radios are at the top of the visible body. Do not save."
+  },
+  {
+    "file": "desk-creation-and-desk-management/stages-tab.png",
+    "caption": "The Stages tab",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "wait for [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--options\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--edit\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] to be visible",
+      "click the tab 'Stages' in [data-test-id=\"desk-config-modal\"]",
+      "click [data-test-id=\"stage--Working\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] to show 'Stage Details'",
+      "move the mouse away from the list"
+    ],
+    "cleanup": [
+      "click [data-test-id=\"desk-config-modal\"] a.close-modal",
+      "Optionally click 'Discard' in [data-test-id=\"modal-confirm\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"desk-config-modal\"] .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Politics has Working, Incoming, Ready for Review and Outgoing. Working is selected so the right column shows its details (Working, Global Read: ON, Content expiry). Replaces image161, image357 and image389."
+  },
+  {
+    "file": "desk-creation-and-desk-management/people-tab.png",
+    "caption": "The People tab",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "Politics members include admin and marenholt (seed adds admin to all desks; marenholt has Politics as default desk)"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "wait for [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--options\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--edit\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] to be visible",
+      "click the tab 'People' in [data-test-id=\"desk-config-modal\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] .members-list to be visible",
+      "move the mouse away from the list"
+    ],
+    "cleanup": [
+      "click [data-test-id=\"desk-config-modal\"] a.close-modal",
+      "Optionally click 'Discard' in [data-test-id=\"modal-confirm\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"desk-config-modal\"] .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces image33 (customer desk name). If Politics has only admin as member, add marenholt and tomasvidal to the desk members through the API before capture."
+  },
+  {
+    "file": "desk-creation-and-desk-management/macros-tab.png",
+    "caption": "The Macros tab",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "wait for [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--options\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--edit\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] to be visible",
+      "click the tab 'Macros' in [data-test-id=\"desk-config-modal\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] .macros to be visible"
+    ],
+    "cleanup": [
+      "click [data-test-id=\"desk-config-modal\"] a.close-modal",
+      "Optionally click 'Discard' in [data-test-id=\"modal-confirm\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"desk-config-modal\"] .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Lists the backend macros of the instance with their access type and action type labels. Replaces image31."
+  },
+  {
+    "file": "desk-creation-and-desk-management/monitoring-settings.png",
+    "caption": "Monitoring settings for a desk",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "Politics has explicit monitoring groups from the seed (all stages, desk output, scheduled desk output)"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--monitoring-settings\"]",
+      "wait for [data-test-id=\"footer\"] to be visible",
+      "wait for [data-test-id=\"desk--Politics\"] [data-test-id=\"monitoring-group--Working\"] to be visible",
+      "move the mouse away from the list"
+    ],
+    "cleanup": [
+      "click 'Cancel' in [data-test-id=\"footer\"]"
+    ],
+    "viewport": "1440x1000",
+    "crop": "element: .modal__dialog",
+    "highlight": "none",
+    "notes": "The window title is 'Monitoring settings for \"Politics\" Desk' on the Desks step, with Politics expanded showing its stages and Output/Scheduled, Output/Published, Output/Sent. Note: the desk list in this window also uses data-test-id desk--<name>; scope selectors to the modal if they clash with the cards behind it. Replaces image150."
+  },
+  {
+    "file": "desk-creation-and-desk-management/routing-incoming-rule.png",
+    "caption": "Desk Routing as the incoming rule of a stage",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "The backend has the desk_routing macro (core superdesk/macros/desk_routing.py, label 'Desk Routing')"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "wait for [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--options\"] to be visible",
+      "click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--edit\"]",
+      "wait for [data-test-id=\"desk-config-modal\"] to be visible",
+      "click the tab 'Stages' in [data-test-id=\"desk-config-modal\"]",
+      "Hover [data-test-id=\"stage--Incoming\"]",
+      "click [data-test-id=\"stage--Incoming\"] [data-test-id=\"stage-actions--edit\"]",
+      "wait for [data-test-id=\"field--stage-description\"] to be visible",
+      {
+        "action": "evaluate",
+        "script": "const label = [...document.querySelectorAll('[data-test-id=\"desk-config-modal\"] label.sd-line-input__label')].find((l) => l.textContent.trim() === 'Incoming Rule'); const sel = label.parentElement.querySelector('select'); const opt = [...sel.options].find((o) => o.textContent.trim() === 'Desk Routing'); sel.value = opt.value; sel.dispatchEvent(new Event('change', {bubbles: true}));"
+      },
+      {
+        "action": "settle"
+      }
+    ],
+    "cleanup": [
+      "click 'Cancel' in [data-test-id=\"desk-config-modal\"] .button-toolbar",
+      "click [data-test-id=\"desk-config-modal\"] a.close-modal",
+      "Optionally click 'Discard' in [data-test-id=\"modal-confirm\"]"
+    ],
+    "viewport": "1440x1100",
+    "crop": {
+      "element": "[data-test-id=\"desk-config-modal\"] .modal__dialog"
+    },
+    "highlight": "none",
+    "allowPortrait": true,
+    "notes": "Edit mode of the Incoming with Incoming Rule set to 'Desk Routing'. Do not save the stage. Replaces image300."
+  },
+  {
+    "file": "desk-creation-and-desk-management/desk-router-widget.png",
+    "caption": "The Desk Router widget",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "Desk 'World' is open (not routing)"
+    ],
+    "steps": [
+      "Open #/workspace",
+      "select desk 'World'",
+      "if [data-test-id=\"dashboard\"] does not show 'Desk Router', click button[aria-label=\"Add widget\"] and click [data-test-id=\"widget-item\"][data-test-value=\"close-desk\"] and click the 'Add This Widget' button",
+      "Optionally click 'Done' in [data-test-id=\"widget-modal\"]",
+      "wait for [data-test-id=\"dashboard-widget\"][data-test-value=\"Desk Router\"] to be visible",
+      {
+        "action": "evaluate",
+        "script": "const w = document.querySelector('[data-test-id=\"dashboard-widget\"][data-test-value=\"Desk Router\"] select'); const opt = [...w.options].find((o) => o.textContent.trim() === 'Culture'); w.value = opt.value; w.dispatchEvent(new Event('change', {bubbles: true}));"
+      },
+      {
+        "action": "settle"
+      },
+      "Confirm the 'Start routing' button is visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"dashboard-widget\"][data-test-value=\"Desk Router\"]",
+      "expand": {
+        "left": 120,
+        "top": 60
+      }
+    },
+    "highlight": "none",
+    "notes": "World is the source desk, Culture the target. Changing the select saves closed_destination on the World desk right away (needs the desk_routing privilege; admin has it). Adding the widget changes the World desk dashboard on the server; that is fine for the next two shots. Replaces image12, image344 and image358 (old UI, customer desk names)."
+  },
+  {
+    "file": "desk-creation-and-desk-management/routing-top-bar.png",
+    "caption": "A closed desk shows where its content goes",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "Desk Router widget already on the World dashboard with Culture as target (previous shot)"
+    ],
+    "steps": [
+      "Open #/workspace",
+      "select desk 'World'",
+      "wait for [data-test-id=\"dashboard-widget\"][data-test-value=\"Desk Router\"] to be visible",
+      "if [data-test-id=\"dashboard-widget\"][data-test-value=\"Desk Router\"] does not show 'Stop routing', click the 'Start routing' button",
+      "wait for [data-test-id=\"top-menu\"] .top-menu__info to show 'Routing to:'",
+      "move the mouse away from the widget"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 380
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"top-menu\"] .top-menu__info"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Top bar of the closed World desk with 'Routing to: Culture'. Leave the desk closed for the next shot; the next shot's cleanup reopens it."
+  },
+  {
+    "file": "desk-creation-and-desk-management/desk-router-stop.png",
+    "caption": "Reopening a closed desk",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "World is closed and routing to Culture (previous shot)"
+    ],
+    "steps": [
+      "Open #/workspace",
+      "select desk 'World'",
+      "wait for [data-test-id=\"dashboard-widget\"][data-test-value=\"Desk Router\"] to be visible",
+      "if [data-test-id=\"dashboard-widget\"][data-test-value=\"Desk Router\"] does not show 'Stop routing', click the 'Start routing' button",
+      "Confirm the 'Stop routing' button is visible",
+      "move the mouse away from the widget"
+    ],
+    "cleanup": [
+      "click the 'Stop routing' button"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"dashboard-widget\"][data-test-value=\"Desk Router\"]",
+      "expand": {
+        "left": 120,
+        "top": 60
+      }
+    },
+    "highlight": "none",
+    "notes": "Same widget in the closed state with the red 'Stop routing' button. Cleanup reopens World so other shots are not affected. Replaces 'unknown (25).png'."
+  },
+  {
+    "file": "desk-creation-and-desk-management/marked-desks-search.png",
+    "caption": "Searching for content marked for the target desk",
+    "route": "#/search",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (desks Politics, Business, World, Culture, Sports with Story profile and story template)",
+      "Default client search config, so the Marked Desks parameter is shown"
+    ],
+    "steps": [
+      "Open #/search",
+      {
+        "action": "evaluate",
+        "script": "if (!document.querySelector('#advanced_search_filters')) { document.querySelector('button.filter-trigger[aria-label=\"Toggle filters\"]').click(); }"
+      },
+      "wait for #advanced_search_filters to be visible",
+      "click #parameters-tab",
+      "Scroll to #search-marked-desks",
+      "click #marked-desks .dropdown__toggle",
+      {
+        "action": "click",
+        "target": "#marked-desks [data-test-id=\"dropdown__item\"] button",
+        "text": "Culture",
+        "nth": "first"
+      },
+      "press Escape",
+      {
+        "action": "settle"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 760,
+        "height": 900
+      }
+    },
+    "highlight": [
+      "#search-marked-desks"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Advanced Search > Parameters with Culture selected under Marked Desks. The panel opens with the 'Toggle filters' button (button.filter-trigger) when it is closed. The sd-meta-terms dropdown toggle selector (#marked-desks .dropdown__toggle) is a best guess; adjust after a dry run. Replaces the second broken 'Base64-Image-Removed' image and image152."
+  }
+]

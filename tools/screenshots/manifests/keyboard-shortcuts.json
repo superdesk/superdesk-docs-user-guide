@@ -1,0 +1,84 @@
+[
+  {
+    "file": "keyboard-shortcuts/shortcuts-overlay.png",
+    "caption": "Hold Alt+K to see the shortcuts",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md) so the monitoring view behind the dimmed backdrop looks real; the overlay content itself does not depend on data"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "select desk 'Politics'",
+      {
+        "action": "evaluate",
+        "script": "document.dispatchEvent(new KeyboardEvent('keydown', {key: 'k', code: 'KeyK', altKey: true, bubbles: true}))"
+      },
+      {
+        "action": "wait",
+        "target": ".modal.modal--large .modal__dialog",
+        "state": "visible"
+      },
+      {
+        "action": "settle"
+      }
+    ],
+    "viewport": "1440x1700",
+    "crop": {
+      "element": ".modal.modal--large .modal__dialog"
+    },
+    "highlight": "none",
+    "cleanup": [
+      "press Escape"
+    ],
+    "allowPortrait": true,
+    "notes": "The overlay is the sdKeyboardModal directive (scripts/core/keyboard/keyboard.ts, template scripts/core/keyboard/views/keyboard-modal.html, heading 'Keyboard Shortcuts'). It opens on keydown Alt+K and closes on keyup Alt+K, so a real key press closes it again before the shot: dispatch only the keydown event, as in the evaluate step. The listener is on document and checks event.key === 'k' with altKey only. Escape closes it (sd-modal). The list is long (groups General, Monitoring / List actions, Authoring, Search, Users); use the 1440x1100 viewport so the whole dialog fits, or crop the top part (General and Monitoring groups) if it still scrolls. At 1440x1700 the whole window, including the Monitoring / List actions group at the bottom, fits without scrolling. The spell checker row reads Option+S because the capture browser runs on macOS; on Windows and Linux it reads Alt+S.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "keyboard-shortcuts/spellchecker-toggle.png",
+    "caption": "The spell checker button in the status bar",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md): 'Coalition unveils election budget with tax cuts for families' on desk Politics, unpublished and not locked by another user",
+      "Done by seed.py: A spell checker dictionary is available for the item's language (English). Without one, isSpellcheckerAvailable() is false and the button is not rendered. The e2e stack normally has the default English dictionary; check before running",
+      "Client config has no spellchecking.shortcut override, so the button title reads 'Spell checker on (Alt+S)' on Linux/Windows"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "button.spellchecker-toggle",
+        "state": "visible"
+      },
+      "Hover button.spellchecker-toggle",
+      {
+        "action": "settle"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "button.spellchecker-toggle",
+      "plus": [
+        "button.proofread-toggle"
+      ],
+      "expand": {
+        "left": 444,
+        "right": 120,
+        "top": 24,
+        "bottom": 60
+      }
+    },
+    "highlight": [
+      "button.spellchecker-toggle"
+    ],
+    "notes": "The button is in scripts/apps/authoring/views/authoring.html next to the 'Toggle theme' (proofread) button. Its state shows with the 'active' class. The hover text is a native title attribute ('Spell checker on (Alt+S)') and will not appear in a screenshot; the outline highlight is what points it out. Keep the crop landscape: the toggle is a small icon button, so include the status bar row around it (the Preview and Toggle theme buttons next to it).",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  }
+]

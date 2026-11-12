@@ -1,0 +1,186 @@
+[
+  {
+    "file": "highlights/choose-highlight-list.png",
+    "caption": "Choosing a highlight list",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/seed.py), including highlights 'Top Stories' (now/d) and 'Election Watch' (now/w) on Politics (HIGHLIGHTS). The snapshot's 'Highlight 1' belongs to another desk."
+    ],
+    "steps": [
+      "open #/workspace/monitoring and select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "hover (#highlightPackage button.dropdown__toggle) so the hover dropdown opens",
+      "wait for (#highlightPackage .dropdown__menu) to show 'Top Stories'"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "#highlightPackage .dropdown__menu",
+      "plus": [
+        "#highlightPackage button.dropdown__toggle"
+      ],
+      "expand": {
+        "left": 20,
+        "right": 220,
+        "top": 63,
+        "bottom": 40
+      }
+    },
+    "highlight": [
+      "#highlightPackage button.dropdown__toggle"
+    ],
+    "notes": "Replaces the inline base64 Highlights icon and 'image38'. The Workspace Panel entry is rendered from scripts/apps/highlights/views/menu.html and package_highlights_dropdown_directive.html: aria-label 'Highlights', no data-test-id, menu label 'Choose highlight list'. The dropdown has class dropdown--hover; if hovering does not open it, click the toggle. Only highlights assigned to the current desk are listed, so Politics must be selected. Remove the two highlights afterwards (DELETE /api/highlights/<id>) or restore the snapshot; marks on items are left behind otherwise.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "highlights/mark-for-highlight.png",
+    "caption": "Adding an article to a highlight",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/seed.py), including highlights 'Top Stories' (now/d) and 'Election Watch' (now/w) on Politics (HIGHLIGHTS). The snapshot's 'Highlight 1' belongs to another desk.",
+      "DEFENCE-PROCUREMENT (Politics / Working) stays unmarked",
+      "Admin has the mark_for_highlights privilege (admin has all privileges)"
+    ],
+    "steps": [
+      "open #/workspace/monitoring and select desk 'Politics'",
+      "hover [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] [data-test-id=\"article-item\"][data-test-value=\"Defence ministry delays patrol vessel order by a year\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      "wait for [data-test-id=\"context-menu\"] to be visible",
+      "hover the button with role=button name 'Mark for highlight' inside [data-test-id=\"context-menu\"] so the submenu opens",
+      "wait for the submenu to show 'Top Stories' and 'Election Watch'"
+    ],
+    "viewport": "1100x760",
+    "crop": {
+      "element": "[data-test-id=\"context-menu\"]",
+      "plus": [
+        "[data-test-id=\"article-item\"][data-test-value=\"Defence ministry delays patrol vessel order by a year\"]"
+      ],
+      "expand": {
+        "bottom": 8
+      }
+    },
+    "highlight": [
+      "role=button:Mark for highlight"
+    ],
+    "notes": "Replaces 's-highlightactions.png', 's-terminologyguide5.png' and 'image218'. 'Mark for highlight' is the mark.item activity (scripts/apps/highlights/index.ts, star icon, group 'highlights'); its submenu is HighlightsReactDropdown and opens on mouseenter, possibly to the left of the menu. Do not click a highlight, that would mark the item. Only text items on a desk the user belongs to get the entry. Remove the two highlights afterwards (DELETE /api/highlights/<id>) or restore the snapshot; marks on items are left behind otherwise.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "highlights/highlight-star.png",
+    "caption": "The star shows that an article is in a highlight",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/seed.py), including highlights 'Top Stories' (now/d) and 'Election Watch' (now/w) on Politics (HIGHLIGHTS). The snapshot's 'Highlight 1' belongs to another desk.",
+      "Marks seeded by seed.py (HIGHLIGHT_MARKS): COUNCIL-TRANSIT in Top Stories and Election Watch, MINISTER-RESIGNS in Top Stories. ELECTION-BUDGET is deliberately left unmarked (a marked item shows a star in its authoring header, and many other pages open that story)"
+    ],
+    "steps": [
+      "open #/workspace/monitoring and select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"highlights-indicator\"]",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] top 320px",
+    "highlight": [
+      "[data-test-id=\"article-item\"][data-test-value=\"Arlenport council approves tram extension to eastern suburbs\"] [data-test-id=\"highlights-indicator\"]"
+    ],
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "notes": "Replaces 'image64', which had a hand-drawn callout. COUNCIL-TRANSIT is in two highlights and shows the double star (icon-multi-star); MINISTER-RESIGNS (Politics desk output, outside this crop) shows a single star (scripts/apps/search/components/HighlightsInfo.tsx). Stars are red because the items changed today, inside the time window of 'Top Stories'. Monitoring view must be List view. The seeded highlights stay until the next snapshot restore.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "highlights/highlight-view.png",
+    "caption": "The items of a highlight",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/seed.py), including highlights 'Top Stories' (now/d) and 'Election Watch' (now/w) on Politics (HIGHLIGHTS). The snapshot's 'Highlight 1' belongs to another desk.",
+      "Marks seeded by seed.py (HIGHLIGHT_MARKS): COUNCIL-TRANSIT in Top Stories and Election Watch, MINISTER-RESIGNS in Top Stories. ELECTION-BUDGET is deliberately left unmarked (a marked item shows a star in its authoring header, and many other pages open that story)"
+    ],
+    "steps": [
+      "open #/workspace/monitoring and select desk 'Politics'",
+      "hover (#highlightPackage button.dropdown__toggle) so the hover dropdown opens",
+      {
+        "action": "click",
+        "target": "#highlightPackage .dropdown__menu button",
+        "text": "Top Stories"
+      },
+      "wait for [data-test-id=\"article-item\"] with text 'Transport minister resigns over ferry contract review' to be visible",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "role=button:Create"
+    ],
+    "notes": "New shot. The route ends up as #/workspace/highlights?highlight=<Top Stories id>. The list is ArticlesListByQueryWithFilters (scripts/core/ArticlesListByQueryWithFilters.tsx) with the highlight name as heading, item type buttons and the 'Create' button, which only shows with the mark_for_highlights privilege. Do not click Create: it creates a highlights package. Remove the two highlights afterwards (DELETE /api/highlights/<id>) or restore the snapshot; marks on items are left behind otherwise.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "highlights/highlights-settings.png",
+    "caption": "The Highlights configurations page",
+    "route": "#/settings/highlights",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/seed.py), including highlights 'Top Stories' (now/d) and 'Election Watch' (now/w) on Politics (HIGHLIGHTS). The snapshot's 'Highlight 1' belongs to another desk.",
+      "Admin has the highlights privilege (Highlights/Summary List Management)"
+    ],
+    "steps": [
+      "Open #/settings/highlights",
+      "wait for [data-test-id=\"highlights-item\"][data-test-value=\"Top Stories\"] to be visible",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "role=button:Create configuration"
+    ],
+    "notes": "Replaces 'grafik (6).png'. The list shows 'Election Watch', 'Highlight 1' (from the snapshot) and 'Top Stories'. Template: scripts/apps/highlights/views/settings.html. The Settings sidebar must show Highlights selected under the 'Content config' group. Remove the two highlights afterwards (DELETE /api/highlights/<id>) or restore the snapshot; marks on items are left behind otherwise.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "highlights/create-highlight-configuration.png",
+    "caption": "Creating a highlight configuration",
+    "route": "#/settings/highlights",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/seed.py), including highlights 'Top Stories' (now/d) and 'Election Watch' (now/w) on Politics (HIGHLIGHTS). The snapshot's 'Highlight 1' belongs to another desk.",
+      "Admin has the highlights privilege",
+      "Desks Politics, Business, World, Culture and Sports exist (seed)"
+    ],
+    "steps": [
+      "Open #/settings/highlights",
+      "Click the 'Create configuration' button",
+      "wait for [data-test-id=\"highlight-configuration-modal\"] to be visible",
+      "Type 'Culture Picks' in the input with aria-label=\"Configuration name\" inside [data-test-id=\"highlight-configuration-modal\"]",
+      "check [data-test-id=\"desk-checkbox\"][data-test-value=\"Culture\"]",
+      "move the mouse away from the modal"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"highlight-configuration-modal\"] .modal__content"
+    },
+    "allowPortrait": true,
+    "highlight": "none",
+    "cleanup": [
+      "click the 'Cancel' button in [data-test-id=\"highlight-configuration-modal\"]"
+    ],
+    "notes": "Replaces 'grafik (8).png', which must not be reused: it shows a customer's desk names. Fields: Configuration name (required, 40 characters), Template ('default template' or a highlights template), Assigned desks (one checkbox per desk), Automatically insert items from (Today, This week, Last N hours). Template: scripts/apps/highlights/views/highlights_config_modal.html. Do not save. If the Automatically insert items from select is cut off at the bottom, use a taller viewport (1440x1100).",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  }
+]

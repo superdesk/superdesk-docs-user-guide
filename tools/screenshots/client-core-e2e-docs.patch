@@ -1,0 +1,88 @@
+diff --git a/e2e/client/index.js b/e2e/client/index.js
+index 55aa45926..92be3f314 100644
+--- a/e2e/client/index.js
++++ b/e2e/client/index.js
+@@ -31,10 +31,59 @@ setTimeout(() => {
+                 id: 'availability-manager',
+                 load: () => import('superdesk-core/scripts/extensions/availability-manager'),
+             },
++            {
++                id: 'broadcasting',
++                load: () => import('superdesk-core/scripts/extensions/broadcasting').then((broadcasting) => {
++                    broadcasting.setCustomizations({
++                        getRundownItemDisplayName: (rundown) => rundown.technical_title,
++                    });
++
++                    return broadcasting;
++                }),
++            },
+             {
+                 id: 'content-lists',
+                 load: () => import('superdesk-core/scripts/extensions/content-lists'),
+             },
++            {
++                id: 'markForUser',
++                load: () => import('superdesk-core/scripts/extensions/markForUser'),
++            },
++            {
++                id: 'annotationsLibrary',
++                load: () => import('superdesk-core/scripts/extensions/annotationsLibrary'),
++            },
++            {
++                id: 'ai-widget',
++                load: () => import('superdesk-core/scripts/extensions/ai-widget').then((ext) => {
++                    // Canned answers for documentation screenshots: the e2e stack has no AI service.
++                    ext.configure(() => ({
++                        generateHeadlines: () => Promise.resolve([
++                            'Coalition budget promises tax relief for 1.2 million households',
++                            'Election budget cuts family income tax and adds levy on holiday rentals',
++                            'Opposition questions how coalition will pay for pre-election tax cuts',
++                        ]),
++                        generateSummary: () => Promise.resolve(
++                            'The governing coalition presented an election-year budget that cuts income tax for '
++                            + 'about 1.2 million households. Finance Minister Ilse Marrow said a new levy on '
++                            + 'short-term rentals and a freeze on defence spending would pay for it. The opposition '
++                            + 'Civic Union said the levy would raise less than half of the 900 million crowns the '
++                            + 'government expects.',
++                        ),
++                        translations: {
++                            generateTranslations: () => Promise.resolve(
++                                '<p>Die Regierungskoalition hat am Montag einen Wahlhaushalt vorgestellt, der die '
++                                + 'Einkommensteuer für rund 1,2 Millionen Haushalte senkt.</p><p>Finanzministerin '
++                                + 'Ilse Marrow sagte, die Entlastung werde durch eine neue Abgabe auf '
++                                + 'Kurzzeitvermietungen finanziert.</p>',
++                            ),
++                            translateActionIntegration: false,
++                        },
++                    }));
++
++                    return ext;
++                }),
++            },
+             {
+                 id: 'publishing-sections',
+                 load: () => import('./test-extensions/publishing-sections'),
+diff --git a/e2e/server/Dockerfile b/e2e/server/Dockerfile
+index 0341e7fb9..b4258412f 100644
+--- a/e2e/server/Dockerfile
++++ b/e2e/server/Dockerfile
+@@ -14,7 +14,7 @@ RUN rm -rf /var/lib/apt/lists/* && \
+     # PIL
+     libjpeg-dev zlib1g-dev \
+     # magic
+-    libmagic-dev \
++    libmagic-dev fonts-dejavu-core \
+     && rm -rf /var/lib/apt/lists/*
+ 
+ # setup venv
+diff --git a/e2e/server/settings.py b/e2e/server/settings.py
+index 365bd3b80..dbe268678 100644
+--- a/e2e/server/settings.py
++++ b/e2e/server/settings.py
+@@ -78,3 +78,6 @@ VALIDATOR_MEDIA_METADATA = {
+         "required": False,
+     },
+ }
++
++# Broadcasting (shows and rundowns) for the user guide screenshots; not in the committed e2e config.
++INSTALLED_APPS = ["apps.rundowns"]

@@ -1,0 +1,276 @@
+[
+  {
+    "file": "packages/create-menu-create-package.png",
+    "caption": "The Create package entry in the Create menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Culture' with the package 'Harbour Lights Festival: the essential guide' (FESTIVAL-GUIDE) in Working, containing FESTIVAL-LINEUP and FILM-AWARDS in its main group"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "select desk 'Culture'",
+      "Click [data-test-id=\"content-create\"]",
+      "Wait for [data-test-id=\"content-create-dropdown\"] to be visible",
+      "Hover [data-test-id=\"create-package\"] so the entry is highlighted"
+    ],
+    "cleanup": [
+      "press Escape"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"content-create-dropdown\"]",
+      "plus": [
+        "[data-test-id=\"content-create\"]"
+      ],
+      "expand": {
+        "left": 240,
+        "top": 60,
+        "bottom": 16
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"create-package\"]"
+    ],
+    "notes": "Replaces image270 and image107 (1.x Create menu and the bulk package icons). Same dropdown as creating-and-editing-content-items/create-menu.png but with the Create package entry called out. The entry is hidden in Personal space, so a desk must be selected. Do not click the entry."
+  },
+  {
+    "file": "packages/item-actions-create-package.png",
+    "caption": "Creating a package from the item actions menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Culture' with the package 'Harbour Lights Festival: the essential guide' (FESTIVAL-GUIDE) in Working, containing FESTIVAL-LINEUP and FILM-AWARDS in its main group",
+      "'Maritime museum reopens after three-year restoration' (MUSEUM-REOPENING) is unpublished in Culture / Working and not in a package"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "select desk 'Culture'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Culture / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "hover [data-test-id=\"article-item\"][data-test-value=\"Maritime museum reopens after three-year restoration\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      "wait for [data-test-id=\"context-menu\"] to be visible",
+      "hover 'Create package' in [data-test-id=\"context-menu\"]"
+    ],
+    "cleanup": [
+      "press Escape"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"context-menu\"]",
+      "plus": [
+        "[data-test-id=\"article-item\"][data-test-value=\"Maritime museum reopens after three-year restoration\"]"
+      ],
+      "expand": {
+        "top": 16,
+        "bottom": 16,
+        "left": 16,
+        "right": 16
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"context-menu\"] :text-is(\"Create package\")"
+    ],
+    "notes": "Replaces image85 (1.x Monitoring with customer desk names). The entry is the 'packageitem' activity in scripts/apps/packaging/index.ts (label 'Create package', shortcut Ctrl+Alt+P), listed in the packaging group of the item actions menu. Do not click it: it would create a package."
+  },
+  {
+    "file": "packages/action-bar-package-buttons.png",
+    "caption": "Package buttons in the action bar",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Culture' with the package 'Harbour Lights Festival: the essential guide' (FESTIVAL-GUIDE) in Working, containing FESTIVAL-LINEUP and FILM-AWARDS in its main group",
+      "'Maritime museum reopens after three-year restoration' (MUSEUM-REOPENING, Culture / Working) and 'Review: The Lighthouse Keeper's Daughter finds new light' (THEATRE-REVIEW, Culture / Outgoing) are unpublished and not in a package"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "select desk 'Culture'",
+      {
+        "action": "openItem",
+        "name": "Harbour Lights Festival: the essential guide",
+        "desk": "Culture"
+      },
+      "Wait for [data-test-id=\"authoring\"] to be visible",
+      "hover [data-test-id=\"article-item\"][data-test-value=\"Maritime museum reopens after three-year restoration\"] [data-test-id=\"item-type-and-multi-select\"] and check its [data-test-id=\"multi-select-checkbox\"]",
+      "do the same for 'Review: The Lighthouse Keeper\\'s Daughter finds new light'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"multi-actions-inline\"] [data-test-id=\"Add to Current Package\"]"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      {
+        "action": "check",
+        "target": "[data-test-id=\"article-item\"][data-test-value=\"Maritime museum reopens after three-year restoration\"] [data-test-id=\"multi-select-checkbox\"]",
+        "value": false
+      },
+      {
+        "action": "check",
+        "target": "[data-test-id=\"article-item\"][data-test-value=\"Review: The Lighthouse Keeper's Daughter finds new light\"] [data-test-id=\"multi-select-checkbox\"]",
+        "value": false
+      },
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1920x1000",
+    "crop": "full",
+    "highlight": [
+      [
+        "[data-test-id=\"multi-actions-inline\"] [data-test-id=\"Create Package\"]",
+        "[data-test-id=\"multi-actions-inline\"] [data-test-id=\"Add to Current Package\"]"
+      ]
+    ],
+    "notes": "Replaces image334 and image203. Labels come from scripts/apps/search/controllers/get-bulk-actions.tsx: 'Create Package' always (unless features.hideCreatePackage), 'Add to Current Package' only while a package is open in authoring. If the open package narrows the monitoring list so the action bar labels collapse to icons, widen the viewport to 1680x900. Do not click either button. Capture: with a package open the action bar shows icon buttons only (data-test-id and aria-label 'Create Package' / 'Add to Current Package'); one outline marks both. At 1440 px the icons are drawn over the 'Sort by: Updated' control, hence 1920x1000."
+  },
+  {
+    "file": "packages/package-open-in-authoring.png",
+    "caption": "A package open for editing",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Culture' with the package 'Harbour Lights Festival: the essential guide' (FESTIVAL-GUIDE) in Working, containing FESTIVAL-LINEUP and FILM-AWARDS in its main group"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "select desk 'Culture'",
+      {
+        "action": "openItem",
+        "name": "Harbour Lights Festival: the essential guide",
+        "desk": "Culture"
+      },
+      "Wait for [data-test-id=\"authoring\"] to be visible",
+      {
+        "action": "wait",
+        "text": "Debut director leads nominations for national film awards"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1920x1000",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"]",
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "highlight": "none",
+    "notes": "Replaces image79 (1.x package with third-party headlines) and the broken image197 (which was a User management screenshot, not a package). Shows the package headline and the main group with two item cards. Capture: 1920x1000 so the header fields and both item cards of the main group fit.",
+    "padding": 0
+  },
+  {
+    "file": "packages/add-to-current-menu.png",
+    "caption": "Adding an item to the open package",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Culture' with the package 'Harbour Lights Festival: the essential guide' (FESTIVAL-GUIDE) in Working, containing FESTIVAL-LINEUP and FILM-AWARDS in its main group",
+      "'Maritime museum reopens after three-year restoration' (MUSEUM-REOPENING) is unpublished in Culture / Working and not in a package"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "select desk 'Culture'",
+      "Open 'Harbour Lights Festival: the essential guide' for editing from desk 'Culture' (double-click it in Culture / Working) and wait for [data-test-id=\"authoring\"] to be visible",
+      "hover [data-test-id=\"article-item\"][data-test-value=\"Maritime museum reopens after three-year restoration\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      "wait for [data-test-id=\"context-menu\"] to be visible",
+      "hover 'Add to current' in [data-test-id=\"context-menu\"] and wait for the submenu with main, story, sidebars and fact box"
+    ],
+    "cleanup": [
+      "press Escape",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"context-menu\"]",
+      "expand": {
+        "left": 220,
+        "top": 16,
+        "bottom": 16,
+        "right": 16
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"context-menu\"] :text-is(\"Add to current\")"
+    ],
+    "notes": "Replaces image52. 'Add to current' (scripts/apps/packaging/index.ts, activity addtopackage) only shows while a package is open and the item is not already in it. The group list comes from the package's profile or the default ['main', 'story', 'sidebars', 'fact box'] (PackagesService.groupList); the submenu may open to the left, hence the left expansion. Do not click a group."
+  },
+  {
+    "file": "packages/packages-widget.png",
+    "caption": "The Packages widget",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/seed.py (SEED.md): desk 'Culture' with the package 'Harbour Lights Festival: the essential guide' (FESTIVAL-GUIDE) in Working, containing FESTIVAL-LINEUP and FILM-AWARDS in its main group"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "select desk 'Culture'",
+      "Open 'Harbour Lights Festival announces its biggest programme yet' (FESTIVAL-LINEUP) for editing from desk 'Culture'",
+      "Wait for [data-test-id=\"authoring\"] to be visible",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-widget\"][data-test-value=\"Packages\"]",
+      "Wait for [data-test-id=\"authoring-widget-panel\"] to list 'Harbour Lights Festival: the essential guide'"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]"
+    ],
+    "viewport": "1440x640",
+    "crop": {
+      "element": "[data-test-id=\"authoring-widget-panel\"]",
+      "plus": [
+        "[data-test-id=\"navigation-tabs\"]"
+      ],
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "highlight": [
+      "[data-test-id=\"authoring\"] [data-test-id=\"authoring-widget\"][data-test-value=\"Packages\"]"
+    ],
+    "notes": "Replaces image401 (1.x authoring with third-party content). Widget registered in scripts/apps/authoring/packages/packages.ts (label 'Packages', icon 'package'); it lists the packages in item.linked_in_packages. If the widget id differs in data-test-value, find it by its tooltip 'Packages'.",
+    "padding": 0
+  }
+]

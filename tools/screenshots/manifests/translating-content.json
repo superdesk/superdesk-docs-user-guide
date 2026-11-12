@@ -1,0 +1,305 @@
+[
+  {
+    "file": "translating-content/translate-menu.png",
+    "caption": "Choosing the target language from the Translate menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md): CEASEFIRE-TALKS is published from desk World and sits in the 'World desk output' monitoring group",
+      "Languages vocabulary as in the e2e 'main' snapshot: Nederlands (nl), Français (fr), English (en), Deutsch (de), Español (es), all active",
+      "The seeded item has language 'en'",
+      "Admin has the 'translate' privilege (admin has all privileges)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'World'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"World desk output\"] contains at least one [data-test-id=\"article-item\"][data-test-value=\"Talks on Dunmarra ceasefire to resume next week, mediators say\"]",
+      "hover [data-test-id=\"monitoring-group\"][data-test-value=\"World desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Talks on Dunmarra ceasefire to resume next week, mediators say\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      "wait for [data-test-id=\"context-menu\"] to be visible",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button.dropdown__toggle[aria-label=\"Translate\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"context-menu\"] .dropdown.open .dropdown__menu button",
+        "text": "Français",
+        "state": "visible"
+      },
+      "Do not click a language"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"context-menu\"]",
+      "plus": [
+        "[data-test-id=\"context-menu\"] .dropdown.open .dropdown__menu"
+      ],
+      "expand": {
+        "left": 24,
+        "right": 24
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"context-menu\"] button.dropdown__toggle[aria-label=\"Translate\"]"
+    ],
+    "notes": "Translate is the 'translate' activity (scripts/apps/translations/index.ts, globe icon). The submenu is rendered by TranslationReactDropdown inside the actions-menu Item (scripts/apps/search/components/actions-menu/Item.tsx); it opens on mouseenter and has class 'dropdown__menu upward <position>'. 'English' is rendered disabled because it is the item's own language; keep it visible in the crop. If the submenu opens to the left of the menu, the union crop still covers it. Press Escape afterwards.",
+    "cleanup": [
+      "press Escape"
+    ],
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "padding": 8
+  },
+  {
+    "file": "translating-content/authoring-header-translated-from.png",
+    "caption": "The authoring header of a translation",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Same as translate-menu.png",
+      "No translation of CEASEFIRE-TALKS exists yet (fresh restore plus seed). This shot creates the French translation that the later shots on this page use"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'World'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"World desk output\"] contains at least one [data-test-id=\"article-item\"][data-test-value=\"Talks on Dunmarra ceasefire to resume next week, mediators say\"]",
+      "hover [data-test-id=\"monitoring-group\"][data-test-value=\"World desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Talks on Dunmarra ceasefire to resume next week, mediators say\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"context-menu\"] button.dropdown__toggle[aria-label=\"Translate\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"context-menu\"] .dropdown.open .dropdown__menu button",
+        "text": "Français"
+      },
+      "wait for [data-test-id=\"authoring\"] to be visible",
+      {
+        "action": "wait",
+        "target": ".authoring-header .authoring-header__label-2",
+        "text": "Translated from",
+        "state": "visible"
+      },
+      "Change the headline in [data-test-id=\"field--headline\"] to 'Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine'",
+      "Wait until [data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"] is enabled",
+      "click [data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"]",
+      {
+        "action": "settle"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".authoring-header .authoring-header__general-info",
+      "expand": {
+        "bottom": 4
+      }
+    },
+    "highlight": [
+      [
+        ".authoring-header .authoring-header__label-2",
+        ".authoring-header a:has-text(\"translations\")"
+      ]
+    ],
+    "highlightStyle": "outline",
+    "notes": "Translate opens the new item for editing in the same window (TranslationService.set -> openArticle(id, 'edit')), on World / Working, state Submitted. The header row comes from scripts/apps/authoring/views/authoring-header.html: 'Translated from' + hollow label with the source language code ('en', usually rendered uppercase) + '(1) translations' link. The headline is changed to French so the next shots read naturally.",
+    "padding": 8
+  },
+  {
+    "file": "translating-content/translations-widget.png",
+    "caption": "The Translations widget",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "A French translation of the seeded published item CEASEFIRE-TALKS ('Talks on Dunmarra ceasefire to resume next week, mediators say', World desk output) exists in World / Working, with its headline changed to 'Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine'. The shot 'translating-content/authoring-header-translated-from' creates it; otherwise create it by API: POST /api/archive/translate {\"guid\": <CEASEFIRE-TALKS guid>, \"language\": \"fr\", \"desk\": <World desk id>}, then PATCH the headline. Only one French translation must exist: restore and re-seed before re-running, or every run adds another translation."
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'World'",
+      "Open 'Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine' for editing from desk 'World'",
+      "wait for [data-test-id=\"authoring\"] to be visible",
+      "click [data-test-id=\"authoring-widget\"][data-test-value=\"Translations\"]",
+      "wait for [data-test-id=\"authoring-widget-panel\"][data-test-value=\"Translations\"] to be visible",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"authoring-widget-panel\"] .sd-list-item",
+        "text": "Talks on Dunmarra ceasefire to resume next week, mediators say",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring-widget-panel\"]",
+      "maxHeight": 300
+    },
+    "highlight": "none",
+    "allowPortrait": false,
+    "notes": "Widget registered in scripts/apps/authoring/translations/index.ts (label 'Translations', icon 'web'); body in translationsWidget.tsx. Two entries, oldest first: the English original with the 'Original' label and status Published, then the French translation with 'Translated from EN' and status Submitted or In Progress. The widget tab only exists when the item is part of a translation group.",
+    "cleanup": [
+      "click [data-test-id=\"authoring-widget\"][data-test-value=\"Translations\"]"
+    ],
+    "padding": 0
+  },
+  {
+    "file": "translating-content/list-translation-labels.png",
+    "caption": "Translation links in the list view",
+    "route": "#/search?q=Dunmarra",
+    "user": "admin",
+    "preconditions": [
+      "A French translation of the seeded published item CEASEFIRE-TALKS ('Talks on Dunmarra ceasefire to resume next week, mediators say', World desk output) exists in World / Working, with its headline changed to 'Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine'. The shot 'translating-content/authoring-header-translated-from' creates it; otherwise create it by API: POST /api/archive/translate {\"guid\": <CEASEFIRE-TALKS guid>, \"language\": \"fr\", \"desk\": <World desk id>}, then PATCH the headline. Only one French translation must exist: restore and re-seed before re-running, or every run adds another translation.",
+      "Client list config includes the 'translations' field in secondLine (the host build has it; the e2e client does not, so appConfig adds it)"
+    ],
+    "steps": [
+      "open #/search?q=Dunmarra",
+      "wait until [data-test-id=\"article-item\"][data-test-value=\"Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine\"] is visible",
+      "wait until [data-test-id=\"article-item\"][data-test-value=\"Talks on Dunmarra ceasefire to resume next week, mediators say\"] is visible",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"article-item\"][data-test-value=\"Talks on Dunmarra ceasefire to resume next week, mediators say\"]",
+      "plus": [
+        "[data-test-id=\"article-item\"][data-test-value=\"Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine\"]"
+      ],
+      "expand": {
+        "top": 8,
+        "bottom": 8
+      }
+    },
+    "highlight": "none",
+    "appConfig": {
+      "list": {
+        "priority": [
+          "priority",
+          "urgency"
+        ],
+        "firstLine": [
+          "wordcount",
+          "slugline",
+          "highlights",
+          "markedDesks",
+          "associations",
+          "publish_queue_errors",
+          "headline",
+          "versioncreated"
+        ],
+        "secondLine": [
+          "profile",
+          "state",
+          "scheduledDateTime",
+          "embargo",
+          "update",
+          "takekey",
+          "signal",
+          "broadcast",
+          "flags",
+          "updated",
+          "category",
+          "provider",
+          "expiry",
+          "desk",
+          "fetchedDesk",
+          "nestedlink",
+          "associatedItems",
+          "translations"
+        ]
+      }
+    },
+    "notes": "Field component scripts/apps/search/components/fields/translations.tsx: a translation shows a hollow 'Translation' label button (opens an 'Original Article' popup), an item with translations shows '(1) Translation'. If #/search?q= does not prefill the query, type 'Dunmarra' into the search bar and press Enter. If the original appears twice (Production and Published repos), keep the Published one and crop to the two rows that show the labels. The appConfig list is the client default list config plus 'translations', because TEST_APP_CONFIG replaces the whole list block. No highlight: outlines round the Translation label and link ran over the headlines above them.",
+    "clearLocalStorage": [
+      "sd-filter"
+    ]
+  },
+  {
+    "file": "translating-content/correction-notification.png",
+    "caption": "The notification sent to translators when the original is corrected",
+    "route": "#/workspace/monitoring",
+    "user": "marenholt",
+    "preconditions": [
+      "A French translation of the seeded published item CEASEFIRE-TALKS ('Talks on Dunmarra ceasefire to resume next week, mediators say', World desk output) exists in World / Working, with its headline changed to 'Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine'. The shot 'translating-content/authoring-header-translated-from' creates it; otherwise create it by API: POST /api/archive/translate {\"guid\": <CEASEFIRE-TALKS guid>, \"language\": \"fr\", \"desk\": <World desk id>}, then PATCH the headline. Only one French translation must exist: restore and re-seed before re-running, or every run adds another translation.",
+      "marenholt (Editor role, has translate, publish and correct) is a member of desk World; add her in the desk settings if not",
+      "marenholt opened the French translation, made any edit (e.g. a body sentence in French) and published it, so she is the last editor of the published translation. World is a production desk and the seeded subscriber accepts it, as for the seeded published items",
+      "Afterwards admin corrected the original CEASEFIRE-TALKS: World desk output > open the item > Correct, change one word in the body, open the Send to / Publish panel and click 'Send correction'",
+      "These steps can also run by API: PATCH /api/archive/publish/<translation id> as marenholt, then PATCH /api/archive/correct/<original id> as admin with a body change",
+      "The French headline set by authoring-header-translated-from is 82 characters and the Story profile allows 64, so the publish fails with 'HEADLINE is too long'. Publish with a shorter headline: PATCH /api/archive/publish/<translation id> as marenholt with {\"headline\": \"Dunmarra : reprise des pourparlers sur le cessez-le-feu\"}, then PATCH /api/archive/correct/<original id> as admin with a body change (done this way on 2026-10-14)."
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "click the button with aria-label 'View notifications' (button[aria-label=\"View notifications\"])",
+      "wait for [data-test-id=\"notification-pane\"] to be visible",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"notification-pane\"] [data-test-id=\"notification\"]",
+        "text": "changed the following original item",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"notification-pane\"] .notification-pane__header",
+      "plus": [
+        "[data-test-id=\"notification-pane\"] [data-test-id=\"notification\"]:has-text(\"changed the following original item\")"
+      ],
+      "expand": {
+        "left": 12,
+        "right": 12,
+        "bottom": 8
+      }
+    },
+    "highlight": "none",
+    "notes": "Activity 'translated:changed' is sent by superdesk-core apps/publish/content/correct.py send_translation_notifications to the original_creator and version_creator of every published item with the original's translation_id. Text in scripts/core/menu/notifications/views/notifications.html: '<user> changed the following original item. Please make sure to update the corresponding translated item accordingly <slugline>'. The 'marenholt' user is not in the capture users map; it falls back to username = password = marenholt (seeded). Close the pane afterwards. An email is also sent; the e2e stack does not deliver it, so it is not shown.",
+    "cleanup": [
+      "click the button with aria-label 'View notifications' (button[aria-label=\"View notifications\"])"
+    ],
+    "padding": 0
+  },
+  {
+    "file": "translating-content/search-languages-filter.png",
+    "caption": "Filtering search results by language",
+    "route": "#/search?q=Dunmarra",
+    "user": "admin",
+    "preconditions": [
+      "A French translation of the seeded published item CEASEFIRE-TALKS ('Talks on Dunmarra ceasefire to resume next week, mediators say', World desk output) exists in World / Working, with its headline changed to 'Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine'. The shot 'translating-content/authoring-header-translated-from' creates it; otherwise create it by API: POST /api/archive/translate {\"guid\": <CEASEFIRE-TALKS guid>, \"language\": \"fr\", \"desk\": <World desk id>}, then PATCH the headline. Only one French translation must exist: restore and re-seed before re-running, or every run adds another translation."
+    ],
+    "steps": [
+      "wait until [data-test-id=\"article-item\"][data-test-value=\"Les pourparlers sur le cessez-le-feu de Dunmarra reprendront la semaine prochaine\"] is visible",
+      {
+        "action": "sleep",
+        "ms": 1000
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { if (!document.querySelector('#advanced_search_filters')) { document.querySelector('button.filter-trigger').click(); } })()"
+      },
+      {
+        "action": "click",
+        "target": "#filters-tab"
+      },
+      {
+        "action": "wait",
+        "target": "#advanced_search_filters",
+        "text": "Français"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 46,
+        "y": 46,
+        "width": 960,
+        "height": 460
+      }
+    },
+    "highlight": [
+      "#advanced_search_filters [sd-toggle-box]:has-text(\"Languages\")"
+    ],
+    "notes": "Facet block in scripts/apps/search/views/search-filters.html: toggle box titled 'Languages', one row per language code in the results with the vocabulary label (English, Français) and a count; the negate (ban) icon shows on hover in local search. If the [data-title] selector does not match after Angular interpolation, use the toggle box containing the heading text 'Languages' inside #advanced_search_filters. Close the panel afterwards with the 'Close panel' button. Capture: the filter panel is already open when the search has a query (clicking 'Toggle filters' closes it), so an evaluate step only clicks the trigger when the panel is missing. The crop is a region with the panel's Filters tab and the two results; the panel stays open for later searches, as it was.",
+    "cleanup": [],
+    "highlightStyle": "outline"
+  }
+]
