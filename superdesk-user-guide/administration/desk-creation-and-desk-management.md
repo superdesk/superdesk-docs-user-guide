@@ -32,7 +32,7 @@ A new desk always starts with two stages, **Working Stage** and **Incoming Stage
 
 **Desk Email** is an email address for the desk. See [Desk email and Slack channel](#desk-email-and-slack-channel).
 
-**Content Expiry** sets how long items stay on the desk before Superdesk removes them. Turn the switch on and enter days, hours and minutes. If you leave all three at 0, or turn the switch off, the desk uses the system default, and the label next to the switch shows **Using System default**. If your installation has no system default, the label shows **OFF** and items do not expire. A stage can set its own expiry, which then wins over the desk's.
+**Content Expiry** sets how long items stay on the desk before Superdesk removes them. Turn the switch on and enter days, hours and minutes. If you leave all three at 0, or turn the switch off, the desk uses the system default, and the label next to the switch shows **Using System default**. If your installation has no system default, the label shows **OFF** and items do not expire. A stage can set its own expiry, which then wins over the desk's. You can enter at most 99999 days. If you enter more, the message "Content expiry can not be more than 99999 days." appears under the fields, and **Save & Continue** and **Done** stay disabled until you lower the number.
 
 **Preserve Published Content** only appears when your installation removes published content after a while. Turn it on to keep the content published from this desk.
 
@@ -96,7 +96,7 @@ When you edit a stage, these options appear:
 
 **Stage description** is optional text for other users.
 
-**Content Expiry** sets how long items stay in this stage. It works like the desk's content expiry. If you leave it at 0 or off, the stage uses the desk's expiry, or the system default when the desk has none.
+**Content Expiry** sets how long items stay in this stage. It works like the desk's content expiry, with the same limit of 99999 days: above it, **Save** stays disabled. If you leave it at 0 or off, the stage uses the desk's expiry, or the system default when the desk has none.
 
 **Incoming Rule**, **Moved onto stage Rule** and **Outgoing Rule** run a macro on an item automatically:
 
