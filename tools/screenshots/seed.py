@@ -107,13 +107,21 @@ class Client:
         if etag:
             headers["If-Match"] = etag
         req = urllib.request.Request(url, data=body, method=method, headers=headers)
-        try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
-                raw = resp.read()
-        except urllib.error.HTTPError as err:
-            raise ApiError(method, url, err.code, err.read().decode("utf-8", errors="replace"))
-        except urllib.error.URLError as err:
-            raise SeedError("Cannot reach {}: {}".format(url, err.reason))
+        # A connection to a remote instance occasionally stalls before the request reaches the
+        # server (the server log shows nothing for it), so a stall is retried a few times. The seeds
+        # match existing objects before creating them, so a retried request is safe.
+        for attempt in range(1, 4):
+            try:
+                with urllib.request.urlopen(req, timeout=120) as resp:
+                    raw = resp.read()
+                break
+            except urllib.error.HTTPError as err:
+                raise ApiError(method, url, err.code, err.read().decode("utf-8", errors="replace"))
+            except (urllib.error.URLError, TimeoutError, OSError) as err:
+                reason = getattr(err, "reason", err)
+                if attempt == 3:
+                    raise SeedError("Cannot reach {}: {}".format(url, reason))
+                print("[retry   ] {} {} after: {}".format(method, path, reason), flush=True)
         return json.loads(raw.decode("utf-8")) if raw else {}
 
     def get(self, path, **params):

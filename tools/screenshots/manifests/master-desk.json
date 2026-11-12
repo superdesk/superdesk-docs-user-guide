@@ -315,7 +315,7 @@
     "route": "#/master-desk",
     "user": "admin",
     "preconditions": [
-      "Planning e2e stack (superdesk-planning e2e-up.sh, client :9021, API :5021); the client-core stack has no Planning, so the tab is hidden there. Run with run-capture-planning.sh.",
+      "Docs instance with the autodocs-planning snapshot (`SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh master-desk/assignments-tab`); the newsroom snapshot and the client-core e2e stack have no Planning, so the tab is hidden there. Fallback: the superdesk-planning e2e stack with run-capture-planning.sh.",
       "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset`: desks Sports, Politics, Business, World and Culture, with assignments in the states assigned, in_progress and completed on every desk."
     ],
     "steps": [
