@@ -54,9 +54,17 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 #### Content management
 
 * [Creating and Editing Content Items](superdesk-user-guide/content-management/creating-and-editing-content-items/README.md)
+  * [Writing and formatting](superdesk-user-guide/content-management/creating-and-editing-content-items/writing-and-formatting.md)
+  * [Metadata and fields](superdesk-user-guide/content-management/creating-and-editing-content-items/metadata-and-fields.md)
   * [Collaboration tools](superdesk-user-guide/content-management/creating-and-editing-content-items/collaboration-tools.md)
   * [Edit Media items](superdesk-user-guide/content-management/creating-and-editing-content-items/edit-media-items.md)
+* [Sending, scheduling and publishing items](superdesk-user-guide/content-management/sending-scheduling-and-publishing.md)
+* [Updates, corrections, kills and takedowns](superdesk-user-guide/content-management/updates-corrections-kills-and-takedowns/README.md)
+  * [Updates](superdesk-user-guide/content-management/updates-corrections-kills-and-takedowns/updates.md)
+  * [Corrections](superdesk-user-guide/content-management/updates-corrections-kills-and-takedowns/corrections.md)
+  * [Kills, takedowns and unpublishing](superdesk-user-guide/content-management/updates-corrections-kills-and-takedowns/kills-takedowns-and-unpublishing.md)
 * [Packages](superdesk-user-guide/content-management/packages.md)
+* [Translating content](superdesk-user-guide/content-management/translating-content.md)
 * [Spiked Items](superdesk-user-guide/content-management/spiked-items.md)
 
 #### Workflow tools
