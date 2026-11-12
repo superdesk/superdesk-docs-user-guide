@@ -409,7 +409,6 @@ The server setting `PLANNING_EVENT_LINK_METHOD` decides how many events a planni
 
 * `one_primary` (the default): a planning item is linked to one event, its primary event. Cancelling, postponing, rescheduling or posting the event is passed on to the planning item. The dates of an existing event can only be changed with the **Update time** and **Reschedule** actions.
 * `many_secondary`: a planning item can be linked to any number of events, and nothing is passed on from the events to the planning item. Users change event dates directly in the event form, and the **Update time** action is not offered.
-* `one_primary_many_secondary`: the first linked event is the primary one and behaves as in `one_primary`; further events are secondary.
 
 ### Server settings
 
