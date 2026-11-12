@@ -1,0 +1,746 @@
+[
+  {
+    "file": "dashboards-and-widgets/add-widget-dialog.png",
+    "caption": "The Add new widget window",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/seed.py); admin has the Desk Management privilege (admin has all)",
+      "Politics desk Dashboard has no widgets yet (fresh seed)",
+      "superdesk-analytics loaded if the Publishing Actions tile should appear (superdesk host build); the stock e2e client shows only the core tiles: Monitor, World Clock, Ingest Stats, Activity Stream, User Activity, Desk Router"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      "wait for [data-test-id=\"dashboard\"] to be visible",
+      {
+        "action": "click",
+        "target": "role=button:Add widget"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-modal\"]",
+        "state": "visible"
+      },
+      "wait for all thumbnails to finish loading"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"widget-modal\"] .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image249' (old UI, red arrow callout). Shows the tile grid, not the detail view. Cleanup closes the window without adding anything.",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Done"
+      }
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/world-clock-widget.png",
+    "caption": "The World Clock widget",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Politics desk Dashboard has no World Clock widget yet"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      "wait for [data-test-id=\"dashboard\"] to be visible",
+      {
+        "action": "click",
+        "target": "role=button:Add widget"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-modal\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] [data-test-id=\"widget-item\"][data-test-value=\"world-clock\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Add This Widget"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Done"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"world-clock\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"world-clock\"] button[aria-label=\"Widget settings\"]"
+      },
+      {
+        "action": "wait",
+        "target": ".modal.in .modal__dialog",
+        "text": "Your clock",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": ".modal.in .modal__dialog button.toggle-button",
+        "text": "Digital"
+      },
+      {
+        "action": "click",
+        "target": ".modal.in .modal__dialog button",
+        "text": "Save"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"world-clock\"] .clock-box.digital",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"world-clock\"]",
+    "highlight": "none",
+    "notes": "Replaces 'image66' and the World Clock thumbnail 'image45'. Default zones are Europe/London, Asia/Tokyo and Europe/Moscow, which is fine. Adds a widget to the shared Politics dashboard. The add steps are not idempotent: run this manifest once after a fresh seed, or remove the widget first (Rearrange widgets, x, Accept). The widget is switched to Digital before the shot: on develop the analog faces render empty, because world-clock.ts uses the d3 v4+ API (d3.scaleLinear, d3.arc, commit d97bedd07 \"Upgrade d3\") while package.json still pins d3 3.5.17 (console: \"v.scaleLinear is not a function\"). Switch back to the default Analog once that is fixed.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/world-clock-configuration.png",
+    "caption": "World Clock Configuration",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Politics desk Dashboard has a World Clock widget (previous entry)"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"world-clock\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"world-clock\"] button[aria-label=\"Widget settings\"]"
+      },
+      {
+        "action": "wait",
+        "target": ".modal.in .modal__dialog",
+        "text": "Your clock",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal.in .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image217'. Shows the 'Your clock' tab with the 'Clock type' Analog/Digital buttons and the clock list with trash icons. The settings window is an angular-ui $modal; crop to .modal-content. If that selector misses, use [role=\"dialog\"] .modal-dialog. The settings window is .modal.in .modal__dialog (there is no .modal-content). Digital is active because world-clock-widget switched the widget to Digital (see the note there).",
+    "cleanup": [
+      "press Escape"
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/monitor-settings-desks.png",
+    "caption": "Choosing desks and stages",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Politics desk Dashboard has no Monitor widget yet"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      "wait for [data-test-id=\"dashboard\"] to be visible",
+      {
+        "action": "click",
+        "target": "role=button:Add widget"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-modal\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] [data-test-id=\"widget-item\"][data-test-value=\"aggregate\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Add This Widget"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Done"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"] button[aria-label=\"Widget settings\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-view-name\"]",
+        "state": "visible"
+      },
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"widget-view-name\"]",
+        "value": "Politics desk"
+      },
+      {
+        "action": "evaluate",
+        "script": "const t = document.querySelector('[data-test-id=\"desk--Politics\"] [data-test-id=\"active-toggle\"]'); if (!t.classList.contains('checked')) { t.click(); }"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"monitoring-group--Working\"]",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x1000",
+    "crop": {
+      "element": ".modal.in .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image319'. Window title 'Monitoring settings', tabs Desks / Saved Searches / Reorder Sections / Items Count. The desk list is long (every desk in the system); the shot should show the View name field and the Politics desk with its stages ticked. Cleanup clicks Done so the widget keeps this configuration for the next shots. The settings window is an angular-ui $modal; crop to .modal-content. If that selector misses, use [role=\"dialog\"] .modal-dialog. Adds a widget to the shared Politics dashboard. The add steps are not idempotent: run this manifest once after a fresh seed, or remove the widget first (Rearrange widgets, x, Accept). A new Monitor widget on a desk Dashboard already has that desk switched on, so the switch is only clicked when it is off (clicking it blindly turns Politics off).",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"done\"]"
+      }
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/monitor-settings-saved-searches.png",
+    "caption": "Choosing saved searches",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Politics desk Dashboard has the Monitor widget 'Politics desk' (previous entry)",
+      "The global saved search 'Budget watch' by marenholt exists (seeded by seed.py, SAVED_SEARCHES). A desk Dashboard lists global saved searches only, and the seeded 'Election coverage' is private"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"] button[aria-label=\"Widget settings\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-view-name\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"wizard--Saved Searches\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"saved-search\"][data-test-value=\"Budget watch\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"saved-search\"][data-test-value=\"Budget watch\"] [data-test-id=\"toggle\"]"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal.in .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image62'. The click on 'Saved Searches' targets the wizard tab in the window header, not the legend text. On a desk Dashboard only the 'Global saved searches' box is listed. Cleanup clicks Done so the saved search group shows up for the Reorder and Items Count shots. The settings window is an angular-ui $modal; crop to .modal-content. If that selector misses, use [role=\"dialog\"] .modal-dialog.",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"done\"]"
+      }
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/monitor-settings-reorder.png",
+    "caption": "Reordering sections",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Monitor widget 'Politics desk' shows Politics stages, Politics desk output and the 'Budget watch' saved search (previous entries)"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"] button[aria-label=\"Widget settings\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-view-name\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"wizard--Reorder Sections\"]"
+      },
+      "Wait for .modal.in .modal__dialog to show 'Reorder stages and saved searches for monitoring view'"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal.in .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image315'. The settings window is an angular-ui $modal; crop to .modal-content. If that selector misses, use [role=\"dialog\"] .modal-dialog.",
+    "cleanup": [
+      "press Escape"
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/monitor-settings-items-count.png",
+    "caption": "Setting the number of items per section",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Same as monitor-settings-reorder"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"] button[aria-label=\"Widget settings\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-view-name\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"wizard--Items Count\"]"
+      },
+      "Wait for .modal.in .modal__dialog to show 'Set maximum items per stages and saved searches for view'"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal.in .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image361'. The settings window is an angular-ui $modal; crop to .modal-content. If that selector misses, use [role=\"dialog\"] .modal-dialog.",
+    "cleanup": [
+      "press Escape"
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/ingest-stats-configuration.png",
+    "caption": "Ingest Stats Configuration",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Politics desk Dashboard has no Ingest Stats widget yet"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      "wait for [data-test-id=\"dashboard\"] to be visible",
+      {
+        "action": "click",
+        "target": "role=button:Add widget"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-modal\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] [data-test-id=\"widget-item\"][data-test-value=\"ingest-stats\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Add This Widget"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Done"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"ingest-stats\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"ingest-stats\"] button[aria-label=\"Widget settings\"]"
+      },
+      {
+        "action": "wait",
+        "target": "#ingest-sources",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "const s = document.querySelector('#ingest-sources'); s.value = 'source'; s.dispatchEvent(new Event('change', {bubbles: true}));"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal.in .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image72'. Labels: 'Select source' (Source stats, Urgency stats, Item type stats) and 'Select color', button 'Save'. Cleanup saves, so the widget shows the source chart in the next shot. The settings window is an angular-ui $modal; crop to .modal-content. If that selector misses, use [role=\"dialog\"] .modal-dialog. Adds a widget to the shared Politics dashboard. The add steps are not idempotent: run this manifest once after a fresh seed, or remove the widget first (Rearrange widgets, x, Accept).",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".modal.in .modal__dialog button",
+        "text": "Save"
+      }
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/ingest-stats-widget.png",
+    "caption": "The Ingest Stats widget",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Ingest Stats widget on the Politics Dashboard set to Source stats (previous entry)",
+      "The ingest collection holds items from at least two sources, otherwise the chart is a single colour. The e2e 'main' snapshot and the seed do not guarantee this: ingest a few items from two providers first, or skip the shot"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"ingest-stats\"]",
+        "state": "visible"
+      },
+      "wait for all thumbnails to finish loading",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"ingest-stats\"]",
+    "highlight": "none",
+    "notes": "Replaces the two images that were hot-linked from superdesk.github.io (image162 and image292). If there is no ingest data, mark the entry skip and leave the placeholder for a manual capture.",
+    "skip": "The ingest collection is empty on the e2e stack and no ingest provider can fetch there, so the Source stats chart has no data to show.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/activity-stream-widget.png",
+    "caption": "The Activity Stream widget",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Politics desk Dashboard has no Activity Stream widget yet",
+      "Seeded newsroom, so recent activity by several users exists"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      "wait for [data-test-id=\"dashboard\"] to be visible",
+      {
+        "action": "click",
+        "target": "role=button:Add widget"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-modal\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] [data-test-id=\"widget-item\"][data-test-value=\"activity\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Add This Widget"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Done"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"activity\"]",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"activity\"]",
+      "maxHeight": 400
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image7' and the Activity Stream thumbnail 'image212'. Adds a widget to the shared Politics dashboard. The add steps are not idempotent: run this manifest once after a fresh seed, or remove the widget first (Rearrange widgets, x, Accept).",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/user-activity-widget.png",
+    "caption": "The User Activity widget",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Politics desk Dashboard has no User Activity widget yet",
+      "Seed locks are alive: marenholt has 'Defence ministry delays patrol vessel order by a year' locked (rerun seed.py if the session expired)",
+      "Done by the e2e client patch (CAPTURE.md): markForUser extension loaded (superdesk host build) for the 'Marked for this user' group with 'Pension reform bill clears first reading after late-night vote'; on the stock e2e client that group is absent"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      "wait for [data-test-id=\"dashboard\"] to be visible",
+      {
+        "action": "click",
+        "target": "role=button:Add widget"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-modal\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] [data-test-id=\"widget-item\"][data-test-value=\"user-activity\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Add This Widget"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Done"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"user-activity\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"user-activity\"] [data-test-id=\"select-user-dropdown\"] .tags-input__overlay-button"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"user-activity\"] [data-test-id=\"select-user-dropdown\"] .tags-input__overlay-button"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"option\"]",
+        "text": "Maren Holt"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"user-activity\"] [data-test-id=\"select-user-dropdown\"] [data-test-id=\"item\"]",
+        "text": "Maren Holt",
+        "state": "visible"
+      },
+      {
+        "action": "settle"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x1000",
+    "crop": {
+      "element": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"user-activity\"]",
+      "maxHeight": 440
+    },
+    "highlight": "none",
+    "allowPortrait": true,
+    "notes": "Replaces 'image291' and the User Activity thumbnail 'image34'. The user picker is a ui-framework TreeSelect labelled 'Select a user' (core/ui/components/SelectUser.tsx); it starts with the logged-in user. Group headers: 'Locked by this user', 'Marked for this user', 'Created by this user', 'Moved to a working stage by this user'. Make the widget taller (Rearrange widgets, down arrow, Accept) if the last group is cut off. Adds a widget to the shared Politics dashboard. The add steps are not idempotent: run this manifest once after a fresh seed, or remove the widget first (Rearrange widgets, x, Accept). The user picker is a single-select tags input: the first click on its transparent .tags-input__overlay-button only focuses it, the second opens the list; the users are [data-test-id=\"option\"] entries in the popover.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/dashboard-overview.png",
+    "caption": "The Dashboard of a desk",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Politics desk Dashboard has the widgets added by the earlier entries (World Clock, Monitor 'Politics desk', Ingest Stats, Activity Stream, User Activity)"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"]",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"aggregate\"] li.content-item",
+        "state": "visible"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Replaces 'image254' (old blue top bar with arrow callouts). Should show the Workspace panel with the Dashboard icon active, the Desks menu reading POLITICS, the 'Dashboard Politics' title and the Rearrange widgets and Add widget buttons at the top right. If the article-item test id does not exist inside the Monitor widget, drop that wait.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/rearrange-mode.png",
+    "caption": "Rearranging widgets",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Same widgets as dashboard-overview"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"world-clock\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": ".subnav button.navbtn:has(i.icon-switches)"
+      },
+      {
+        "action": "wait",
+        "target": ".gridster.editmode",
+        "state": "visible"
+      },
+      "hover [data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"world-clock\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 640
+      }
+    },
+    "highlight": [
+      ".subnav button.navbtn--blue i"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Replaces 'image234', 'image155' and the inline Rearrange Widgets icon. In edit mode each widget shows resize arrows (.widget-resize-width, .widget-resize-height) and a remove button (.widget-close); the highlight marks the blue Accept checkmark. Cleanup leaves edit mode without changes.",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".subnav button.navbtn--blue"
+      }
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "dashboards-and-widgets/desk-router-widget.png",
+    "caption": "The Desk Router widget",
+    "route": "#/workspace",
+    "user": "admin",
+    "preconditions": [
+      "Culture desk Dashboard has no Desk Router widget yet",
+      "Culture is open (is_closed false); Politics is open"
+    ],
+    "steps": [
+      "open #/workspace and select desk 'Culture'",
+      "wait for [data-test-id=\"dashboard\"] to be visible",
+      {
+        "action": "click",
+        "target": "role=button:Add widget"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-modal\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] [data-test-id=\"widget-item\"][data-test-value=\"close-desk\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Add This Widget"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"widget-modal\"] button",
+        "text": "Done"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"close-desk\"]",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "const s = document.querySelector('[data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"close-desk\"] select.sd-line-input__select'); const o = [...s.options].find((x) => x.textContent.trim() === 'Politics'); s.value = o.value; s.dispatchEvent(new Event('change', {bubbles: true}));"
+      },
+      "Wait until the 'Start routing' button in the Desk Router widget is enabled",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"widget-grid\"] [data-test-id=\"widget\"][data-test-value=\"close-desk\"]",
+    "highlight": "none",
+    "notes": "New image. Choosing the destination saves closed_destination on the Culture desk right away (no Save button), but does not close the desk. Do not click 'Start routing'; the desks-and-custom-workspaces/closed-desk-indicators entry closes Culture through the API and reopens it in cleanup. Labels: 'Route incoming content to', 'Start routing'. 'Routed from' only appears on a desk that other closed desks route to. Adds a widget to the Culture dashboard; not idempotent.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  }
+]

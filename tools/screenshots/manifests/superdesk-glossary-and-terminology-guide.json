@@ -1,0 +1,42 @@
+[
+  {
+    "file": "superdesk-glossary-and-terminology-guide/user-menu.png",
+    "caption": "The notifications bell and the user menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Newsroom seed from tools/screenshots/SEED.md has run",
+      "Optional: admin has at least one unread notification so the count badge shows on the bell (for example, have marenholt mark an item for admin)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"my-profile\"] to be visible",
+      "Click [data-test-id=\"my-profile\"]",
+      "Wait for [data-test-id=\"my-profile-dropdown\"] .dropdown__menu to be visible",
+      "Wait for [data-test-id=\"current-user__username\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"my-profile-dropdown\"] .dropdown__menu",
+      "plus": [
+        "button[aria-label=\"View notifications\"]",
+        "[data-test-id=\"my-profile\"]"
+      ],
+      "expand": {
+        "left": 200,
+        "top": 8
+      }
+    },
+    "highlight": [
+      [
+        "button[aria-label=\"View notifications\"] i.icon-bell",
+        "#unread-count"
+      ],
+      "[data-test-id=\"my-profile\"] [data-test-id=\"user-avatar\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Replaces a broken 'Base64-Image-Removed' image under the User icon entry. Top-bar markup is scripts/core/menu/views/menu.html: the bell button has aria-label 'View notifications' and an #unread-count badge; the avatar button has data-test-id 'my-profile'; the dropdown lists the avatar, display name, username and the 'Manage profile' and 'Sign out' buttons. Expand to the left so the crop is landscape and includes the 'Marked for me' button if it is there. Press Escape afterwards.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  }
+]

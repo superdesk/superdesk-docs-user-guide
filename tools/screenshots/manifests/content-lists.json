@@ -1,0 +1,219 @@
+[
+  {
+    "file": "content-lists/workspace-panel-icon.png",
+    "caption": "The Content lists icon in the Workspace Panel",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Client build loads the content-lists extension (the e2e client does, see e2e/client/index.js; the superdesk host build does not)",
+      "Logged in user has the content_lists privilege (admin has all privileges)",
+      "Seeded newsroom from SEED.md so the monitoring list behind the panel is not empty"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "select desk 'Politics'",
+      "Hover [data-test-id=\"workspace-navigation\"] [data-test-id=\"Content lists\"] so its hover state shows"
+    ],
+    "viewport": "1440x584",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 284,
+        "width": 560,
+        "height": 300
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"workspace-navigation\"] [data-test-id=\"Content lists\"] .sd-sidebar-menu__main-icon"
+    ],
+    "notes": "The side menu entry comes from the extension's addToSideMenu (icon 'add-to-list', order 1010); the button has title, aria-label and data-test-id 'Content lists' (scripts/apps/workspace/views/workspace-sidenav-items-default.html). If the icon is not in the bottom part of the panel, adjust the crop region so the icon and a few neighbours are in frame."
+  },
+  {
+    "file": "content-lists/lists-overview.png",
+    "caption": "The Content lists overview: one card per list",
+    "route": "#/content-lists",
+    "user": "admin",
+    "preconditions": [
+      "Content lists extension loaded (e2e client)",
+      "Seeded newsroom from SEED.md (published, scheduled and in-progress text articles exist)",
+      "Content lists seeded by seed.py (CONTENT_LISTS): the five lists below, items added through PATCH /api/content_lists/<id>/items",
+      "List 'Homepage top stories' (limit 5, description 'Lead stories for the homepage, in order', enabled true) with, in order: MINISTER-RESIGNS (pinned at position 0), CENTRAL-BANK-RATES, CEASEFIRE-TALKS, ELECTION-POLL, STARTUP-FUNDING, BOOK-PRIZE, SAILING-REGATTA (7 items, so the card shows '+2 more')",
+      "List 'Business briefing' (no limit, enabled true): CENTRAL-BANK-RATES, STARTUP-FUNDING, AIRLINE-MERGER (scheduled), ENERGY-TARIFFS (in progress)",
+      "List 'Election special' (no limit, enabled true): ELECTION-POLL, ELECTION-BUDGET, ELECTION-DEBATE, ELECTION-MARKETS, ELECTION-VALDORIA",
+      "List 'Weekend sport' (no limit, enabled true): SAILING-REGATTA, MARATHON-PREVIEW, TENNIS-FINAL, RUGBY-SEMIFINAL",
+      "List 'Culture picks' (no limit, enabled false so the card shows 'disabled'): BOOK-PRIZE, FESTIVAL-LINEUP",
+      "No other content lists exist (restore the snapshot first, it has none)"
+    ],
+    "steps": [
+      "Open #/content-lists and wait for [data-test-id=\"content-lists--grid\"] to be visible",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"content-list-card\"]",
+        "state": "visible"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Cards are sorted by name. Only lists of type 'manual' are shown. The footer of each card shows 'Items updated:' and an 'active' or 'disabled' label."
+  },
+  {
+    "file": "content-lists/list-editor.png",
+    "caption": "The list editor: the list on the left, the article picker on the right",
+    "route": "#/content-lists",
+    "user": "admin",
+    "preconditions": [
+      "Same content lists as for content-lists/lists-overview.png, in particular 'Homepage top stories' with MINISTER-RESIGNS pinned at position 0"
+    ],
+    "steps": [
+      "Open #/content-lists and wait for [data-test-id=\"content-lists--grid\"]",
+      "Click [data-test-id=\"content-list-card\"][data-test-value=\"Homepage top stories\"] [data-test-id=\"content-list-card--edit\"] button",
+      "Wait for [data-test-id=\"content-list--editor\"] and for at least 7 [data-test-id=\"content-list--items\"] [data-test-id=\"content-list-item\"]",
+      {
+        "action": "wait",
+        "target": "text=Could not load the content list.",
+        "state": "hidden",
+        "optional": true
+      },
+      "Wait for [data-test-id=\"content-list--picker-results\"] [data-test-id=\"content-list-item\"] to show (source 'Published' is the default)",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"content-list--items\"] [data-test-id=\"content-list-item--pin\"][data-test-value=\"pinned\"]",
+      "[data-test-id=\"content-list--picker-source\"]"
+    ],
+    "notes": "The published articles already in the list appear dimmed in the picker on the right (they are not draggable). The pinned row has a rotated pin icon. With limit 5 the limit warning also appears after row 5; that is expected and is the subject of limit-warning.png."
+  },
+  {
+    "file": "content-lists/limit-warning.png",
+    "caption": "Articles past the limit are dimmed below the warning",
+    "route": "#/content-lists",
+    "user": "admin",
+    "preconditions": [
+      "Same content lists as for content-lists/lists-overview.png: 'Homepage top stories' has limit 5 and 7 items"
+    ],
+    "steps": [
+      "Open #/content-lists and wait for [data-test-id=\"content-lists--grid\"]",
+      "Click [data-test-id=\"content-list-card\"][data-test-value=\"Homepage top stories\"] [data-test-id=\"content-list-card--edit\"] button",
+      {
+        "action": "wait",
+        "target": "text=Could not load the content list.",
+        "state": "hidden",
+        "optional": true
+      },
+      "Wait for [data-test-id=\"content-list--limit-notification\"] to be visible",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"content-list--items\"]",
+      "maxHeight": 470
+    },
+    "highlight": [
+      "[data-test-id=\"content-list--limit-notification\"]"
+    ],
+    "notes": "The alert text is 'This list is limited to 5 items. Articles below will be removed.' The two rows below it are shown at half opacity."
+  },
+  {
+    "file": "content-lists/list-settings.png",
+    "caption": "The List settings window",
+    "route": "#/content-lists",
+    "user": "admin",
+    "preconditions": [
+      "Same content lists as for content-lists/lists-overview.png"
+    ],
+    "steps": [
+      "Open #/content-lists and wait for [data-test-id=\"content-lists--grid\"]",
+      "Click [data-test-id=\"content-list-card\"][data-test-value=\"Homepage top stories\"] [data-test-id=\"content-list-card--actions\"] button",
+      "Click [data-test-id=\"content-list-card--settings\"]",
+      "Wait for [data-test-id=\"content-list-settings\"] to be visible (Name 'Homepage top stories', Number of articles limit 5, Description filled, Active on)"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog:has([data-test-id=\"content-list-settings\"])"
+    },
+    "highlight": "none",
+    "cleanup": [
+      "Click [data-test-id=\"content-list-settings--cancel\"]"
+    ],
+    "notes": "Small modal titled 'List settings' with Cancel and Save in the footer. If the dialog container is not a PrimeReact .p-dialog, crop to the modal element that contains [data-test-id=\"content-list-settings\"] including its header and footer."
+  },
+  {
+    "file": "content-lists/manage-webhooks.png",
+    "caption": "The Manage Webhooks window",
+    "route": "#/content-lists",
+    "user": "admin",
+    "preconditions": [
+      "Same content lists as for content-lists/lists-overview.png",
+      "Two webhooks seeded by seed.py (CONTENT_LIST_WEBHOOKS): https://www.meridian-news.example/hooks/content-lists (enabled) and https://staging.meridian-news.example/hooks/content-lists (disabled, excludes 'Culture picks')"
+    ],
+    "steps": [
+      "Open #/content-lists and wait for [data-test-id=\"content-lists--grid\"]",
+      "Click [data-test-id=\"content-lists--settings-menu-button\"]",
+      "Click [data-test-id=\"content-lists--webhooks\"]",
+      "Wait for [data-test-id=\"manage-webhooks\"] and two [data-test-id=\"webhook-item\"]",
+      "Click [data-test-id=\"webhook-item\"][data-test-value=\"https://staging.meridian-news.example/hooks/content-lists\"] to open the edit panel",
+      "Wait for [data-test-id=\"webhook-edit-panel\"] to show URL, Excluded lists ('Culture picks') and Enabled (off)",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog:has([data-test-id=\"manage-webhooks\"])"
+    },
+    "highlight": "none",
+    "cleanup": [
+      "Click [data-test-id=\"webhook-edit-panel--cancel\"]"
+    ],
+    "notes": "x-large modal titled 'Manage Webhooks'. The disabled webhook carries a 'Disabled' label. Seeding the webhooks makes the server queue real POSTs to the .example addresses on every list change; they fail and are retried by Celery, which is harmless on the e2e stack. Create the webhooks after the lists so seeding the lists does not trigger them."
+  },
+  {
+    "file": "content-lists/production-api-scope.png",
+    "caption": "The Content lists scope on a Production API client",
+    "route": "#/settings/production-api-keys",
+    "user": "admin",
+    "preconditions": [
+      "Logged in user has the auth_server_clients privilege (admin has all)",
+      "Client build includes the CONTENT_LISTS_READ scope (client-core 7e08bc457 or later)"
+    ],
+    "steps": [
+      "Open #/settings/production-api-keys and wait for [data-test-id=\"list-page--items\"]",
+      "Click [data-test-id=\"list-page--add-item\"]",
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"item-view-edit\"] [data-test-id=\"gform-input--name\"]",
+        "value": "Meridian website"
+      },
+      {
+        "action": "treeSelect",
+        "target": "[data-test-id=\"item-view-edit\"] [data-test-id=\"gform-input--scope\"]",
+        "value": [
+          "Archive",
+          "Content lists"
+        ]
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x640",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"gform-input--scope\"]"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"item-view-edit--cancel-save\"]"
+    ],
+    "notes": "Flow from e2e/client/playwright/production-api-keys.spec.ts. The scope options are Archive, Desks, Users, Contacts, Planning, Events, Assignments, Content lists."
+  }
+]

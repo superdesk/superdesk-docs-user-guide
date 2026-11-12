@@ -1,84 +1,248 @@
 # Searching Content in Superdesk
 
-### Searching Content in the Search Tab
+Superdesk has a built-in search for finding news items. Search covers newly ingested content, items in production, published items and archived items: articles, pictures, videos, audio and packages. Each desk also has its own search box in the Monitoring view. To search the whole of Superdesk, use the **Search** icon in the Workspace Panel.
 
-Superdesk has a convenient built-in search function for finding news items. The Search function is also how you can view all the newly ingested articles, photos, videos and content packages. Each desk has a desk-specific search located in the monitoring pane. If you would like to search the entire content of Superdesk, click the Search tab located on the Workspace Panel.
+## Opening Search
 
-<div align="left"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAD+0lEQVRoQ+2ZSUwUQRSGfxSVRRgX4pgRGAVj3FFEFjEsERM14YAmgjEkGr1wUDiQaPTCRaOJMYqHuUj0YjQmOgfXoIiaIIJA3Fm0URYntiI4IJtsVg1MHHro6eqe7pBOpq/dVfW+97/36lW1H8dxY9Dx4+cDmGb1fApMswDwKeBUgO8ZQMOPP/jyqxffuwfR1T+EgeFRx+sA/xmYHzgLi0PnYNnCYKxcNBfGkABVxPNagaqWLlR+7UQzMVzOE0VAkpYuQIJ5vpxhbt8qBnhjs+PBRx627gGvDDCFBmDnaiNiTAZF8ygCuFHXjhfE62o+W4gaObHhsqeUBWAncX3lVSuaO+SFC6tVUWHBOLg5EgaSL6wPMwA13lLxxeuQkTKMhlRe8jJmCGaAC885zTwvhKJKFKRES7E63jMBaBHzUtax5oQkAK02JS9bpNbT5P2hRLNkdZIEOPO4SRD3G2EpNCNCdZN7UHquDMUu89J8OJ6xwuNKHgHoJnWttk11U+VMuH9ThMfNziPAhWckcWXusMbI5cgm0iebQhDsP2Hq8BDabDaUvmyEtbVPjv2gO3ZBqnhCiwLQ3ubUo6YpFpsqhKj8lWjelYTc1cRwURMJyMd6FN03oMgtDN1DyDnNye0rRHsnUYBnXAduvbExeytuxzacWBuC2WTEX3snnr5txL0qHhwMiEuIQs76cKw0zCRvR9D2vhp5D3nmuffEmJAaHTbl96IAV6tbUNduZ1skOh4lWSYYiXFdXD0KrZ/hbl4QsrJSkBsdQCD78MJaitMc2/Sx4QYciDfLA3CvPs7xriE0Lju/LxO5S4h3f7ej6HIN2pJTYEla4FBj/BlBQ2UZCitCUHg4CWnziErf6rH7epBLRRMPIU/VSFSBY3c+oH9ohMFFy3HqyFrEzKFG3iFGmlGUtxFxwkTo5VFsqUQpgbtN4QZ/ouRSBawMKwTOmomzmWvkKZBvfYexMZYbF6ci4h6cvLLc70m74OeHi1nr1AIQhlAnVjkqilIAaSBFALoPIfEkdlcyW5jE6emwbDJMSmKutgz55cIkbmTIAEBREuu+jGq3kY07vbf1PY7enGq/cBdF0UYm3kqIqR6EtIwE5G0weGglJo9lhVDUStCllDZzuclR2GwMmtTM8TyPuxWfgMStOBT5/8wrBaG4maMA2rTTpKXYm84M4VU7TSHkVCOmkuL4iA3C6wMNXUq7I6UAYtQO6/lylLh4QZUjJZ1Pu0P9BAS5z+Je1yD/yf8eVrVDvdMhur5WoRC6v9hyQuj2atG1wmiRE6wxL6x0kvdCYqVR19frrlC6/cEhVEa3v5jYd19tvlScA9qYI39WH4B8n6k7wqeAuv6UP9s/V2uwb/W0ADUAAAAASUVORK5CYII=" alt="This is the Search icon on the Workspace Panel." height="48" width="48"></div>
+Click the **Search** icon in the Workspace Panel, or press **Ctrl+Alt+F** anywhere in Superdesk. When you hover over the icon, a menu may list other places you can search, such as external search providers and search shortcuts. See [Search shortcuts](#search-shortcuts).
 
-Clicking the Search icon in the Workspace Panel enables you to browse all the news items. You can browse all types of items using the Search feature. This includes published, killed, ingested or archived items.
+<figure><img src="../../.gitbook/assets/searching-content-in-superdesk/search-page.png" alt="The Search page with the advanced search panel open on the left and the results list on the right" width="999"><figcaption><p>The Search page</p></figcaption></figure>
 
-![](<../../.gitbook/assets/image60 5d4dd610426debe0aa9f65fbf147d4db.png>)
+The header of the Search page has, from left to right:
 
-You can perform a search by typing in keywords related to the article you’re looking for in the text box beside the search icon.
+* the **Toggle filters** button (a funnel), which opens and closes the advanced search panel,
+* the source dropdown, which shows **Superdesk** or the search provider you are using,
+* the search box,
+* the total number of results and the sort control,
+* the view switcher.
 
-<div align="left"><img src="../../.gitbook/assets/image73 4c7eb9ea999fd577550ef2a4e864c9ea.png" alt=""></div>
+What you find depends on your role. If your role does not have the **Global searches** privilege, Search only shows content from the desks you are a member of. Items in stages that a desk hides from non-members are only shown to members of that desk.
 
-If you type multiple words, Superdesk will search for items containing all of those words simultaneously. In the example above, we are searching for an article that contains both ‘giraffes’ and ‘IWGP’.
+## Searching by keyword
 
-<div align="left"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA0CAYAAAAuT6DoAAAB9ElEQVRoQ+2avY6CQBDHB7/wgwfQklpfQh+A56S2VxMLOytja4KaSIDKEKmUu9kLhLsgtxd3F+RmE4KJK7O//P8zCzja4XCI4XOEYQidTgd0XWfnVqsFzWYTNE3Drys/rtcrjEajb+vUErggCKDb7UKv10sBEa7RaFQeDBdYCHe5XBhYcqCCqF4t4E6nE/T7fRgMBuxcK7jj8ZjCISDBVSgbC3OOlKuQUj+XUqic4ziFOVf1/Y7gsFLmVUtSrsScJFuSLUu037PQZEuyZY43bNsG13X/bNjhcAiWZbEbiFeGVFvWGm673cJms4H7/c4tAD7pz2YzGI/H3L8ppaA8Hg/Y7XawXq+5AEWC/fqaQcSNMy+gaDAlcBgkjmPY7/ewWq1yFZQBpgyuCBDBptMpyzHRN+JSq2VeoqOCy+WSKSgTTKlyCejtdoP5fM72P1H7WSnVMi8owb28w31dQHnO/QvlfN+XViUT4UtTbjKZSCn/WUcrh4uiiFVK0zQFZdbzyyiHk06UCUBw9CSu0m+csciWZEtOq6icRrYkW6r0G2cssiXZktMqKqeRLcmWKv3GGavQlovFAtrtNuv5wtZE/JxtSRT9EpVzzS9NS/stz+czg8L/yfK69t4aDl8HYK+lYRgMDkGz/ZZvDed5HmuuSY46wH0AePJ9VaPRJnkAAAAASUVORK5CYII=" alt="This is the Advanced Search icon." height="52" width="55"></div>
+Type one or more words in the search box and press Enter. Superdesk finds the items that contain all of the words you typed. To find words that appear next to each other, put them in double quotes, for example `"election budget"`.
 
-You can apply additional filters and parameters to your search by clicking on the Advanced Search icon. Inside the Advanced Search menu, you will find several ways to refine your search.
+### How your words are matched
 
-You can define the Stage of the content item you’re looking for: ingested, production, published or archived. You can choose multiple selections for a single search. When the buttons turn white, articles in those states will not be included in your search. To search only for newly ingested articles, for example, leave only the Ingest button in blue.
+*Available since Superdesk 2.5.*
 
-<div align="left"><img src="../../.gitbook/assets/image148 33c5fc1c60f5cfa71be865945450351a.png" alt=""></div>
+Your words do not have to be in the same field. A search for `giraffe zoo` also finds an item with *giraffe* in the headline and *zoo* in the body.
 
-Below the production stage buttons there are two tabs, one for parameters, and one for filters.
+The search box also finds items by the name of their author, as it appears in the item's author field.
+
+### Highlighted search terms
+
+If your Superdesk has search highlighting turned on, the words you searched for are highlighted in the results. Highlights show in the headline, slugline, abstract and body of ingested, production and published items, both in the results list and in the preview. The same applies when you search in the Monitoring view (since 2.4).
+
+<figure><img src="../../.gitbook/assets/searching-content-in-superdesk/search-highlights.png" alt="Search results for the word election, with the matching words highlighted in the headlines and the search tag shown above the list" width="1496"><figcaption><p>Search terms highlighted in the results</p></figcaption></figure>
+
+## Advanced search
+
+Click **Toggle filters** (the funnel at the left of the header) to open the advanced search panel. The panel has up to three tabs:
+
+* **Advanced Search**, with parameters and filters,
+* **Saved**, with your saved searches and the global ones. You see it if your role can manage saved searches.
+* **Raw**, a free query box for administrators. See [Raw search](#raw-search).
+
+### Choosing where to search
+
+At the top of the **Advanced Search** tab, four buttons choose which content is searched: **Ingest**, **Production**, **Published** and **Archived**. A highlighted button is included in the search. Click a button to include or exclude that content. For example, to search only newly ingested content, leave only **Ingest** highlighted.
+
+The four buttons match the places where Superdesk keeps content. **Ingest** holds items that arrived from feeds and have not been fetched to a desk yet. **Production** holds the items on desks and in personal spaces. **Published** holds published items for as long as their expiry time runs. When that time is up, Superdesk moves them to **Archived**, a separate long-term store where they stay searchable. Your administrator sets the expiry times, see [Content expiry](../administration/defining-publishing-in-superdesk/publish-queue-legal-archive-and-content-expiry.md#content-expiry).
+
+Below these buttons are two tabs, **Parameters** and **Filters**.
 
 {% tabs %}
 {% tab title="Parameters" %}
-* **Slugline**: Input a slugline associated with the news item. This will only search words in the slugline field.
-* **Headline**: Search by article title. You may enter either a full article title, consecutive or non-consecutive words.
-* **Story text**: Search for words within the main body of the text. You may enter either consecutive or non-consecutive words. Enter three words for the most accurate search.
-* **Unique Name**: Search by article uniqueID. You can view the article's unique name at the bottom of an article’s Metadata tab using the Info button in the Editor Sidebar. By default, an article’s unique name is a unique number identifier, but the unique name can be edited. Enter the unique name exactly as it appears in the info tab.
-* **Byline**: Search by author’s full name (must be written exactly as it appears in the author's profile).
-* **Subject**: Click the blue + button and select from a number of subjects that pop up in the Subject window (i.e. sports, politics or weather).
-* **From desk**: Select desk of origin from a drop-down list.
-* **To desk**: Select a Desk from the drop-down list to search for articles sent to the selected desk.
-* **Creator**: Select article originator from a drop-down list of all users in your instance of Superdesk.
-* **Marked Desks**: Desks can be marked, either manually, or through the use of the Desk Routing widget. If you are using the Desk Routing widget, you will need to use this Marked Desks parameter to create a Saved Search to monitor the results of the Desk Routing. A bell icon will appear next to items that have been marked.
-* **Spiked Content**: Choose whether to include spiked content, exclude spiked content, or search only spiked content in this query.
-* **Provider**: Select source from which the item was ingested. There is a drop-down menu of current ingest sources to choose from.
+Fill in one or more fields and click **Search** at the bottom of the panel. You can also press Enter in any text field.
 
-Once you have input all the applicable information into the search parameters, you can click the _Search_ button to run the search.
+* **Slugline**: searches only the slugline.
+* **Headline**: searches only the headline. You can enter the full headline or some of its words.
+* **Story Text**: searches the body of the item.
+* **Unique Name**: finds the item with this unique name. Enter it exactly as it appears in the item's metadata. By default the unique name is a number, but it can be edited.
+* **Byline**: searches the byline field. You can enter the full byline or part of it.
+* **Subject** and other controlled vocabularies: click the field and pick values from the list. Which vocabularies appear here depends on your installation.
+* **Marked Desks**: finds items that were marked for one or more desks with **Mark for desk**. Items marked for a desk show a bell icon in lists. Save this search to follow everything marked for your desk.
+* **Keywords**: finds items with the keywords you pick.
+* **From Desk**: the desk the item came from.
+* **To Desk**: the desk the item was sent to.
+* **Creator**: the user who created the item. This field only appears when **Production** is selected.
+* **Spiked Content**: **Exclude spiked content** (the default), **Include spiked content** or **Spiked only content**.
+* **Provider**: the ingest source the item came from.
+* **Feature Media**: turn this on to find only items that have a feature image or other feature media.
+
+Your administrator can add a **Sign-off** field or hide fields you do not use, so your list can differ.
 {% endtab %}
 
 {% tab title="Filters" %}
-For content types filters, you can search for articles containing just pictures, just text, or both by clicking on _composite_. You could also search for audio or video files.
+Filters narrow the current results. Each filter group lists the values found in the results, with the number of matching items next to each value. Click a value to include it. Click the ban icon next to a value (**Negate**) to exclude it instead.
 
-Advanced search filters include: Content types, Desk, Ingest Source, News Category, Genre, Urgency, Priority and Flags. In the Desks section, you can further refine your search by checking off the boxes beside particular desks, to make your search desk-specific.
+The filter groups are:
 
-![](<../../.gitbook/assets/image67 51aa19a2d00b0d28dfc903fac5c2120c.png>)
+* **Content types**: text, picture, composite (packages), video, audio and other types,
+* **Languages**,
+* **Desks**,
+* **Sources**,
+* **Credits**,
+* **Category**, **Genre**, **Urgency** and **Priority** (the names follow your vocabularies),
+* **Flags**: **Legal** and **Sms**,
+* **Date created**, **Date modified** and **Date published**: click **Last 24 Hours**, **Last 7 Days** or **Last 30 Days**, or set a range with the from and to date pickers,
+* **Date scheduled**, for scheduled items.
 
-<div align="left"><img src="../../.gitbook/assets/image87 a019862b51ed4900e7910872103c9bc9.png" alt=""></div>
+A group only appears when the current results have values for it.
 
-The final filter is by date. You can set a date range to search for articles created or modified between particular time periods by clicking on the calendar icons and inputting specific dates, or by selecting the pre-made buttons for LAST 24 HOURS, LAST 7 DAYS or LAST 30 DAYS.
+<figure><img src="../../.gitbook/assets/searching-content-in-superdesk/advanced-search-filters.png" alt="The Filters tab of the advanced search panel with the Content types, Desks, Category and Urgency groups" width="255"><figcaption><p>The Filters tab</p></figcaption></figure>
 {% endtab %}
 {% endtabs %}
 
-If you find yourself searching the same parameters over and over again, you can choose to save the search using the SAVE SEARCH button. In addition to saving the parameters in the Advanced Search menu, it also makes the search available for use in the Monitoring widgets on your Desk Dashboard.
+### Search tags
 
-<div align="left"><img src="../../.gitbook/assets/s-searchfilters.png" alt="Search Parameters"></div>
+Every keyword, parameter and filter you use appears as a tag above the results. Click the cross on a tag to remove it and widen the search. To remove everything at once, click **Clear filters** at the bottom of the advanced search panel.
 
-When you have input your search information, blue boxes will appear at the top of the results window. If you’re searching for multiple parameters at the same time, you will see multiple blue boxes. You can remove a parameter and widen your search by clicking on the x in the blue box to remove the filter.
+## Sorting and changing the view
 
-<div align="left"><img src="../../.gitbook/assets/s-searchtopright.png" alt="Sort search results" height="237" width="172"></div>
+The header shows the total number of results. Click **Sort by** to sort the results by **Updated**, **Created**, **Urgency**, category, **Slugline**, **Priority** or **Genre**. Click the arrow next to it to switch between ascending and descending order.
 
-In the top-right section of the search results window, you have the option to rearrange your search results. The drop-down sort menu allows you to arrange by most recent, date created, news value, category, alphabetically by slugline, priority, or alphabetically by genre. Clicking on the reverse pyramid beside the sorting options will allow you to view your results in reverse order.
+Results are shown in **List View** by default. Use the view switcher at the right of the header to change to **Photo Grid View**, which is best for pictures and other media, or to **Compact View** if your installation offers it. You can also press **V** to switch views. See [Monitoring Tab](monitoring-tab.md#choosing-a-list-view) for what each view looks like.
 
-<div align="left"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAvCAYAAABOtfLKAAAA6ElEQVRoQ+2aMQ6EIBBFx4DEjntwEo5hQii4G0ezsaPbDZsttdD8GHb202niyPw38x0Tptbaa9938d7Lr65SihhjZNKQTM5ZrLU6kkkpyTzPOpJZ11WWZWEyw/kEyQyH5LuhTsY5p6dnmMyIpcYyG5FK3xPJ/AWZbduk1ir9V6KvEILEGD/XV+73YfHOgpYZkzkgSTJ0szud+dAzNIAzoelmdLPj2oD2zEN9fvoaJkMDuDCAcpxBjzOqvjN0M6ACtGagmNBQJAOVExiMZIBiQkORDFROYDCSAYoJDUUyUDmBwdSRUXdC4w31tMEqck0bEwAAAABJRU5ErkJggg==" alt="Search grid-view" height="47" width="51"></div>
+## Finding translations
 
-By default, the search results appear in a list view. You can switch to a grid-view by clicking on the grid icon in the top-right corner. The grid view is especially useful for viewing news items with images because it allows space for thumbnail views of the pictures.
+Translations are linked to the item they were translated from. In the results list:
 
-***
+* A translated item shows a **Translation** label. Click it to see the **Original Article**.
+* An item that has been translated shows the number of its translations, for example **(2) Translations**. Click it to see each translation with its language code.
 
-### Searching Content on your Desk
+Click a headline in that list to preview the item. To narrow the results to one language, use the **Languages** filter on the **Filters** tab.
 
-You can easily search content on your current Desk by using the search textbox at the top of the Monitoring Pane. This will search all content in that Desk’s workflow. If you type multiple words, Superdesk will search for items containing all of those words simultaneously.
+Whether the translation labels appear in your lists depends on how your administrator has set up the list fields. To translate an item and move between an original and its translations, see [Translating content](../content-management/translating-content.md#finding-translations-in-search).
 
-<div align="left"><img src="../../.gitbook/assets/unknown (8).png" alt=""></div>
+## Saved searches
 
-You can also similarly search content in a Desk’s Spike tab by using the search textbox at the top of that pane.
+If you run the same search often, save it. A saved search keeps the keywords, parameters and filters you used. You can run it again from the **Saved** tab, show it as a group in Monitoring, and subscribe to it by email.
 
-Use the drop-down menu at the top of the Monitoring pane to skip between the Stages and Saved Searches. The Advanced Search Icon can be used to filter for content that was created using a specific content profile.
+### Saving a search
+
+{% stepper %}
+{% step %}
+### Run the search
+
+Enter your keywords, parameters and filters. When a search is active, **Clear filters** and **Save Search** appear at the bottom of the advanced search panel.
+{% endstep %}
+
+{% step %}
+### Click Save Search
+
+The **Save search** form opens.
+{% endstep %}
+
+{% step %}
+### Name it
+
+Enter a **Name** (required) and, if you like, a **Description**. Turn on **Make global** to share the search with everyone. If your installation uses search shortcuts, a global search can also be made a **Search shortcut**.
+{% endstep %}
+
+{% step %}
+### Click Ok
+
+The search is saved and appears on the **Saved** tab.
+{% endstep %}
+{% endstepper %}
+
+<figure><img src="../../.gitbook/assets/searching-content-in-superdesk/save-search.png" alt="The Save search form with the Name and Description fields and the Make global switch" width="458"><figcaption><p>Saving a search</p></figcaption></figure>
+
+### Private and global saved searches
+
+* A **private** saved search is only visible to you.
+* A **global** saved search is visible to all users. Only global saved searches can be added to a desk's Monitoring view. See [Saved searches in Monitoring](#saved-searches-in-monitoring).
+
+### Using, editing and deleting saved searches
+
+Open the advanced search panel and click the **Saved** tab. **My Saved Searches** lists the searches you created. Your global ones are marked **[Global]**. **Global Saved Searches** lists the global searches of other users, with the name of the user who created each one. Use the **Search saved searches** box to find one by name.
+
+<figure><img src="../../.gitbook/assets/searching-content-in-superdesk/saved-searches.png" alt="The Saved tab with My Saved Searches and Global Saved Searches, each with edit, delete and Subscribe links" width="700"><figcaption><p>The Saved tab</p></figcaption></figure>
+
+* **Run** a saved search by clicking its name.
+* **Edit** it with the pencil icon (**Edit search**). Change the parameters or filters, then click **Save Changes**, or **Save As** to keep the original and save a copy. Click **Back / Cancel** to leave without saving.
+* **Delete** it with the bin icon (**Delete search**) and confirm.
+
+You can edit and delete your own saved searches. Editing or deleting another user's global saved search needs the **Manage Global Saved Searches** privilege.
+
+### Search shortcuts
+
+If your installation uses search shortcuts, a global saved search can be marked as a **Search shortcut**. Shortcuts appear in the menu that opens when you hover over the **Search** icon, and in the source dropdown in the Search header, next to the search providers. Click one to run it.
+
+### Subscribing to a saved search
+
+You can get a regular email with the items that match a saved search.
+
+{% stepper %}
+{% step %}
+### Find the saved search
+
+On the **Saved** tab, hover over the search and click **Subscribe**, which appears under it.
+{% endstep %}
+
+{% step %}
+### Choose when you get the email
+
+In the **New subscription** window, under **Schedule**, choose **Every day** or **Select days**. Under **Time**, choose **Every hour** or **Select hours**.
+{% endstep %}
+
+{% step %}
+### Click Subscribe
+
+The search now shows a **Subscribed** label. Superdesk emails you a **Saved searches report** at the times you chose.
+{% endstep %}
+{% endstepper %}
+
+<figure><img src="../../.gitbook/assets/searching-content-in-superdesk/saved-search-subscription.png" alt="The New subscription window with the Schedule and Time options" width="856"><figcaption><p>Subscribing to a saved search</p></figcaption></figure>
+
+To change or stop a subscription, click **Manage subscription** under the search. The window shows when the last report was sent. Click **Update subscription** to save changes, or **Unsubscribe** to stop the emails.
+
+Users with the **Manage Saved Searches Subscriptions For Other Users** privilege can also subscribe other users and whole desks. Edit the saved search and click **Manage** next to the number of subscriptions. In the **Manage** window, click **Add new**, search for a user or a desk, and set the schedule. When a desk is subscribed, every member of the desk gets the email.
+
+### Saved searches in Monitoring
+
+A saved search can be shown as a group in the Monitoring view, next to the stages. The group lists every item that matches the search and updates like any other group. See [Monitoring Tab](monitoring-tab.md#groups-in-the-monitoring-view).
+
+* In a **custom workspace**, open the workspace setup with the gear icon and go to the **Saved Searches** step. You can add both global and your private saved searches.
+* In a **desk's** Monitoring view, an administrator adds saved searches in the desk's monitoring settings. Only global saved searches can be used there, because every member of the desk sees the same groups.
+
+Saved searches can also be shown in a Monitoring widget on your dashboard. See [Dashboards and Widgets](dashboards-and-widgets.md).
+
+If you want an overview of the work on every desk rather than a list of items, use [Master Desk](master-desk.md).
+
+## Raw search
+
+The **Raw** tab is only available to administrators. It has a **Query Text** box for queries in the Elasticsearch query string syntax. Use it for searches the parameters and filters cannot express. Type the query and press Enter. Some examples:
+
+* `urgency:<=2` finds items with urgency 1 or 2.
+* `type:text OR type:picture` finds only text and picture items.
+* `_exists_:slugline` finds items that have a slugline.
+* `firstpublished:{now-24h TO now}` finds items first published in the last 24 hours.
+* `authors.sub_label:Holt` finds items with an author called Holt.
+
+A raw search can be saved like any other search. The saved search then has a **Query** field with the raw query.
+
+## Searching on your desk
+
+To search only the items in your desk's workflow, use the search box at the top of the Monitoring view. It narrows all groups to the items that match. The Spiked Items view has its own search box for the items spiked from your desk. See [Monitoring Tab](monitoring-tab.md#searching-and-filtering) and [Spiked Items](../content-management/spiked-items.md).
+
+## For administrators
+
+* **Privileges** (in **Settings** > **User Roles**):
+  * **Global searches** lets users search Superdesk content on all desks. Without it, searches only return content from the user's own desks, and the **Search** icon only lists external search providers.
+  * **Manage Saved Searches** shows the **Saved** tab and lets users save searches.
+  * **Manage Global Saved Searches** lets users edit and delete other users' global saved searches.
+  * **Manage Saved Searches Subscriptions** lets users subscribe to saved searches.
+  * **Manage Saved Searches Subscriptions For Other Users** lets users subscribe other users and desks.
+* **Client configuration** (in `superdesk.config.js`):
+  * `search` lists the parameters shown on the **Parameters** tab, for example `{slugline: 1, headline: 1, sign_off: 1}`. Leave a parameter out to hide it.
+  * `search_cvs` lists the controlled vocabularies shown as parameters. The default is **Subject** and **Company Codes**.
+  * `defaultSearch` sets which of ingest, production, published and archived content is searched by default. Set a repository to `false` to leave it out.
+  * `features.elasticHighlight: true` turns on highlighted search terms.
+  * `features.searchShortcut: true` lists search providers and search shortcuts in the Search menu and the source dropdown, and adds the **Search shortcut** option to global saved searches.
+  * `search.useDefaultTimezone: true` interprets dates in the date filters in the server's time zone instead of the user's.
+* **Server configuration**: `ELASTIC_QUERY_STRING_TYPE` (default `cross_fields`) controls how words are matched across fields.
+* **Search providers** are set up in **Settings** > **Search Providers**. See [Content Configuration](../administration/content-configuration/README.md#search-providers).
+* **Saved search reports** are sent by email, so Superdesk needs a working email configuration.

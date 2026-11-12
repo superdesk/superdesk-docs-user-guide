@@ -1,0 +1,267 @@
+[
+  {
+    "file": "analytics/menu-entry.png",
+    "caption": "Analytics in the Main menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"top-menu\"]",
+      {
+        "action": "click",
+        "target": "#hamburger-menu button.hamburger"
+      },
+      "Wait for [data-test-id=\"main-menu\"] to be visible and for [data-test-id=\"main-menu-item\"][data-test-value=\"Analytics\"] to exist",
+      "Hover [data-test-id=\"main-menu-item\"][data-test-value=\"Analytics\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: #main-menu",
+    "highlight": "[data-test-id=\"main-menu-item\"][data-test-value=\"Analytics\"]",
+    "notes": "Analytics is registered as a main-menu activity (category MENU_MAIN, adminTools false), so it is listed in the upper group of the Hamburger Menu, not under 'Admin tools'. It only appears when the user has at least one report privilege.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  },
+  {
+    "file": "analytics/report-list.png",
+    "caption": "Choosing a report",
+    "route": "#/analytics",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)",
+      "Planning installed (so Planning Usage is listed)",
+      "ANALYTICS_ENABLE_ARCHIVE_STATS = True and archive statistics generated after the seed content was created: run `python manage.py analytics:gen_archive_statistics` in the server container (the hourly celery beat job is too slow for a capture run) (so Desk Activity, Production Time and User Activity are listed)"
+    ],
+    "steps": [
+      "Open #/analytics (no report query parameter) and wait for #report-dropdown",
+      "Check the dropdown toggle reads 'Select A Report'",
+      {
+        "action": "click",
+        "target": "#report-dropdown .dropdown__toggle"
+      },
+      "Wait for #report-dropdown .dropdown__menu to be visible; it should list Content Publishing, Desk Activity, Featuremedia Updates, Planning Usage, Production Time, Publishing Performance, Update Time, User Activity"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".sd-analytics .subnav",
+      "plus": [
+        "#report-dropdown .dropdown__menu"
+      ],
+      "expand": {
+        "bottom": 20,
+        "right": 40
+      }
+    },
+    "highlight": "none",
+    "notes": "The first entry of the menu is an empty item (the 'no report' placeholder). If it renders as a blank row, keep it; do not crop it out. Featuremedia Updates and Update Time disappear when PUBLISH_ASSOCIATED_ITEMS is on.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  },
+  {
+    "file": "analytics/content-publishing-report.png",
+    "caption": "A Content Publishing report, grouped by category",
+    "route": "#/analytics?report=content_publishing_report",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)",
+      "At least 40 published text items from the last 30 days spread over 4 desks (Politics, Business, Sports, Culture) and at least 4 categories, a few of them corrected, killed or updated, so the charts have several bars and colours"
+    ],
+    "steps": [
+      "Open #/analytics?report=content_publishing_report and wait for .sd-filters-panel with the 'Advanced' tab active",
+      "Make sure the Parameters tab (#parameters-tab) is active",
+      "In 'Group By:' select 'Category'; leave 'Subgroup By:' empty",
+      "Leave 'Date Filter:' on 'Range' (default: last 30 days)",
+      {
+        "action": "click",
+        "target": ".side-panel__footer button.btn--primary:has-text(\"Run Report\")"
+      },
+      "Wait until .sda-chart__highchart svg.highcharts-root is rendered and .sda-chart__loader-container is gone"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Shows the whole page: top bar, report panel on Parameters, and the column chart. The default chart type is Column.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  },
+  {
+    "file": "analytics/chart-tab.png",
+    "caption": "Choosing the chart type",
+    "route": "#/analytics?report=content_publishing_report",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)",
+      "At least 40 published text items from the last 30 days spread over 4 desks (Politics, Business, Sports, Culture) and at least 4 categories, a few of them corrected, killed or updated, so the charts have several bars and colours"
+    ],
+    "steps": [
+      "Open #/analytics?report=content_publishing_report and wait for .sd-filters-panel",
+      {
+        "action": "click",
+        "target": "#chart-tab"
+      },
+      "Wait for the 'Chart Type' buttons (Bar, Column, Table) to be visible",
+      "Type 'Published stories per category' in the 'Title' textarea",
+      "Click the 'Bar' chart type button"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: .sd-filters-panel",
+    "highlight": "the Chart Type button group",
+    "notes": "The Title and Subtitle fields show placeholders generated from the parameters when empty; typing a title makes the shot clearer. 'Order Data In:' shows because Content Publishing sorts its groups.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  },
+  {
+    "file": "analytics/export-menu.png",
+    "caption": "Exporting a chart",
+    "route": "#/analytics?report=content_publishing_report",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)",
+      "At least 40 published text items from the last 30 days spread over 4 desks (Politics, Business, Sports, Culture) and at least 4 categories, a few of them corrected, killed or updated, so the charts have several bars and colours"
+    ],
+    "steps": [
+      "Open #/analytics?report=content_publishing_report, keep the defaults and click 'Run Report'",
+      "Wait for .sda-chart__highchart svg.highcharts-root",
+      {
+        "action": "click",
+        "target": ".sda-chart__highchart .highcharts-contextbutton"
+      },
+      "Wait for .highcharts-contextmenu .highcharts-menu to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".sda-chart__highchart",
+      "expand": {
+        "bottom": 40
+      }
+    },
+    "highlight": ".highcharts-contextmenu .highcharts-menu",
+    "notes": "Highcharts 6 context menu with Print chart, Download PNG/JPEG/SVG/PDF and Download CSV. Record the exact menu labels in the capture log so the page text can be checked (there is a VERIFY comment for them). Crop to the chart so the menu is readable.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  },
+  {
+    "file": "analytics/desk-activity-report.png",
+    "caption": "The Desk Activity report",
+    "route": "#/analytics?report=desk_activity_report",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)",
+      "ANALYTICS_ENABLE_ARCHIVE_STATS = True and archive statistics generated after the seed content was created: run `python manage.py analytics:gen_archive_statistics` in the server container (the hourly celery beat job is too slow for a capture run)",
+      "Desk 'Politics' had items created, fetched, sent in and out, published and spiked over the last 7 days (the seed script should spread history over several days and hours)"
+    ],
+    "steps": [
+      "Open #/analytics?report=desk_activity_report and wait for .sd-filters-panel",
+      "In 'Desk' select 'Politics'",
+      "In 'Interval' select 'Daily'",
+      "In 'Date Filter:' select 'Relative Days' and pick '7 days'",
+      {
+        "action": "click",
+        "target": ".side-panel__footer button.btn--primary:has-text(\"Run Report\")"
+      },
+      "Wait for the chart (svg.highcharts-root) and the table below it (.sda-chart__table) to render"
+    ],
+    "viewport": "1440x1100",
+    "crop": "element: .sd-column-box__main-column",
+    "highlight": "none",
+    "notes": "Needs archive statistics; without them the report is not in the list. The table has the Incoming (Total, Create, Fetch, Duplicate, Sent To, Deschedule, Unspike) and Outgoing (Total, Publish, Spike, Sent From, Publish Scheduled, Publish Embargo) column groups; make the viewport tall enough to show both chart and table.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  },
+  {
+    "file": "analytics/user-activity-report.png",
+    "caption": "The User Activity report",
+    "route": "#/analytics?report=user_activity_report",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)",
+      "ANALYTICS_ENABLE_ARCHIVE_STATS = True and archive statistics generated after the seed content was created: run `python manage.py analytics:gen_archive_statistics` in the server container (the hourly celery beat job is too slow for a capture run)",
+      "Yesterday, user 'editor' (or another named user) opened, edited and closed 5 to 8 different items at different times of day, so the timeline has several rows"
+    ],
+    "steps": [
+      "Open #/analytics?report=user_activity_report and wait for .sd-filters-panel",
+      "In 'User' search for and pick the seeded user",
+      "Under 'Date Filter:' ('Single Day') pick yesterday's date",
+      {
+        "action": "click",
+        "target": ".side-panel__footer button.btn--primary:has-text(\"Run Report\")"
+      },
+      "Wait for the xrange chart (svg.highcharts-root) with sluglines on the y axis",
+      "Click the first bar in the chart and wait for the second chart (#item_timeline_report) to render and scroll into view",
+      "Scroll back so both charts are visible if the viewport allows"
+    ],
+    "viewport": "1440x1100",
+    "crop": "element: .sd-column-box__main-column",
+    "highlight": "none",
+    "notes": "Bars are periods during which the user had the item locked (item_lock to item_unlock in archive history), so the seed must lock and unlock items as that user, not only create them. If both charts do not fit, capture the first chart only and say so in the capture log.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  },
+  {
+    "file": "analytics/save-report-form.png",
+    "caption": "Saving a report",
+    "route": "#/analytics?report=content_publishing_report",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)",
+      "At least 40 published text items from the last 30 days spread over 4 desks (Politics, Business, Sports, Culture) and at least 4 categories, a few of them corrected, killed or updated, so the charts have several bars and colours"
+    ],
+    "steps": [
+      "Open #/analytics?report=content_publishing_report and wait for .sd-filters-panel",
+      "In 'Date Filter:' select 'Relative Days' and pick '7 days' (this makes the form dirty so 'Save Report' is enabled)",
+      {
+        "action": "click",
+        "target": ".side-panel__footer button:has-text(\"Save Report\")"
+      },
+      "Wait for .save-report__form",
+      "Type 'Weekly stories per category' in Name and 'Published stories per category over the last 7 days' in Description",
+      "Turn on the 'Make Global' switch"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: .sd-filters-panel",
+    "highlight": ".save-report__form",
+    "notes": "'Make Global' only shows with the 'Analytics - Manage Global Saved Reports' privilege (admin has it). Do not click Save, or click Cancel afterwards so the next shots are not affected; the schedule shot creates its own saved report.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  },
+  {
+    "file": "analytics/schedule-modal.png",
+    "caption": "Scheduling a report by email",
+    "route": "#/analytics?report=desk_activity_report",
+    "user": "admin",
+    "preconditions": [
+      "Instance has superdesk-analytics installed and enabled (server INSTALLED_APPS contains 'analytics'; client superdesk.config.js has 'superdesk.analytics' in apps and 'superdesk-analytics' in importApps). The current demo stack does NOT have it; use an Analytics-enabled build such as the default superdesk host build on develop.",
+      "Logged in as admin (all privileges, including every 'Analytics - ...' privilege)",
+      "ANALYTICS_ENABLE_ARCHIVE_STATS = True and archive statistics generated after the seed content was created: run `python manage.py analytics:gen_archive_statistics` in the server container (the hourly celery beat job is too slow for a capture run)",
+      "A global saved report for Desk Activity named 'Politics desk, last 7 days' exists (desk Politics, interval Daily, Relative Days 7). Create it via POST /api/saved_reports {name, report: 'desk_activity_report', params: {...}, is_global: true} or through the UI",
+      "Users with email addresses exist (e.g. editor@example.com) so the To: field can pick them"
+    ],
+    "steps": [
+      "Open #/analytics?report=desk_activity_report and wait for .sd-filters-panel",
+      {
+        "action": "click",
+        "target": ".sd-filters-panel .nav-tabs__link:has-text(\"Saved\")"
+      },
+      "Wait for .saved-reports and the item 'Politics desk, last 7 days' under 'Global Saved Reports'",
+      {
+        "action": "click",
+        "target": ".saved-reports__item:has-text(\"Politics desk, last 7 days\") .dropdown__toggle"
+      },
+      {
+        "action": "click",
+        "target": ".dropdown__menu button:has-text(\"Create new schedule\")"
+      },
+      "Wait for the modal .modal.scheduled-reports (heading 'Edit \"\" Schedule')",
+      "Turn on 'Active'; Name: 'Politics desk weekly'; Description: 'Sent every Monday morning'",
+      "When: select 'Weekly', pick hour '8:00am', tick 'MO'",
+      "In 'To:' pick the editor user and type one external address, e.g. desk-chief@example.com",
+      "Subject: 'Politics desk activity, last 7 days'; Format: 'PDF File'; leave Image Width at 800 pixels"
+    ],
+    "viewport": "1440x1100",
+    "crop": "element: .modal.scheduled-reports .modal__content",
+    "highlight": "none",
+    "notes": "Do not click Create. The modal heading reads 'Edit \"<name>\" Schedule' even for a new schedule (it uses the typed name), which is why a name is typed before the capture. Weekday checkboxes appear only for 'Weekly'. If the crop selector .modal__content does not match the sd-modal markup, crop to the element with class 'scheduled-reports'.",
+    "skip": "superdesk-analytics is not installed on the client-core e2e stack (not in the server's INSTALLED_APPS, not in the client's apps); needs an Analytics-enabled build such as the superdesk host stack."
+  }
+]

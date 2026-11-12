@@ -3,7 +3,7 @@
 Superdesk can use AI services to help you write and tag stories. This page explains the parts you can see in the interface:
 
 * the **AI Assistant** widget, which suggests headlines, writes a short summary and translates an item,
-* **iMatrics auto-tagging**, which suggests topics, people, organisations and places for an item, and can suggest images,
+* the **iMatrics auto-tagging** widget, which suggests topics, people, organisations and places for an item, and can suggest images,
 * the **AI Providers** settings page, where administrators store the connections to AI services.
 
 The two widgets are optional modules. Your Superdesk may have one, both or neither. The AI Providers page is part of every Superdesk since 3.7, but only administrators see it.

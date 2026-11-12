@@ -1,0 +1,372 @@
+[
+  {
+    "file": "edit-media-items/upload-dialog.png",
+    "caption": "The Upload media window",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md); desk 'Culture' exists",
+      "A picture content profile exists (Settings > Content Profiles, Content Type Picture) with Headline and Description required, so required markers show; otherwise the default media fields show"
+    ],
+    "steps": [
+      "select desk 'Culture'",
+      "Click [data-test-id=\"content-create\"]",
+      "Click [data-test-id=\"content-create-dropdown\"] [data-test-id=\"upload-media\"]",
+      "Wait for [data-test-id=\"file-upload\"] [data-test-id=\"drag-area\"] to be visible",
+      {
+        "action": "evaluate",
+        "script": "(async () => { const mk = (name, hue) => new Promise((res) => { const c = document.createElement('canvas'); c.width = 1600; c.height = 1067; const g = c.getContext('2d'); const grd = g.createLinearGradient(0, 0, 1600, 1067); grd.addColorStop(0, 'hsl(' + hue + ',60%,60%)'); grd.addColorStop(1, 'hsl(' + (hue + 40) + ',60%,30%)'); g.fillStyle = grd; g.fillRect(0, 0, 1600, 1067); c.toBlob((b) => res(new File([b], name, {type: 'image/jpeg'})), 'image/jpeg', 0.9); }); const files = await Promise.all([mk('festival-opening-1.jpg', 200), mk('festival-opening-2.jpg', 25), mk('festival-opening-3.jpg', 140)]); const dt = new DataTransfer(); files.forEach((f) => dt.items.add(f)); document.querySelector('[data-test-id=\"file-upload\"] [data-test-id=\"drag-area\"]').dispatchEvent(new DragEvent('drop', {bubbles: true, cancelable: true, dataTransfer: dt})); })()"
+      },
+      "Wait until [data-test-id=\"file-upload\"] contains at least one [data-test-id=\"media-grid-item\"]",
+      {
+        "action": "sleep",
+        "ms": 1000
+      },
+      "Change the headline in [data-test-id=\"media-metadata-editor\"] [data-test-id=\"field--headline\"] to 'Harbour Lights Festival opening night'",
+      "Change the headline in [data-test-id=\"media-metadata-editor\"] [data-test-id=\"field--description_text\"] to 'Crowds gather on the quay for the opening concert of the Harbour Lights Festival.'",
+      {
+        "action": "evaluate",
+        "script": "(() => { const el = [...document.querySelectorAll('[data-test-id=\"file-upload\"] *')].find((x) => x.children.length === 0 && /Currently editing/.test(x.textContent)); let p = el && el.parentElement; while (p && !(p.scrollHeight > p.clientHeight + 4 && getComputedStyle(p).overflowY !== 'visible')) { p = p.parentElement; } if (p) { p.scrollTop = 0; } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 300
+      },
+      "Do not click Upload"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"file-upload\"] [data-test-id=\"multi-image-edit--cancel-upload\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Upload window: scripts/apps/archive/views/upload.html inside sd-multi-image-edit (scripts/apps/search/views/multi-image-edit.html). Header: 'Upload media', Cancel, 'Send to: Culture' desk dropdown ([data-test-id=upload-selected-desk]), Upload. Thumbnails with Select All / Deselect All, Metadata panel with 'Currently editing: 3 items' and Copy metadata / Paste metadata at the bottom. capture.mjs has no file-input action, so the evaluate step draws three gradient JPEGs on a canvas and dispatches a drop on the drag area, the same way the e2e MediaUpload.dropFiles does. If the drop is ignored, add a setInputFiles action to capture.mjs and use [data-test-id=image-upload-input] with real photos. Cancel in cleanup so nothing is uploaded. Capture: filling the description scrolls the Metadata panel down; an evaluate step scrolls it back to the top so 'Currently editing: 3 items' shows."
+  },
+  {
+    "file": "edit-media-items/picture-item.png",
+    "caption": "A picture item in the editor",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md): picture 'Kestrel Cup regatta, day three' (SAILING-REGATTA) in Sports / Incoming, with headline, caption and alt text",
+      "Done by seed.py: The Image Crop Sizes vocabulary (crop_sizes) has at least two active sizes, e.g. 4-3 (800x600) and 16-9 (1280x720); otherwise the Edit crops button is hidden. The e2e 'media-items' snapshot has one size '4-3'",
+      "For nicer pictures, seed with --images-dir pointing at real photos"
+    ],
+    "steps": [
+      "select desk 'Sports'",
+      {
+        "action": "openItem",
+        "name": "Kestrel Cup regatta, day three",
+        "desk": "Sports"
+      },
+      "Wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"media-image\"] img to be visible",
+      "wait for all thumbnails to finish loading",
+      "Hover [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"image-overlay-actions\"]",
+      {
+        "action": "evaluate",
+        "script": "(() => { const s = document.createElement('style'); s.textContent = '[data-test-id=\"authoring-field\"][data-test-value=\"media\"] .item-association__image-overlay { opacity: 1 !important; transition: none !important; }'; document.head.appendChild(s); })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 300
+      }
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x1200",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"]",
+      "maxHeight": 640
+    },
+    "highlight": [
+      [
+        "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"edit-metadata\"]",
+        "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"crop\"]"
+      ],
+      "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"original-size-label\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Media field markup in scripts/apps/authoring/views/article-edit.html: overlay icons edit-metadata (pencil), edit-image (switches), crop (crop icon, only when crop sizes exist), label 'Original (W x H px)', metadata view and crop thumbnails (sd-item-crops) below. Hover must keep the overlay visible at capture time. Capture: the hover goes to the overlay block ([data-test-id=image-overlay-actions]); the icons in the centre of the picture intercept a hover on media-image and Playwright times out. 1200 px high so the picture, its size label and the crops fit without scrolling. The hover state is lost by the time the shot is taken (the overlay is opacity 0 unless .item-association is hovered), so a style pins the overlay at opacity 1, which is exactly what the hover shows. The style lives only in this page load."
+  },
+  {
+    "file": "edit-media-items/media-editor-metadata.png",
+    "caption": "Editing a picture's metadata",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md): picture 'Kestrel Cup regatta, day three' (SAILING-REGATTA) in Sports / Incoming, with headline, caption and alt text",
+      "Done by seed.py: The Image Crop Sizes vocabulary (crop_sizes) has at least two active sizes, e.g. 4-3 (800x600) and 16-9 (1280x720); otherwise the Edit crops button is hidden. The e2e 'media-items' snapshot has one size '4-3'",
+      "For nicer pictures, seed with --images-dir pointing at real photos"
+    ],
+    "steps": [
+      "select desk 'Sports'",
+      {
+        "action": "openItem",
+        "name": "Kestrel Cup regatta, day three",
+        "desk": "Sports"
+      },
+      "Hover [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"image-overlay-actions\"]",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"edit-metadata\"]",
+      "Wait for [data-test-id=\"media-metadata-editor\"] to be visible",
+      "wait for all thumbnails to finish loading"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"change-image\"] [data-test-id=\"done\"]",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Media editor scripts/apps/authoring/views/change-image.html on the 'Details / Metadata' tab ([data-test-id=nav-view]): picture on the left, Metadata panel on the right with the picture profile fields and Copy metadata / Paste metadata at the bottom. Full-screen modal. Do not change any value. Capture: [data-test-id=change-image] is only the editor's header bar; the editor fills the screen, so the crop is full and the waits target the panels themselves."
+  },
+  {
+    "file": "edit-media-items/media-editor-edit-image.png",
+    "caption": "Editing the image",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md): picture 'Kestrel Cup regatta, day three' (SAILING-REGATTA) in Sports / Incoming, with headline, caption and alt text",
+      "Done by seed.py: The Image Crop Sizes vocabulary (crop_sizes) has at least two active sizes, e.g. 4-3 (800x600) and 16-9 (1280x720); otherwise the Edit crops button is hidden. The e2e 'media-items' snapshot has one size '4-3'",
+      "For nicer pictures, seed with --images-dir pointing at real photos"
+    ],
+    "steps": [
+      "select desk 'Sports'",
+      {
+        "action": "openItem",
+        "name": "Kestrel Cup regatta, day three",
+        "desk": "Sports"
+      },
+      "Hover [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"image-overlay-actions\"]",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"edit-image\"]",
+      "Wait for [data-test-id=\"controls-panel\"] to be visible",
+      "wait for all thumbnails to finish loading"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"change-image\"] [data-test-id=\"done\"]",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      [
+        "[data-test-id=\"crop-button\"]",
+        "[data-test-id=\"flip-vertical-button\"]"
+      ],
+      "[data-test-id=\"adjust-colours\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Edit image tab ([data-test-id=nav-image-edit]): Controls panel with 'Change image settings' (Crop, Rotate left, Rotate right, Flip horizontal, Flip vertical) and 'Adjust colours' (Brightness, Contrast, Saturation sliders). Do not click Apply: it rewrites the stored picture. Capture: [data-test-id=change-image] is only the editor's header bar; the editor fills the screen, so the crop is full and the waits target the panels themselves."
+  },
+  {
+    "file": "edit-media-items/media-editor-crops.png",
+    "caption": "Editing crops",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md): picture 'Kestrel Cup regatta, day three' (SAILING-REGATTA) in Sports / Incoming, with headline, caption and alt text",
+      "Done by seed.py: The Image Crop Sizes vocabulary (crop_sizes) has at least two active sizes, e.g. 4-3 (800x600) and 16-9 (1280x720); otherwise the Edit crops button is hidden. The e2e 'media-items' snapshot has one size '4-3'",
+      "For nicer pictures, seed with --images-dir pointing at real photos"
+    ],
+    "steps": [
+      "select desk 'Sports'",
+      {
+        "action": "openItem",
+        "name": "Kestrel Cup regatta, day three",
+        "desk": "Sports"
+      },
+      "Hover [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"image-overlay-actions\"]",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"media\"] [data-test-id=\"crop\"]",
+      "Wait for [data-test-id=\"renditions-strip\"] to be visible",
+      "wait for all thumbnails to finish loading"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"change-image\"] [data-test-id=\"done\"]",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      [
+        "[data-test-id=\"rendition-item\"]:nth-child(1)",
+        "[data-test-id=\"rendition-item\"]:nth-child(2)",
+        "[data-test-id=\"rendition-item\"]:nth-child(3)"
+      ]
+    ],
+    "highlightStyle": "outline",
+    "notes": "Edit crops tab ([data-test-id=nav-crop]): crop frame on the picture for the selected rendition and the strip of renditions ('Original' plus one thumbnail per crop size) below. Do not drag the frame or Save. Capture: [data-test-id=change-image] is only the editor's header bar; the editor fills the screen, so the crop is full and the waits target the panels themselves. The tab opens with Original selected and the point of interest shown; there is no rendition-crop-preview element, so the shot uses that default state."
+  },
+  {
+    "file": "edit-media-items/preview-original.png",
+    "caption": "The Original button in the picture preview",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "appConfig": {
+      "features": {
+        "preview": 1
+      }
+    },
+    "preconditions": [
+      "Seeded newsroom (SEED.md): picture 'Kestrel Cup regatta, day three' (SAILING-REGATTA) in Sports / Incoming, with headline, caption and alt text",
+      "appConfig turns on features.preview so the Preview button shows; TEST_APP_CONFIG replaces the whole 'features' block, so carry over other features the e2e config needs"
+    ],
+    "steps": [
+      "select desk 'Sports'",
+      {
+        "action": "openItem",
+        "name": "Kestrel Cup regatta, day three",
+        "desk": "Sports"
+      },
+      "Click [data-test-id=\"authoring\"] .preview-toggle",
+      "Wait for .sd-full-preview to be visible",
+      "wait for all thumbnails to finish loading"
+    ],
+    "cleanup": [
+      "Click 'Close' in .sd-full-preview--header",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".sd-full-preview",
+      "maxHeight": 760
+    },
+    "highlight": [
+      ".sd-full-preview a.btn:text-is(\"Original\")"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Full preview: scripts/apps/authoring/preview/fullPreview.tsx renders, for pictures, an <a class='btn ...'>Original</a> (opens renditions.original.href in a new tab) above the baseImage; header (fullPreviewMultiple.tsx) has 'Hide media', 'Print', 'Close'. Do not click Original (opens a new tab)."
+  },
+  {
+    "file": "edit-media-items/body-media-block.png",
+    "caption": "A picture in the body",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md); story 'Marsh breaks national 200m freestyle record at Olympic trials' in Sports / Working",
+      "Done by seed.py: The Story profile body field has the 'media' formatting option",
+      "Done by seed.py (BODY_MEDIA): the picture 'Kestrel Cup regatta, day three' sits in the body of OLYMPICS-SWIMMING after the first paragraph, with a caption, stored as association editor_0 and as a MEDIA entity in fields_meta",
+      "Content profile shows image titles in the body (body field option 'Show image title') if the Title box should appear"
+    ],
+    "steps": [
+      "select desk 'Sports'",
+      {
+        "action": "openItem",
+        "name": "Marsh breaks national 200m freestyle record at Olympic trials",
+        "desk": "Sports"
+      },
+      "Wait for [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] .image-block to be visible",
+      "Scroll to [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] .image-block",
+      "wait for all thumbnails to finish loading",
+      "Hover [data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] .image-block .image-block__image"
+    ],
+    "cleanup": [
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"close\"]",
+      {
+        "action": "sleep",
+        "ms": 800
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const b = [...document.querySelectorAll('[data-test-id=\"unsaved-changes-dialog\"] button')].find((x) => x.textContent.trim().toLowerCase() === 'ignore'); if (b) { b.click(); } })()"
+      },
+      {
+        "action": "sleep",
+        "ms": 500
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring\"] [data-test-id=\"authoring-field\"][data-test-value=\"body_html\"] .image-block",
+      "expand": {
+        "top": 40,
+        "bottom": 4
+      }
+    },
+    "highlight": "none",
+    "notes": "Media block: scripts/core/editor3/components/media/MediaBlock.tsx: remove x (top right), optional Title, picture with hover icons Edit metadata / Edit image / Edit crops, metadata lines Alt text, Credit, Copyright holder, Assign rights, Copyright notice, and the multi-line Caption box."
+  },
+  {
+    "file": "edit-media-items/video-editor.png",
+    "caption": "The video editor",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "videoEditor client extension loaded (not in the default build or the e2e client)",
+      "Server with VIDEO_SERVER_ENABLED=true and VIDEO_SERVER_URL pointing at a running video server",
+      "A video item uploaded after the video server was enabled, so its original rendition has video_editor_id"
+    ],
+    "steps": [
+      "Open the video item for editing",
+      "Click 'Edit video' in the media action bar under the player",
+      "Wait for the 'Edit Video' modal to be visible and the timeline thumbnails to load"
+    ],
+    "cleanup": [
+      "Click 'Done' in the Edit Video modal"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "skip": "Needs the optional video editor extension and a video server; not available on the e2e stack.",
+    "notes": "Extension: scripts/extensions/videoEditor (mediaActions contribution renders the 'Edit video' button only when renditions.original.video_editor_id is set). Modal shows player, play/pause, rotate, 'Quality:' list, crop dropdown, timeline with trim handles, 'Video thumbnail' with 'Use current frame' / 'Upload image', header buttons Cancel / Save / Done."
+  }
+]

@@ -1,0 +1,342 @@
+[
+  {
+    "file": "master-desk/workspace-panel-icon.png",
+    "caption": "The Master Desk icon in the Workspace Panel",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Logged in user has the masterdesk privilege (admin has all privileges)",
+      "Default host build so the sidebar shows the usual icons (Dashboard, Monitoring, Assignments, Highlights, Spike, Search, Personal, Master Desk, Planning)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "Hover [data-test-id=\"workspace-navigation\"] [data-test-id=\"Master Desk\"] so its tooltip/hover state shows"
+    ],
+    "viewport": "1440x584",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 284,
+        "width": 560,
+        "height": 300
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"workspace-navigation\"] [data-test-id=\"Master Desk\"] .sd-sidebar-menu__main-icon"
+    ],
+    "notes": "The sidebar button has title and aria-label 'Master Desk' and data-test-id 'Master Desk' (scripts/apps/workspace/views/workspace-sidenav-items-default.html). Keyboard shortcut Ctrl+Alt+D also opens it. Capture: landscape region of the bottom-left corner (560x300 CSS px) in a 1440x584 viewport, so the lower Workspace Panel with the Master Desk icon, the bottom bar and a slice of the Politics monitoring list fit in one frame."
+  },
+  {
+    "file": "master-desk/select-desks.png",
+    "caption": "Choosing which desks Master Desk shows",
+    "route": "#/master-desk",
+    "user": "admin",
+    "preconditions": [
+      "At least 4 desks exist, e.g. Politics, Sports, Business, Culture",
+      "User preference masterdesk:desks is at its default (Show all on) before the shot, or set it explicitly in the steps"
+    ],
+    "steps": [
+      "Open #/master-desk and wait for the desk cards (.sd-grid-list .sd-board) to render",
+      "Click the last button in the header: button.sd-navbtn containing i.icon-switches",
+      "Wait for ul.dropdown__menu with first item 'Select desks' to be visible",
+      {
+        "action": "switches",
+        "names": [
+          "Show all"
+        ]
+      },
+      "Turn on the switches for Politics and Business (the 'Show all' switch turns off automatically)",
+      "Wait until every card shows a number above 'items in production'"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".sd-main-content-grid__header .dropdown__menu",
+      "plus": [
+        "button.sd-navbtn:has(i.icon-switches)"
+      ],
+      "expand": {
+        "left": 180,
+        "bottom": 16
+      }
+    },
+    "highlight": [
+      ".dropdown__menu li:has(> label:text-is(\"Show all\")) [role=\"checkbox\"]",
+      ".dropdown__menu li:has(> label:text-is(\"Politics\")) [role=\"checkbox\"]",
+      ".dropdown__menu li:has(> label:text-is(\"Business\")) [role=\"checkbox\"]"
+    ],
+    "notes": "This changes the user's saved preference. Reset afterwards by turning 'Show all' back on so later shots show every desk. Capture: the shot leaves Politics and Business selected; every later Master Desk shot sets its own desk selection first.",
+    "padding": 0
+  },
+  {
+    "file": "master-desk/overview-tab.png",
+    "caption": "The Overview tab: one card per desk, with item counts per stage",
+    "route": "#/master-desk",
+    "user": "admin",
+    "preconditions": [
+      "'Show all' desks is on in the Master Desk desk selection",
+      "4 desks exist, each with 3 to 4 stages (e.g. Incoming, Working, Ready for review, Outgoing)",
+      "Each desk has 3 to 10 saved, unpublished text items spread over its stages so the donut charts have several colours",
+      "Optional: one desk with 0 items, to show an empty card"
+    ],
+    "steps": [
+      "Open #/master-desk and wait for the desk cards (.sd-grid-list .sd-board) to render",
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Show all"
+        ]
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Politics",
+          "Business",
+          "World",
+          "Culture",
+          "Sports"
+        ]
+      },
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      "Make sure the 'Overview' option of the tab switch in the header is selected (it is the default)",
+      "Wait until every card shows a number above 'items in production' and the donut charts are drawn"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Counts exclude published, corrected, killed, recalled, scheduled and spiked items and items with version 0, so seed items must be saved at least once and left unpublished."
+  },
+  {
+    "file": "master-desk/overview-filters.png",
+    "caption": "Following a story by slugline with the Filters panel",
+    "route": "#/master-desk",
+    "user": "admin",
+    "preconditions": [
+      "Items with slugline 'election' exist in at least two different desks, in working stages, unpublished",
+      "Other items with different sluglines exist so the filtered counts visibly differ from the unfiltered ones"
+    ],
+    "steps": [
+      "Open #/master-desk and wait for the desk cards (.sd-grid-list .sd-board) to render",
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Show all"
+        ]
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Politics",
+          "Business",
+          "World",
+          "Culture",
+          "Sports"
+        ]
+      },
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      "Click the filter button on the left of the header: button.sd-navbtn containing i.icon-filter-large",
+      "Wait for .sd-main-content-grid__filter.open-filters to be visible (panel heading 'Filters')",
+      "Type 'election' in the input with name=\"slugline\" (label 'Slugline')",
+      "Click the 'Apply Filters' button",
+      "Wait for the filter bar .sd-search-tags__bar to show the tag 'slugline: (election)' and for the card counts to update"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "input[name=\"slugline\"]",
+      "text=slugline: (election)"
+    ],
+    "notes": "Leave the panel open so the shot shows the panel, the active filter bar with 'Clear all filters', and the filtered cards together."
+  },
+  {
+    "file": "master-desk/single-desk-view.png",
+    "caption": "The single desk view shows the items in each stage of one desk",
+    "route": "#/master-desk",
+    "user": "admin",
+    "preconditions": [
+      "Admin user is a member of the Politics desk so the 'Go To Desk' button appears",
+      "Politics desk has items in at least 3 stages, with sluglines and headlines filled in, some with urgency set",
+      "No filters active"
+    ],
+    "steps": [
+      "Open #/master-desk and wait for the desk cards (.sd-grid-list .sd-board) to render",
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Show all"
+        ]
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Politics",
+          "Business",
+          "World",
+          "Culture",
+          "Sports"
+        ]
+      },
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      "Click the card header (h3.sd-board__header-title) with the text 'Politics'",
+      "Wait for .sd-kanban-list .sd-board columns, one per stage, each with a count in .label-total",
+      "Confirm the 'Go To Desk' button is visible in the header"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      ".sd-main-content-grid__header button.navbtn--left",
+      "role=button:Go To Desk"
+    ],
+    "notes": "The header shows no desk name in this view (the desk switcher dropdown is commented out since 2.6), so mention the desk in the caption if needed. Each stage lists at most 100 items."
+  },
+  {
+    "file": "master-desk/users-tab.png",
+    "caption": "The Users tab: desk members grouped by role, with locked items and assignments",
+    "route": "#/master-desk",
+    "user": "admin",
+    "preconditions": [
+      "Desks have members with at least two different roles (e.g. Editor, Journalist), and ideally one member with no role",
+      "At least two users have items open for editing (locked) so the lock count shows",
+      "Planning is installed and at least one user has planning assignments so the assignment count shows"
+    ],
+    "steps": [
+      "Open #/master-desk and wait for the desk cards (.sd-grid-list .sd-board) to render",
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Show all"
+        ]
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Politics",
+          "Business",
+          "World",
+          "Culture",
+          "Sports"
+        ]
+      },
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      "Click 'Users' in the tab switch on the right of the header",
+      "Wait for .sd-kanban-list .sd-board columns, one per desk, with role subheaders (.sd-board__subheader-title)",
+      {
+        "action": "wait",
+        "target": "li.sd-list-item:has(.user-items--locked)"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "li.sd-list-item:has-text(\"Tomas Vidal\") .user-items--locked"
+    ],
+    "notes": "Locks can be created by logging in as the other users in a second browser context and opening items for editing, then leaving them open."
+  },
+  {
+    "file": "master-desk/user-activity-panel.png",
+    "caption": "The User Activity panel for one desk member",
+    "route": "#/master-desk",
+    "user": "admin",
+    "preconditions": [
+      "Same data as users-tab.png",
+      "The chosen user has created items and has at least one item locked"
+    ],
+    "steps": [
+      "Open #/master-desk and wait for the desk cards (.sd-grid-list .sd-board) to render",
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Show all"
+        ]
+      },
+      {
+        "action": "switches",
+        "names": [
+          "Politics",
+          "Business",
+          "World",
+          "Culture",
+          "Sports"
+        ]
+      },
+      {
+        "action": "click",
+        "target": "button.sd-navbtn:has(i.icon-switches)"
+      },
+      "Click 'Users' in the tab switch on the right of the header",
+      {
+        "action": "click",
+        "target": "li.sd-list-item:has-text(\"Maren Holt\"):has(.user-items--locked)",
+        "nth": "first"
+      },
+      "Wait for .sd-main-content-grid__preview.open-preview with header tab 'User Activity' and the groups 'Locked by this user', 'Marked for this user', 'Created by this user', 'Moved to a working stage by this user'"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "'Marked for this user' only appears when the markForUser extension is loaded (it is in the default host build)."
+  },
+  {
+    "file": "master-desk/assignments-tab.png",
+    "caption": "The Assignments tab: planning assignments per desk by status",
+    "route": "#/master-desk",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance with the autodocs-planning snapshot (`SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh master-desk/assignments-tab`); the newsroom snapshot and the client-core e2e stack have no Planning, so the tab is hidden there. Fallback: the superdesk-planning e2e stack with run-capture-planning.sh.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset`: desks Sports, Politics, Business, World and Culture, with assignments in the states assigned, in_progress and completed on every desk."
+    ],
+    "steps": [
+      "Open #/master-desk",
+      "Click 'Assignments' in the tab switch on the right of the header",
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "settle"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "To Do counts states assigned and submitted, Completed counts completed and cancelled. Desks with no assignments still show a card with 0.",
+    "cleanup": [
+      "Click 'Overview' in the tab switch on the right of the header"
+    ]
+  }
+]

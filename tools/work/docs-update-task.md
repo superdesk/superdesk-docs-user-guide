@@ -1,0 +1,73 @@
+# Docs update routine: prompt and setup
+
+The cloud routine that keeps the user guide in step with merged product PRs (SDESK-8055). One routine, "Docs update" (https://claude.ai/code/routines/trig_013vDQ2xnZLUuyaLy4qX9c4u), serves all four product repos; each repo fires it from a GitHub Actions workflow. The agent runs the `docs-update` skill in `.claude/skills/docs-update/SKILL.md`; this file holds what goes into the routine and how it gets fired.
+
+## Prompt
+
+Paste as the routine's message. The fire request appends its text after the prompt, and that text names the repository and the PR.
+
+```
+A pull request was merged in one of the Superdesk product repositories (superdesk-client-core, superdesk-planning, superdesk-core or superdesk-analytics). The message after this prompt names the repository and the pull request.
+
+You are in a checkout of superdesk/superdesk-docs-user-guide on main. Run the docs-update skill (.claude/skills/docs-update/SKILL.md) for that pull request: decide whether it is user-facing, update the affected pages, recapture the screenshots it changed on the docs instance, and open a draft-or-ready docs PR against main for a human to review. If the PR is not user-facing, do not create a branch or PR; just report why.
+
+Rules that are not negotiable: edit only the pages the change affects, ground every label and menu path in the merged code, never push to main, never commit tools/screenshots/out, no em-dashes and no emoji anywhere. End with the short report the skill asks for.
+```
+
+## Routine settings
+
+- Repository: `superdesk/superdesk-docs-user-guide`, branch `main`.
+- Trigger: API only. The routine's GitHub event trigger is not used: the Edit dialog fails to save it, and saving also wipes the sparse checkouts below, so do not add one from the UI. The per-routine token comes from Edit, Add another trigger, API, Generate token; it is shown once and generating a new one revokes the old.
+- Schedule: a placeholder one-shot far in the future (`run_once_at`), because the API needs one of cron or one-shot. It never matters.
+- Model: Opus. The judgement in step 1 and the page edits are the expensive part, not the tool calls.
+- Tools: Bash, Read, Write, Edit, Glob, Grep. No connectors needed.
+- Environment: the cloud environment below. Needs outbound access to `https://sd-autodocs.test.superdesk.org`.
+
+## Cloud environment (claude.ai/code, environment settings)
+
+- Network access: Custom, with "Also include default list of common package managers" checked (GitHub, npm, PyPI, apt), plus one line: `sd-autodocs.test.superdesk.org`.
+- Environment variables (`.env` format):
+  - `CHROMIUM_PATH=/usr/bin/google-chrome` (Chrome for Testing is preinstalled in the image, so Playwright downloads nothing)
+  - `AUTODOCS_URL=https://sd-autodocs.test.superdesk.org`
+  - `BASH_DEFAULT_TIMEOUT_MS=600000` (a capture run can take longer than the two-minute default)
+- Setup script (runs as root on a fresh image, before the environment variables exist and apparently outside the repo checkout, so it must not rely on either and must exit 0 or the session is aborted). The skill runs `npm ci` itself, so the script only preinstalls Pillow for the styling scripts:
+
+  ```sh
+  pip install pillow || true
+  exit 0
+  ```
+
+- The image has Node 22 first on PATH (20 and 21 under `/opt`), Python 3 with pip, `git` and `gh`. The GitHub proxy allows REST (`gh api`) and rejects GraphQL, so the skill never uses `gh pr`.
+- The repo's `.claude/skills/docs-update` loads in the session because the docs repo is the first and only full checkout of the task. The other sources (client-core, superdesk, superdesk-core, superdesk-planning, superdesk-analytics) are sparse checkouts of a single file each; they exist only so the GitHub proxy lets `gh api` read those repositories.
+
+## How a merge fires it
+
+Each product repo carries `.github/workflows/docs-update.yml` (first in superdesk/superdesk-client-core#5423, copied unchanged to planning, core and analytics). On `pull_request_target` closed against `develop` it calls the fire endpoint when the PR is merged, carries the `docs` label and was not opened by dependabot:
+
+```
+POST https://api.anthropic.com/v1/claude_code/routines/<routine id>/fire
+Authorization: Bearer <routine token>
+anthropic-version: 2026-10-21
+{"text": "Pull request merged: <PR url> (<PR title>)"}
+```
+
+The `docs` label is the gate: a merge without it does nothing, so people opening user-facing PRs have to add it. Dependabot is excluded because its PRs never change the UI. The routine accepts 30 fires per hour.
+
+The token lives as the organisation-level Actions secret `ROUTINE_FIRE_TOKEN` on the superdesk org, shared by the four repos. Rotating it means generating a new token on the routine and updating that one secret.
+
+## Running it by hand
+
+- From GitHub: Actions, "Docs update", Run workflow, enter the PR number. This path ignores the label and does not check that the PR is merged, which is what you want for a test. The button exists only once the workflow file is on `develop`.
+- From a laptop with the Claude Code CLI: `/docs-update https://github.com/superdesk/<repo>/pull/<number>` in a checkout of this repo. Same skill, local machine, no routine involved.
+
+A run shows up as a session on the routine page within a minute. It ends with a draft PR on this repo named `docs-update/<repo-short>-<number>`, or with a report saying the PR is not user-facing.
+
+## Diagram
+
+`docs-update-flow.html` next to this file is the swimlane used on the Confluence page (Superdesk Editorial Team space). It was made with the diagram-design plugin and the saved Superdesk profile; open it in a browser or render the `svg` element to PNG at 2x for the wiki.
+
+## Rollout
+
+1. superdesk-client-core first, watch the first three runs and fix the skill from what they get wrong.
+2. The workflow is in all four repos (client-core merged 9 Nov 2026, the other three open as superdesk-planning#3062, superdesk-core#3362, superdesk-analytics#231).
+3. The docs instance follows the `auto-docs` branch of `superdesk/superdesk`, which pins client-core in `client/package-lock.json` and the server packages in `server/requirements.txt`. Until something bumps those pins after a merge, a run right after a merge finds the instance behind and leaves its shots pending in a draft PR. Nothing picks those up on its own yet: someone re-runs `/docs-update` for the same PR once the instance has the change, and the skill continues the existing branch. Automating both is the follow-up: a workflow on `superdesk/superdesk` that merges develop into `auto-docs` after each dependabot bump, and a weekly sweep over open `docs-update/*` drafts.

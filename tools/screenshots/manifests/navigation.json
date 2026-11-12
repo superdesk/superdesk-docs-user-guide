@@ -1,0 +1,214 @@
+[
+  {
+    "file": "navigation/screen-overview.png",
+    "caption": "The main parts of the Superdesk screen",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (SEED.md): desk 'Politics' with Working, Incoming, Ready for Review and Outgoing, each with seeded text items",
+      "Monitoring view preference is List view",
+      "No monitoring filters active",
+      "Preview pane closed and no item open for editing"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      {
+        "action": "evaluate",
+        "script": "for (const sel of ['[data-test-id=\"workspace-navigation\"]', '[data-test-id=\"monitoring-view\"]']) { document.querySelector(sel).style.marginTop = '56px'; }"
+      },
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "#hamburger-menu button",
+      "[data-test-id=\"monitoring--selected-desk\"]",
+      ".top-menu__content-block--right",
+      "[data-test-id=\"workspace-navigation\"]",
+      "[data-test-id=\"opened-articles-bar\"]"
+    ],
+    "highlightStyle": "callout",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "notes": "Numbered callouts 1 to 5 must match the numbered list on the page: 1 main menu button, 2 Desks menu, 3 right part of the top bar (bell and avatar), 4 Workspace Panel, 5 bar at the bottom. isTestEnvironment is switched off so the top bar has its normal colour instead of the e2e test colour. Replaces the legacy 'image336' screenshot. The evaluate step pushes the Workspace Panel and the Monitoring view down by 56 px, so the badges of 1 to 3 sit in an empty band under the top bar instead of on the controls; badge 4 sits on the panel's top-right corner and badge 5 above the bottom bar (badgeAnchor per item).",
+    "badgeAnchor": [
+      "below",
+      "below",
+      "below",
+      "top-right",
+      "above"
+    ]
+  },
+  {
+    "file": "navigation/desks-menu.png",
+    "caption": "Switching desks with the Desks menu",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom: admin is a member of Politics, Business, World, Culture and Sports",
+      "Done by seed.py: Admin has at least one custom workspace, for example 'Election coverage' (create it once through the API: POST /api/workspaces {\"name\": \"Election coverage\", \"user\": <admin _id>}, or through CREATE NEW WORKSPACE in the Desks menu)"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "click [data-test-id=\"monitoring--selected-desk\"]",
+      "wait for [data-test-id=\"monitoring--select-desk-options\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"monitoring--select-desk-options\"]",
+      "plus": [
+        "[data-test-id=\"monitoring--selected-desk\"]",
+        "#hamburger-menu button"
+      ],
+      "expand": {
+        "right": 320,
+        "bottom": 16
+      }
+    },
+    "highlight": "none",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "cleanup": [
+      "press Escape"
+    ],
+    "notes": "The open menu must show the DESKS heading with the five desks, the CUSTOM WORKSPACES heading with at least one workspace, and CREATE NEW WORKSPACE at the bottom. The right expansion keeps the crop landscape and shows a slice of the Monitoring list behind the menu. Replaces the legacy 'image5' and 'image184' screenshots."
+  },
+  {
+    "file": "navigation/workspace-panel.png",
+    "caption": "The Workspace Panel",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Admin has all privileges, so every icon the build offers is shown",
+      "Seeded newsroom, desk 'Sports' selected"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 48,
+        "width": 560,
+        "height": 480
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"workspace-navigation\"] [data-test-id=\"Monitoring\"]"
+    ],
+    "highlightStyle": "outline",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "notes": "Only the active Monitoring icon is outlined; the page describes the icons in a table, not by number. The e2e client shows Dashboard, Monitoring, Highlights, Spiked Items, Search, Personal space, Master Desk and Content lists. If a host build with Planning and Broadcasting is available (--base-url), prefer it so Assignments, Broadcasting and Planning appear too, and raise the region height until the last icon fits. Icon buttons carry data-test-id equal to their label, except Highlights (.highlights-dropdown) and Search (a[href=\"#/search\"]). Replaces the legacy 'grafik (2)' screenshot."
+  },
+  {
+    "file": "navigation/main-menu.png",
+    "caption": "The main menu",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Admin has all privileges",
+      "availability-manager extension loaded without dashboard.addLinkToSideMenu (the e2e client), so 'Availability Management' is listed in the main menu"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      {
+        "action": "click",
+        "target": "#hamburger-menu button"
+      },
+      "wait for [data-test-id=\"main-menu\"] [data-test-id=\"main-menu-item\"] to be visible",
+      {
+        "action": "sleep",
+        "ms": 600
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"main-menu\"]",
+      "plus": [
+        "#hamburger-menu button"
+      ],
+      "expand": {
+        "right": 360
+      }
+    },
+    "allowPortrait": true,
+    "highlight": "none",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "#hamburger-menu button"
+      }
+    ],
+    "notes": "The menu slides in from the left and is full height. It must show the general entries at the top (Workspace, Personal Space, Publish Queue and others), the 'Admin tools' heading with Settings, User Management, Ingest Dashboard and System Message, and 'About Superdesk' in the footer. Replaces the legacy 'image202' screenshot and the inline base64 hamburger icon."
+  },
+  {
+    "file": "navigation/settings-page.png",
+    "caption": "The Settings start page",
+    "route": "/#/settings",
+    "user": "admin",
+    "preconditions": [
+      "Admin has all privileges, so every Settings page is listed"
+    ],
+    "steps": [
+      "open /#/settings",
+      "wait for .sd-grid-list .sd-card to be visible",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "notes": "Shows one card per group (Content flow, Workflow, Content config) with the page links, and the same groups in the left column. New screenshot; the old page had none."
+  },
+  {
+    "file": "navigation/role-privileges.png",
+    "caption": "The Monitoring view privilege controls the Monitoring icon",
+    "route": "/#/settings/user-roles",
+    "user": "admin",
+    "preconditions": [
+      "Roles Editor, Journalist and Sub Editor exist (seeded)"
+    ],
+    "steps": [
+      "open /#/settings/user-roles",
+      "click [data-test-id=\"roles-privileges-tab\"]",
+      "wait for [data-test-id=\"roles-privileges-form\"] [data-test-id=\"privilege-row\"] to be visible",
+      "scroll to [data-test-id=\"privilege-row\"][data-test-value=\"monitoring_view\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 240,
+        "y": 96,
+        "width": 1200,
+        "height": 560
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"privilege-row\"][data-test-value=\"monitoring_view\"]"
+    ],
+    "highlightStyle": "outline",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "notes": "Do not change or save any checkbox. The table has one column per role; the highlighted row is labelled 'Monitoring view'. If the scroll leaves the row outside the 560 px crop, crop from the table header down to a few rows below the highlighted row instead. New screenshot. The privileges form is taller than the viewport and is scrolled, so an element crop starts above the viewport; the crop is a fixed region from the tab row down, after scrolling MONITORING VIEW into view."
+  }
+]

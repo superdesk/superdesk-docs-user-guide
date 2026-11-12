@@ -1,0 +1,396 @@
+[
+  {
+    "file": "defining-publishing-in-superdesk/filter-condition-profile.png",
+    "caption": "A filter condition on the content profile",
+    "route": "#/settings/content-filters",
+    "user": "admin",
+    "preconditions": [
+      "At least one enabled content profile called 'Story' exists (the seeded desks use the Story profile, see SEED.md)",
+      "Logged-in user has the dictionaries privilege (the Settings > Content Filters entry is registered with privileges {dictionaries: 1}); admin has all privileges"
+    ],
+    "steps": [
+      "Open #/settings/content-filters and wait for the 'Filter Conditions' tab button to be visible",
+      "Click the 'Filter Conditions' button",
+      "Click [data-test-id=\"add-new-filter-condition\"]",
+      "Wait for the modal heading 'Add New Filter Condition' to be visible",
+      {
+        "action": "fill",
+        "target": ".modal__dialog:has(h3.modal__heading:has-text(\"Add New Filter Condition\")) input[ng-model=\"filterCondition.name\"]",
+        "value": "Story profile only"
+      },
+      {
+        "action": "choose",
+        "target": ".modal__dialog:has(h3.modal__heading:has-text(\"Add New Filter Condition\")) .sd-line-input:has(select[ng-model=\"filterCondition.field\"])",
+        "value": "Profile"
+      },
+      {
+        "action": "choose",
+        "target": ".modal__dialog:has(h3.modal__heading:has-text(\"Add New Filter Condition\")) .sd-line-input:has(select[ng-model=\"filterCondition.operator\"])",
+        "value": "in"
+      },
+      {
+        "action": "click",
+        "target": ".modal__dialog:has(h3.modal__heading:has-text(\"Add New Filter Condition\")) .term-editor .dropdown__toggle"
+      },
+      {
+        "action": "click",
+        "target": ".modal__dialog:has(h3.modal__heading:has-text(\"Add New Filter Condition\")) .term-editor [data-test-id=\"dropdown__item\"] button",
+        "text": "Story",
+        "nth": "first"
+      },
+      "Do not click Save"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal__dialog:has(h3.modal__heading:has-text(\"Add New Filter Condition\"))"
+    },
+    "highlight": "none",
+    "notes": "Replaces the old field-list screenshot (image380), which predates the Profile and Embargo fields. Template: scripts/apps/content-filters/views/manage-filter-conditions.html. The Field select is ng-model filterCondition.field with options labelled by getLabelForFieldId, so the option text for the profile field is 'Profile'. With the 'in' operator the Values control is an sd-meta-terms term editor (add button, then pick from the dropdown list). Cleanup: press Escape or click 'Cancel' in the modal footer."
+  },
+  {
+    "file": "defining-publishing-in-superdesk/internal-destination-form.png",
+    "caption": "Creating an Internal Destination",
+    "route": "#/settings/internal-destinations",
+    "user": "admin",
+    "preconditions": [
+      "Seeded desks 'Politics' and 'World' exist, World has a stage 'Incoming' (SEED.md)",
+      "Optional: a content filter exists to pick in 'Content filter'. The main snapshot may have none; leave the field empty in that case"
+    ],
+    "steps": [
+      "Open #/settings/internal-destinations and wait for [data-test-id=\"list-page--add-item\"] to be visible",
+      "Click [data-test-id=\"list-page--add-item\"]",
+      "Fill [data-test-id=\"list-page--new-item\"] [data-test-id=\"gform-input--name\"] with 'Politics to World'",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"list-page--new-item\"] label",
+        "text": "Active"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"list-page--new-item\"] [data-test-id=\"gform-input--desk\"] [data-test-id=\"dropdown-button\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"option\"]",
+        "text": "World",
+        "nth": "first"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"list-page--new-item\"] [data-test-id=\"gform-input--stage\"] [data-test-id=\"dropdown-button\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"option\"]",
+        "text": "Incoming",
+        "nth": "first"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"list-page--new-item\"] label",
+        "text": "Send only after publish schedule"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      },
+      {
+        "action": "mouseAway"
+      },
+      "Do not click [data-test-id=\"item-view-edit--save\"]"
+    ],
+    "viewport": "1440x640",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Replaces image19 (old modal 'Edit Destination' with customer desk names). On develop the form opens as a side panel of the generic list page (scripts/apps/internal-destinations/InternalDestinations.tsx). Field test ids follow gform-input--<field>: name, is_active, filter, desk, stage, macro, send_after_schedule; the desk combobox pattern comes from e2e/client/playwright/internal-destinations.crud.spec.ts. The panel shows 'Destination name', 'Active', 'Content filter', 'Desk', 'Stage', 'Macro', 'Send only after publish schedule'. Cleanup: cancel the new item (button 'Cancel' in the panel) so no destination is created. The desk option button's accessible name may include more text (the e2e spec clicks a button named 'Sports Desk'), hence the has-text filter on the button.",
+    "cleanup": [
+      "Click [data-test-id=\"item-view-edit--cancel-save\"]",
+      {
+        "action": "click",
+        "target": ".p-dialog button",
+        "text": "Don't save",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "file": "defining-publishing-in-superdesk/product-subscribers-tab.png",
+    "caption": "The Subscribers tab of a Product",
+    "route": "#/settings/products",
+    "user": "admin",
+    "preconditions": [
+      "Done by seed.py: A product 'General news' with product_type 'both' exists (create before capture: POST /api/products {\"name\": \"General news\", \"product_type\": \"both\"})",
+      "Done by seed.py: 'Subscriber 1' (main snapshot) has 'General news' in products (PATCH /api/subscribers/<id> with products: [<product id>])",
+      "Done by seed.py: A second active subscriber 'Content API client' exists with 'General news' in api_products only and no destinations (POST /api/subscribers with name, email, subscriber_type 'digital', sequence_num_settings {min: 1, max: 9999}, api_products: [<product id>], is_active: true)"
+    ],
+    "steps": [
+      "Open #/settings/products and wait for the 'General news' list item to be visible",
+      {
+        "action": "hover",
+        "target": "li.sd-list-item:has-text(\"General news\")"
+      },
+      {
+        "action": "click",
+        "target": "li.sd-list-item:has-text(\"General news\") button[title=\"Edit product\"]"
+      },
+      "Wait for the modal heading 'Edit \"General news\" Product'",
+      {
+        "action": "click",
+        "target": ".modal__dialog .nav-tabs__link",
+        "text": "Subscribers"
+      },
+      "Wait for two .sd-card items ('Subscriber 1' and 'Content API client') to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal__dialog:has(h3.modal__heading:has-text(\"Product\"))"
+    },
+    "highlight": "none",
+    "notes": "Feature: SDESK-7694, Content API subscribers listed in the product modal (since 3.2). Template: scripts/apps/products/views/products-config-modal.html; the tab shows a card per subscriber that has the product in products or api_products. Cleanup: click 'Cancel'. The product and the extra subscriber can stay or be removed by restoring the snapshot."
+  },
+  {
+    "file": "defining-publishing-in-superdesk/subscriber-general.png",
+    "caption": "The General tab of a Subscriber",
+    "route": "#/settings/publish",
+    "user": "admin",
+    "preconditions": [
+      "e2e main snapshot: one subscriber 'Subscriber 1' with at least one destination",
+      "Done by seed.py: Optional: 'General news' product from the product-subscribers-tab entry, so the Products field is not empty"
+    ],
+    "steps": [
+      "Open #/settings/publish and wait for [data-test-id=\"subscriber-item\"] to be visible",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"subscriber-item\"][data-test-value=\"Subscriber 1\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"subscriber-item\"][data-test-value=\"Subscriber 1\"] [data-test-id=\"edit-subscriber-button\"]"
+      },
+      "Wait for the modal heading 'Edit Subscriber' to be visible",
+      "Make sure the 'General' wizard step is active",
+      {
+        "action": "click",
+        "target": "[on-change=\"updateStartDate\"] input"
+      },
+      {
+        "action": "sleep",
+        "ms": 400
+      },
+      {
+        "action": "click",
+        "target": ".p-datepicker td.p-datepicker-today > span"
+      },
+      {
+        "action": "sleep",
+        "ms": 300
+      },
+      {
+        "action": "press",
+        "key": "Escape",
+        "optional": true
+      },
+      {
+        "action": "sleep",
+        "ms": 300
+      },
+      {
+        "action": "click",
+        "target": "[on-change=\"updateEndDate\"] input"
+      },
+      {
+        "action": "sleep",
+        "ms": 400
+      },
+      {
+        "action": "press",
+        "key": "3"
+      },
+      {
+        "action": "press",
+        "key": "1"
+      },
+      {
+        "action": "press",
+        "key": "/"
+      },
+      {
+        "action": "press",
+        "key": "1"
+      },
+      {
+        "action": "press",
+        "key": "2"
+      },
+      {
+        "action": "press",
+        "key": "/"
+      },
+      {
+        "action": "press",
+        "key": "2"
+      },
+      {
+        "action": "press",
+        "key": "0"
+      },
+      {
+        "action": "press",
+        "key": "2"
+      },
+      {
+        "action": "press",
+        "key": "7"
+      },
+      {
+        "action": "press",
+        "key": "Enter"
+      },
+      {
+        "action": "sleep",
+        "ms": 400
+      },
+      {
+        "action": "press",
+        "key": "Escape"
+      },
+      {
+        "action": "sleep",
+        "ms": 300
+      },
+      {
+        "action": "click",
+        "target": ".modal.sd-wizard .modal__heading, .modal.sd-wizard h3",
+        "nth": "first"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur(); document.querySelectorAll('.modal.sd-wizard .modal__body, .modal.sd-wizard .sd-wizard__content, .modal.sd-wizard [class*=modal__body]').forEach(e => e.scrollTop = 0)"
+      },
+      {
+        "action": "mouseAway"
+      },
+      "Do not click Save"
+    ],
+    "viewport": "1440x1100",
+    "crop": {
+      "element": ".modal.sd-wizard .modal__dialog",
+      "maxHeight": 900
+    },
+    "highlight": [
+      ".modal.sd-wizard .form__row:has(> label.form-label:has-text(\"Subscriber Schedule Settings\"))"
+    ],
+    "notes": "Replaces image397 (part of the old form). Template: scripts/apps/publish/views/subscribers.html. The schedule block is the form__row with label 'Subscriber Schedule Settings' and two sd-date-picker elements (labels 'Start Date', 'End Date'). With Status active and Start Date today, no warning is shown; a start date in the future would show the 'Active switch will override' warning, which is fine but not needed. Crop the top of the modal (Status, schedule, Name, E-Mail to broadcast Kill Events, Target Type, Media Type, Subscriber codes, Targetable by users). Cleanup: click 'Cancel' in the modal footer. If the date steps do not resolve, set the dates through the picker popup (click the calendar button of each sd-date-picker and pick the day), or PATCH the subscriber's schedule before capture ({\"schedule\": {\"start_date\": \"<today>\", \"end_date\": \"<today+30>\"}}) and skip the two date steps. Capture: the start date is today, picked in the calendar popup (the start date cannot be in the past); the end date is typed key by key as a fixed date (31/12/2027, update it once that is close), because the PrimeReact calendar ignores fill and the 'set the date' step only finds [data-test-id=\"date-input\"]. Escape after each date only closes the calendar popup."
+  },
+  {
+    "file": "defining-publishing-in-superdesk/subscriber-content-api.png",
+    "caption": "The Content API tab of a Subscriber",
+    "route": "#/settings/publish",
+    "user": "admin",
+    "preconditions": [
+      "Done by seed.py: 'Subscriber 1' has the 'General news' product (type both) in api_products (see the product-subscribers-tab entry)",
+      "Done by seed.py: 'Subscriber 1' has one Content API token: POST /api/subscriber_token {\"subscriber\": \"<id>\", \"expiry_days\": 365}"
+    ],
+    "steps": [
+      "Open #/settings/publish and wait for [data-test-id=\"subscriber-item\"] to be visible",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"subscriber-item\"][data-test-value=\"Subscriber 1\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"subscriber-item\"][data-test-value=\"Subscriber 1\"] [data-test-id=\"edit-subscriber-button\"]"
+      },
+      "Wait for the modal heading 'Edit Subscriber' to be visible",
+      {
+        "action": "click",
+        "target": ".modal.sd-wizard [sd-wizard-step-title], .modal.sd-wizard .nav-tabs__link, .modal.sd-wizard .sd-wizard__nav button",
+        "text": "Content API",
+        "nth": "first"
+      },
+      "Wait for the 'Authentication Token' list to show one token row"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: .modal.sd-wizard .modal__dialog",
+    "highlight": "none",
+    "mask": [
+      ".modal.sd-wizard .sd-list-item code"
+    ],
+    "notes": "Template: the 'Content API' sd-wizard-step in scripts/apps/publish/views/subscribers.html; token controller scripts/apps/publish/controllers/SubscriberTokenController.ts ('Expire in:' select, 'Generate token' button, copy and revoke buttons). Mask the token value: it is a working credential for the instance. Cleanup: click 'Cancel'. The wizard step headers are rendered by sd-wizard; if the click target does not resolve, click the text 'Content API' inside .modal.sd-wizard."
+  },
+  {
+    "file": "defining-publishing-in-superdesk/publish-queue.png",
+    "caption": "The Publish Queue",
+    "route": "#/publish_queue",
+    "user": "admin",
+    "preconditions": [
+      "Several items published to 'Subscriber 1' so the queue has rows. The seed publishes 7 items (SEED.md); if 'Subscriber 1' does not receive them, publish 'test sports story' to it as in e2e/client/playwright/publish-queue.spec.ts",
+      "No customer or personal names in subscriber or destination names"
+    ],
+    "steps": [
+      "Open #/publish_queue",
+      "Wait until [data-test-id=\"publish-queue-table\"] contains at least one [data-test-id=\"publish-queue-item\"]"
+    ],
+    "viewport": "1600x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"publish-queue-table\"] th:has-text(\"Processing time\")"
+    ],
+    "notes": "Replaces image348 and image299 (old queue without the Content Type filter and Processing time column, with customer names). Template: scripts/apps/publish/views/publish-queue.html. A wider viewport keeps all 16 columns readable. If highlighting a header cell is awkward, use highlight none."
+  },
+  {
+    "file": "defining-publishing-in-superdesk/publish-queue-preview.png",
+    "caption": "Previewing a Publish Queue entry",
+    "route": "#/publish_queue",
+    "user": "admin",
+    "preconditions": [
+      "Same as publish-queue.png"
+    ],
+    "steps": [
+      "Open #/publish_queue",
+      "Wait until [data-test-id=\"publish-queue-table\"] contains at least one [data-test-id=\"publish-queue-item\"]",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"publish-queue-item\"]",
+        "nth": "first"
+      },
+      "Wait for [data-test-id=\"authoring-preview\"] to be visible"
+    ],
+    "viewport": "1920x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Replaces image124 (2020 screenshot with personal names and an annotation arrow). A single click on a row opens sd-item-preview with the Content, Metadata and Item history tabs (show-history-tab is true). The e2e spec checks the preview with s('authoring-preview', 'field--headline'). Cleanup: none needed; the next shot reloads the route."
+  },
+  {
+    "file": "defining-publishing-in-superdesk/desk-content-expiry.png",
+    "caption": "Content expiry in the desk settings",
+    "route": "#/settings/desks",
+    "user": "admin",
+    "preconditions": [
+      "Seeded desk 'Politics' exists (SEED.md)",
+      "Its content_expiry is unset or 0, so the switch shows the 'Using System default' label; or set it to 2 days via PATCH /api/desks/<id> {\"content_expiry\": 2880} to show the day/hour/minute fields with values"
+    ],
+    "steps": [
+      "Open #/settings/desks and wait for [data-test-id=\"desk--Politics\"] to be visible",
+      "Click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions\"]",
+      "Click [data-test-id=\"desk--Politics\"] [data-test-id=\"desk-actions--edit\"]",
+      "Wait for [data-test-id=\"desk-config-modal\"] to be visible",
+      "Scroll to the [sd-content-expiry] element in the General step"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"desk-config-modal\"] [sd-content-expiry]",
+      "plus": [
+        "[data-test-id=\"field--name\"]"
+      ],
+      "expand": {
+        "bottom": 60,
+        "top": 24
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"desk-config-modal\"] [sd-content-expiry]"
+    ],
+    "notes": "New shot. Template: scripts/apps/desks/views/content-expiry.html used from desk-config-modal.html (data-header 'Content Expiry', context 'System'). When the switch is on the row shows number inputs with 'days', 'hr' and 'min'. 'Preserve Published Content' only appears when the server sets PUBLISHED_CONTENT_EXPIRY_MINUTES > 0, which the e2e server does not, so it will not be in the shot. If the crop is too tall or too narrow, crop the whole modal top 600px instead. Cleanup: close the modal without saving."
+  }
+]

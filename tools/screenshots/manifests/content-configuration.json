@@ -1,0 +1,445 @@
+[
+  {
+    "file": "content-configuration/settings-content-config.png",
+    "caption": "The Content config group on the Settings page",
+    "route": "#/settings",
+    "user": "admin",
+    "preconditions": [
+      "Admin user (has all settings privileges, so every Content config entry is listed)"
+    ],
+    "steps": [
+      "Open #/settings and wait for .sd-page__content--centered-dashboard .sd-card to be visible"
+    ],
+    "viewport": "1440x760",
+    "crop": "full",
+    "highlight": [
+      ".sd-page__content--centered-dashboard .sd-card:has(.sd-card__thumbnail-heading:text-is(\"Content config\"))"
+    ],
+    "notes": "The settings landing page (scripts/apps/settings/settings.tsx) renders one .sd-card per menu group; the group label for this page is 'Content config' (coreMenuGroups.CONTENT_CONFIG). Its links are Content Profiles, Dictionaries, Highlights, Metadata, Search Providers, Templates. Including the left nav (.sd-left-nav) shows the same group header (li.sd-left-nav__group-header 'Content config'); if the union becomes taller than 1.3x its width, drop the 'plus' and crop the card alone with expand {left: 24, right: 24}."
+  },
+  {
+    "file": "content-configuration/content-profiles-list.png",
+    "caption": "Content profiles, with the type filters and the Active only switch",
+    "route": "#/settings/content-profiles",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot: profiles Story, Text, Picture, Video, Audio and Package exist and are active"
+    ],
+    "steps": [
+      "Open #/settings/content-profiles and wait for [data-test-id=\"content-profile\"][data-test-value=\"Story\"] to be visible"
+    ],
+    "viewport": "1440x640",
+    "crop": "full",
+    "highlight": [
+      ".sd-page__header .sd-check-button__group",
+      [
+        ".sd-page__header .sd-toggle[ng-model=\"active_only\"]",
+        ".sd-page__header .sd-toggle[ng-model=\"active_only\"] + label"
+      ],
+      "#add-new-content-profile"
+    ],
+    "highlightStyle": "callout",
+    "notes": "Cards have data-test-id 'content-profile' with data-test-value = label (profile-settings.html). The type filter buttons are .sd-check-button__group in the second .sd-page__header; the 'Active only' switch follows it. Numbered callouts 1 = type filters, 2 = Active only, 3 = Add New."
+  },
+  {
+    "file": "content-configuration/add-content-profile.png",
+    "caption": "Creating a content profile",
+    "route": "#/settings/content-profiles",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot (picture, video and audio already have a profile, so their type buttons show as disabled, which is what the page describes)"
+    ],
+    "steps": [
+      "Open #/settings/content-profiles and wait for [data-test-id=\"content-profile\"][data-test-value=\"Story\"] to be visible",
+      "Click #add-new-content-profile",
+      {
+        "action": "wait",
+        "target": ".modal__dialog:has(#profile-save)",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": ".modal__dialog:has(#profile-save) button.btn--icon-only",
+        "nth": "first"
+      },
+      {
+        "action": "fill",
+        "target": ".modal__dialog:has(#profile-save) input[name=\"label\"]",
+        "value": "Feature"
+      },
+      {
+        "action": "fill",
+        "target": ".modal__dialog:has(#profile-save) input[name=\"description\"]",
+        "value": "Long-form features with a kicker and a fact box"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".modal__dialog:has(.modal__heading:has-text(\"Add New Content Profile\"))"
+    },
+    "highlight": "none",
+    "cleanup": [
+      "press Escape"
+    ],
+    "notes": "Do not click 'Save & Continue' (#profile-save): the shot must not create a profile. sd-modal renders .modal > .modal__dialog > .modal__content only while open (superdesk-ui-framework modals.js)."
+  },
+  {
+    "file": "content-configuration/edit-content-profile.png",
+    "caption": "The profile editor: general settings at the top, then the field tabs",
+    "route": "#/settings/content-profiles",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot: the Story profile exists"
+    ],
+    "steps": [
+      "Open #/settings/content-profiles and wait for [data-test-id=\"content-profile\"][data-test-value=\"Story\"] to be visible",
+      "Click [data-test-id=\"content-profile\"][data-test-value=\"Story\"] [data-test-id=\"content-profile-actions\"]",
+      "Click 'Edit' in [data-test-id=\"content-profile-actions--options\"]",
+      "Wait for [data-test-id=\"content-profile-edit-view\"] to be visible",
+      "In [data-test-id=\"content-profile-tabs\"] click the tab with role=tab name 'Content fields'",
+      "Wait for [data-test-id=\"content-profile-fields\"] to be visible"
+    ],
+    "viewport": "1440x1000",
+    "crop": "element: [data-test-id=\"content-profile-editing-modal\"] .modal__dialog",
+    "highlight": [
+      "[data-test-id=\"content-profile-tabs\"]",
+      "[data-test-id=\"content-profile-fields\"] button[aria-label=\"Add new field\"] >> nth=0"
+    ],
+    "highlightStyle": "callout",
+    "allowPortrait": true,
+    "cleanup": [
+      "press Escape"
+    ],
+    "notes": "Shows Icon picker, Label, Description, Active and 'Can be embedded' switches, then the Header fields / Content fields / Widgets tabs and the field list. The round '+' (Add new field) buttons sit between fields (new-field-select.tsx). Callout 1 = tabs, 2 = an Add new field button. Do not save."
+  },
+  {
+    "file": "content-configuration/field-options.png",
+    "caption": "Field options for the body field",
+    "route": "#/settings/content-profiles",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot: the Story profile has the Body HTML field on the Content fields tab"
+    ],
+    "steps": [
+      "Open #/settings/content-profiles and wait for [data-test-id=\"content-profile\"][data-test-value=\"Story\"] to be visible",
+      "Click [data-test-id=\"content-profile\"][data-test-value=\"Story\"] [data-test-id=\"content-profile-actions\"]",
+      "Click 'Edit' in [data-test-id=\"content-profile-actions--options\"]",
+      "In [data-test-id=\"content-profile-tabs\"] click the tab with role=tab name 'Content fields'",
+      "Click [data-test-id=\"content-profile-fields\"] [data-test-id=\"field\"][data-test-value=\"Body HTML\"]",
+      "Wait for [data-test-id=\"item-view-edit\"] to be visible",
+      "Scroll to [data-test-id=\"formatting-options-input\"]"
+    ],
+    "viewport": "1440x1000",
+    "crop": {
+      "element": "[data-test-id=\"content-profile-editing-modal\"] .modal__dialog"
+    },
+    "highlight": [
+      "[data-test-id=\"item-view-edit\"] [data-test-id=\"gform-input--sdWidth\"]",
+      "[data-test-id=\"formatting-options-input\"]"
+    ],
+    "highlightStyle": "callout",
+    "allowPortrait": true,
+    "cleanup": [
+      "press Escape"
+    ],
+    "notes": "The open field shows Required, Read-only, Width, Minimum/Maximum length, Maximum soft length, Show Floating Character Count, Clean Pasted HTML, Formatting options and Show Image Title (get-content-profiles-form-config.tsx). The field label in the list is 'Body HTML' (GET_LABEL_MAP). If item-view-edit is taller than 1.3x its width the portrait exemption applies (it sits in a dialog). Do not click Apply or Save."
+  },
+  {
+    "file": "content-configuration/metadata-tabs.png",
+    "caption": "Metadata management, Vocabularies tab",
+    "route": "#/settings/vocabularies",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot plus seed.py (categories vocabulary has National, Politics, Business, World, Sport, Culture)"
+    ],
+    "steps": [
+      "Open #/settings/vocabularies and wait for [data-test-id=\"metadata-content\"] [data-test-id=\"vocabulary-item\"][data-test-value=\"Categories\"] to be visible",
+      "Hover [data-test-id=\"vocabulary-item\"][data-test-value=\"Categories\"] so its Download config, Edit and Delete buttons show"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"metadata-tabs\"]",
+      "button:has-text(\"Upload Config\")",
+      "[data-test-id=\"vocabulary-item\"][data-test-value=\"Categories\"] .sd-list-item__action-menu"
+    ],
+    "highlightStyle": "callout",
+    "notes": "Heading is 'Metadata management' (vocabularies/views/settings.html). Tabs: Vocabularies, Custom text fields, Custom blocks, Custom date fields, Custom embed fields, Related content, URLs, Other fields. Callouts 1 = tabs, 2 = Upload Config, 3 = row actions."
+  },
+  {
+    "file": "content-configuration/vocabulary-items.png",
+    "caption": "Editing the items of a vocabulary",
+    "route": "#/settings/vocabularies",
+    "user": "admin",
+    "preconditions": [
+      "seed.py has run, so Categories holds National, Politics, Business, World, Sport and Culture (the snapshot's placeholders are inactive)"
+    ],
+    "steps": [
+      "Open #/settings/vocabularies and wait for [data-test-id=\"vocabulary-item\"][data-test-value=\"Categories\"] to be visible",
+      "Hover [data-test-id=\"vocabulary-item\"][data-test-value=\"Categories\"]",
+      "Click its [data-test-id=\"vocabulary-item--start-editing\"]",
+      "Wait for [data-test-id=\"vocabulary-modal\"] .modal__dialog to be visible",
+      "In [data-test-id=\"vocabulary-tabs\"] click 'Items'",
+      "Wait for #vocabulary-items-view-edit-placeholder table to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"vocabulary-modal\"] .modal__dialog",
+    "highlight": "none",
+    "cleanup": [
+      "click [data-test-id=\"vocabulary-edit-modal--cancel\"]"
+    ],
+    "notes": "The modal header reads 'Edit Categories'. Columns come from the vocabulary schema (name, qcode, parent by default) plus 'Active'. If the languages vocabulary has more than one language, each row also shows 'Name (<language>)' inputs. Do not save."
+  },
+  {
+    "file": "content-configuration/related-content-field.png",
+    "caption": "Settings of a related content field",
+    "route": "#/settings/vocabularies",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot"
+    ],
+    "steps": [
+      "Open #/settings/vocabularies and wait for [data-test-id=\"metadata-tabs\"] to be visible",
+      "In [data-test-id=\"metadata-tabs\"] click 'Related content'",
+      "In [data-test-id=\"metadata-content\"] click 'Add New'",
+      "Wait for [data-test-id=\"vocabulary-modal\"] .modal__dialog to be visible",
+      "fill [data-test-id=\"vocabulary-edit--id\"] with 'related_stories'",
+      "fill [data-test-id=\"vocabulary-edit-field--name\"] with 'Related stories'",
+      {
+        "action": "choose",
+        "target": ".form__row-item:has(> .sd-line-input #field-media-type)",
+        "value": "Related items"
+      },
+      "check the checkbox labelled 'Text' in [data-test-id=\"vocabulary-modal\"]",
+      "check the checkbox labelled 'Image' in [data-test-id=\"vocabulary-modal\"]",
+      "click the switch #multiple_items",
+      "fill input#max_items with '5'",
+      "check the checkbox labelled 'Published' in [data-test-id=\"vocabulary-modal\"]"
+    ],
+    "viewport": "1440x1000",
+    "crop": "element: [data-test-id=\"vocabulary-modal\"] .modal__dialog",
+    "highlight": "none",
+    "allowPortrait": true,
+    "cleanup": [
+      "click [data-test-id=\"vocabulary-edit-modal--cancel\"]"
+    ],
+    "notes": "With 'Related items' selected the dialog shows the extra types (Text, Graphic, Package, Preformatted) and the 'External Providers Only' switch (since 2.11). The sd-check checkboxes are labelled by their text. Do not click Save."
+  },
+  {
+    "file": "content-configuration/custom-block.png",
+    "caption": "Defining a custom block",
+    "route": "#/settings/vocabularies",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot"
+    ],
+    "steps": [
+      "Open #/settings/vocabularies and wait for [data-test-id=\"metadata-navigation\"] to be visible",
+      "In [data-test-id=\"metadata-navigation\"] click 'Custom blocks'",
+      {
+        "action": "hover",
+        "target": "[data-test-id=\"vocabulary-item\"][data-test-value=\"Fact box\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"vocabulary-item\"][data-test-value=\"Fact box\"] [data-test-id=\"vocabulary-item--start-editing\"]"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"vocabulary-edit-content\"] [data-test-id=\"editor3\"]",
+        "state": "visible"
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"vocabulary-modal\"] .modal__dialog",
+    "highlight": [
+      "[data-test-id=\"vocabulary-edit-content\"] [data-test-id=\"formatting-options\"]",
+      "[data-test-id=\"vocabulary-edit-content\"] [data-test-id=\"editor3\"]"
+    ],
+    "highlightStyle": "callout",
+    "cleanup": [
+      "click [data-test-id=\"vocabulary-edit-modal--cancel\"]"
+    ],
+    "notes": "Flow mirrors e2e/client/playwright/editor3.spec.ts 'configuring a vocabulary for custom blocks' (TreeSelectDriver on formatting-options, then typing in the editor3 textbox and clicking formatting-option=h2). The editor test id 'field--editor-block' is on the sd-editor3 host. Callout 1 = Formatting Options, 2 = Sample content. Do not save. Capture: opens the seeded 'Fact box' block (seed.py CUSTOM_BLOCKS: formatting options and a two-line sample) instead of typing a new one, because a new block with the id fact_box would clash with the seeded one."
+  },
+  {
+    "file": "content-configuration/templates-list.png",
+    "caption": "The template list",
+    "route": "#/settings/templates",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot: templates kill, takedown, story, story 2 and story 3 exist; story is assigned to several desks"
+    ],
+    "steps": [
+      "Open #/settings/templates and wait for [data-test-id=\"template-content\"] [data-test-id=\"content-template\"][data-test-value=\"story\"] to be visible",
+      "Click #order_button so the Filter dropdown (#order_selector) opens"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "#order_button",
+      "#order_selector"
+    ],
+    "notes": "Filter options: All, Personal, Private (needs the personal_template privilege, admin has it), No Desk, then one entry per desk (templates/constants.ts, TemplatesDirective). Cards show Template type, Desk(s), and for scheduled templates Sched. Desk / Stage, Automated item creation and Scheduled Time(s). If the open dropdown covers the cards too much, take the shot with the dropdown closed and highlight #order_button only."
+  },
+  {
+    "file": "content-configuration/template-scheduling.png",
+    "caption": "A template that creates an item every weekday morning",
+    "route": "#/settings/templates",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot plus seed.py (desks Politics, Business, World, Culture, Sports)"
+    ],
+    "steps": [
+      "Open #/settings/templates and wait for [data-test-id=\"template-header\"] to be visible",
+      "In [data-test-id=\"template-header\"] click the 'Add New' button",
+      "Wait for [data-test-id=\"template-edit-view\"] to be visible",
+      "fill #template-name with 'morning briefing'",
+      {
+        "action": "choose",
+        "target": ".sd-line-input:has(> #template-profile)",
+        "value": "Story"
+      },
+      "click [data-test-id=\"template-edit-view\"] [data-test-id=\"desks\"] [data-test-id=\"desk--Politics\"]",
+      "click [data-test-id=\"template-edit-view\"] [data-test-id=\"desks\"] [data-test-id=\"desk--World\"]",
+      "Optionally change the headline in [data-test-id=\"template-edit-view\"] [data-test-id=\"field--headline\"] to 'Morning briefing'",
+      "click span[sd-switch][ng-model=\"template.schedule.is_active\"]",
+      "click div[sd-weekday-picker] .sd-checkbox--button-Monday",
+      "click div[sd-weekday-picker] .sd-checkbox--button-Tuesday",
+      "click div[sd-weekday-picker] .sd-checkbox--button-Wednesday",
+      "click div[sd-weekday-picker] .sd-checkbox--button-Thursday",
+      "click div[sd-weekday-picker] .sd-checkbox--button-Friday",
+      {
+        "action": "click",
+        "target": "span[sd-timepicker] .icn-btn"
+      },
+      {
+        "action": "click",
+        "target": ".timepicker-popup .select-area:has-text(\"Hours\") li:text-is(\"07\")"
+      },
+      {
+        "action": "click",
+        "target": ".timepicker-popup .select-area:has-text(\"Minutes\") li:text-is(\"00\")"
+      },
+      {
+        "action": "click",
+        "target": ".timepicker-popup >> role=button[name=\"Confirm\"]"
+      },
+      "click #add_time",
+      {
+        "action": "choose",
+        "target": ".sd-line-input:has(> #schedule-desk)",
+        "value": "Politics"
+      },
+      {
+        "action": "choose",
+        "target": ".sd-line-input:has(> #template-stage)",
+        "value": "Working"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      }
+    ],
+    "viewport": "1440x1000",
+    "crop": {
+      "element": "[data-test-id=\"template-edit-view\"]"
+    },
+    "highlight": [
+      "[data-test-id=\"template-edit-view\"] [data-test-id=\"desks\"]",
+      ".template-container__metadata .toggle-box:has(.toggle-box__label:text-is(\"Automatically create item\"))"
+    ],
+    "highlightStyle": "callout",
+    "cleanup": [
+      "click 'Cancel' in [data-test-id=\"template-edit-view\"]"
+    ],
+    "notes": "Flow mirrors e2e templates.auto-create.spec.ts (weekday picker classes .sd-checkbox--button-<Day>, timepicker popup with 'Hours'/'Minutes' select areas and a 'Confirm' button; typing the time is locale-sensitive, use the popup). The hour list item may be '7' rather than '07', adjust to the rendered text. The headline test id may differ in the template editor; skip that step if it does not resolve. Do not click Save."
+  },
+  {
+    "file": "content-configuration/add-dictionary.png",
+    "caption": "Adding a global dictionary",
+    "route": "#/settings/dictionaries",
+    "user": "admin",
+    "preconditions": [
+      "Logged in as an administrator account (user_type administrator), otherwise the 'Dictionary' entry is missing from the + menu"
+    ],
+    "steps": [
+      "Open #/settings/dictionaries and wait for .dictionary-settings to be visible",
+      "Click [data-test-id=\"add-dictionary-toggle\"]",
+      "Wait for [data-test-id=\"create-dictionary\"] to be visible",
+      "Click [data-test-id=\"create-dictionary\"]",
+      "Wait for [data-test-id=\"dictionary-config-modal\"] .modal__dialog to be visible",
+      "fill [data-test-id=\"dict-name\"] with 'Newsroom English'",
+      "fill [data-test-id=\"dict-lang-code\"] with 'en'",
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"dictionary-config-modal\"] .modal__dialog",
+    "highlight": "none",
+    "cleanup": [
+      "click [data-test-id=\"cancel\"]"
+    ],
+    "notes": "Dialog title 'Add New Dictionary' with Active switch, Dictionary name, Language code and Dictionary file (accepts text/plain). Same flow as e2e dictionaries.spec.ts. Do not save."
+  },
+  {
+    "file": "content-configuration/vocabulary-delete-blocked.png",
+    "caption": "A vocabulary that is still used by a content profile cannot be deleted",
+    "route": "#/settings/vocabularies",
+    "user": "admin",
+    "preconditions": [
+      "A custom text field with ID 'kicker' and Name 'Kicker' exists and is on the Content fields tab of the Story profile. The steps below create both through the UI; alternatively create them through the API before the run.",
+      "Run this shot last: it changes the Story profile. Restore the snapshot afterwards (capture.mjs --restore on the next run)."
+    ],
+    "steps": [
+      "Open #/settings/vocabularies and wait for [data-test-id=\"metadata-tabs\"] to be visible",
+      "In [data-test-id=\"metadata-tabs\"] click 'Custom text fields'",
+      "In [data-test-id=\"metadata-content\"] click 'Add New'",
+      "fill [data-test-id=\"vocabulary-edit--id\"] with 'kicker'",
+      "fill [data-test-id=\"vocabulary-edit-field--name\"] with 'Kicker'",
+      "click 'Save' in [data-test-id=\"vocabulary-edit-footer\"]",
+      "wait for [data-test-id=\"metadata-content\"] [data-test-id=\"vocabulary-item\"][data-test-value=\"Kicker\"] to be visible",
+      "Open #/settings/content-profiles and wait for [data-test-id=\"content-profile\"][data-test-value=\"Story\"] to be visible",
+      "Click [data-test-id=\"content-profile\"][data-test-value=\"Story\"] [data-test-id=\"content-profile-actions\"]",
+      "Click 'Edit' in [data-test-id=\"content-profile-actions--options\"]",
+      "In [data-test-id=\"content-profile-tabs\"] click the tab with role=tab name 'Content fields'",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"content-profile-editing-modal\"] button[aria-label=\"Add new field\"] >> nth=0"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"tree-menu-popover\"] >> role=treeitem[name=\"Kicker (text)\"]"
+      },
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"item-view-edit\"]",
+        "value": "Full"
+      },
+      "click 'Apply' in [data-test-id=\"item-view-edit\"]",
+      "click 'Save' in [data-test-id=\"content-profile-edit-view--footer\"]",
+      "wait for [data-test-id=\"content-profile-edit-view\"] to disappear",
+      "Open #/settings/vocabularies and wait for [data-test-id=\"metadata-tabs\"] to be visible",
+      "In [data-test-id=\"metadata-tabs\"] click 'Custom text fields'",
+      "Hover [data-test-id=\"vocabulary-item\"][data-test-value=\"Kicker\"]",
+      "Click its [data-test-id=\"vocabulary-item--start-removing\"]",
+      "Wait for [data-test-id=\"vocabulary-deletion-modal--cannot-delete\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"vocabulary-deletion-modal--cannot-delete\"]",
+    "highlight": "none",
+    "cleanup": [
+      "click 'Go back'"
+    ],
+    "notes": "VocabularyDeletionModal.tsx: header 'Cannot delete vocabulary', text 'The vocabulary Kicker can't be deleted because it is currently used in the following Content Profile:' with 'Story', and buttons 'Go to content profiles' / 'Go back'. The data-test-id is passed to the ui-framework Modal; if it lands on an inner element, crop the enclosing [role=\"dialog\"] instead. Add-field flow mirrors e2e page-object-models/settings/content-profile.ts addFieldsToContentProfile."
+  }
+]

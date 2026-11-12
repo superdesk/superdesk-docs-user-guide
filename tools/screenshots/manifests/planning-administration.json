@@ -1,0 +1,678 @@
+[
+  {
+    "file": "planning-administration/actions-menu.png",
+    "caption": "The Actions menu in Planning",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      {
+        "action": "click",
+        "target": ".subnav + .subnav .icon-dots-vertical"
+      },
+      {
+        "action": "wait",
+        "target": ".subnav + .subnav ul.dropdown__menu",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".subnav + .subnav ul.dropdown__menu",
+      "plus": [
+        ".subnav + .subnav .icon-dots-vertical"
+      ],
+      "expand": {
+        "left": 220,
+        "top": 16,
+        "bottom": 16,
+        "right": 16
+      }
+    },
+    "highlight": "none",
+    "notes": "Expected entries in order: Manage Agendas, Manage Planning Profile, Manage Coverage Profiles, Manage Event Profile, Manage Event Templates, Manage Event & Planning Filters, Manage Custom Layouts, Featured Stories (client/components/Main/ActionsSubnavDropdown.tsx). If Manage Event Templates is missing, event templates are not enabled on the server."
+  },
+  {
+    "file": "planning-administration/manage-agendas.png",
+    "caption": "Managing agendas",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      {
+        "action": "click",
+        "target": ".subnav + .subnav .icon-dots-vertical"
+      },
+      {
+        "action": "click",
+        "target": ".subnav + .subnav ul.dropdown__menu button",
+        "text": "Manage Agendas"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog .p-dialog-header",
+        "text": "Manage Agendas",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog [data-test-id=\"list-page--items\"] .sd-list-item",
+        "state": "visible",
+        "nth": "first"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "hover",
+        "target": ".p-dialog [data-test-id=\"list-page--items\"] .sd-list-item",
+        "nth": "first"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog"
+    },
+    "highlight": [
+      ".p-dialog .sd-list-item:has-text(\"Elections 2024\")"
+    ],
+    "notes": "Enabled agendas sort first (defaultSortOption is_enabled descending). The disabled agenda shows a 'Disabled' warning label (client/components/Agendas/AgendaListItem.tsx).",
+    "highlightStyle": "outline"
+  },
+  {
+    "file": "planning-administration/event-profile-fields.png",
+    "caption": "Editing a field in the event profile",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      {
+        "action": "click",
+        "target": ".subnav + .subnav .icon-dots-vertical"
+      },
+      {
+        "action": "click",
+        "target": ".subnav + .subnav ul.dropdown__menu button",
+        "text": "Manage Event Profile"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog [role=\"tab\"] >> nth=1"
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog [data-test-id=\"content-list--field-slugline\"]"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog [data-test-id=\"content-field--editor\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"content-field--editor\"] label",
+        "text": "Required",
+        "nth": "first"
+      },
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.maxlength\"] input",
+        "value": "40",
+        "optional": true
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog"
+    },
+    "highlight": [
+      "[data-test-id=\"content-field--editor\"]"
+    ],
+    "notes": "Shows the fields list grouped by section on the left and the Details panel (Required, Min, Max, Input Type...) on the right with Cancel / Apply. Close with Discard All afterwards so the profile is not changed for later shots.",
+    "highlightStyle": "outline",
+    "cleanup": [
+      {
+        "action": "press",
+        "key": "Escape"
+      }
+    ]
+  },
+  {
+    "file": "planning-administration/multilingual-language-field.png",
+    "caption": "Setting up languages on the Language field",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      {
+        "action": "click",
+        "target": ".subnav + .subnav .icon-dots-vertical"
+      },
+      {
+        "action": "click",
+        "target": ".subnav + .subnav ul.dropdown__menu button",
+        "text": "Manage Event Profile"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog [role=\"tab\"] >> nth=1"
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog .btn--icon-only-circle >> nth=3"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"tree-menu-popover\"] [role=\"treeitem\"]",
+        "text": "Language"
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog [data-test-id=\"content-list--field-language\"]"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog [data-test-id=\"content-field--editor\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"content-field--editor\"] label",
+        "text": "Multilingual",
+        "nth": "first"
+      },
+      {
+        "action": "treeSelect",
+        "target": "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.languages\"]",
+        "value": [
+          "English",
+          "German"
+        ]
+      },
+      {
+        "action": "treeSelect",
+        "target": "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.default_language\"]",
+        "value": [
+          "English"
+        ]
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog"
+    },
+    "highlight": [
+      "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.multilingual\"]",
+      "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.languages\"]",
+      "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.default_language\"]"
+    ],
+    "notes": "multilingual_events.spec.ts is skipped upstream as flaky, so add generous waits after each tree select. The field editor buttons are Cancel / Apply (the page object still says Save). Discard All afterwards.",
+    "highlightStyle": "outline",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": ".p-dialog button",
+        "text": "Discard All",
+        "optional": true
+      },
+      {
+        "action": "press",
+        "key": "Escape"
+      }
+    ]
+  },
+  {
+    "file": "planning-administration/coverage-profiles.png",
+    "caption": "One profile per coverage type",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      {
+        "action": "click",
+        "target": ".subnav + .subnav .icon-dots-vertical"
+      },
+      {
+        "action": "click",
+        "target": ".subnav + .subnav ul.dropdown__menu button",
+        "text": "Manage Coverage Profiles"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog .p-dialog-header",
+        "text": "Manage Coverage Profiles",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog label",
+        "text": "Picture",
+        "nth": "first"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "settle"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog"
+    },
+    "highlight": "none",
+    "notes": "CoverageProfileModal.tsx: vertical RadioButtonGroup of coverage types, then the FieldTab for the selected type. Picture is a better example than the default first type.",
+    "cleanup": [
+      {
+        "action": "press",
+        "key": "Escape"
+      }
+    ]
+  },
+  {
+    "file": "planning-administration/planning-preview-groups.png",
+    "caption": "The preview follows the planning profile",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md).",
+      "Apply the grouped planning profile first: `python3 seed_planning.py --scenario grouped-preview` (also adds the 'Budget vote coverage' item); remove it afterwards with `--reset` (planning_types has no DELETE)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      "click [data-test-id=\"view-PLANNING\"]",
+      {
+        "action": "click",
+        "target": ".sd-column-box__main-column__listpanel .sd-list-item",
+        "text": "Budget vote coverage"
+      },
+      {
+        "action": "wait",
+        "target": ".sd-preview-panel",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": ".sd-preview-panel [data-test-id=\"toggle-extra\"] [role=\"button\"]",
+        "nth": "first"
+      },
+      {
+        "action": "wait",
+        "target": ".sd-preview-panel [data-test-id=\"field-anpa_category\"]",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".sd-preview-panel"
+    },
+    "highlight": [
+      ".sd-preview-panel [data-test-id=\"toggle-extra\"]"
+    ],
+    "notes": "Based on e2e/playwright/planning/planning_preview_profile.spec.ts. Shows fields in profile order inside the Main group and the expanded Extra togglebox. Feature is 3.6 (STT-1699).",
+    "highlightStyle": "outline"
+  },
+  {
+    "file": "planning-administration/manage-event-templates.png",
+    "caption": "Renaming and deleting event templates",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      {
+        "action": "click",
+        "target": ".subnav + .subnav .icon-dots-vertical"
+      },
+      {
+        "action": "click",
+        "target": ".subnav + .subnav ul.dropdown__menu button",
+        "text": "Manage Event Templates"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog .p-dialog-header",
+        "text": "Manage Event Templates",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog [data-test-id=\"list-page--items\"] .sd-list-item",
+        "state": "visible",
+        "nth": "first"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "hover",
+        "target": ".p-dialog [data-test-id=\"list-page--items\"] .sd-list-item",
+        "nth": "first"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog"
+    },
+    "highlight": "none",
+    "notes": "The modal only allows renaming (Template name) and deleting; there is no create button (disallowCreatingNewItem)."
+  },
+  {
+    "file": "planning-administration/filter-schedule.png",
+    "caption": "Setting up a scheduled export",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      {
+        "action": "click",
+        "target": ".subnav + .subnav .icon-dots-vertical"
+      },
+      {
+        "action": "click",
+        "target": ".subnav + .subnav ul.dropdown__menu button",
+        "text": "Manage Event & Planning Filters"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"search-filters-modal\"]",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"search-filters-modal\"] .sd-list-item",
+        "text": "Sport events this week"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"manage-filters--preview--edit-schedule\"]"
+      },
+      {
+        "action": "choose",
+        "value": "Weekly"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-week_days\"] label",
+        "text": "Su"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-week_days\"] label",
+        "text": "Sa"
+      },
+      {
+        "action": "fill",
+        "target": "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-hour\"]",
+        "value": "06:00"
+      },
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-desk\"]",
+        "value": "Sports"
+      },
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-content_template\"]",
+        "value": "Weekly advisory"
+      },
+      {
+        "action": "choose",
+        "target": "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-export_template\"]",
+        "value": "Weekly events list"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"search-filters-modal\"]"
+    },
+    "highlight": [
+      [
+        "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-desk\"]",
+        "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-content_template\"]",
+        "[data-test-id=\"search-filters-modal\"] [data-test-id=\"field-export_template\"]"
+      ]
+    ],
+    "notes": "Panel title 'Filter Schedule' (EditFilterSchedule.tsx). If the filter resource name or params shape differ, create the filter through the UI with Add New Filter (Filter Name, Item Type Events, Calendars Sport) and click Create first. Close with Cancel afterwards.",
+    "cleanup": [
+      {
+        "action": "press",
+        "key": "Escape"
+      }
+    ],
+    "highlightStyle": "outline"
+  },
+  {
+    "file": "planning-administration/custom-layouts.png",
+    "caption": "Editing a custom layout",
+    "route": "#/planning",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/planning and wait for [data-test-id=\"planning-list-panel\"] to be visible",
+      {
+        "action": "click",
+        "target": ".subnav + .subnav .icon-dots-vertical"
+      },
+      {
+        "action": "click",
+        "target": ".subnav + .subnav ul.dropdown__menu button",
+        "text": "Manage Custom Layouts"
+      },
+      {
+        "action": "wait",
+        "target": ".p-dialog .p-dialog-header",
+        "text": "Manage Custom Layouts",
+        "state": "visible"
+      },
+      {
+        "action": "hover",
+        "target": ".p-dialog .sd-list-item",
+        "text": "weekly_events"
+      },
+      {
+        "action": "click",
+        "target": ".p-dialog .sd-list-item:has-text(\"weekly_events\") .icon-pencil"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "settle"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".p-dialog"
+    },
+    "highlight": "none",
+    "notes": "Form fields from client/components/ExportTemplates/ManageExportTemplates.tsx. Close without saving.",
+    "cleanup": [
+      {
+        "action": "press",
+        "key": "Escape"
+      }
+    ]
+  },
+  {
+    "file": "planning-administration/manage-locations.png",
+    "caption": "Managing the shared locations",
+    "route": "#/locations",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/locations",
+      {
+        "action": "wait",
+        "target": ".sd-list-item",
+        "text": "Sydney Opera House",
+        "state": "visible"
+      },
+      {
+        "action": "click",
+        "target": ".sd-list-item",
+        "text": "Sydney Opera House"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "settle"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Activity '/locations', label 'Manage Locations', MENU_MAIN (index.ts). Editor labels: Name, Address, Area, Suburb, City/Town, Locality, State/Province/Region, Post Code, Country, Latitude, Longitude, Notes. If 'locations' is not accepted by planning_prepopulate, create them through the event form as in location_event_form.spec.ts."
+  },
+  {
+    "file": "planning-administration/role-privileges.png",
+    "caption": "Planning privileges in User Roles",
+    "route": "#/settings/user-roles",
+    "user": "admin",
+    "preconditions": [
+      "Docs instance https://sd-autodocs.test.superdesk.org with the autodocs-planning snapshot, browser time zone Australia/Sydney: `FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>` (FRESH reseeds with today's dates). The local superdesk-planning e2e stack on slot 1 (client http://localhost:9021, API http://localhost:5021/api, run-capture-planning.sh, server image built from the same checkout as the client) is the fallback when the instance is down.",
+      "Seeded with `python3 seed_planning.py --api-url http://localhost:5021/api --reset` on the same Sydney day as the capture (it creates every event, planning item, coverage, assignment, agenda, template, filter, layout and location this entry needs; see SEED.md)."
+    ],
+    "steps": [
+      "Open #/settings/user-roles",
+      {
+        "action": "click",
+        "target": "text=Roles privileges"
+      },
+      {
+        "action": "wait",
+        "target": "text=Planning - Agenda Management",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "(() => { const el=[...document.querySelectorAll('td, th, div, span')].find(e => e.childElementCount===0 && e.textContent.trim().toLowerCase()==='planning'); if (el) { el.scrollIntoView({block:'start'}); let p=el.parentElement; while (p && p.scrollHeight<=p.clientHeight) p=p.parentElement; if (p) p.scrollTop -= 60; } })()"
+      },
+      {
+        "action": "wait",
+        "target": "text=Connected to Notification Server!",
+        "state": "hidden",
+        "optional": true
+      },
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": {
+      "width": 1440,
+      "height": 1100
+    },
+    "crop": "full",
+    "highlight": [
+      "tr:has-text(\"Planning - Global Filters\")"
+    ],
+    "notes": "Rows are sorted alphabetically by the client; the evaluate step scrolls the 'Planning' row to the top so the Planning - ... rows fill the table, including 'Planning - Global Filters' (outlined). The prepopulate roles have no privileges ticked (admin is an administrator user type and needs none).",
+    "highlightStyle": "outline"
+  }
+]
