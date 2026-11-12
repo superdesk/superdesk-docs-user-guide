@@ -1,0 +1,246 @@
+[
+  {
+    "file": "desks-and-custom-workspaces/desks-menu.png",
+    "caption": "The Desks menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom (tools/screenshots/seed.py): admin is a member of Politics, Business, World, Culture and Sports",
+      "Done by seed.py: At least one custom workspace owned by admin exists (the e2e 'main' snapshot has 'Workspace 1'); a second one named 'Election night' makes the purple section read better: create it with POST /api/workspaces {\"name\": \"Election night\", \"user\": \"<admin _id>\"} if missing",
+      "No desk is closed (no desk has is_closed: true), so all desk names are in the normal colour"
+    ],
+    "steps": [
+      "open #/workspace/monitoring and select desk 'Politics'",
+      "click [data-test-id=\"monitoring--selected-desk\"]",
+      "wait for [data-test-id=\"monitoring--select-desk-options\"] to be visible",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"monitoring--select-desk-options\"]",
+      "plus": [
+        "[data-test-id=\"monitoring--selected-desk\"]"
+      ],
+      "expand": {
+        "right": 260,
+        "bottom": 16,
+        "left": 48
+      }
+    },
+    "highlight": "none",
+    "notes": "Replaces the old 'image227' screenshot (old blue top bar). Must show the DESKS label, the desk list, the CUSTOM WORKSPACES label with purple workspace names and the CREATE NEW WORKSPACE button at the bottom. Close the menu in cleanup.",
+    "cleanup": [
+      "press Escape"
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "desks-and-custom-workspaces/create-workspace.png",
+    "caption": "Creating a custom workspace",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom; any desk selected"
+    ],
+    "steps": [
+      "open #/workspace/monitoring and select desk 'Politics'",
+      "click [data-test-id=\"monitoring--selected-desk\"]",
+      "wait for [data-test-id=\"monitoring--select-desk-options\"] to be visible",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"monitoring--select-desk-options\"] button.action-btn"
+      },
+      "wait for [data-test-id=\"workspace-modal\"] to be visible",
+      {
+        "action": "fill",
+        "target": "#workspace-name",
+        "value": "Election night 2"
+      },
+      "Do not click Save, the shot shows the filled form"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"workspace-modal\"] .modal__content"
+    },
+    "highlight": "none",
+    "notes": "The button in the Desks menu reads 'CREATE NEW WORKSPACE' (aria-label 'create new workspace'). The window title is 'Create new Workspace', the field label 'Workspace name', the buttons 'Cancel' and 'Save'. If the test id sits on a full-screen wrapper, crop to the inner .modal__dialog / [role=\"dialog\"] instead. New image, there was none before.",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"workspace-modal\"] button",
+        "text": "Cancel"
+      }
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "desks-and-custom-workspaces/closed-desk-indicators.png",
+    "caption": "A closed desk in the Desks menu and the routing label in the top bar",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom",
+      "Desk 'Culture' is open before the shot. The first step closes it and routes it to 'Politics' through PATCH /api/closed_desks/<Culture _id> (If-Match: the desk _etag), the same call the Desk Router widget makes with 'Start routing'; the cleanup reopens it"
+    ],
+    "steps": [
+      {
+        "action": "evaluate",
+        "script": "(async () => { const api = window.appConfigLoaded.server.url; const H = {Authorization: localStorage.getItem('sess:token'), 'Content-Type': 'application/json'}; const desk = async (n) => (await (await fetch(api + '/desks?where=' + encodeURIComponent(JSON.stringify({name: n})), {headers: H})).json())._items[0]; const c = await desk('Culture'); const p = await desk('Politics'); if (c.is_closed) { return; } const r = await fetch(api + '/closed_desks/' + c._id, {method: 'PATCH', headers: {...H, 'If-Match': c._etag}, body: JSON.stringify({is_closed: true, closed_destination: p._id})}); if (!r.ok) { throw new Error('closing Culture failed: ' + r.status + ' ' + (await r.text())); } })()"
+      },
+      "open #/workspace/monitoring and select desk 'Culture'",
+      "wait for .top-menu__info to be visible",
+      "click [data-test-id=\"monitoring--selected-desk\"]",
+      "wait for [data-test-id=\"monitoring--select-desk-options\"] li.desk-item--closed to be visible",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 460
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"monitoring--select-desk-options\"] li.desk-item--closed",
+      "[data-test-id=\"monitoring--select-desk-options\"] li.desk-item--receiving",
+      ".top-menu__info"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Culture shows in red with an icon in the Desks menu, Politics shows a green icon (desk-item--receiving), and the top bar on the right reads 'Routing to: Politics'. The dropdown classes are applied about 500 ms after the desk changes, so wait for the class, not just the menu. Cleanup reopens the desk so later shots on other pages are not affected. New image, there was none before.",
+    "cleanup": [
+      "press Escape",
+      {
+        "action": "evaluate",
+        "script": "(async () => { const api = window.appConfigLoaded.server.url; const H = {Authorization: localStorage.getItem('sess:token'), 'Content-Type': 'application/json'}; const c = (await (await fetch(api + '/desks?where=' + encodeURIComponent(JSON.stringify({name: 'Culture'})), {headers: H})).json())._items[0]; if (!c.is_closed) { return; } const r = await fetch(api + '/closed_desks/' + c._id, {method: 'PATCH', headers: {...H, 'If-Match': c._etag}, body: JSON.stringify({is_closed: false})}); if (!r.ok) { throw new Error('reopening Culture failed: ' + r.status + ' ' + (await r.text())); } })()"
+      }
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "desks-and-custom-workspaces/personal-space.png",
+    "caption": "Personal space",
+    "route": "#/workspace/personal",
+    "user": "admin",
+    "preconditions": [
+      "Done by seed.py: admin has at least three items in Personal space: the e2e 'main' snapshot has 'personal space article 1'; add two more with POST /api/archive {\"type\": \"text\", \"slugline\": \"FERRY-NOTES\", \"headline\": \"Notes on the ferry contract review\"} and {\"type\": \"text\", \"slugline\": \"BUDGET-IDEAS\", \"headline\": \"Ideas for budget explainer\"} (no task.desk, so they land in admin's Personal space)",
+      "The client loads the markForUser extension (superdesk host build) so the 'Marked for me' button shows; on the stock e2e client only 'Personal Items' and 'Sent Items' appear",
+      "Monitoring view preference is List view"
+    ],
+    "steps": [
+      "open #/workspace/personal",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Personal Items\"] contains at least one [data-test-id=\"article-item\"]",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 520
+      }
+    },
+    "highlight": "none",
+    "notes": "Replaces the inline Personal space icon image. The radio buttons 'Personal Items', 'Sent Items' and 'Marked for me' sit in the toolbar (sd-check type radio), with Personal Items active. The Workspace panel on the left should show the Personal space icon as active.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "desks-and-custom-workspaces/personal-item-actions.png",
+    "caption": "The Actions menu of an item in Personal space",
+    "route": "#/workspace/personal",
+    "user": "admin",
+    "preconditions": [
+      "Item 'personal space article 1' in admin's Personal space (e2e 'main' snapshot), not locked"
+    ],
+    "steps": [
+      "open #/workspace/personal",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Personal Items\"] contains at least one [data-test-id=\"article-item\"]",
+      "hover [data-test-id=\"article-item\"][data-test-value=\"personal space article 1\"]",
+      "click [data-test-id=\"context-menu-button\"] inside that item",
+      "wait for [data-test-id=\"context-menu\"] to be visible",
+      {
+        "action": "mouseAway"
+      }
+    ],
+    "viewport": "860x800",
+    "crop": {
+      "element": "[data-test-id=\"context-menu\"]",
+      "plus": [
+        "[data-test-id=\"article-item\"][data-test-value=\"personal space article 1\"]"
+      ],
+      "expand": {
+        "bottom": 16,
+        "top": 16
+      }
+    },
+    "highlight": "none",
+    "padding": 0,
+    "notes": "Replaces 'unknown (1).png' and 's-personaloptions.png'. Do not hover a submenu entry. data-test-value on rows is the headline; if the snapshot item has no headline, the slugline is used, which is what the e2e spec monitoring.personal-space.spec.ts relies on.",
+    "cleanup": [
+      "press Escape"
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "desks-and-custom-workspaces/currently-working-on.png",
+    "caption": "The Currently working on view",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded items ELECTION-DEBATE (Politics / Incoming) and PARLIAMENT-HOUSING (Politics / Ready for Review), unpublished and not locked by anyone else"
+    ],
+    "steps": [
+      "open #/workspace/monitoring and select desk 'Politics'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Politics / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "Open 'Party leaders agree to three TV debates before polling day' for editing",
+      "Open 'Assembly committee backs plan to double social housing targets' for editing",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"opened-articles-bar\"] [data-test-id=\"item\"]",
+        "text": "Party leaders",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"opened-articles-bar\"] [data-test-id=\"item\"]",
+        "text": "Assembly committee",
+        "state": "visible"
+      },
+      "click .opened-articles-bar__quick-actions",
+      "Wait for .modal--fullscreen to show 'Currently working on'",
+      "move the mouse away from the list"
+    ],
+    "keepOpenItems": true,
+    "viewport": "1440x900",
+    "crop": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 300
+      }
+    },
+    "highlight": "none",
+    "notes": "Replaces 'image338' (old card style). The shot opens its own two Politics items without changing them, so it does not depend on an earlier shot. Cleanup closes the view and both items so later shots start clean.",
+    "cleanup": [
+      "click .modal--fullscreen .modal__close",
+      "click [data-test-id=\"opened-articles-bar\"] [data-test-id=\"close\"]",
+      "click [data-test-id=\"opened-articles-bar\"] [data-test-id=\"close\"]"
+    ],
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  }
+]

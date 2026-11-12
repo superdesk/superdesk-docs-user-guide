@@ -1,0 +1,283 @@
+[
+  {
+    "file": "user-management-and-user-roles/user-management-menu.png",
+    "caption": "User Management in the main menu",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Politics'",
+      "click button[aria-label=\"Toggle main menu\"]",
+      "wait for [data-test-id=\"main-menu\"] to be visible",
+      {
+        "action": "settle"
+      }
+    ],
+    "cleanup": [
+      "press Escape"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"main-menu\"]",
+      "expand": {
+        "right": 240
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"main-menu-item\"][data-test-value=\"User Management\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Main menu open with the 'Admin tools' group. Replaces image381 and image197 (pre-2.6 top bar). Expand to the right so the crop is not a narrow portrait strip."
+  },
+  {
+    "file": "user-management-and-user-roles/user-list.png",
+    "caption": "The user list",
+    "route": "#/users",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)",
+      "Status filter at its default 'Active'"
+    ],
+    "steps": [
+      "Open #/users and wait for [data-test-id=\"users-list\"] [data-test-id=\"users-list-item\"] to be visible",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"user-filter\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Shows the search field, 'All user types' / 'Authors only' buttons, the status dropdown ([data-test-id=\"user-filter\"]) and the columns Full name, Username, Role, Email, Created. Replaces image285 and image139."
+  },
+  {
+    "file": "user-management-and-user-roles/create-user.png",
+    "caption": "Creating a user",
+    "route": "#/users",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)",
+      "Database authentication (not LDAP), so Create user opens the form and not the Import user window"
+    ],
+    "steps": [
+      "Open #/users and wait for [data-test-id=\"users-list\"] [data-test-id=\"users-list-item\"] to be visible",
+      "click [data-test-id=\"create-user-button\"]",
+      "wait for [data-test-id=\"user-details-form\"] to be visible",
+      "fill [data-test-id=\"user-details-form\"] [data-test-id=\"field--first_name\"] with 'Ines'",
+      "fill [data-test-id=\"user-details-form\"] [data-test-id=\"field--last_name\"] with 'Moreau'",
+      "fill [data-test-id=\"user-details-form\"] [data-test-id=\"field--username\"] with 'inesmoreau'",
+      "fill [data-test-id=\"user-details-form\"] [data-test-id=\"field--email\"] with 'ines.moreau@meridian.example'",
+      {
+        "action": "evaluate",
+        "script": "const s = document.querySelector('[data-test-id=\"user-details-form\"] #user_role'); const o = [...s.options].find((x) => x.textContent.trim() === 'Journalist'); if (o) { s.value = o.value; s.dispatchEvent(new Event('change', {bubbles: true})); }"
+      },
+      {
+        "action": "evaluate",
+        "script": "document.activeElement && document.activeElement.blur()"
+      },
+      {
+        "action": "mouseAway"
+      },
+      {
+        "action": "settle"
+      }
+    ],
+    "cleanup": [
+      "click [data-test-id=\"user-details-form\"] [data-test-id=\"cancel\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"user-details-form\"] [data-test-id=\"save\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Do not save: saving would send an activation email and leave a pending user behind. Replaces the inline base64 Create icon and image177."
+  },
+  {
+    "file": "user-management-and-user-roles/user-row-actions.png",
+    "caption": "Actions on a user in the list",
+    "route": "#/users",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)",
+      "No user is selected in the list (the action icons are hidden on the selected row)"
+    ],
+    "steps": [
+      "Open #/users and wait for [data-test-id=\"users-list\"] [data-test-id=\"users-list-item\"] to be visible",
+      "Hover [data-test-id=\"users-list-item\"][data-test-value=\"Tomas Vidal\"]",
+      "wait for [data-test-id=\"users-list-item\"][data-test-value=\"Tomas Vidal\"] .action .item-functions to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"users-list\"]"
+    },
+    "highlight": [
+      "[data-test-id=\"users-list-item\"][data-test-value=\"Tomas Vidal\"] .action .item-functions"
+    ],
+    "highlightStyle": "outline",
+    "notes": "The hover icons are 'Disable user' (trash) and 'Clear sessions' (skull/kill icon). Replaces image127 and 'grafik (15).png'."
+  },
+  {
+    "file": "user-management-and-user-roles/user-profile-overview.png",
+    "caption": "The full profile of a user",
+    "route": "#/users",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)",
+      "Maren Holt has some activity (the seed locks and edits items as her), so the Activity Stream is not empty"
+    ],
+    "steps": [
+      "Open #/users and wait for [data-test-id=\"users-list\"] [data-test-id=\"users-list-item\"] to be visible",
+      "click [data-test-id=\"users-list-item\"][data-test-value=\"Maren Holt\"]",
+      "click [data-test-id=\"view-full-profile\"]",
+      "wait for [data-test-id=\"page-nav-title\"] to show 'Maren Holt'",
+      "wait for [data-test-id=\"user-details-form\"] to be visible",
+      "move the mouse away from the form"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"page-sections\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Full profile of marenholt opened by admin: tabs Overview and Privileges (no Personal preferences, that tab is only on your own profile; Availability only if the availability extension is loaded), left section menu General / Password / Default desk / Language / Author info, Activity Stream on the right. Replaces image335 and image275."
+  },
+  {
+    "file": "user-management-and-user-roles/user-type-checkboxes.png",
+    "caption": "Administrator, Author and Private",
+    "route": "#/users",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)",
+      "Maren Holt is an author (is_author true, seed default)",
+      "Client subscriptionLevel is not 'solo' or 'team' (default), so the checkboxes are shown"
+    ],
+    "steps": [
+      "Open #/users and wait for [data-test-id=\"users-list\"] [data-test-id=\"users-list-item\"] to be visible",
+      "click [data-test-id=\"users-list-item\"][data-test-value=\"Maren Holt\"]",
+      "click [data-test-id=\"view-full-profile\"]",
+      "wait for [data-test-id=\"page-nav-title\"] to show 'Maren Holt'",
+      "wait for [data-test-id=\"user-details-form\"] to be visible",
+      {
+        "action": "evaluate",
+        "script": "document.querySelector('[data-test-id=\"user-details-form\"] .user_type').scrollIntoView({block: 'center'})"
+      },
+      "move the mouse away from the form"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"user-details-form\"] .user_type",
+      "plus": [
+        "[data-test-id=\"user-details-form\"] .field__role"
+      ],
+      "expand": {
+        "top": 16,
+        "bottom": 48
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"user-details-form\"] #user_private"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Shows the Role select and the Administrator, Author and Private checkboxes. Administrator is only rendered because admin is an administrator. Do not change anything."
+  },
+  {
+    "file": "user-management-and-user-roles/user-privileges-tab.png",
+    "caption": "The Privileges tab of a user",
+    "route": "#/users",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)",
+      "Maren Holt has the Editor role with some privileges granted by the role"
+    ],
+    "steps": [
+      "Open #/users and wait for [data-test-id=\"users-list\"] [data-test-id=\"users-list-item\"] to be visible",
+      "click [data-test-id=\"users-list-item\"][data-test-value=\"Maren Holt\"]",
+      "click [data-test-id=\"view-full-profile\"]",
+      "wait for [data-test-id=\"page-nav-title\"] to show 'Maren Holt'",
+      "wait for [data-test-id=\"user-details-form\"] to be visible",
+      "click [data-test-id=\"page-section\"][data-test-value=\"privileges\"]",
+      "wait for [data-test-id=\"user-privileges-form\"] to be visible",
+      "move the mouse away from the table"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"privilege-granted-by-role\"] >> nth=0"
+    ],
+    "highlightStyle": "outline",
+    "notes": "User / Role columns; rows granted by the role show a greyed, ticked checkbox and the role name label. The highlight takes the first role label. Replaces image211."
+  },
+  {
+    "file": "user-management-and-user-roles/user-roles.png",
+    "caption": "The Roles tab",
+    "route": "#/settings/user-roles",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)"
+    ],
+    "steps": [
+      "Open #/settings/user-roles",
+      "Make sure the 'Roles' tab is active",
+      "wait for [data-test-id=\"role-item\"][data-test-value=\"Editor\"] to be visible",
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"add-role\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Roles Editor, Journalist, Sub Editor and the snapshot's default role. Replaces image63 and image176."
+  },
+  {
+    "file": "user-management-and-user-roles/edit-role.png",
+    "caption": "Editing a role",
+    "route": "#/settings/user-roles",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)",
+      "An 'Author roles' vocabulary exists so the Content creation / Content editing selects are shown instead of the missing-vocabulary warning"
+    ],
+    "steps": [
+      "Open #/settings/user-roles",
+      "Hover [data-test-id=\"role-item\"][data-test-value=\"Editor\"]",
+      "click [data-test-id=\"role-item\"][data-test-value=\"Editor\"] [data-test-id=\"role-edit\"]",
+      "wait for [data-test-id=\"role-modal\"] to be visible"
+    ],
+    "cleanup": [
+      "click [data-test-id=\"role-modal\"] [data-test-id=\"cancel\"]"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"role-modal\"] .modal__dialog"
+    },
+    "highlight": "none",
+    "notes": "Edit Role window: Role Name, Role Description, Set as default, Default author roles. Replaces image77."
+  },
+  {
+    "file": "user-management-and-user-roles/roles-privileges.png",
+    "caption": "The Roles privileges tab",
+    "route": "#/settings/user-roles",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom from tools/screenshots/SEED.md (roles Editor and Journalist; users marenholt, tomasvidal, priyaraman, danielokafor, elinesund, lucabrandt)"
+    ],
+    "steps": [
+      "Open #/settings/user-roles",
+      "click [data-test-id=\"roles-privileges-tab\"]",
+      "wait for [data-test-id=\"roles-privileges-form\"] to be visible",
+      "Scroll to [data-test-id=\"privilege-row\"][data-test-value=\"masterdesk\"]",
+      "move the mouse away from the table"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": [
+      "[data-test-id=\"privilege-row\"][data-test-value=\"masterdesk\"]"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Table with one column per role (Editor, Journalist, Sub Editor, ...). Scrolled so the Master Desk row is in view as an example of a newer privilege. Replaces image375."
+  }
+]

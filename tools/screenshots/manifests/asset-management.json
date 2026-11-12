@@ -1,0 +1,192 @@
+[
+  {
+    "file": "asset-management/workspace-grid-view.png",
+    "caption": "The SAMS workspace in grid view",
+    "route": "#/workspace/sams",
+    "user": "admin",
+    "preconditions": [
+      "SAMS sets (create via POST /api/sams/sets, then PATCH state): 'Newsroom documents' (usable, no allowed desks), 'Press releases' (usable, Allowed Desks: Politics, Business), 'Photo archive' (usable), 'Campaign 2022' (disabled, holds 1 asset), 'Graphics' (draft)",
+      "SAMS assets (upload via the UI or POST /api/sams/assets, multipart): 'Election budget summary' (election-budget-summary.pdf, Newsroom documents, public, tags: budget, election, description 'Finance ministry summary of the 2026 budget proposal'); 'Finance ministry press release' (finance-press-release.pdf, Press releases, public, tags: budget); 'Polling methodology notes' (polling-methodology.docx, Newsroom documents, internal, tags: election, polling); 'Parliament building, Aldmark' (parliament.jpg, Photo archive, public, tags: parliament); 'Minister interview recording' (minister-interview.mp3, Newsroom documents, internal); 'Transit council route map' (transit-map.png, Photo archive, public, tags: transit); 'Housing report draft' (housing-report.pdf, Newsroom documents, draft, tags: housing); 'Rally poster 2022' (rally-poster.jpg, Campaign 2022, public)",
+      "Use fictional content only (Meridian News Service / Aldmark, see SEED.md); no real logos or customer names in file contents or thumbnails",
+      "Admin has the sams and sams_manage privileges (admin has all), so the three-dot Manage SAMS button shows"
+    ],
+    "steps": [
+      "Open #/workspace/sams (or click [data-test-id=\"workspace-navigation\"] [data-test-id=\"SAMS\"])",
+      "Wait for the asset cards (.sd-grid-item) to render; set filter button shows 'All Sets'",
+      "Make sure the view is grid: if the last nav button in the second bar has icon 'grid-view' you are in list view, click it",
+      "Do not open the filter panel or a preview"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Needs a stack the demo/e2e setup does not provide: a running SAMS service with a MongoGridFS destination 'Default' (see superdesk-core scripts/install-start-sams), the server with sams_client installed, 'superdesk.sams' in INSTALLED_APPS, SAMS_HOST/SAMS_PORT pointing at it and MEDIA_STORAGE_PROVIDER='superdesk.sams.media_storage.SAMSMediaStorage', and the client with the 'sams' extension loaded plus AuthoringAttachmentsWidget: SamsAttachmentsWidget passed to startApp. Page component: scripts/extensions/sams/src/apps/samsWorkspace.tsx; top bar and second bar in components/workspaceSubnav.tsx (tooltips 'Change Set filter', 'Manage SAMS', 'Upload New Asset(s)', 'Toggle filters', 'Switch to list view'). Want 7 to 8 cards visible with a mix of PDF/DOCX icons and image thumbnails.",
+    "skip": "SAMS is not available on the client-core e2e stack: no SAMS service, and the server has no superdesk.sams app (no /api/sams resources), so the sams extension is not loaded in the e2e client."
+  },
+  {
+    "file": "asset-management/manage-sets.png",
+    "caption": "Managing sets",
+    "route": "#/workspace/sams",
+    "user": "admin",
+    "preconditions": [
+      "SAMS sets (create via POST /api/sams/sets, then PATCH state): 'Newsroom documents' (usable, no allowed desks), 'Press releases' (usable, Allowed Desks: Politics, Business), 'Photo archive' (usable), 'Campaign 2022' (disabled, holds 1 asset), 'Graphics' (draft)",
+      "Sets hold assets as listed in workspace-grid-view so the usable/disabled counts are non-zero"
+    ],
+    "steps": [
+      "Open #/workspace/sams and wait for the asset list",
+      "Click the top bar button with tooltip 'Manage SAMS' (button.sd-navbtn containing i.icon-dots-vertical)",
+      "Click the menu item 'Manage Sets'",
+      "Wait for [data-portal-id=\"ManageSetsModal\"] with header 'Manage Sets'; groups 'Draft Sets', 'Usable Sets', 'Disabled Sets' visible",
+      "Click the set 'Press releases' in Usable Sets so the right panel 'Set Details' shows Name, Description, Max Asset Size, Storage Destination, Storage Provider and Allowed Desks (Politics, Business)"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-portal-id=\"ManageSetsModal\"] .modal__dialog",
+    "highlight": "none",
+    "notes": "Needs a stack the demo/e2e setup does not provide: a running SAMS service with a MongoGridFS destination 'Default' (see superdesk-core scripts/install-start-sams), the server with sams_client installed, 'superdesk.sams' in INSTALLED_APPS, SAMS_HOST/SAMS_PORT pointing at it and MEDIA_STORAGE_PROVIDER='superdesk.sams.media_storage.SAMSMediaStorage', and the client with the 'sams' extension loaded plus AuthoringAttachmentsWidget: SamsAttachmentsWidget passed to startApp. Components: components/sets/manageSetsModal.tsx, setListPanel.tsx, setPreviewPanel.tsx.",
+    "skip": "SAMS is not available on the client-core e2e stack: no SAMS service, and the server has no superdesk.sams app (no /api/sams resources), so the sams extension is not loaded in the e2e client."
+  },
+  {
+    "file": "asset-management/upload-assets.png",
+    "caption": "Uploading assets and filling in their details",
+    "route": "#/workspace/sams",
+    "user": "admin",
+    "preconditions": [
+      "SAMS sets (create via POST /api/sams/sets, then PATCH state): 'Newsroom documents' (usable, no allowed desks), 'Press releases' (usable, Allowed Desks: Politics, Business), 'Photo archive' (usable), 'Campaign 2022' (disabled, holds 1 asset), 'Graphics' (draft)",
+      "Two local files to upload: council-minutes.pdf and harbour-front.jpg (fictional content)"
+    ],
+    "steps": [
+      "Open #/workspace/sams and wait for the asset list",
+      "Click the round primary button with tooltip 'Upload New Asset(s)'; the native file chooser opens: in Playwright use page.waitForEvent('filechooser') and set both files",
+      "Wait for [data-portal-id=\"UploadFileModal\"] with header 'Upload New Asset(s)' and two file cards",
+      "Click the first card (council-minutes.pdf) to select it",
+      "In the right panel set Name 'Council meeting minutes', Description 'Minutes of the transit council meeting', State 'Internal', Set 'Newsroom documents', add tag 'transit'",
+      "Do NOT click Upload"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-portal-id=\"UploadFileModal\"] .modal__dialog",
+    "highlight": "none",
+    "notes": "Needs a stack the demo/e2e setup does not provide: a running SAMS service with a MongoGridFS destination 'Default' (see superdesk-core scripts/install-start-sams), the server with sams_client installed, 'superdesk.sams' in INSTALLED_APPS, SAMS_HOST/SAMS_PORT pointing at it and MEDIA_STORAGE_PROVIDER='superdesk.sams.media_storage.SAMSMediaStorage', and the client with the 'sams' extension loaded plus AuthoringAttachmentsWidget: SamsAttachmentsWidget passed to startApp. Modal: containers/FileUploadModal.tsx (buttons Close, Add File, Upload) with components/assets/uploadAssetModal.tsx; right panel is components/assets/assetEditor.tsx. Default state for new files is Draft. Close the modal without uploading after the shot.",
+    "skip": "SAMS is not available on the client-core e2e stack: no SAMS service, and the server has no superdesk.sams app (no /api/sams resources), so the sams extension is not loaded in the e2e client."
+  },
+  {
+    "file": "asset-management/workspace-list-view.png",
+    "caption": "List view with an asset preview open",
+    "route": "#/workspace/sams",
+    "user": "admin",
+    "preconditions": [
+      "SAMS sets (create via POST /api/sams/sets, then PATCH state): 'Newsroom documents' (usable, no allowed desks), 'Press releases' (usable, Allowed Desks: Politics, Business), 'Photo archive' (usable), 'Campaign 2022' (disabled, holds 1 asset), 'Graphics' (draft)",
+      "SAMS assets (upload via the UI or POST /api/sams/assets, multipart): 'Election budget summary' (election-budget-summary.pdf, Newsroom documents, public, tags: budget, election, description 'Finance ministry summary of the 2026 budget proposal'); 'Finance ministry press release' (finance-press-release.pdf, Press releases, public, tags: budget); 'Polling methodology notes' (polling-methodology.docx, Newsroom documents, internal, tags: election, polling); 'Parliament building, Aldmark' (parliament.jpg, Photo archive, public, tags: parliament); 'Minister interview recording' (minister-interview.mp3, Newsroom documents, internal); 'Transit council route map' (transit-map.png, Photo archive, public, tags: transit); 'Housing report draft' (housing-report.pdf, Newsroom documents, draft, tags: housing); 'Rally poster 2022' (rally-poster.jpg, Campaign 2022, public)",
+      "Use fictional content only (Meridian News Service / Aldmark, see SEED.md); no real logos or customer names in file contents or thumbnails"
+    ],
+    "steps": [
+      "Open #/workspace/sams and wait for the asset list",
+      "Click the last nav button in the second bar (tooltip 'Switch to list view')",
+      "Wait for list rows to render",
+      "Click the row 'Election budget summary'",
+      "Wait for the right panel with header 'Asset Preview' showing Name, Description, Filename, Size, Type, State (Public), Set, Tags"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Needs a stack the demo/e2e setup does not provide: a running SAMS service with a MongoGridFS destination 'Default' (see superdesk-core scripts/install-start-sams), the server with sams_client installed, 'superdesk.sams' in INSTALLED_APPS, SAMS_HOST/SAMS_PORT pointing at it and MEDIA_STORAGE_PROVIDER='superdesk.sams.media_storage.SAMSMediaStorage', and the client with the 'sams' extension loaded plus AuthoringAttachmentsWidget: SamsAttachmentsWidget passed to startApp. List style is kept in the SAMS store only; switch back to grid after the shot so later captures start in grid view. Preview panel: components/assets/assetPreviewPanel.tsx.",
+    "skip": "SAMS is not available on the client-core e2e stack: no SAMS service, and the server has no superdesk.sams app (no /api/sams resources), so the sams extension is not loaded in the e2e client."
+  },
+  {
+    "file": "asset-management/advanced-search.png",
+    "caption": "Narrowing the list with Advanced Search",
+    "route": "#/workspace/sams",
+    "user": "admin",
+    "preconditions": [
+      "SAMS sets (create via POST /api/sams/sets, then PATCH state): 'Newsroom documents' (usable, no allowed desks), 'Press releases' (usable, Allowed Desks: Politics, Business), 'Photo archive' (usable), 'Campaign 2022' (disabled, holds 1 asset), 'Graphics' (draft)",
+      "SAMS assets (upload via the UI or POST /api/sams/assets, multipart): 'Election budget summary' (election-budget-summary.pdf, Newsroom documents, public, tags: budget, election, description 'Finance ministry summary of the 2026 budget proposal'); 'Finance ministry press release' (finance-press-release.pdf, Press releases, public, tags: budget); 'Polling methodology notes' (polling-methodology.docx, Newsroom documents, internal, tags: election, polling); 'Parliament building, Aldmark' (parliament.jpg, Photo archive, public, tags: parliament); 'Minister interview recording' (minister-interview.mp3, Newsroom documents, internal); 'Transit council route map' (transit-map.png, Photo archive, public, tags: transit); 'Housing report draft' (housing-report.pdf, Newsroom documents, draft, tags: housing); 'Rally poster 2022' (rally-poster.jpg, Campaign 2022, public)",
+      "Use fictional content only (Meridian News Service / Aldmark, see SEED.md); no real logos or customer names in file contents or thumbnails"
+    ],
+    "steps": [
+      "Open #/workspace/sams and wait for the asset list (grid view)",
+      "Click the nav button with tooltip 'Toggle filters' (icon filter-large) at the left of the second bar",
+      "Wait for the left panel with header 'Advanced Search'",
+      "In Tags type 'election' and pick 'election' from the suggestions",
+      "In State select 'Public'",
+      "Click 'Submit'",
+      "Wait for the list to show only 'Election budget summary'"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "Outline the Advanced Search panel on the left",
+    "notes": "Needs a stack the demo/e2e setup does not provide: a running SAMS service with a MongoGridFS destination 'Default' (see superdesk-core scripts/install-start-sams), the server with sams_client installed, 'superdesk.sams' in INSTALLED_APPS, SAMS_HOST/SAMS_PORT pointing at it and MEDIA_STORAGE_PROVIDER='superdesk.sams.media_storage.SAMSMediaStorage', and the client with the 'sams' extension loaded plus AuthoringAttachmentsWidget: SamsAttachmentsWidget passed to startApp. Panel: components/assets/assetFilterPanel.tsx (fields Name, Filename, Description, Tags, State, Size From:, Size To:, Uploaded From:, Uploaded To:; buttons Clear, Submit). Click Clear afterwards; search params are stored in the URL.",
+    "skip": "SAMS is not available on the client-core e2e stack: no SAMS service, and the server has no superdesk.sams app (no /api/sams resources), so the sams extension is not loaded in the e2e client."
+  },
+  {
+    "file": "asset-management/edit-asset.png",
+    "caption": "Editing an asset's details and tags",
+    "route": "#/workspace/sams",
+    "user": "admin",
+    "preconditions": [
+      "SAMS sets (create via POST /api/sams/sets, then PATCH state): 'Newsroom documents' (usable, no allowed desks), 'Press releases' (usable, Allowed Desks: Politics, Business), 'Photo archive' (usable), 'Campaign 2022' (disabled, holds 1 asset), 'Graphics' (draft)",
+      "SAMS assets (upload via the UI or POST /api/sams/assets, multipart): 'Election budget summary' (election-budget-summary.pdf, Newsroom documents, public, tags: budget, election, description 'Finance ministry summary of the 2026 budget proposal'); 'Finance ministry press release' (finance-press-release.pdf, Press releases, public, tags: budget); 'Polling methodology notes' (polling-methodology.docx, Newsroom documents, internal, tags: election, polling); 'Parliament building, Aldmark' (parliament.jpg, Photo archive, public, tags: parliament); 'Minister interview recording' (minister-interview.mp3, Newsroom documents, internal); 'Transit council route map' (transit-map.png, Photo archive, public, tags: transit); 'Housing report draft' (housing-report.pdf, Newsroom documents, draft, tags: housing); 'Rally poster 2022' (rally-poster.jpg, Campaign 2022, public)",
+      "Use fictional content only (Meridian News Service / Aldmark, see SEED.md); no real logos or customer names in file contents or thumbnails"
+    ],
+    "steps": [
+      "Open #/workspace/sams and wait for the asset list (grid view)",
+      "Double-click the card 'Polling methodology notes' (or open its three-dot menu and choose 'Edit')",
+      "Wait for the right panel with 'Cancel' and 'Save' buttons and the fields Name, Description, State, Tags (tags 'election' and 'polling' shown as chips)",
+      "Type 'survey' in Tags so the suggestion list shows 'Create new tag: \"survey\"', and leave the dropdown open"
+    ],
+    "viewport": "1440x900",
+    "crop": "full",
+    "highlight": "none",
+    "notes": "Needs a stack the demo/e2e setup does not provide: a running SAMS service with a MongoGridFS destination 'Default' (see superdesk-core scripts/install-start-sams), the server with sams_client installed, 'superdesk.sams' in INSTALLED_APPS, SAMS_HOST/SAMS_PORT pointing at it and MEDIA_STORAGE_PROVIDER='superdesk.sams.media_storage.SAMSMediaStorage', and the client with the 'sams' extension loaded plus AuthoringAttachmentsWidget: SamsAttachmentsWidget passed to startApp. Editing locks the asset; click Cancel after the shot so it is unlocked (otherwise later captures show it locked). Panel: components/assets/assetEditorPanel.tsx.",
+    "skip": "SAMS is not available on the client-core e2e stack: no SAMS service, and the server has no superdesk.sams app (no /api/sams resources), so the sams extension is not loaded in the e2e client."
+  },
+  {
+    "file": "asset-management/select-assets.png",
+    "caption": "Picking existing assets to attach",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "SAMS sets (create via POST /api/sams/sets, then PATCH state): 'Newsroom documents' (usable, no allowed desks), 'Press releases' (usable, Allowed Desks: Politics, Business), 'Photo archive' (usable), 'Campaign 2022' (disabled, holds 1 asset), 'Graphics' (draft)",
+      "SAMS assets (upload via the UI or POST /api/sams/assets, multipart): 'Election budget summary' (election-budget-summary.pdf, Newsroom documents, public, tags: budget, election, description 'Finance ministry summary of the 2026 budget proposal'); 'Finance ministry press release' (finance-press-release.pdf, Press releases, public, tags: budget); 'Polling methodology notes' (polling-methodology.docx, Newsroom documents, internal, tags: election, polling); 'Parliament building, Aldmark' (parliament.jpg, Photo archive, public, tags: parliament); 'Minister interview recording' (minister-interview.mp3, Newsroom documents, internal); 'Transit council route map' (transit-map.png, Photo archive, public, tags: transit); 'Housing report draft' (housing-report.pdf, Newsroom documents, draft, tags: housing); 'Rally poster 2022' (rally-poster.jpg, Campaign 2022, public)",
+      "Use fictional content only (Meridian News Service / Aldmark, see SEED.md); no real logos or customer names in file contents or thumbnails",
+      "Seeded demo data from SEED.md: desk 'Politics', item 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) in Working, not locked by another user",
+      "Current desk is Politics, so the restricted set 'Press releases' is available"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Politics'",
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing",
+      "Click [data-test-id=\"authoring-widget\"][data-test-value=\"Attachments\"]",
+      "Click the button 'Or select an existing asset'",
+      "Wait for [data-portal-id=\"SelectAssetModal\"] with header 'Select Asset(s)'",
+      "Click 'Election budget summary' and 'Finance ministry press release' so both are selected",
+      "Do NOT click 'Attach Asset(s)' yet if select-assets is captured before attachments-widget; otherwise click it after the shot"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-portal-id=\"SelectAssetModal\"] .modal__dialog",
+    "highlight": "none",
+    "notes": "Needs a stack the demo/e2e setup does not provide: a running SAMS service with a MongoGridFS destination 'Default' (see superdesk-core scripts/install-start-sams), the server with sams_client installed, 'superdesk.sams' in INSTALLED_APPS, SAMS_HOST/SAMS_PORT pointing at it and MEDIA_STORAGE_PROVIDER='superdesk.sams.media_storage.SAMSMediaStorage', and the client with the 'sams' extension loaded plus AuthoringAttachmentsWidget: SamsAttachmentsWidget passed to startApp. Modal is fullscreen with dark theme (components/assets/selectAssetModal.tsx). It only lists internal and public assets under ATTACHMENTS_MAX_SIZE in sets allowed for the current desk, so 'Housing report draft' and 'Rally poster 2022' (disabled set) do not appear.",
+    "skip": "SAMS is not available on the client-core e2e stack: no SAMS service, and the server has no superdesk.sams app (no /api/sams resources), so the sams extension is not loaded in the e2e client."
+  },
+  {
+    "file": "asset-management/attachments-widget.png",
+    "caption": "Attachments from SAMS in the story editor",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "SAMS sets (create via POST /api/sams/sets, then PATCH state): 'Newsroom documents' (usable, no allowed desks), 'Press releases' (usable, Allowed Desks: Politics, Business), 'Photo archive' (usable), 'Campaign 2022' (disabled, holds 1 asset), 'Graphics' (draft)",
+      "SAMS assets (upload via the UI or POST /api/sams/assets, multipart): 'Election budget summary' (election-budget-summary.pdf, Newsroom documents, public, tags: budget, election, description 'Finance ministry summary of the 2026 budget proposal'); 'Finance ministry press release' (finance-press-release.pdf, Press releases, public, tags: budget); 'Polling methodology notes' (polling-methodology.docx, Newsroom documents, internal, tags: election, polling); 'Parliament building, Aldmark' (parliament.jpg, Photo archive, public, tags: parliament); 'Minister interview recording' (minister-interview.mp3, Newsroom documents, internal); 'Transit council route map' (transit-map.png, Photo archive, public, tags: transit); 'Housing report draft' (housing-report.pdf, Newsroom documents, draft, tags: housing); 'Rally poster 2022' (rally-poster.jpg, Campaign 2022, public)",
+      "Use fictional content only (Meridian News Service / Aldmark, see SEED.md); no real logos or customer names in file contents or thumbnails",
+      "Seeded demo data from SEED.md: 'Coalition unveils election budget with tax cuts for families' (ELECTION-BUDGET) on Politics / Working",
+      "The story has two attachments from SAMS: 'Election budget summary' (public) and 'Polling methodology notes' (internal). Attach them with the steps of select-assets.png, then save the story"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Politics'",
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing",
+      "Click [data-test-id=\"authoring-widget\"][data-test-value=\"Attachments\"] and wait for [data-test-id=\"authoring-widget-panel\"]",
+      "Wait for the attachment list (.attachments-list li) to show both items; 'Polling methodology notes' has the orange 'internal' label",
+      "Hover the 'Election budget summary' item so the download, edit and delete icons show"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"authoring-widget-panel\"]",
+    "highlight": "none",
+    "notes": "Needs a stack the demo/e2e setup does not provide: a running SAMS service with a MongoGridFS destination 'Default' (see superdesk-core scripts/install-start-sams), the server with sams_client installed, 'superdesk.sams' in INSTALLED_APPS, SAMS_HOST/SAMS_PORT pointing at it and MEDIA_STORAGE_PROVIDER='superdesk.sams.media_storage.SAMSMediaStorage', and the client with the 'sams' extension loaded plus AuthoringAttachmentsWidget: SamsAttachmentsWidget passed to startApp. Widget: apps/samsAttachmentsWidget.tsx and components/attachments/samsAttachmentsList.tsx; footer shows 'Drag files here or browse' and 'Or select an existing asset'. Without the AuthoringAttachmentsWidget override the standard widget ('Attach files') renders instead, which is the wrong shot.",
+    "skip": "SAMS is not available on the client-core e2e stack: no SAMS service, and the server has no superdesk.sams app (no /api/sams resources), so the sams extension is not loaded in the e2e client."
+  }
+]

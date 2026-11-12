@@ -1,0 +1,96 @@
+# Superdesk
+
+## Documentation
+
+- [Superdesk Documentation](https://docs.superdesk.org/index.md)
+- [Introduction to Superdesk](https://docs.superdesk.org/intro.md)
+- [Contributing to Superdesk](https://docs.superdesk.org/index-1.md)
+- [Install and deploy](https://docs.superdesk.org/installation.md)
+
+## User Guide
+
+- [Superdesk User Guide](https://docs.superdesk.org/user-guide/superdesk-user-guide.md)
+- [Getting started](https://docs.superdesk.org/user-guide/superdesk-user-guide/getting-started.md)
+- [Foreword](https://docs.superdesk.org/user-guide/superdesk-user-guide/getting-started/foreword.md)
+- [What is Superdesk?](https://docs.superdesk.org/user-guide/superdesk-user-guide/getting-started/what-is-superdesk.md)
+- [Navigating Superdesk](https://docs.superdesk.org/user-guide/superdesk-user-guide/navigating-superdesk.md)
+- [Navigation](https://docs.superdesk.org/user-guide/superdesk-user-guide/navigating-superdesk/navigation.md)
+- [Icons and User Experience](https://docs.superdesk.org/user-guide/superdesk-user-guide/navigating-superdesk/icons-and-user-experience.md)
+- [Workspace and Search](https://docs.superdesk.org/user-guide/superdesk-user-guide/workspace-and-search.md)
+- [Desks and Custom Workspaces](https://docs.superdesk.org/user-guide/superdesk-user-guide/workspace-and-search/desks-and-custom-workspaces.md)
+- [Dashboards and Widgets](https://docs.superdesk.org/user-guide/superdesk-user-guide/workspace-and-search/dashboards-and-widgets.md)
+- [Monitoring Tab](https://docs.superdesk.org/user-guide/superdesk-user-guide/workspace-and-search/monitoring-tab.md)
+- [Searching Content in Superdesk](https://docs.superdesk.org/user-guide/superdesk-user-guide/workspace-and-search/searching-content-in-superdesk.md)
+- [Highlights](https://docs.superdesk.org/user-guide/superdesk-user-guide/workspace-and-search/highlights.md)
+- [Content management](https://docs.superdesk.org/user-guide/superdesk-user-guide/content-management.md)
+- [Creating and Editing Content Items](https://docs.superdesk.org/user-guide/superdesk-user-guide/content-management/creating-and-editing-content-items.md)
+- [Collaboration tools](https://docs.superdesk.org/user-guide/superdesk-user-guide/content-management/creating-and-editing-content-items/collaboration-tools.md)
+- [Edit Media items](https://docs.superdesk.org/user-guide/superdesk-user-guide/content-management/creating-and-editing-content-items/edit-media-items.md)
+- [Packages](https://docs.superdesk.org/user-guide/superdesk-user-guide/content-management/packages.md)
+- [Spiked Items](https://docs.superdesk.org/user-guide/superdesk-user-guide/content-management/spiked-items.md)
+- [Workflow tools](https://docs.superdesk.org/user-guide/superdesk-user-guide/workflow-tools.md)
+- [Journalist Workflow Tools](https://docs.superdesk.org/user-guide/superdesk-user-guide/workflow-tools/journalist-workflow-tools.md)
+- [Editor Workflow Tools](https://docs.superdesk.org/user-guide/superdesk-user-guide/workflow-tools/editor-workflow-tools.md)
+- [Administration](https://docs.superdesk.org/user-guide/superdesk-user-guide/administration.md)
+- [Desk Creation and Desk Management](https://docs.superdesk.org/user-guide/superdesk-user-guide/administration/desk-creation-and-desk-management.md)
+- [User Management and User Roles](https://docs.superdesk.org/user-guide/superdesk-user-guide/administration/user-management-and-user-roles.md)
+- [Defining Publishing in Superdesk](https://docs.superdesk.org/user-guide/superdesk-user-guide/administration/defining-publishing-in-superdesk.md)
+- [Content Configuration](https://docs.superdesk.org/user-guide/superdesk-user-guide/administration/content-configuration.md)
+- [Superdesk Planning Component](https://docs.superdesk.org/user-guide/superdesk-user-guide/superdesk-planning-component.md)
+- [Integrations and advanced features](https://docs.superdesk.org/user-guide/superdesk-user-guide/integrations-and-advanced-features.md)
+- [Superdesk API](https://docs.superdesk.org/user-guide/superdesk-user-guide/integrations-and-advanced-features/superdesk-api.md)
+- [Ingesting News Items and Events](https://docs.superdesk.org/user-guide/superdesk-user-guide/integrations-and-advanced-features/ingesting-news-items-and-events.md)
+- [Availability Management](https://docs.superdesk.org/user-guide/superdesk-user-guide/availability-management.md): This feature allows to manage the availability of the freelancers of a news organisation. The generic solution allows to set the availability for certain tasks and subtasks.
+- [How to set it up](https://docs.superdesk.org/user-guide/superdesk-user-guide/availability-management/how-to-set-it-up.md)
+- [View and edit Availability](https://docs.superdesk.org/user-guide/superdesk-user-guide/availability-management/view-and-edit-availability.md)
+- [Manage Availability](https://docs.superdesk.org/user-guide/superdesk-user-guide/availability-management/manage-availability.md)
+- [The Production API endpoint](https://docs.superdesk.org/user-guide/superdesk-user-guide/availability-management/the-production-api-endpoint.md)
+- [Reference](https://docs.superdesk.org/user-guide/superdesk-user-guide/reference.md)
+- [Superdesk \\- Glossary and Terminology Guide](https://docs.superdesk.org/user-guide/superdesk-user-guide/reference/superdesk-glossary-and-terminology-guide.md)
+
+## Development
+
+- [Developer Guide](https://docs.superdesk.org/development/index.md)
+- [Quick Start](https://docs.superdesk.org/development/index/quick-start.md)
+- [Architecture Overview](https://docs.superdesk.org/development/index/architecture.md)
+- [Superdesk Client Core (Frontend)](https://docs.superdesk.org/development/index/index.md)
+- [Superdesk Core (Backend)](https://docs.superdesk.org/development/index/index-1.md)
+- [Superdesk Planning](https://docs.superdesk.org/development/index/index-2.md)
+- [Contribution Workflow](https://docs.superdesk.org/development/index/contributing-workflow.md)
+
+## API Reference
+
+- [Production API](https://docs.superdesk.org/api-reference/readme.md): Endpoint and schema reference for the Production API.
+- [General](https://docs.superdesk.org/api-reference/readme/general.md)
+- [Items](https://docs.superdesk.org/api-reference/readme/items.md)
+- [Desks](https://docs.superdesk.org/api-reference/readme/desks.md)
+- [Content Lists](https://docs.superdesk.org/api-reference/readme/content-lists.md)
+- [Assignments](https://docs.superdesk.org/api-reference/readme/assignments.md)
+- [Planning](https://docs.superdesk.org/api-reference/readme/planning.md)
+- [Events](https://docs.superdesk.org/api-reference/readme/events.md)
+- [Users](https://docs.superdesk.org/api-reference/readme/users.md)
+- [User Metrics](https://docs.superdesk.org/api-reference/readme/user-metrics.md)
+- [Contacts](https://docs.superdesk.org/api-reference/readme/contacts.md)
+- [Assets](https://docs.superdesk.org/api-reference/readme/assets.md)
+- [User Availability](https://docs.superdesk.org/api-reference/readme/user-availability.md)
+- [Models](https://docs.superdesk.org/api-reference/readme/models.md)
+
+
+---
+
+# Agent Instructions
+This documentation is published with GitBook. GitBook is the documentation platform designed so that both humans and AI agents can read, navigate, and reason over technical content effectively. Learn more at gitbook.com.
+
+## Querying This Documentation
+This site has an agentic ask interface you may use to query the documentation dynamically by asking a question.
+
+Perform an HTTP GET request on the following URL with the `ask` and `goal` query parameters:
+
+```
+GET https://docs.superdesk.org/index.md?ask=<question>&goal=<user_goal>
+```
+
+`ask` is the immediate question: it should be specific, self-contained, and written in natural language.
+`goal` is what the user is ultimately trying to achieve, the reason they need the answer. Sharing it helps GitBook give you a better, more relevant answer. A goal is most helpful when it describes the outcome the user wants rather than restating the question. For example, with `ask=how do I create an API token`, a goal like `automate deployments from our CI pipeline` lets GitBook tailor the answer to that use case.
+
+The response will contain a direct answer to the question and relevant excerpts and sources from the documentation.

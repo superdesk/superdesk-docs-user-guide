@@ -1,0 +1,285 @@
+[
+  {
+    "file": "sending-scheduling-and-publishing/send-publish-button.png",
+    "caption": "The Send to / Publish button in the authoring top bar",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot (or equivalent): desk 'Sports' with stage 'Working' containing the text item 'story 2'",
+      "No features.customAuthoringTopbar configured, so the top bar only shows the default buttons (keeps the shot uncluttered)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Wait for [data-test-id=\"authoring\"] [data-test-id=\"open-send-publish-pane\"] to be visible",
+      "Hover [data-test-id=\"open-send-publish-pane\"] so the 'Send to / Publish' tooltip shows"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"authoring-topbar\"]",
+    "highlight": "none",
+    "notes": "Button is #send-to-btn in scripts/apps/authoring/views/authoring-topbar.html, tooltip 'Send to / Publish', paper plane icon. If the tooltip does not render in the crop, take the shot without hover. Capture: no outline; the hover tooltip names the button, and a red outline on the purple button is hard to see.",
+    "padding": 0
+  },
+  {
+    "file": "sending-scheduling-and-publishing/send-to-tab.png",
+    "caption": "The Send to tab",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot: desks 'Sports' and 'Education', each with 'Incoming' and 'Working'; item 'story 2' in Sports / Working",
+      "Default client config (ui.sendEmbargo false, authoring.panels.sendTo.publishSchedule false) so the tab shows only Destination and Stage"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"open-send-publish-pane\"]",
+      "In [data-test-id=\"interactive-actions-panel\"] click the tab with role=tab name 'Send to' inside [data-test-id=\"tabs\"]",
+      "Open [data-test-id=\"destination-select\"] and choose 'Business'",
+      "In [data-test-id=\"stage-select\"] check the radio 'Incoming'",
+      "Do not click Send"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"interactive-actions-panel\"]",
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "highlight": "none",
+    "notes": "Shows Destination toggle box, Stage radio group and the Send button. 'Send and open' is not shown because the panel was opened from authoring. Optionally take a second variant with the destination dropdown open to show preferred desks listed first (needs the 'desks:preferred' user preference set).",
+    "padding": 0
+  },
+  {
+    "file": "sending-scheduling-and-publishing/publish-tab.png",
+    "caption": "The Publish tab",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot: item 'test sports story' in Sports / Working, at least one subscriber ('Subscriber 1')",
+      "Sports desk type is Production (or features.noPublishOnAuthoringDesk off) so the Publish tab is available",
+      "Default client config: ui.publishEmbargo true, authoring.panels.publish.publishSchedule true, authoring.panels.publish.publishingTarget true, ui.sendAndPublish not set (true)"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"open-send-publish-pane\"]",
+      "Make sure the 'Publish' tab is active in [data-test-id=\"interactive-actions-panel\"] [data-test-id=\"tabs\"] (it is the default)",
+      "Wait for the 'Target' toggle box button to be visible (panel finished loading)"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"interactive-actions-panel\"]",
+      "clipAbove": [
+        "[data-test-id=\"opened-articles-bar\"]",
+        ".opened-articles-bar__create-new"
+      ]
+    },
+    "highlight": "none",
+    "notes": "Sections expected top to bottom: From (desk select), Embargo, Publish schedule, Target (Target subscribers, Target regions, Target types). Footer: Publish from (disabled) and Publish. Preview only appears if a subscriber destination has a preview endpoint URL. If the panel is taller than the viewport, use a 1440x1100 viewport.",
+    "padding": 0
+  },
+  {
+    "file": "sending-scheduling-and-publishing/save-and-send-dialog.png",
+    "caption": "Superdesk asks to save your changes before sending or publishing",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot: item 'test sports story' in Sports / Working"
+    ],
+    "steps": [
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      "Change the headline in [data-test-id=\"field--headline\"] (role textbox) to 'Coalition unveils election budget with tax cuts for young families'",
+      "Wait until [data-test-id=\"authoring-topbar\"] [data-test-id=\"save\"] is enabled (edit registered)",
+      "Click [data-test-id=\"authoring\"] [data-test-id=\"open-send-publish-pane\"], keep the 'Publish' tab",
+      "Click [data-test-id=\"interactive-actions-panel\"] [data-test-id=\"publish\"]",
+      "Wait for [data-test-id=\"modal-confirm\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"modal-confirm\"]",
+    "highlight": [
+      "[data-test-id=\"modal-confirm\"] >> role=button[name=/save and send/i]"
+    ],
+    "notes": "Dialog title 'Save changes?', text 'There are some unsaved changes, do you want to save and send it now?', buttons 'Save and send' and 'Cancel' (ConfirmDirtyService.confirmSendTo). Cancel the dialog afterwards; do not publish.",
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"modal-confirm\"] >> role=button[name=/cancel/i]",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "file": "sending-scheduling-and-publishing/embargo-schedule-time-zone.png",
+    "caption": "Embargo, publish schedule and time zone",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot: item 'test sports story' in Sports / Working",
+      "User has the 'embargo' privilege (admin has it)",
+      "Server DEFAULT_TIMEZONE set to a named zone, e.g. Europe/Prague, so the Time zone field is filled in"
+    ],
+    "steps": [
+      "Open 'Baltrum Energy to raise household tariffs 6 percent in January' for editing from desk 'Business'",
+      "open the Send to / Publish panel on the 'Publish' tab",
+      "In [data-test-id=\"embargo\"] set the date [data-test-id=\"date-input\"] to tomorrow and the time [data-test-id=\"time-input\"] to 12:00",
+      "In [data-test-id=\"publish-schedule\"] set the date to tomorrow and the time to 10:00",
+      "Wait for the 'Time zone' toggle box to appear below Publish schedule"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"publishing-section\"] .toggle-box:has(.toggle-box__header:has-text(\"Embargo\"))",
+      "plus": [
+        "[data-test-id=\"publishing-section\"] .toggle-box:has(.toggle-box__header:has-text(\"Time zone\"))"
+      ]
+    },
+    "highlight": [
+      "[data-test-id=\"publishing-section\"] .toggle-box:has(.toggle-box__header:has-text(\"Time zone\"))"
+    ],
+    "notes": "The Time zone section only renders once embargo or schedule has a value. Each date field has a round 'Clear' icon button at its end (tooltip 'Clear'). Do not publish; close the panel and discard changes afterwards, or use a throwaway item. Capture: uses the throwaway Business item ENERGY-TARIFFS (Business / Incoming) and clears both dates afterwards, because the panel saves embargo and schedule values to the item.",
+    "padding": 16,
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"embargo\"] >> role=button[name=\"Clear\"]",
+        "optional": true
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"publish-schedule\"] >> role=button[name=\"Clear\"]",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "file": "sending-scheduling-and-publishing/scheduled-item-in-list.png",
+    "caption": "A scheduled and embargoed item in Monitoring",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "e2e 'main' snapshot with 'Subscriber 1' so publishing succeeds",
+      "Item 'story 2' published from desk 'Sports' with Publish schedule tomorrow 10:00 and Embargo tomorrow 12:00 (set in the Publish tab, then Publish, confirm 'Save and send' if asked)",
+      "Sports desk monitoring shows the 'Scheduled Desk Output' group (enable it in the desk's monitoring settings if it is not shown)",
+      "Client list config shows 'scheduledDateTime', 'state' and 'embargo' in the second line (the default host config does)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Sports'",
+      {
+        "action": "evaluate",
+        "script": "document.querySelector('[data-test-id=\"monitoring-group\"][data-test-value=\"Sports\"]').scrollIntoView({block: 'start'})"
+      },
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Sports\"] contains at least one [data-test-id=\"article-item\"][data-test-value=\"Eastbrook Rovers name unchanged side for rugby semifinal\"]",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports\"]"
+    },
+    "highlight": [
+      [
+        "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports\"] [data-test-id=\"article-item\"][data-test-value=\"Eastbrook Rovers name unchanged side for rugby semifinal\"] .label--warning",
+        "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports\"] [data-test-id=\"article-item\"][data-test-value=\"Eastbrook Rovers name unchanged side for rugby semifinal\"] span[title^=\"Article is scheduled\"]",
+        "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports\"] [data-test-id=\"article-item\"][data-test-value=\"Eastbrook Rovers name unchanged side for rugby semifinal\"] .state_embargo"
+      ]
+    ],
+    "notes": "If the Scheduled Desk Output group cannot be enabled, crop the article row wherever it appears (e.g. search results). The exact data-test-value for the scheduled output group is unverified; it is built from group.header and group.subheader in monitoring-group.html."
+  },
+  {
+    "file": "sending-scheduling-and-publishing/bulk-deschedule.png",
+    "caption": "Descheduling several items at once",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Two items on desk 'Sports' published with a Publish schedule in the future (e.g. 'story 2' and 'test sports story' scheduled for tomorrow 10:00 and 11:00)",
+      "Scheduled Desk Output group shown for Sports, or use Search filtered to the two items"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and select desk 'Sports'",
+      {
+        "action": "click",
+        "target": ".monitoring__toolbar-container .dropdown__toggle:has-text(\"Monitoring\")"
+      },
+      {
+        "action": "click",
+        "target": ".monitoring__toolbar-container .dropdown__menu button.label-group:has-text(\"Scheduled\")"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"monitoring-view\"] .monitoring-backlink"
+      },
+      {
+        "action": "settle"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"monitoring-view\"] [data-test-id=\"monitoring-group\"]:not([data-test-value=\"Sports desk output\"])"
+      },
+      "wait until [data-test-id=\"monitoring-view\"] contains at least one [data-test-id=\"article-item\"][data-test-value=\"Aldmark Open final: Brook and Lind meet for the third time\"]",
+      "hover [data-test-id=\"article-item\"][data-test-value=\"Aldmark Open final: Brook and Lind meet for the third time\"] [data-test-id=\"item-type-and-multi-select\"] and check its [data-test-id=\"multi-select-checkbox\"]",
+      "do the same for 'Arlenport Marathon: course record under threat on Sunday'",
+      "Wait for [data-test-id=\"multi-action-bar\"] and the inline action [data-test-id=\"multi-actions-inline\"] [data-test-id=\"Deschedule\"]",
+      "move the mouse away from the list so no row is hovered",
+      "Do not click Deschedule"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"monitoring-view\"] top 300px",
+    "highlight": [
+      "[data-test-id=\"multi-actions-inline\"] [data-test-id=\"Deschedule\"] i"
+    ],
+    "notes": "Bulk action defined in scripts/apps/search/controllers/get-bulk-actions.tsx (label 'Deschedule', calendar icon). Clicking it opens 'Do you want to deschedule articles?'. Capture: opens the Sports Scheduled Desk Output group on its own from the Monitoring dropdown so only scheduled items are in view.",
+    "padding": 0
+  },
+  {
+    "file": "sending-scheduling-and-publishing/topbar-shortcut-buttons.png",
+    "caption": "Shortcut buttons in the authoring top bar",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Client config features.customAuthoringTopbar = {toDesk: true, publish: true, sendAndDuplicate: {deskName: 'Education', stageName: 'Incoming'}} (the default host config uses deskName 'Test' / stageName 'Working'; either point it at an existing desk or create a desk 'Test' with a stage 'Working')",
+      "e2e 'main' snapshot: item 'story 2' in Sports / Working; Sports is a production desk"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring",
+      "Open 'Coalition unveils election budget with tax cuts for families' for editing from desk 'Politics'",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"authoring-topbar\"] button[aria-label=\"Send and duplicate\"]"
+      },
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring-topbar\"] [data-test-id=\"toggle-full-width\"]"
+      },
+      {
+        "action": "settle"
+      },
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x900",
+    "crop": "element: [data-test-id=\"authoring-topbar\"]",
+    "highlight": [
+      [
+        ".subnav__button-stack--custom-buttons button >> nth=0",
+        ".subnav__button-stack--custom-buttons button >> nth=-1"
+      ]
+    ],
+    "notes": "Buttons come from scripts/apps/authoring/views/authoring-topbar.html. With no unsaved changes on a saved item they are enabled; take the shot in that state. Capture: authoring is switched to full width for the shot (and back in cleanup); in the split view the pane is narrow enough to show the short labels T D, P, S & D.",
+    "appConfig": {
+      "features": {
+        "customAuthoringTopbar": {
+          "toDesk": true,
+          "publish": true,
+          "sendAndDuplicate": {
+            "deskName": "Politics",
+            "stageName": "Working"
+          }
+        }
+      }
+    },
+    "padding": 0,
+    "cleanup": [
+      {
+        "action": "click",
+        "target": "[data-test-id=\"authoring-topbar\"] [data-test-id=\"toggle-full-width\"]",
+        "optional": true
+      }
+    ]
+  }
+]

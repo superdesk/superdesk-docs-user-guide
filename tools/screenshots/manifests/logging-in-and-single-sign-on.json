@@ -1,0 +1,175 @@
+[
+  {
+    "file": "logging-in-and-single-sign-on/login-page.png",
+    "caption": "The login page",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Default DB authentication (no LDAP), so the 'Forgot password?' link shows",
+      "No SSO configured on the server (no SAML_PATH, no GOOGLE_CLIENT_ID/SECRET, OIDC_ENABLED false)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "click [data-test-id=\"my-profile\"]",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"my-profile-dropdown\"] .dropdown__menu button",
+        "text": "Sign out"
+      },
+      "wait for [data-test-id=\"login-page\"] [data-test-id=\"submit\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".login-screen .login-form-container",
+      "plus": [
+        ".login-screen .session-error"
+      ],
+      "expand": {
+        "left": 160,
+        "right": 160,
+        "top": 24,
+        "bottom": 24
+      }
+    },
+    "highlight": "none",
+    "notes": "Empty login form: Superdesk logo, 'username' and 'password' fields, 'Log In' button, 'Forgot password?' link (scripts/core/auth/login-modal.html). capture.mjs logs every context in before the first step, so the shot signs out first (avatar > Sign out). Sign out runs localStorage.clear() and reloads to the login page; the next shot's route load logs in again automatically ('session was logged out; logging in again'). Sign out stores LOGGED_OUT_LANGUAGE, so the login page shows in English for admin.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "logging-in-and-single-sign-on/login-sso-buttons.png",
+    "caption": "Single sign-on buttons on the login page",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "None on the server: the SSO buttons are switched on through TEST_APP_CONFIG (client-side only, the buttons are not clicked)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "click [data-test-id=\"my-profile\"]",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"my-profile-dropdown\"] .dropdown__menu button",
+        "text": "Sign out"
+      },
+      "wait for [data-test-id=\"login-page\"] [data-test-id=\"submit\"] to be visible",
+      {
+        "action": "evaluate",
+        "script": "localStorage.setItem('TEST_APP_CONFIG', JSON.stringify({saml_auth: true, saml_label: 'Single Sign On', google_auth: true})); location.reload();"
+      },
+      "wait for [data-test-id=\"login-page\"] [data-test-id=\"submit\"] to be visible",
+      "Wait for [data-test-id=\"login-page\"] to show 'Log In with Google'"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".login-screen .login-form-container",
+      "plus": [
+        ".login-screen .session-error"
+      ],
+      "expand": {
+        "left": 160,
+        "right": 160,
+        "top": 24,
+        "bottom": 24
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"login-page\"] .sd-content-divider",
+      [
+        "[data-test-id=\"login-page\"] button:has-text(\"Log In with Google\")",
+        "[data-test-id=\"login-page\"] button:has-text(\"Single Sign On\")"
+      ]
+    ],
+    "highlightStyle": "outline",
+    "cleanup": [
+      {
+        "action": "evaluate",
+        "script": "localStorage.removeItem('TEST_APP_CONFIG')"
+      }
+    ],
+    "notes": "Login form plus the 'or' divider and the two buttons 'Log In with Google' and 'Single Sign On' (the SAML button text is SAML_LABEL). The entry-level appConfig field cannot be used because Sign out clears localStorage, so the config is written after sign out and the page reloaded. init.ts merges TEST_APP_CONFIG over the server client_config, which is what turns the buttons on. capture.mjs logs every context in before the first step, so the shot signs out first (avatar > Sign out). Sign out runs localStorage.clear() and reloads to the login page; the next shot's route load logs in again automatically ('session was logged out; logging in again'). Sign out stores LOGGED_OUT_LANGUAGE, so the login page shows in English for admin.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "logging-in-and-single-sign-on/reset-password.png",
+    "caption": "Asking for a password reset link",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Default DB authentication (reset_user_password resource available)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      "click [data-test-id=\"my-profile\"]",
+      {
+        "action": "click",
+        "target": "[data-test-id=\"my-profile-dropdown\"] .dropdown__menu button",
+        "text": "Sign out"
+      },
+      "wait for [data-test-id=\"login-page\"] [data-test-id=\"submit\"] to be visible",
+      "Click the 'Forgot password?' link in [data-test-id=\"login-page\"]",
+      "wait for (#user-email) to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".login-screen .login-form-container",
+      "plus": [
+        ".login-screen .session-error"
+      ],
+      "expand": {
+        "left": 160,
+        "right": 160,
+        "top": 24,
+        "bottom": 24
+      }
+    },
+    "highlight": "none",
+    "notes": "Reset password page, step 1 (scripts/core/auth/reset-password.html): info text about the reset token, 'Email' field (leave empty), 'Get token' button, 'Have password? Sign in.' link. Do not click 'Get token'. Route after the click is #/reset-password/. capture.mjs logs every context in before the first step, so the shot signs out first (avatar > Sign out). Sign out runs localStorage.clear() and reloads to the login page; the next shot's route load logs in again automatically ('session was logged out; logging in again'). Sign out stores LOGGED_OUT_LANGUAGE, so the login page shows in English for admin.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  },
+  {
+    "file": "logging-in-and-single-sign-on/session-expired.png",
+    "caption": "Logging in again after your session expired",
+    "route": "#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Admin is logged in (the capture context does this)"
+    ],
+    "steps": [
+      "Open #/workspace/monitoring and wait for [data-test-id=\"workspace-navigation\"] to be visible",
+      {
+        "action": "evaluate",
+        "script": "localStorage.removeItem('sess:token')"
+      },
+      "click [data-test-id=\"my-profile\"]",
+      "press Escape",
+      "wait for (.login-screen .session-error) to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": ".login-screen .login-form-container",
+      "plus": [
+        ".login-screen .session-error"
+      ],
+      "expand": {
+        "left": 160,
+        "right": 160,
+        "top": 24,
+        "bottom": 24
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"login-page\"] .session-error"
+    ],
+    "highlightStyle": "outline",
+    "notes": "Simulates an expired session: the session service watches localStorage 'sess:token'; removing it on the next digest (the click) shows the login screen with 'Your session has expired. Please log in again.' because the identity is still known (login-modal.html, p.session-error). If the overlay does not appear, delete the session on the server instead: evaluate fetch(localStorage.getItem('sess:href'), {method: 'DELETE', headers: {Authorization: localStorage.getItem('sess:token')}}) and then trigger any API call. The next shot's route load logs in again. Do not let dismissInterruptions log in before the shot is taken.",
+    "appConfig": {
+      "isTestEnvironment": false
+    }
+  }
+]

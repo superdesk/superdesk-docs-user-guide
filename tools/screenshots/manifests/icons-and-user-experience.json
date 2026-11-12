@@ -1,0 +1,293 @@
+[
+  {
+    "file": "icons-and-user-experience/top-bar.png",
+    "caption": "The top bar",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Admin has all privileges, including 'feature_preview', so the feature preview switch ('stable') is shown",
+      "Done by seed.py: Admin has at least two unread notifications, so the bell shows a number. Create them with the API before the shot: as marenholt, POST /api/item_comments {\"item\": \"<_id of PENSION-REFORM>\", \"text\": \"@admin can you check the pension figures before 18:00?\"}; as tomasvidal, POST /api/item_comments {\"item\": \"<_id of COUNCIL-TRANSIT>\", \"text\": \"@admin the council vote moved to Thursday\"}",
+      "Desk 'Sports' selected"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait for #unread-count to be visible",
+      {
+        "action": "evaluate",
+        "script": "const t = document.querySelector('[data-test-id=\"monitoring-view\"] .monitoring__toolbar-container'); t.style.marginTop = '56px';"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"top-menu\"]",
+      "expand": {
+        "bottom": 40
+      }
+    },
+    "highlight": [
+      "#hamburger-menu button",
+      "[data-test-id=\"monitoring--selected-desk\"]",
+      "button.beta-switch",
+      "button[aria-label=\"View notifications\"]",
+      "[data-test-id=\"my-profile\"]"
+    ],
+    "highlightStyle": "badge",
+    "badgeAnchor": "below",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "notes": "Badges 1 to 5 must match the numbered list on the page: 1 main menu button, 2 Desks menu, 3 feature preview switch, 4 notifications bell with its number, 5 avatar. isTestEnvironment is off so the bar has its normal colour (the e2e client sets it to true, which recolours the bar). The bottom expansion leaves room for the badges below the bar. Replaces the legacy 'grafik (3)' screenshot. Do not open the notifications panel in this shot, so the notifications stay unread for the next one. VERIFY on the first run that POST /api/item_comments with an @username creates a 'mentioned you' notification (superdesk-core apps/comments/user_mentions.py). The badges are plain numbered badges centred below each control (badgeAnchor below): capture.mjs only applies badgeAnchor to the badge style, so with callout the badges landed on the controls and covered the menu button and the bell. The evaluate step pushes the Monitoring toolbar down by 56 px (as in monitoring-tab/monitoring-toolbar) so the badges below the bar sit on plain background instead of covering the toolbar labels."
+  },
+  {
+    "file": "icons-and-user-experience/notifications-panel.png",
+    "caption": "The Notifications panel",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "The two mention notifications from the top-bar shot exist and are unread (run that shot first, or create them the same way)",
+      "Desk 'Sports' selected"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait for #unread-count to be visible",
+      "click button[aria-label=\"View notifications\"]",
+      "wait until [data-test-id=\"notification-pane\"] contains at least one [data-test-id=\"notification\"]",
+      {
+        "action": "sleep",
+        "ms": 300
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"notification-pane\"]",
+      "plus": [
+        "button[aria-label=\"View notifications\"]",
+        "[data-test-id=\"my-profile\"]"
+      ],
+      "expand": {
+        "left": 240
+      }
+    },
+    "allowPortrait": true,
+    "highlight": "none",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "cleanup": [
+      "click button[aria-label=\"View notifications\"]"
+    ],
+    "notes": "The panel marks a notification as read 1.5 seconds after it is shown, so capture within about a second to keep the unread highlight. Each entry shows the sender's avatar, the time and 'Maren Holt mentioned you PENSION-REFORM: ...'. The panel is a full-height side panel, hence allowPortrait. New screenshot; the old page had none."
+  },
+  {
+    "file": "icons-and-user-experience/create-new-menu.png",
+    "caption": "The Create new menu",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Desk 'Sports' selected; its default content template exists (snapshot)",
+      "Admin has used at least one template recently, so 'Recent templates' is listed (create one item from 'More templates...' once and close it without changes, or skip this precondition and accept a menu without that section)",
+      "No item open for editing"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      {
+        "action": "click",
+        "target": ".opened-articles-bar__create-new button"
+      },
+      "wait for [data-test-id=\"content-create-dropdown\"] to be visible",
+      "wait for [data-test-id=\"content-create-dropdown\"] [data-test-id=\"default-desk-template\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"content-create-dropdown\"]",
+      "plus": [
+        ".opened-articles-bar__create-new"
+      ],
+      "expand": {
+        "left": 280,
+        "top": 16
+      }
+    },
+    "highlight": "none",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "cleanup": [
+      "press Escape"
+    ],
+    "notes": "The menu opens upwards from the 'Create new' button at the right end of the bottom bar. It must show 'Default desk template', 'Recent templates' (if available), 'More templates...', 'Create package' and 'Upload media'. Do not click any option. The left expansion keeps the crop landscape. Replaces the legacy 'grafik (5)' screenshot."
+  },
+  {
+    "file": "icons-and-user-experience/state-labels.png",
+    "caption": "State labels in a Monitoring list",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded newsroom, seeded on the same day as the capture: Sports has published items in its desk output and the scheduled items MARATHON-PREVIEW, TENNIS-FINAL and RUGBY-SEMIFINAL (embargoed) in its scheduled desk output",
+      "Monitoring view preference is List view",
+      "No monitoring filters active"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"] contains at least one [data-test-id=\"article-item\"]",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"] [data-test-id=\"article-item\"][data-test-value=\"Eastbrook Rovers name unchanged side for rugby semifinal\"]",
+        "state": "visible"
+      },
+      "scroll to [data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"]",
+      "move the mouse away from the list so no row is hovered"
+    ],
+    "viewport": "1440x1500",
+    "crop": {
+      "element": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports desk output\"]",
+      "maxHeight": 620
+    },
+    "highlight": "none",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "clearLocalStorage": [
+      "sd-filter"
+    ],
+    "notes": "The rows must show the green Published labels, the orange Scheduled labels with their date and the pink Embargo label on RUGBY-SEMIFINAL. The Sports desk output group (data-test-value \"Sports desk output\") lists the scheduled items as well as the published ones, so it carries all three labels; the separate scheduled group (data-test-value \"Sports\", header \"Sports scheduled desk output\") only repeats the three scheduled rows and is left out. New screenshot."
+  },
+  {
+    "file": "icons-and-user-experience/locked-item-list-and-preview.png",
+    "caption": "A locked item in the list and in the preview",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded lock active: ROWING-CHAMPS ('Saltmere crews dominate opening day of rowing championships') in Sports / Working is open for editing by danielokafor (run seed.py shortly before the capture, the lock lasts as long as his session)",
+      "Admin is a member of Sports and has the 'unlock' privilege, so the Unlock button shows in the preview",
+      "Monitoring view preference is List view"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "wait for [data-test-id=\"article-item\"][data-test-value=\"Saltmere crews dominate opening day of rowing championships\"] [data-test-id=\"article-item-locked\"] to be visible",
+      "click [data-test-id=\"article-item\"][data-test-value=\"Saltmere crews dominate opening day of rowing championships\"]",
+      "wait for #locked .item-locked to be visible",
+      {
+        "action": "hover",
+        "target": "#locked .item-locked"
+      },
+      {
+        "action": "wait",
+        "target": "#locked .item-locked button",
+        "text": "Unlock",
+        "state": "visible"
+      }
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"]",
+      "plus": [
+        "#locked .item-locked"
+      ],
+      "maxHeight": 520
+    },
+    "highlight": [
+      "[data-test-id=\"article-item\"][data-test-value=\"Saltmere crews dominate opening day of rowing championships\"] .state-border",
+      "#locked .item-locked"
+    ],
+    "highlightStyle": "outline",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "notes": "Do not click Unlock: it would take the seeded lock away for later shots. The row shows the red bar on its left edge; the preview shows 'Locked by Daniel Okafor', the lock time and 'Unlock'. The preview's Unlock button is only displayed while the pointer is over the lock notice (archive-preview.scss), so the last step hovers it. Clicking a row only previews it and does not take the lock. Replaces the legacy 'image1', 'image181', 'image235', 'image407' and 'unknown (2)' screenshots."
+  },
+  {
+    "file": "icons-and-user-experience/locked-item-authoring.png",
+    "caption": "A locked item opened read-only",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Same seeded lock as the previous shot (ROWING-CHAMPS locked by danielokafor)"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait for [data-test-id=\"article-item\"][data-test-value=\"Saltmere crews dominate opening day of rowing championships\"] [data-test-id=\"article-item-locked\"] to be visible",
+      "double-click [data-test-id=\"article-item\"][data-test-value=\"Saltmere crews dominate opening day of rowing championships\"]",
+      "wait for [data-test-id=\"authoring-topbar\"] [data-test-id=\"locked-info\"] to be visible",
+      "wait for [data-test-id=\"locked-info\"] [data-test-id=\"user-avatar\"] to be visible"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"authoring-topbar\"]",
+      "expand": {
+        "bottom": 128
+      }
+    },
+    "highlight": [
+      "[data-test-id=\"locked-info\"]"
+    ],
+    "highlightStyle": "outline",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "notes": "Do not click Unlock and do not press Ctrl+Shift+U. The top bar must show the avatar, 'Locked by Daniel Okafor' and the 'Unlock' button, and no Save button. The bottom expansion shows the start of the read-only article. Replaces the legacy 'image125', 'image123', 'unknown (3)', 'unknown (4)' and 'unknown (5)' screenshots.",
+    "padding": 0
+  },
+  {
+    "file": "icons-and-user-experience/opened-articles-bar.png",
+    "caption": "The bar at the bottom of the screen",
+    "route": "/#/workspace/monitoring",
+    "user": "admin",
+    "preconditions": [
+      "Seeded items OLYMPICS-SWIMMING (\"Marsh breaks national 200m freestyle record at Olympic trials\") and ATHLETICS-TRIALS (\"Sprinters chase world championship places at national trials\") in Sports / Working, unpublished and not locked by anyone else"
+    ],
+    "steps": [
+      "open /#/workspace/monitoring and select desk 'Sports'",
+      "wait until [data-test-id=\"monitoring-group\"][data-test-value=\"Sports / Working\"] contains at least one [data-test-id=\"article-item\"]",
+      "Open 'Marsh breaks national 200m freestyle record at Olympic trials' for editing",
+      "Open 'Sprinters chase world championship places at national trials' for editing",
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"opened-articles-bar\"] [data-test-id=\"item\"]",
+        "text": "Sprinters chase",
+        "state": "visible"
+      },
+      {
+        "action": "wait",
+        "target": "[data-test-id=\"opened-articles-bar\"] [data-test-id=\"item\"]",
+        "text": "Marsh breaks",
+        "state": "visible"
+      },
+      {
+        "action": "evaluate",
+        "script": "const b = document.querySelector('[data-test-id=\"opened-articles-bar\"]'); b.style.bottom = '24px'; b.style.right = '16px';"
+      },
+      "move the mouse away from the list"
+    ],
+    "viewport": "1440x900",
+    "crop": {
+      "element": "[data-test-id=\"opened-articles-bar\"]",
+      "expand": {
+        "top": 40,
+        "bottom": 24,
+        "right": 16
+      }
+    },
+    "highlight": [
+      ".opened-articles-bar__quick-actions i",
+      [
+        "[data-test-id=\"opened-articles-bar\"] [data-test-id=\"item\"]:has-text(\"Marsh breaks\")",
+        "[data-test-id=\"opened-articles-bar\"] [data-test-id=\"item\"]:has-text(\"Sprinters chase\")"
+      ],
+      ".opened-articles-bar__create-new button"
+    ],
+    "highlightStyle": "outline",
+    "appConfig": {
+      "isTestEnvironment": false
+    },
+    "cleanup": [
+      "click [data-test-id=\"opened-articles-bar\"] [data-test-id=\"item\"] [data-test-id=\"close\"]",
+      "click [data-test-id=\"opened-articles-bar\"] [data-test-id=\"item\"] [data-test-id=\"close\"]"
+    ],
+    "notes": "Both items must appear as tabs, the second one highlighted as the item being edited. SAILING-REGATTA (the Kestrel Cup story) is published, so it opens read-only and never appears in the bar; do not use it here. Make no changes to the items, so closing them asks nothing. The three outlines mark the 'All opened items' button, the open item tabs and the 'Create new' button. Replaces the legacy 's-overviewopenitems' screenshot. The evaluate step lifts the bar 24 px off the bottom and 16 px off the right edge of the window so the outlines are not cut at the edge; the outlines go around the grid icon, the two item tabs (one box) and the Create new button, which keeps them apart.",
+    "padding": 0
+  }
+]
