@@ -54,9 +54,17 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 #### Content management
 
 * [Creating and Editing Content Items](superdesk-user-guide/content-management/creating-and-editing-content-items/README.md)
+  * [Writing and formatting](superdesk-user-guide/content-management/creating-and-editing-content-items/writing-and-formatting.md)
+  * [Metadata and fields](superdesk-user-guide/content-management/creating-and-editing-content-items/metadata-and-fields.md)
   * [Collaboration tools](superdesk-user-guide/content-management/creating-and-editing-content-items/collaboration-tools.md)
   * [Edit Media items](superdesk-user-guide/content-management/creating-and-editing-content-items/edit-media-items.md)
+* [Sending, scheduling and publishing items](superdesk-user-guide/content-management/sending-scheduling-and-publishing.md)
+* [Updates, corrections, kills and takedowns](superdesk-user-guide/content-management/updates-corrections-kills-and-takedowns/README.md)
+  * [Updates](superdesk-user-guide/content-management/updates-corrections-kills-and-takedowns/updates.md)
+  * [Corrections](superdesk-user-guide/content-management/updates-corrections-kills-and-takedowns/corrections.md)
+  * [Kills, takedowns and unpublishing](superdesk-user-guide/content-management/updates-corrections-kills-and-takedowns/kills-takedowns-and-unpublishing.md)
 * [Packages](superdesk-user-guide/content-management/packages.md)
+* [Translating content](superdesk-user-guide/content-management/translating-content.md)
 * [Spiked Items](superdesk-user-guide/content-management/spiked-items.md)
 
 #### Workflow tools
@@ -68,17 +76,29 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 
 * [Desk Creation and Desk Management](superdesk-user-guide/administration/desk-creation-and-desk-management.md)
 * [User Management and User Roles](superdesk-user-guide/administration/user-management-and-user-roles.md)
-* [Defining Publishing in Superdesk](superdesk-user-guide/administration/defining-publishing-in-superdesk.md)
-* [Content Configuration](superdesk-user-guide/administration/content-configuration.md)
+* [System messages](superdesk-user-guide/administration/system-messages.md)
+* [Defining Publishing in Superdesk](superdesk-user-guide/administration/defining-publishing-in-superdesk/README.md)
+  * [Content Filters and Internal Destinations](superdesk-user-guide/administration/defining-publishing-in-superdesk/content-filters-and-internal-destinations.md)
+  * [Products and Subscribers](superdesk-user-guide/administration/defining-publishing-in-superdesk/products-and-subscribers.md)
+  * [Publish Queue, Legal Archive and Content Expiry](superdesk-user-guide/administration/defining-publishing-in-superdesk/publish-queue-legal-archive-and-content-expiry.md)
+* [Content Configuration](superdesk-user-guide/administration/content-configuration/README.md)
+  * [Content profiles](superdesk-user-guide/administration/content-configuration/content-profiles.md)
+  * [Metadata and custom fields](superdesk-user-guide/administration/content-configuration/metadata-and-custom-fields.md)
+  * [Templates, macros and dictionaries](superdesk-user-guide/administration/content-configuration/templates-macros-and-dictionaries.md)
 
 #### Superdesk Planning Component
 
-* [Superdesk Planning Component](superdesk-user-guide/superdesk-planning-component.md)
+* [Events](superdesk-user-guide/superdesk-planning-component/events.md)
+* [Planning items and coverages](superdesk-user-guide/superdesk-planning-component/planning-items-and-coverages.md)
+* [Assignments](superdesk-user-guide/superdesk-planning-component/assignments.md)
+* [Planning administration](superdesk-user-guide/superdesk-planning-component/planning-administration.md)
 
 #### Integrations and advanced features
 
 * [Superdesk API](superdesk-user-guide/integrations-and-advanced-features/superdesk-api.md)
 * [Ingesting News Items and Events](superdesk-user-guide/integrations-and-advanced-features/ingesting-news-items-and-events.md)
+* [Content lists](superdesk-user-guide/integrations-and-advanced-features/content-lists.md)
+* [AI features](superdesk-user-guide/integrations-and-advanced-features/ai-features.md)
 
 #### Availability Management
 

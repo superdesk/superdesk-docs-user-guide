@@ -1,66 +1,85 @@
 # Manage Availability
 
-#### Administrator Capabilities
+## What availability managers can do
 
-If you have the "Availability Manage" privilege, you can:
+If your role has the **Availability - manage** privilege, you can:
 
-* View and modify any user's availability on the Availability Dashboard
-* Override user-set availability
-* Create or delete availability records for other users
-* Ensure organizational coverage and planning needs
+* view and change any user's availability from the Availability Management dashboard,
+* override the availability a user has set,
+* add or remove daily entries for other users,
+* make sure your newsroom has the coverage it needs.
 
-#### Override a User's Availability
+## Change another user's availability
 
-**Create an Entry for Another User**
+You need both **Availability - view** (to see the dashboard) and **Availability - manage** (to make changes).
 
-1. Navigate to the **User Availability Management** Dashboard
-2. Select the the date and click on the user name in the availability entry
-3. Set the status and working hours
-4. Click **Save**
+{% stepper %}
+{% step %}
+### Open the dashboard
 
-The entry is marked with the current user as `last_updated_by`.
+Open the Main menu and click **Availability Management**.
+{% endstep %}
 
-**Update Another User's Availability**
+{% step %}
+### Open the user's calendar
 
-1. Select an existing record for the user
-2. Modify the status, hours, or tags
-3. Save changes
-4. The user can see that an admin modified their record
+Find the person in the day or week view and click their name or avatar. A window with their name opens. It shows their availability settings and calendar, the same as in their own profile.
+{% endstep %}
 
-<figure><img src="../../.gitbook/assets/grafik (13).png" alt=""><figcaption><p>User with Management privilege edits the availability of another user</p></figcaption></figure>
+{% step %}
+### Pick the date
 
-#### Monitor Coverage
+Click the date in the calendar. If the day has no entry yet, the **Edit availability** window opens. If it already has one, a short summary opens: click the pencil icon (**Edit**) to change it, or the bin icon (**Remove**) to delete it.
+{% endstep %}
 
-1. View the **Team Availability Calendar**
-2. Identify gaps in coverage for specific dates
-3. See which desks or specializations have availability
-4. Use tags to filter by department or skill area
+{% step %}
+### Set the status and hours
 
-#### Permissions & Restrictions
+Choose **Available**, **Unavailable** or **Partially available**. For partial availability, set the start and end time. Add or remove tasks if needed.
+{% endstep %}
 
-| Action                      | Allowed    | Requires                  |
-| --------------------------- | ---------- | ------------------------- |
-| View own availability       | ✓          | `Availability View`       |
-| Modify own availability     | ✓          | `Availability Manage own` |
-| View others' availability   | ✓          | `Availability View`       |
-| Modify others' availability | Admin only | `Availability Manage`     |
-| Delete availability records | Admin only | `Availability Manage`     |
-| Override user settings      | Admin only | `Availability Manage`     |
+{% step %}
+### Save
 
-#### Manage the used Tasks and Subtasks via CV
+Click **Save**.
+{% endstep %}
+{% endstepper %}
 
-This requires Superdesk admin rights.
+Superdesk records who made the change. In the user's calendar the day gets an outline, and its summary reads "Modified by" with your name and the date. This way the user can see that someone else changed their availability.
 
-Under Settings/Metadata fine the Controlled Vocabulary with the ID: `availability_manager_tags`
+The user's default schedule can be changed in the same window, with the **Manage** button next to **Availability schedule**. See [View and edit Availability](view-and-edit-availability.md).
 
-<figure><img src="../../.gitbook/assets/grafik (14).png" alt=""><figcaption><p>Manage the Availability Manager Tags</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/availability-management/edit-other-user.png" alt="The Edit availability window open over another user's availability calendar" width="999"><figcaption><p>An availability manager edits another user's availability</p></figcaption></figure>
 
-Edit the CV with its Tasks and Subtasks. For example organize the Coverage for certain Regions by setting up the CV accordingly:
+## Monitor coverage
+
+1. Open the Availability Management dashboard in the **Day** or **Week** view.
+2. Look for gaps on specific dates.
+3. Filter by task or region to see who covers it, and by language if you need a specific language.
+4. Set the **Status** filter to **Not set** to find people who have not entered their availability yet.
+
+## Permissions and restrictions
+
+| Action                                   | Privilege needed                           |
+| ---------------------------------------- | ------------------------------------------ |
+| View and change your own availability    | **Availability - manage own availability** |
+| View everyone's availability             | **Availability - view**                    |
+| Change other users' availability         | **Availability - manage**                  |
+| Add or remove other users' daily entries | **Availability - manage**                  |
+| Change other users' default schedule     | **Availability - manage**                  |
+
+## Manage the tasks and subtasks
+
+This requires Superdesk administrator rights.
+
+Open the Main menu, click **Settings** and then **Metadata**, and find the controlled vocabulary with the ID `availability_manager_tags`.
+
+<figure><img src="../../.gitbook/assets/availability-management/tasks-vocabulary.png" alt="The Metadata settings with the availability tasks vocabulary open for editing" width="999"><figcaption><p>Manage the availability tasks and subtasks</p></figcaption></figure>
+
+Edit the vocabulary to add your tasks and subtasks. For example, to organise coverage by region, set it up like this:
 
 Province A\
 &#x20;    \- Region X\
 &#x20;    \- Region Y\
 Province B\
 &#x20;    \- Region Z
-
-***

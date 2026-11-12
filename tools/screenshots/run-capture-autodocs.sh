@@ -43,6 +43,31 @@ case "$SNAPSHOT" in
   *) TZ_NAME=Europe/London ;;
 esac
 only=$1; shift
+# After a start with an empty database the instance seeds itself for a few minutes (run_seed.sh on the
+# auto-docs branch). A restore or reseed from here while that runs wipes the seed under it and leaves the
+# instance without its snapshots, so wait for the seed state marker the boot seed keeps in the
+# `autodocs_seed_state` vocabulary. Instances without the marker (older builds) are not held back.
+python3 - "$API" <<'PY' || exit 1
+import sys, time
+sys.path.insert(0, ".")
+from seed import login
+api = sys.argv[1]
+deadline = time.time() + 900
+while True:
+    try:
+        client = login(api, "admin", "admin")
+        marker = client.get_optional("/vocabularies/autodocs_seed_state")
+        state = (marker.get("items") or [{}])[0].get("qcode", "done") if marker else "done"
+    except Exception as err:  # the API is down or restarting
+        state = "unreachable ({})".format(str(err)[:80])
+    if state == "done":
+        break
+    if time.time() > deadline:
+        print("[capture] the instance seed did not finish in 15 minutes (state: {})".format(state))
+        sys.exit(1)
+    print("[capture] instance seed state: {}; waiting".format(state), flush=True)
+    time.sleep(20)
+PY
 restore_args=(--restore --snapshot "$SNAPSHOT")
 if [ -n "$FRESH" ]; then
   if [ "$SNAPSHOT" = autodocs-planning ]; then

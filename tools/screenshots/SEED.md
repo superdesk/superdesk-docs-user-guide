@@ -102,7 +102,7 @@ The full seed, including the settings and supporting data above, has run against
 
 ## The Planning stack: `seed_planning.py`
 
-The Planning pages and the Master Desk Assignments tab need the superdesk-planning e2e stack (slot 1: client http://localhost:9021, API http://localhost:5021/api, `DEFAULT_TIMEZONE` Australia/Sydney). That stack has no `restore_record`; it is reset with the `planning_prepopulate_data` prepopulate profile instead. `seed_planning.py` does that reset and seeds on top of it (standard library only, data at the top of the script):
+The Planning pages and the Master Desk Assignments tab are captured on the docs instance with the `autodocs-planning` snapshot (`FRESH=1 SNAPSHOT=autodocs-planning ./run-capture-autodocs.sh <page>/<shot>`). The superdesk-planning e2e stack (slot 1: client http://localhost:9021, API http://localhost:5021/api, `DEFAULT_TIMEZONE` Australia/Sydney) is the fallback and the setup the rest of this section describes. That stack has no `restore_record`; it is reset with the `planning_prepopulate_data` prepopulate profile instead. `seed_planning.py` does that reset and seeds on top of it (standard library only, data at the top of the script):
 
 ```bash
 python3 seed_planning.py --api-url http://localhost:5021/api --reset   # wipe and seed
@@ -114,6 +114,7 @@ python3 seed_planning.py --reset                                       # back to
 
 - **Users and desks**: the profile's users get fictional names (logins unchanged, password `admin`); "Sports Desk" and "Politic Desk" become Sports and Politics, Business, World and Culture are created, "XEditor3 Desk" is deleted. The content profile and template are renamed Story; the Sports desk gets a "Weekly advisory" article template.
 - **Planning data**: three events (two today, one tomorrow), four planning items for today and tomorrow (with text, picture and video coverages), five more dated yesterday so every desk has assignments in the states assigned, in progress and completed without adding rows to today's list. Work is started and completed through `assignments/content` and `assignments/complete`, logged in as the assignee.
+- **Vocabularies for the full client**: the broadcasting vocabularies (`rundown_item_types` and the others from `seed_broadcasting.py`) and `availability_manager_tags`, because the client on the docs instance does not start without the first and shows administrators a blocking modal without the second. The planning e2e stack does not load those extensions.
 - **Administration data**: agendas (one disabled), three event templates, the saved filter "Sport events this week", two custom layouts, three locations, the languages, countries and regions vocabularies, and today's featured stories list.
 - **Clean-up on every run**: item locks, the Featured Stories lock and editor autosaves left by earlier captures are released or deleted (`run-capture-planning.sh` runs the seed without `--reset` before capturing; set `NO_SEED=1` to skip that).
 - `--scenario` stores a partial event or planning profile that changes the editor for every shot, so it is applied only right before the shots that need it. The API cannot delete a profile override, so `--reset` is what undoes it.
