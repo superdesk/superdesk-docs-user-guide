@@ -1,22 +1,24 @@
 # Superdesk \\- Glossary and Terminology Guide
 
+Some terms belong to an optional component that your Superdesk may not have. They are marked with the component in brackets after the term, for example (Planning) or (Broadcasting). Terms without a mark are part of every Superdesk.
+
 **Action menu** - The icon with three vertical dots that opens a menu of further actions. On a list row its tooltip is **Item actions**, in the editor top bar and the Monitoring toolbar it is **More actions**. The menu offers actions such as editing, spiking or fetching an item to a desk. Action menus appear on items in lists, in the preview and in the editor's top bar. See [Monitoring Tab](../workspace-and-search/monitoring-tab.md#item-actions).
 
 **Activity Stream** - A Dashboard widget that shows what happens to items across all desks. You can set how many entries it shows. See [Dashboards and Widgets](../workspace-and-search/dashboards-and-widgets.md#activity-stream-widget-settings).
 
 **Advanced Search icon** - The **Toggle filters** button, shaped like a funnel, at the left of the Search header. It opens the advanced search panel, where you set more parameters and filters for your search. See [Searching Content in Superdesk](../workspace-and-search/searching-content-in-superdesk.md#advanced-search).
 
-**Agenda** - Agendas are part of the Superdesk Planning component. They group planning items, for example by desk, by topic or for a special occasion. Agendas are managed in Planning with **Actions** > **Manage Agendas**. See [Planning administration](../superdesk-planning-component/planning-administration.md#agendas).
+**Agenda** (Planning) - Agendas are part of the Superdesk Planning component. They group planning items, for example by desk, by topic or for a special occasion. Agendas are managed in Planning with **Actions** > **Manage Agendas**. See [Planning administration](../superdesk-planning-component/planning-administration.md#agendas).
 
-**AI provider** - A connection to an external AI service that Superdesk uses for its AI features. Administrators add providers, with the service address, the API key and the models people may use, in **Settings** > **AI Providers** (since 3.7). See [AI features](../integrations-and-advanced-features/ai-features.md).
+**AI provider** (AI features) - A connection to an external AI service that Superdesk uses for its AI features. Administrators add providers, with the service address, the API key and the models people may use, in **Settings** > **AI Providers** (since 3.7). See [AI features](../integrations-and-advanced-features/ai-features.md).
 
-**Analytics** - The Analytics module adds reports on publishing, desk activity and user activity, and extra Dashboard widgets. See [Analytics](../integrations-and-advanced-features/analytics.md).
+**Analytics** (Analytics) - The Analytics module adds reports on publishing, desk activity and user activity, and extra Dashboard widgets. See [Analytics](../integrations-and-advanced-features/analytics.md).
 
 **Article / News Item / Content Item** - These are generic terms for any content in Superdesk including text articles, photos, videos, packages, used throughout this manual.
 
 **Asset** - See **SAMS / Asset**.
 
-**Availability** - Lets freelancers and correspondents enter the days and hours they can work, and lets editors see everyone's availability by day or by week on the Availability Management dashboard. See [Availability Management](../availability-management/README.md).
+**Availability** (Availability Management) - Lets freelancers and correspondents enter the days and hours they can work, and lets editors see everyone's availability by day or by week on the Availability Management dashboard. See [Availability Management](../availability-management/README.md).
 
 **Byline** - A metadata field on an article which usually contains the author’s name and the date of creation.
 
@@ -24,7 +26,7 @@
 
 **Content Filter** - Content Filters allow you to create a series of criteria through which Superdesk can narrow down the news items and create news item groupings. Content Filters allow you to build various Products for distribution. You can use any number of Filter Conditions, or Content Filters to automatically select the content for the Product. Content Filters are optional. If you choose not to use any Content Filters, every news item that you publish will be part of your Product. See [Content Filters and Internal Destinations](../administration/defining-publishing-in-superdesk/content-filters-and-internal-destinations.md).
 
-**Content list** - An ordered list of articles that you curate by hand, for example the top stories for a home page. Your website or app reads the list from Superdesk and shows the articles in that order. Content lists are an optional module (since 3.7). See [Content lists](../integrations-and-advanced-features/content-lists.md).
+**Content list** (Content lists) - An ordered list of articles that you curate by hand, for example the top stories for a home page. Your website or app reads the list from Superdesk and shows the articles in that order. Content lists are an optional module (since 3.7). See [Content lists](../integrations-and-advanced-features/content-lists.md).
 
 **Content Profile** - The set of fields an item has, their order and which ones are required. Every template points to a content profile. Administrators manage profiles in **Settings** > **Content Profiles**. See [Content profiles](../administration/content-configuration/content-profiles.md).
 
@@ -44,7 +46,7 @@
 
 **Embargo** - A date and time before which subscribers must not use an item. An embargo does not hold the item back: Superdesk publishes the item straight away and marks it as embargoed until that date. If the item must not leave Superdesk before a certain time, use a **Publish schedule** instead, or both. See [Sending, scheduling and publishing items](../content-management/sending-scheduling-and-publishing.md#embargo-and-publish-schedule).
 
-**Events** - Events are part of the Superdesk Planning component. Events can be created by hand, or ingested automatically from an external calendar or feed. See [Events](../superdesk-planning-component/events.md).
+**Events** (Planning) - Events are part of the Superdesk Planning component. Events can be created by hand, or ingested automatically from an external calendar or feed. See [Events](../superdesk-planning-component/events.md).
 
 **Fetch** - The process of moving an article to a Desk. Usually specifically refers to moving an article from _Ingest_ to a Desk. See [Desks and Custom Workspaces](../workspace-and-search/desks-and-custom-workspaces.md#fetching-items-from-search).
 
@@ -107,7 +109,7 @@ The more complete your metadata is, the easier it will be to search for and upda
 
 **Personal Space** - Each user has a Personal Space in which they can create Personal Items. You open it from the Main menu or with the **Personal space** icon in the Workspace Panel. The Personal Space is separate from Custom Workspaces. See [Desks and Custom Workspaces](../workspace-and-search/desks-and-custom-workspaces.md#personal-space).
 
-**Planning Item** - Planning Items are part of the Superdesk Planning component. Planning items are used to assign coverage to specific desks or users. They can be generated from Events, or they can be created manually. Each Planning Item can contain several pieces of coverage, each assigned to a different user. Planning Items can be exported from the Planning list to generate articles on a desk. See [Planning items and coverages](../superdesk-planning-component/planning-items-and-coverages.md#planning-items).
+**Planning Item** (Planning) - Planning Items are part of the Superdesk Planning component. Planning items are used to assign coverage to specific desks or users. They can be generated from Events, or they can be created manually. Each Planning Item can contain several pieces of coverage, each assigned to a different user. Planning Items can be exported from the Planning list to generate articles on a desk. See [Planning items and coverages](../superdesk-planning-component/planning-items-and-coverages.md#planning-items).
 
 **Production API key** - A client ID and secret that an external application uses to read content from the Production API. Each key has scopes that limit what the application can read, such as **Archive**, **Desks** or **Users**. Administrators create keys in **Settings** > **Production API**. See [Superdesk API](../integrations-and-advanced-features/superdesk-api.md#managing-production-api-keys).
 
@@ -123,13 +125,13 @@ The more complete your metadata is, the easier it will be to search for and upda
 
 **Roles** - A role is your designated job within Superdesk. Your role comes with a set of privileges and permissions. Some examples of roles are: journalist, editor, manager, reporter, bureau-chief, copytaker, producer, etc. Permissions for each role are customisable from the Settings menu. See [User Management and User Roles](../administration/user-management-and-user-roles.md#user-roles).
 
-**Rundown** - The running order of a radio or TV broadcast: a list of items with their planned durations, which can have subitems. A rundown belongs to a **Show** and is created from one of the show's rundown templates. See [Broadcasting: shows and rundowns](../broadcasting-shows-and-rundowns.md).
+**Rundown** (Broadcasting) - The running order of a radio or TV broadcast: a list of items with their planned durations, which can have subitems. A rundown belongs to a **Show** and is created from one of the show's rundown templates. See [Broadcasting: shows and rundowns](../broadcasting-shows-and-rundowns.md).
 
-**SAMS / Asset** - SAMS is an optional shared library of files, such as PDFs, documents, images or audio. An asset is one file in that library, with its name, description and tags. You upload an asset once and attach it to as many stories as you need. Assets are grouped in sets. See [Asset management (SAMS)](../integrations-and-advanced-features/asset-management.md).
+**SAMS / Asset** (SAMS) - SAMS is an optional shared library of files, such as PDFs, documents, images or audio. An asset is one file in that library, with its name, description and tags. You upload an asset once and attach it to as many stories as you need. Assets are grouped in sets. See [Asset management (SAMS)](../integrations-and-advanced-features/asset-management.md).
 
 **Saved Search** - A Saved Search is a set of parameters which have been generated by a user in Superdesk to find articles. Saved Searches can be displayed in Monitoring Widgets and Monitoring tabs on desks if they are global. See [Searching Content in Superdesk](../workspace-and-search/searching-content-in-superdesk.md#saved-searches).
 
-**Show** - A radio or TV programme in the Broadcasting module, such as a daily news bulletin. Each show has a name, a code and rundown templates, from which its **Rundowns** are created. See [Broadcasting: shows and rundowns](../broadcasting-shows-and-rundowns.md).
+**Show** (Broadcasting) - A radio or TV programme in the Broadcasting module, such as a daily news bulletin. Each show has a name, a code and rundown templates, from which its **Rundowns** are created. See [Broadcasting: shows and rundowns](../broadcasting-shows-and-rundowns.md).
 
 **Slugline** - While articles are in production, it is common practice for journalists to designate them with a short name or “slug” to describe the article story or subject. In the article editing window, users can enter this name in the slugline text box. Note that sluglines are Superdesk-internal and do not appear in the published version of an article. Sluglines can be used for grouping Related Items.
 
