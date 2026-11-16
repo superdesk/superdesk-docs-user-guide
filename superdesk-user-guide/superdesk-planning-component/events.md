@@ -38,7 +38,7 @@ The event form is split into sections. Use the icons on the left of the editor t
 * **Description**: **Slugline**, **Event Name**, **Description**, **Calendars** and **Occurrence Status** (how certain it is that the event takes place).
 * **Location**: **Location** and **Contacts**.
 * **Details**: **Category**, **Subject**, **Long Description**, **Internal Note** (only seen inside your newsroom) and **Ed Note**.
-* **Attachments**, **Links** and **Related Plannings**.
+* **Attachments**, **Links**, **Coverages** and **Related Plannings**.
 
 ## Dates and times
 
@@ -84,6 +84,8 @@ Fill in the rest of the event and click **Create**. Superdesk creates one event 
 {% endstep %}
 {% endstepper %}
 
+If the event has coverages of its own, each event in the series gets its own copy of them, due at the same time relative to its own date. See [Coverages on the event](#coverages-on-the-event).
+
 When you edit, post, cancel or change the time of one event in a series, Superdesk asks which events the change applies to: **This event only**, **This and all future events** or **All Events**.
 
 To change the rule of an existing series, use **Update Repetitions** in the action menu. To turn a single event into a series, use **Convert to Recurring Event**.
@@ -122,6 +124,27 @@ Contacts come from the Media Contacts list. See [Media Contacts](../administrati
 * **Links**: add web addresses with background information. Click **Add link** for each one.
 * **Related Articles**: if your administrator has added this field, search for existing articles about the event and link them.
 
+## Coverages on the event
+
+*Available since Superdesk 3.7.*
+
+An event can hold coverages of its own, without a planning item. You only see this when the event profile has the **Coverages** field. Your administrator sets this up; see [Fields](planning-administration.md#fields).
+
+In the event form, the **Coverages** section comes after **Links** and before **Related Plannings**. To add a coverage, click the plus button next to **Coverages** and pick a type under **Coverage Type**, or choose **Advanced mode** to add several at once. You can also click **Add Coverage** in the editor's left bar. Each coverage shows as a card. Open it to fill in the details, the same way as for a planning item; see [Adding coverages](planning-items-and-coverages.md#adding-coverages). Then save the event.
+
+<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-coverages.png" alt="An event in the editor with a text coverage for the Culture desk in its Coverages section" width="434"><figcaption><p>Coverages of the event itself</p></figcaption></figure>
+
+If your administrator turned on **Inline Add Coverages form**, the **Coverages** section shows a **Coverage Types** box instead of the plus button. Tick each type you need and pick its **Desk**, user, **Language** and **Status**. Then click **Add Coverage(s)**. The plus icon on a type adds a second coverage of that type. **Cancel** clears the box and folds it into an **Add Coverages** button; click that button to open the box again. When you pick a desk, the status changes to **Planned**, unless your Superdesk is set up to leave the status to you. A desk is required when you pick a user, or when your Superdesk adds coverages to the workflow automatically.
+
+<!-- SCREENSHOT PENDING: needs a fourth capture run of superdesk-planning-component/event-inline-coverage-form (manifest fixed after three failed attempts) -->
+<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-inline-coverage-form.png" alt="The Coverage Types box in the event form with Text ticked and the Culture desk picked"><figcaption><p>The inline form for adding coverages</p></figcaption></figure>
+
+Once the event is saved, you see its coverages in other places too:
+
+* The event preview shows each coverage as a card, like the preview of a planning item.
+* In the list, the event row shows one icon per coverage that is due on that day. If a coverage is due on a day outside the event's dates, the event is also listed on that day.
+* **Edit Coverages** in the event's action menu changes the coverages without opening the editor. See [Editing coverages from the list](planning-items-and-coverages.md#editing-coverages-from-the-list).
+
 ## Changing an event
 
 The action menu of an event lists what you can do with it. Which actions appear depends on the event's state and your privileges.
@@ -130,6 +153,7 @@ The action menu of an event lists what you can do with it. Which actions appear 
 | --- | --- |
 | **Preview** | Open the event in the preview panel. |
 | **Edit**, **Edit in popup** | Open the event in the editor. |
+| **Edit Coverages** | Change the event's coverages in the **Add Coverages (advanced mode)** window, without opening the editor. Only shown when the event profile has the **Coverages** field and the event is not locked or cancelled. See [Editing coverages from the list](planning-items-and-coverages.md#editing-coverages-from-the-list). |
 | **Create Planning Item**, **Create and Open Planning Item** | Create a planning item linked to this event, with the event's details copied in. See [Creating a planning item](planning-items-and-coverages.md#creating-a-planning-item). |
 | **Duplicate** | Open a copy of the event as a new event. |
 | **Update time** | Change the start and end time. |
@@ -142,7 +166,7 @@ The action menu of an event lists what you can do with it. Which actions appear 
 | **Mark as completed** | Mark an event that is taking place today as completed. |
 | **Spike**, **Unspike** | Move an unposted draft event out of the list, or bring it back. |
 
-<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-actions-menu.png" alt="The action menu of an event in the list" width="1394"><figcaption><p>Actions for an event</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-actions-menu.png" alt="The action menu of an event in the list" width="1332"><figcaption><p>Actions for an event</p></figcaption></figure>
 
 ## Ingested events
 
