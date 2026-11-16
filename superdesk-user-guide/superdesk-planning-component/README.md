@@ -12,7 +12,7 @@ This is an optional module. If you do not see it, ask your administrator.
 
 * An **event** is something that happens at a given time and place: a press conference, a match, a court hearing. Events can be created by hand or ingested from external calendars. Events are grouped in **calendars**, such as Sport or Finance.
 * A **planning item** is your plan for covering something. It holds one or more coverages. A planning item can be linked to an event, or stand on its own. Planning items are grouped in **agendas**, for example by desk or by topic.
-* A **coverage** is one piece of content you intend to produce for a planning item, for example a text story or a picture. Each coverage has a type, a due time and a status.
+* A **coverage** is one piece of content you intend to produce, for example a text story or a picture. It belongs to a planning item, or directly to an event. Each coverage has a type, a due time and a status.
 * An **assignment** is a coverage given to a desk, and optionally to a user. Assignments appear in the **Assignments** workspace of the people who have to do the work.
 
 If your newsroom works in several languages, events and planning items can hold their text in each language. See [Multilingual events and planning items](events.md#multilingual-events-and-planning-items).
@@ -55,7 +55,7 @@ Use the view switch in the second toolbar row:
 
 The list filter menu in the list header narrows the list further. In **Events only** it lists your calendars and **No Calendar Assigned**. In **Planning only** it lists your agendas and **No Agenda Assigned**. Saved filters set up by your administrator appear under **Search Filters**.
 
-In the planning views, **Assigned to** shows only planning items with a coverage assigned to the user you pick. Clear the field to see everyone's items again.
+In the planning views, **Assigned to** shows only planning items with a coverage assigned to the user you pick. In **Events only**, it is there when events can have coverages of their own, and shows the events with such a coverage. Clear the field to see everyone's items again.
 
 If the first entry in the filter menu reads **My Events & Planning**, **My Events** or **My Planning**, you only see items you created yourself. Seeing other people's items needs a privilege. Ask your administrator if you need it.
 
@@ -76,7 +76,7 @@ Each row shows the item's main details. Your administrator decides which fields 
 * A green **P** badge on the left means the item is posted. A light, empty badge means it is not posted yet.
 * A red "no entry" icon in the same place means the planning item is marked **Not For Publication**.
 * A red bar on the left edge means someone has the item open for editing. Nobody else can edit it until they close it.
-* On planning items, one icon per coverage shows the coverage type. Its colour tells you how far the work has got. Hover over the icon for the type, desk and status.
+* On events and planning items, one icon per coverage shows the coverage type. On an event, you see the coverages due that day. The icon's colour tells you how far the work has got. Hover over the icon for the type, desk and status.
 * A state label such as **Scheduled**, **Cancelled**, **Postponed** or **Rescheduled** shows the item's workflow state.
 
 ### Events and their planning items in one list
@@ -105,7 +105,7 @@ Each row has an action menu (three dots) that appears when you hover over the ro
 
 In **Events only** and **Planning only**, hover over a row and tick its checkbox to select it. A bar at the top of the list shows how many items you selected, with **Select all** and **Deselect All**, and icon buttons for what you can do with all of them:
 
-* events: **Export**, **Download**, **Create planning**, **Spike** or **Unspike**,
+* events: **Add to workflow** (when events can have coverages of their own), **Export**, **Download**, **Create planning**, **Spike** or **Unspike**,
 * planning items: **Add to workflow**, **Export**, **Spike** or **Unspike**.
 
 Selecting several items is not available in **Events & Planning**.
@@ -113,7 +113,7 @@ Selecting several items is not available in **Events & Planning**.
 ## Searching and filtering
 
 * **Search planning** in the toolbar searches the text of the items in the current view. Press Enter to search.
-* The filter icon opens **Advanced filters** on the left. The fields depend on the view and on your setup. Typical ones are name, slugline, category, subject, state, **Only Posted**, **Include Spiked**, **Lock State**, **Source**, dates and creation date. Events have calendars, language and location. Planning items have agendas, urgency, **Featured**, **Ad Hoc Planning** (items without an event) and coverage assignment status. Click **Search** to apply them and **Clear** to empty the panel.
+* The filter icon opens **Advanced filters** on the left. The fields depend on the view and on your setup. Typical ones are name, slugline, category, subject, state, **Only Posted**, **Include Spiked**, **Lock State**, **Source**, dates and creation date. Events have calendars, language and location. Planning items have agendas, urgency, **Featured** and **Ad Hoc Planning** (items without an event). Both events and planning items have **Without Coverage**, **With Coverages only**, **Coverage Type** and **Coverage Assignment Status**. On events, these only appear when events can have coverages of their own. **Without Coverage** and **With Coverages only** turn each other off. Click **Search** to apply them and **Clear** to empty the panel.
 * While a search or filter is active, a red **Clear Filters** button appears in the toolbar. Click it to see the full list again.
 * Saved filters appear in the list filter menu under **Search Filters**.
 

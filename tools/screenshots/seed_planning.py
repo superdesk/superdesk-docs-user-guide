@@ -161,6 +161,17 @@ EVENTS = [
         "start": (1, "19:30"), "end": (1, "22:30"), "calendar": "entertainment",
         "location": "doc-location-opera-house",
     },
+    # An event with a coverage of its own (no planning item), for the event coverage shots. `coverages` uses
+    # the same shape as the PLANNING coverage specs below; only the "draft" state is supported here.
+    {
+        "guid": "doc-event-library", "slugline": "Library reopening", "name": "State Library reopens its reading room",
+        "definition_short": "The renovated reading room opens to the public with a tour for the press.",
+        "start": (0, "13:00"), "end": (0, "15:00"), "calendar": "entertainment",
+        "coverages": [
+            {"id": "doc-cov-library-text", "type": "text", "slugline": "Library reopening",
+             "due": (0, "16:00"), "status": "planned", "assign": ("Culture", None, "draft")},
+        ],
+    },
 ]
 
 # Coverages: `assign` is (desk, username or None, state). State "draft" keeps the coverage out of the
@@ -557,6 +568,26 @@ class Seeder:
                 event["location"] = [self.location_ref(spec["location"])]
             self.prepopulate("events", [event])
             log("create", "event", spec["slugline"])
+            if spec.get("coverages"):
+                self.add_event_coverages(spec)
+
+    def add_event_coverages(self, spec):
+        """Add an event's own coverages with a PATCH, the way the Edit Coverages action saves them."""
+        path = "/events/" + quote(spec["guid"])
+        event = self.c.get(path)
+        coverages = list(event.get("coverages") or [])
+        for cov in spec["coverages"]:
+            # Same temporary id prefix as in assign_coverages, so the server treats the coverage as new.
+            doc = self.coverage_doc(cov, "draft", "tempId-" + cov["id"])
+            if cov.get("assign"):
+                desk, username, state = cov["assign"]
+                if state != "draft":
+                    raise SeedError("event coverages are only seeded as drafts: {}".format(cov["id"]))
+                doc["assigned_to"] = {"desk": self.desks[desk]["_id"],
+                                      "user": self.user_id(username) if username else None}
+            coverages.append(doc)
+            log("add", "coverage", "{} / {}".format(spec["slugline"], cov["type"]))
+        self.c.patch(path, {"coverages": coverages, "update_method": "single"}, event["_etag"])
 
     @staticmethod
     def coverage_doc(cov, workflow_status="draft", coverage_id=None):

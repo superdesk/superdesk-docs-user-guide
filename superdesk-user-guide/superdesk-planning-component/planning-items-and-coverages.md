@@ -2,6 +2,8 @@
 
 A planning item describes what your newsroom plans to produce. It holds the coverages, and through them, the assignments.
 
+An event can also hold coverages of its own. See [Coverages on the event](events.md#coverages-on-the-event).
+
 To make planning items visible outside Superdesk, see [Posting events and planning items](events.md#posting-events-and-planning-items). For the work that follows from a coverage, see [Assignments](assignments.md).
 
 ## Planning items
@@ -137,7 +139,7 @@ Superdesk remembers the desk you pick for each coverage type. The next coverage 
 
 An assigned coverage is still a draft until you add it to the workflow. Only then does Superdesk create the assignment, show it in the Assignments workspace and notify the desk or user. This lets a planner organise the work first and release it to the team when ready.
 
-To add a coverage to the workflow, save the planning item, then turn on **Add to workflow** in the coverage and save again. The coverage label changes from **Draft** to **Assigned**. To add the coverages of several planning items at once, select them in **Planning only** and click **Add to workflow** in the selection bar.
+To add a coverage to the workflow, save the planning item, then turn on **Add to workflow** in the coverage and save again. The coverage label changes from **Draft** to **Assigned**. To add the coverages of several items at once, select them in **Events only** or **Planning only** and click **Add to workflow** in the selection bar. The button only appears when at least one selected item has a draft coverage and you can edit all of them.
 
 Once a coverage is in the workflow, change its desk or user from the assignment, not from the coverage. See [Other assignment actions](assignments.md#other-assignment-actions).
 
