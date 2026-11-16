@@ -706,17 +706,17 @@ class Seeder:
                 self.c.request("DELETE", "/e2e/force_unlock/{}/{}".format(resource, quote(item["_id"])))
                 log("unlock", resource, item.get("slugline") or item.get("planning", {}).get("slugline") or item["_id"])
 
-        # The Featured Stories window holds a lock of its own while it is open.
-        if self.c.get("/planning_featured_lock", max_results=10)["_items"]:
+        # The Featured Stories window holds a lock of its own while it is open. The lock resource is not
+        # readable (POST only), the planning_locks endpoint reports it instead.
+        if self.c.get("/planning_locks", repos="featured_planning").get("featured"):
             self.c.post("/planning_featured_unlock", {})
             log("unlock", "featured", "Featured Stories")
 
         # Autosaves of unsaved editor sessions (new items typed in by the capture steps) come back the next time
-        # the editor opens, so they go too.
-        for resource in ("event_autosave", "planning_autosave"):
-            for item in self.c.get("/" + resource, max_results=200)["_items"]:
-                self.c.delete("/{}/{}".format(resource, quote(item["_id"])), item["_etag"])
-                log("delete", "autosave", item.get("slugline") or item["_id"])
+        # the editor opens, so they go too. Events and planning items share one autosave resource.
+        for item in self.c.get("/planning_autosave", max_results=200)["_items"]:
+            self.c.delete("/planning_autosave/{}".format(quote(item["_id"])), item["_etag"])
+            log("delete", "autosave", item.get("slugline") or item["_id"])
 
     # -- profile scenarios
 
