@@ -297,7 +297,7 @@
       }
     },
     "highlight": "none",
-    "notes": "A draft, unposted event today shows: Edit, Edit in popup, Create Planning Item, Create and Open Planning Item, Duplicate, Update time, Reschedule, Mark as Postponed, Cancel, Convert to Recurring Event, Assign to calendar, Save event as a template, Mark as completed, Spike (exact set depends on state). The menu helper is getMenuItem in e2e/playwright/utils/common/ui/actionMenu.ts. If the menu is taller than the viewport, raise the viewport height to 1100."
+    "notes": "A draft, unposted event today shows: Edit, Edit in popup, Edit Coverages (only when the event profile has the Coverages field), Create Planning Item, Create and Open Planning Item, Duplicate, Update time, Reschedule, Mark as Postponed, Cancel, Convert to Recurring Event, Assign to calendar, Save event as a template, Mark as completed, Spike (exact set depends on state). The menu helper is getMenuItem in e2e/playwright/utils/common/ui/actionMenu.ts. If the menu is taller than the viewport, raise the viewport height to 1100."
   },
   {
     "file": "superdesk-planning-component/event-embedded-planning.png",

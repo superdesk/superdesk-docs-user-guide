@@ -130,6 +130,7 @@ The action menu of an event lists what you can do with it. Which actions appear 
 | --- | --- |
 | **Preview** | Open the event in the preview panel. |
 | **Edit**, **Edit in popup** | Open the event in the editor. |
+| **Edit Coverages** | Change the event's coverages in the **Add Coverages (advanced mode)** window, without opening the editor. Only shown when the event profile has the **Coverages** field and the event is not locked or cancelled. See [Editing coverages from the list](planning-items-and-coverages.md#editing-coverages-from-the-list). |
 | **Create Planning Item**, **Create and Open Planning Item** | Create a planning item linked to this event, with the event's details copied in. See [Creating a planning item](planning-items-and-coverages.md#creating-a-planning-item). |
 | **Duplicate** | Open a copy of the event as a new event. |
 | **Update time** | Change the start and end time. |
@@ -142,7 +143,7 @@ The action menu of an event lists what you can do with it. Which actions appear 
 | **Mark as completed** | Mark an event that is taking place today as completed. |
 | **Spike**, **Unspike** | Move an unposted draft event out of the list, or bring it back. |
 
-<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-actions-menu.png" alt="The action menu of an event in the list" width="1394"><figcaption><p>Actions for an event</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-actions-menu.png" alt="The action menu of an event in the list" width="1332"><figcaption><p>Actions for an event</p></figcaption></figure>
 
 ## Ingested events
 

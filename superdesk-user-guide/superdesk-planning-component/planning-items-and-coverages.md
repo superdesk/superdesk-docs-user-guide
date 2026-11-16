@@ -166,7 +166,11 @@ The colour of the coverage icon in the list follows the assignment: unassigned, 
 
 *Available since Superdesk 2.11 and 3.6.*
 
-You can change the coverages of a planning item without opening the editor. Choose **Edit Coverages** in the item's action menu. The **Add Coverages (advanced mode)** window opens with the existing coverages. Change the desk, user, language or status, enable more coverage types, and click **Save**.
+You can change the coverages of a planning item or an event without opening the editor. Choose **Edit Coverages** in the item's action menu. The **Add Coverages (advanced mode)** window opens with the existing coverages. Change the desk, user, language or status, enable more coverage types, and click **Save**.
+
+For events, this action is available since Superdesk 3.7. It appears only when the event profile has the **Coverages** field, and not on events that are locked or cancelled. Saving changes only the event's coverages, so linked planning items stay as they are.
+
+While the window is open, the item is locked. If another user has locked the item, Superdesk tells you that you cannot edit its coverages right now.
 
 To add a single coverage quickly, use **Add coverage** in the same menu and pick the type.
 
