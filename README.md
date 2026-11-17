@@ -98,6 +98,7 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 * [Superdesk API](superdesk-user-guide/integrations-and-advanced-features/superdesk-api.md)
 * [Ingesting News Items and Events](superdesk-user-guide/integrations-and-advanced-features/ingesting-news-items-and-events.md)
 * [Content lists](superdesk-user-guide/integrations-and-advanced-features/content-lists.md)
+* [Asset management (SAMS)](superdesk-user-guide/integrations-and-advanced-features/asset-management.md)
 * [AI features](superdesk-user-guide/integrations-and-advanced-features/ai-features.md)
 
 #### Availability Management
@@ -105,10 +106,10 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 * [How to set it up](superdesk-user-guide/availability-management/how-to-set-it-up.md)
 * [View and edit Availability](superdesk-user-guide/availability-management/view-and-edit-availability.md)
 * [Manage Availability](superdesk-user-guide/availability-management/manage-availability.md)
-* [The Production API endpoint](superdesk-user-guide/availability-management/the-production-api-endpoint.md)
 
 #### Reference
 
+* [Keyboard shortcuts](superdesk-user-guide/reference/keyboard-shortcuts.md)
 * [Superdesk - Glossary and Terminology Guide](superdesk-user-guide/reference/superdesk-glossary-and-terminology-guide.md)
 
 ### Additional resources
