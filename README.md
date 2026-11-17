@@ -105,10 +105,14 @@ Then follow [Creating and Editing Content Items](superdesk-user-guide/content-ma
 * [How to set it up](superdesk-user-guide/availability-management/how-to-set-it-up.md)
 * [View and edit Availability](superdesk-user-guide/availability-management/view-and-edit-availability.md)
 * [Manage Availability](superdesk-user-guide/availability-management/manage-availability.md)
-* [The Production API endpoint](superdesk-user-guide/availability-management/the-production-api-endpoint.md)
+
+#### Broadcasting: shows and rundowns
+
+* [Broadcasting: shows and rundowns](superdesk-user-guide/broadcasting-shows-and-rundowns.md)
 
 #### Reference
 
+* [Keyboard shortcuts](superdesk-user-guide/reference/keyboard-shortcuts.md)
 * [Superdesk - Glossary and Terminology Guide](superdesk-user-guide/reference/superdesk-glossary-and-terminology-guide.md)
 
 ### Additional resources
