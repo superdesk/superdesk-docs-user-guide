@@ -12,18 +12,18 @@ Each report is controlled by its own privilege, so you may see only some of the 
 
 Open the Main menu (also called the hamburger menu) in the top-left corner and click **Analytics**. See [Navigation](../navigating-superdesk/navigation.md#the-main-menu) for more on the Main menu.
 
-**Analytics** is only listed if your role can view at least one report.
+**Analytics** is only listed if it has been set up by your administrator and your role can view at least one report.
 
 ## The Analytics page
 
-The page opens with no report selected. The bar at the top holds:
+The page opens with no report selected. The bar at the top holds only the report list, which reads **Select A Report** until you pick one, and the **Highcharts License** button (an info icon) on the right, which shows the license of the charting library.
+
+When you pick a report, the report panel opens on the left and the chart area fills the rest of the page. Two more controls appear in the top bar:
 
 * the **filter** icon on the left, which opens and closes the report panel,
-* the report list, which reads **Select A Report** until you pick one,
-* the **Report** and **Schedules** switch, if the report can be scheduled and you are allowed to schedule reports,
-* the **Highcharts License** button (an info icon) on the right, which shows the license of the charting library.
+* the **Report** and **Schedules** switch, if the report can be scheduled and you are allowed to schedule reports.
 
-When you pick a report, the report panel opens on the left and the chart area fills the rest of the page. Superdesk adds the report to the page address, so you can bookmark a report or send the link to a colleague.
+Superdesk adds the report to the page address, so you can bookmark a report or send the link to a colleague.
 
 ## Available reports
 
@@ -40,7 +40,7 @@ The list shows the reports below, in this order. Some reports only appear when y
 | **Update Time** | How long it took to publish an update after the original story. | Archive statistics |
 | **User Activity** | A timeline of the stories one user worked on during one day. | Archive statistics |
 
-"Archive statistics" are figures that Superdesk works out from the history of every item. Your administrator decides whether they are collected. They are refreshed once an hour, so the last hour of activity may not show yet in these reports.
+"Archive statistics" are figures that Superdesk works out from the history of every item. Your administrator decides whether they are collected. They are refreshed once an hour, so the last hour of activity may not show yet in these reports. Planning Usage needs the [Superdesk Planning Component](../superdesk-planning-component/README.md), so it is only listed when Planning is installed.
 
 ### Publishing reports
 
@@ -73,7 +73,11 @@ In **Content Publishing**, **Group By** and **Subgroup By** also list the custom
 
 Each row of the chart is a story, labelled with its slugline. The bars show when the user had the story open for editing. Hover over a bar to see the slugline, headline, times and the actions taken. Click a bar to open a second chart below with the full timeline of that story, from creation to its last action, with one colour per user who touched it.
 
+{% hint style="info" %}
 User Activity cannot be scheduled.
+{% endhint %}
+
+For what a user is working on right now, rather than a day's history, use the **User Activity** widget on the dashboard. It is part of Superdesk itself, not of Analytics. See [Dashboards and Widgets](../workspace-and-search/dashboards-and-widgets.md#user-activity-widget).
 
 ### Planning Usage
 
@@ -130,13 +134,17 @@ Under **Date Filter** pick one of these options:
 | Months | **Relative Months** (the last 1 to 12 months), **Last Month**, **This Month** |
 | Year | **Last Year**, **This Year** |
 
-Dates in the future are not allowed. Most reports start with a range covering the last 30 days. Update Time starts with **Yesterday**. Relative periods are worked out again every time the report runs, which makes them a good choice for saved and scheduled reports.
+Dates in the future are not allowed. Most reports start with a range covering the last 30 days. Update Time starts with **Yesterday**.
+
+{% hint style="info" %}
+Relative periods are worked out again every time the report runs, which makes them a good choice for saved and scheduled reports.
+{% endhint %}
 
 ### Filtering the content
 
 The **Filters** section shows one box per filter. The filters available depend on the report. They include **Desks**, **Users**, **Categories**, **Genre**, **Source**, **Urgency**, **Content State**, **Ingest Providers**, **Stages** and **Content Types**.
 
-Type in a box to find values and pick one or more. Turn on **Exclude** in a box to leave the picked values out instead of keeping only them. The **Content State** box also has a **Rewrites** option: **Include Rewrites**, **Exclude Rewrites** or **Rewrites Only**.
+Type in a box to find values and pick one or more. Turn on **Exclude** in a box to leave the picked values out instead of keeping only them. The **Content State** box also has a **Rewrites** option: **Include Rewrites**, **Exclude Rewrites** or **Rewrites Only**. A rewrite is an update of a published story, see [Updates](../content-management/updates-corrections-kills-and-takedowns/README.md).
 
 ## Charts and tables
 
@@ -159,8 +167,6 @@ To download a chart, click the menu button in the top-right corner of the chart 
 * **Download SVG vector image**
 * **Download PDF document**
 * **Download CSV**, the data behind the chart as a spreadsheet file
-
-<!-- VERIFY: open a chart's export menu, choose Download PDF document and check that a PDF downloads; if it does not, drop that bullet. -->
 
 A report shown as a table has a smaller menu at the top right of the table, **Export Chart As...**, with one option: **CSV File**.
 
@@ -207,14 +213,16 @@ Click the **Saved** tab in the report panel. It lists **My Saved Reports** and *
 * Click a saved report to load its settings, then click **Run Report**.
 * Click the trash icon to delete it. You can delete your own reports, and other people's global reports if you manage global saved reports.
 
+{% hint style="info" %}
 A saved report that has schedules cannot be deleted, and cannot be made private again, until its schedules are removed.
+{% endhint %}
 
 ## Scheduling reports by email
 
-Superdesk can email a report regularly, for example the Desk Activity of the past day every morning. A schedule always uses a global saved report, so save the report and turn on **Make Global** first. User Activity cannot be scheduled.
+Superdesk can email a report regularly, for example the Desk Activity of the past day every morning.
 
 {% hint style="info" %}
-You need the privilege to manage scheduled reports to see the **Schedules** switch, the **Schedule** button and the scheduling options in the three-dot menu.
+A schedule always uses a global saved report, so save the report and turn on **Make Global** first. User Activity cannot be scheduled. You need the privilege to manage scheduled reports to see the **Schedules** switch, the **Schedule** button and the scheduling options in the three-dot menu.
 {% endhint %}
 
 {% stepper %}
@@ -245,7 +253,7 @@ Check the **Report Type** and the **Saved Report**. Only global saved reports ar
 {% step %}
 ### Set the email
 
-Under **Email**, add the recipients in **To:**. You can pick Superdesk users or type any email address. Fill in **Subject:** and **Body**, then pick the **Format** (**JPEG Image**, **PNG Image** or **PDF File**) and the **Image Width**, from 400 to 1400 pixels.
+Under **Email**, add the recipients in **To:**, one at a time. Start typing to pick a Superdesk user or an address used by another schedule, or type a new email address and press Enter. Each recipient becomes a tag that you can remove with its x. Fill in **Subject:** and **Body**, then pick the **Format** (**JPEG Image**, **PNG Image** or **PDF File**) and the **Image Width**, from 400 to 1400 pixels.
 {% endstep %}
 
 {% step %}
