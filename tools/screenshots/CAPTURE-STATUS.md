@@ -46,6 +46,8 @@ Preconditions that the seed or the client patch now fulfil start with "Done by s
 
 - `broadcasting-shows-and-rundowns` (8 of 9): captured on 2026-10-14 on slot 1 with the broadcasting patch (CAPTURE.md, "Broadcasting on the e2e stack") and `seed_broadcasting.py`, styled and copied into `.gitbook/assets`. Run `seed_broadcasting.py` after `seed.py` and again before a rerun: it releases rundown locks a failed run leaves behind and puts the rundown list back in order.
 
+- `analytics` (8 of 9): not on this stack (no superdesk-analytics); captured on the docs instance on 2026-11-18, styled and copied into `.gitbook/assets`. `user-activity-report` is captured but not in the page: the y axis labels only two of the seven sluglines and the timeline chart below has no title. Everything is dated the capture day, so the 7-day Desk Activity chart has one busy day. Restore `autodocs`, run `seed_analytics.py` against the instance (SEED.md, "Analytics"), wait for the next full hour so the archive statistics exist, then `NO_RESTORE=1 ./run-capture-autodocs.sh analytics`. The steps pick each report from the report list: opening `#/analytics?report=...` directly can leave the report panel empty (the report controller starts before `/api/report_configs` has answered). The instance lists six reports (PUBLISH_ASSOCIATED_ITEMS hides Featuremedia Updates and Update Time), and Desk Activity offers only a From/To range in this analytics version.
+
 ### Capturable now
 
 Preconditions are met on this stack. Only the shots marked "smoke-tested" have actually been run; the others are expected to need the usual step fixes.
@@ -81,7 +83,6 @@ Preconditions are met on this stack. Only the shots marked "smoke-tested" have a
 
 ### Skipped, with the reason in the entry's `skip`
 
-- `analytics` (all 9): superdesk-analytics is not installed on this stack.
 - `asset-management` (all 8): no SAMS service and no `superdesk.sams` server app, so the sams extension is not loaded.
 - `broadcasting-shows-and-rundowns/search-matching-items`: the client's search query never reaches the server's nested rundown item search, so no item rows appear under a rundown (reason in the entry).
 - `ai-features/imatrics-tags`: auto-tagging-widget is not loaded (it adds an empty IMATRICS header field to every authoring view, and its build rewrites a tracked file).
