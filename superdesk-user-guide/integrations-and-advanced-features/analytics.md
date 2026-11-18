@@ -14,6 +14,8 @@ Open the Main menu (also called the hamburger menu) in the top-left corner and c
 
 **Analytics** is only listed if it has been set up by your administrator and your role can view at least one report.
 
+<figure><img src="../../.gitbook/assets/analytics/menu-entry.png" alt="The Main menu with Analytics highlighted" width="282"><figcaption><p>Analytics in the Main menu</p></figcaption></figure>
+
 ## The Analytics page
 
 The page opens with no report selected. The bar at the top holds only the report list, which reads **Select A Report** until you pick one, and the **Highcharts License** button (an info icon) on the right, which shows the license of the charting library.
@@ -24,6 +26,8 @@ When you pick a report, the report panel opens on the left and the chart area fi
 * the **Report** and **Schedules** switch, if the report can be scheduled and you are allowed to schedule reports.
 
 Superdesk adds the report to the page address, so you can bookmark a report or send the link to a colleague.
+
+<figure><img src="../../.gitbook/assets/analytics/report-list.png" alt="The report list opened, showing the available reports" width="424"><figcaption><p>Choosing a report</p></figcaption></figure>
 
 ## Available reports
 
@@ -46,6 +50,8 @@ The list shows the reports below, in this order. Some reports only appear when y
 
 **Content Publishing** answers "how much did we publish, and of what?". Under **Group By** you pick the field for the main bars: **Category**, **Genre**, **Source**, **Urgency**, **Subject**, **Author** or **Language**. **Subgroup By** splits each bar by a second field. Leave it empty for a simple chart.
 
+<figure><img src="../../.gitbook/assets/analytics/content-publishing-report.png" alt="A Content Publishing report with the report panel on the left and a column chart of published stories per category" width="999"><figcaption><p>A Content Publishing report, grouped by category</p></figcaption></figure>
+
 **Publishing Performance** shows the same published content from a different angle. Under **Group By** you pick **Desk**, **User**, **Category**, **Source**, **Urgency**, **Genre**, **Subject** or **Author**. Each bar is then split by what happened to the content: **Published**, **Killed**, **Corrected**, **Updated** or **Taken Down**. See [Updates, corrections, kills and takedowns](../content-management/updates-corrections-kills-and-takedowns/README.md) for what these actions mean.
 
 ### Grouping by your own metadata fields
@@ -60,6 +66,8 @@ In **Content Publishing**, **Group By** and **Subgroup By** also list the custom
 
 * incoming: **Create**, **Fetch**, **Duplicate**, **Sent To**, **Deschedule** and **Unspike**,
 * outgoing: **Publish**, **Spike**, **Sent From**, **Publish Scheduled** and **Publish Embargo**.
+
+<figure><img src="../../.gitbook/assets/analytics/desk-activity-report.png" alt="A Desk Activity report for the Politics desk with the daily chart and the table of actions below it" width="999"><figcaption><p>The Desk Activity report</p></figcaption></figure>
 
 **Production Time** measures the time between a story entering a desk and leaving it, for each desk. Under **Included Statistics** tick the figures you want: **Minimum**, **Average**, **Maximum** and **Sum**. On the **Filters** tab you can narrow down which actions count as entering and leaving a desk.
 
@@ -157,6 +165,8 @@ The **Chart** section sets how the result looks:
 
 You can change the chart type and run the report again at any time. Your choice is part of the report settings, so it is kept when you save the report.
 
+<figure><img src="../../.gitbook/assets/analytics/chart-tab.png" alt="The Chart section of the report panel with the Title field, the Chart Type buttons and Order Data In" width="361"><figcaption><p>Choosing the chart type</p></figcaption></figure>
+
 ## Exporting a report
 
 To download a chart, click the menu button in the top-right corner of the chart and pick a format:
@@ -167,6 +177,8 @@ To download a chart, click the menu button in the top-right corner of the chart 
 * **Download SVG vector image**
 * **Download PDF document**
 * **Download CSV**, the data behind the chart as a spreadsheet file
+
+<figure><img src="../../.gitbook/assets/analytics/export-menu.png" alt="The export menu of a chart with the print and download options" width="800"><figcaption><p>Exporting a chart</p></figcaption></figure>
 
 A report shown as a table has a smaller menu at the top right of the table, **Export Chart As...**, with one option: **CSV File**.
 
@@ -205,6 +217,8 @@ Turn on **Make Global** to share the report with everyone who can view this repo
 Click **Save**. If you started from a saved report, **Save** updates it and **Save As** creates a new one.
 {% endstep %}
 {% endstepper %}
+
+<figure><img src="../../.gitbook/assets/analytics/save-report-form.png" alt="The Save Report form with Name, Description and the Make Global switch" width="361"><figcaption><p>Saving a report</p></figcaption></figure>
 
 ### Using saved reports
 
@@ -262,6 +276,8 @@ Under **Email**, add the recipients in **To:**, one at a time. Start typing to p
 Click **Create**. Superdesk shows "Report Schedule created!".
 {% endstep %}
 {% endstepper %}
+
+<figure><img src="../../.gitbook/assets/analytics/schedule-modal.png" alt="The schedule form with the Active switch, the When settings, the saved report and the email fields" width="474"><figcaption><p>Scheduling a report by email</p></figcaption></figure>
 
 Superdesk checks the schedules at the start of every hour. The hours are in the newsroom's time zone, set by your administrator, which may differ from your own.
 
