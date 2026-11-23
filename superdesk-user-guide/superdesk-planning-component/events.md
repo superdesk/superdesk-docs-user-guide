@@ -128,7 +128,7 @@ Contacts come from the Media Contacts list. See [Media Contacts](../administrati
 
 *Available since Superdesk 3.7.*
 
-An event can hold coverages of its own, without a planning item. You only see this when the event profile has the **Coverages** field. Your administrator sets this up; see [Fields](planning-administration.md#fields).
+An event can hold coverages of its own, without a planning item. This is the second way to plan coverage for an event; the first is a planning item linked to the event, see [Adding planning items from the event form](planning-items-and-coverages.md#adding-planning-items-from-the-event-form). Both can be used on the same event, but a newsroom usually picks one of the two. You only see this when the event profile has the **Coverages** field. Your administrator sets this up; see [Fields](planning-administration.md#fields).
 
 In the event form, the **Coverages** section comes after **Links** and before **Related Plannings**. To add a coverage, click the plus button next to **Coverages** and pick a type under **Coverage Type**, or choose **Advanced mode** to add several at once. You can also click **Add Coverage** in the editor's left bar. Each coverage shows as a card. Open it to fill in the details, the same way as for a planning item; see [Adding coverages](planning-items-and-coverages.md#adding-coverages). Then save the event.
 

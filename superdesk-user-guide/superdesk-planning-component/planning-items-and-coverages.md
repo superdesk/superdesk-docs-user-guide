@@ -38,7 +38,7 @@ You can plan coverage without leaving the event. Save the event first, then clic
 
 Add coverages to the card with the **Coverages** plus button, which lists the coverage types and an **Advanced mode** for the full coverage form. Each coverage shows as a card with its assignment and workflow state, for example **Unassigned** and **Draft**; open it to choose the desk and user. When you save the card, the planning item is saved and linked to the event.
 
-<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-embedded-planning.png" alt="An event in the editor with a planning item and two coverages added in the Related Plannings section" width="434"><figcaption><p>Planning coverage from inside the event</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-embedded-planning.png" alt="An event in the editor with a planning item and two coverages added in the Related Plannings section" width="476"><figcaption><p>Planning coverage from inside the event</p></figcaption></figure>
 
 ### Creating an event from a planning item
 

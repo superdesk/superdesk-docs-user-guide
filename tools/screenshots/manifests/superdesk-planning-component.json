@@ -653,12 +653,12 @@
       "width": 1440,
       "height": 1000
     },
-    "crop": "element: [data-test-id=\"editor-panel\"]",
+    "crop": "element: [data-test-id=\"editor--group__related_plannings\"]",
     "highlight": [
       ".related-plannings button >> nth=0",
       "[data-test-id=\"editor--planning-item__1\"]"
     ],
-    "notes": "Related Plannings in develop: each linked planning item is a collapsible card (Show more / Show less) holding the full planning form with its own Save button; the plus button next to the heading adds a new planning item filled from the event, and its Coverages plus button opens the coverage type menu. The existing Opera premiere planning item (seeded, linked) is item __0, the new one __1. Do not save. Cleanup cancels the editor and ignores the changes.",
+    "notes": "Related Plannings in develop: each linked planning item is a collapsible card (Show more / Show less) holding the full planning form with its own Save button; the plus button next to the heading adds a new planning item filled from the event, and its Coverages plus button opens the coverage type menu. The existing Opera premiere planning item (seeded, linked) is item __0, the new one __1. The crop is the Related Plannings group only, so the event's own Coverages section (a separate way of covering an event, see event-coverages) stays out of the shot. Do not save. Cleanup cancels the editor and ignores the changes.",
     "highlightStyle": "outline",
     "cleanup": [
       {
