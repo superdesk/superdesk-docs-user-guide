@@ -161,15 +161,28 @@ EVENTS = [
         "start": (1, "19:30"), "end": (1, "22:30"), "calendar": "entertainment",
         "location": "doc-location-opera-house",
     },
-    # An event with a coverage of its own (no planning item), for the event coverage shots. `coverages` uses
-    # the same shape as the PLANNING coverage specs below; only the "draft" state is supported here.
+    # Events with coverages of their own (no planning item), for the event coverage shots. They sit next
+    # week so that this week's list shows only events covered through planning items: a newsroom uses one
+    # way or the other, and the overview should not mix them. `coverages` uses the same shape as the
+    # PLANNING coverage specs below; only the "draft" state is supported here.
     {
         "guid": "doc-event-library", "slugline": "Library reopening", "name": "State Library reopens its reading room",
         "definition_short": "The renovated reading room opens to the public with a tour for the press.",
-        "start": (0, "13:00"), "end": (0, "15:00"), "calendar": "entertainment",
+        "start": (7, "13:00"), "end": (7, "15:00"), "calendar": "entertainment",
         "coverages": [
             {"id": "doc-cov-library-text", "type": "text", "slugline": "Library reopening",
-             "due": (0, "16:00"), "status": "planned", "assign": ("Culture", None, "draft")},
+             "due": (7, "16:00"), "status": "planned", "assign": ("Culture", None, "draft")},
+        ],
+    },
+    {
+        "guid": "doc-event-gallery", "slugline": "Gallery late night", "name": "Late night opening at the Art Gallery",
+        "definition_short": "The gallery stays open until midnight with talks, music and the new wing.",
+        "start": (8, "18:00"), "end": (8, "23:30"), "calendar": "entertainment",
+        "coverages": [
+            {"id": "doc-cov-gallery-picture", "type": "picture", "slugline": "Gallery late night",
+             "due": (8, "20:00"), "status": "planned", "assign": ("Culture", None, "draft")},
+            {"id": "doc-cov-gallery-text", "type": "text", "slugline": "Gallery late night",
+             "due": (8, "21:30"), "status": "planned", "assign": ("Culture", None, "draft")},
         ],
     },
 ]

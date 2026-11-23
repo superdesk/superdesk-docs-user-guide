@@ -148,7 +148,7 @@ Click a field to open its details on the right. Change the options, then click *
 
 Some fields are required by the system and always stay required: **Dates** for events, **Planning Date** and **Coverages** for planning items, and **Content Type** and **Scheduled** for coverages. Their details show "This field is required by the system".
 
-The event **Coverages** field is not required by the system. If you remove it from the event profile, the coverage filters, **Assigned to** and **Add to workflow** disappear from the **Events only** view.
+The event **Coverages** field is not required by the system. If you remove it from the event profile, everything about event coverages goes with it: the **Assigned to** filter and **Add to workflow** in the **Events only** view, the **Edit Coverages** action on events, and the coverage options in the **Advanced filters** panel for events (**Without Coverage**, **With Coverages only**, **Coverage Type** and **Coverage Assignment Status**).
 
 <figure><img src="../../.gitbook/assets/planning-administration/event-profile-fields.png" alt="The Manage Event Profile window with a field's details open" width="637"><figcaption><p>Editing a field in the event profile</p></figcaption></figure>
 

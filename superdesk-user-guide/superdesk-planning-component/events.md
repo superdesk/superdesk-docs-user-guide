@@ -134,7 +134,7 @@ In the event form, the **Coverages** section comes after **Links** and before **
 
 <figure><img src="../../.gitbook/assets/superdesk-planning-component/event-coverages.png" alt="An event in the editor with a text coverage for the Culture desk in its Coverages section" width="434"><figcaption><p>Coverages of the event itself</p></figcaption></figure>
 
-If your administrator turned on **Inline Add Coverages form**, the **Coverages** section shows a **Coverage Types** box instead of the plus button. Tick each type you need and pick its **Desk**, user, **Language** and **Status**. Then click **Add Coverage(s)**. The plus icon on a type adds a second coverage of that type. **Cancel** clears the box and folds it into an **Add Coverages** button; click that button to open the box again. When you pick a desk, the status changes to **Planned**, unless your Superdesk is set up to leave the status to you. A desk is required when you pick a user, or when your Superdesk adds coverages to the workflow automatically.
+If your administrator turned on **Inline Add Coverages form**, the **Coverages** section shows a **Coverage Types** box instead of the plus button. Tick each type you need and pick its configured fields, like **Desk**, user, **Language** and **Status**. Then click **Add Coverage(s)**. The plus icon on a type adds a second coverage of that type. **Cancel** clears the box and folds it into an **Add Coverages** button; click that button to open the box again. When you pick a desk, the status changes to **Planned**, unless your Superdesk is set up to leave the status to you. A desk is required when you pick a user, or when your Superdesk adds coverages to the workflow automatically.
 
 <figure><img src="../../.gitbook/assets/superdesk-planning-component/event-inline-coverage-form.png" alt="The Coverage Types box in the event form with Text ticked and the Culture desk picked" width="434"><figcaption><p>The inline form for adding coverages</p></figcaption></figure>
 
@@ -142,7 +142,9 @@ Once the event is saved, you see its coverages in other places too:
 
 * The event preview shows each coverage as a card, like the preview of a planning item.
 * In the list, the event row shows one icon per coverage that is due on that day. If a coverage is due on a day outside the event's dates, the event is also listed on that day.
-* **Edit Coverages** in the event's action menu changes the coverages without opening the editor. See [Editing coverages from the list](planning-items-and-coverages.md#editing-coverages-from-the-list).
+* **Edit Coverages** in the event's action menu changes the coverages without opening the editor (it opens the advanced mode window instead). See [Editing coverages from the list](planning-items-and-coverages.md#editing-coverages-from-the-list).
+
+<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-list-coverages.png" alt="The Events only view with two events, each row showing the icons of its own coverages" width="999"><figcaption><p>Events with their own coverages in the Events only view</p></figcaption></figure>
 
 ## Changing an event
 
