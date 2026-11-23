@@ -136,8 +136,7 @@ In the event form, the **Coverages** section comes after **Links** and before **
 
 If your administrator turned on **Inline Add Coverages form**, the **Coverages** section shows a **Coverage Types** box instead of the plus button. Tick each type you need and pick its **Desk**, user, **Language** and **Status**. Then click **Add Coverage(s)**. The plus icon on a type adds a second coverage of that type. **Cancel** clears the box and folds it into an **Add Coverages** button; click that button to open the box again. When you pick a desk, the status changes to **Planned**, unless your Superdesk is set up to leave the status to you. A desk is required when you pick a user, or when your Superdesk adds coverages to the workflow automatically.
 
-<!-- SCREENSHOT PENDING: needs a fourth capture run of superdesk-planning-component/event-inline-coverage-form (manifest fixed after three failed attempts) -->
-<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-inline-coverage-form.png" alt="The Coverage Types box in the event form with Text ticked and the Culture desk picked"><figcaption><p>The inline form for adding coverages</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/superdesk-planning-component/event-inline-coverage-form.png" alt="The Coverage Types box in the event form with Text ticked and the Culture desk picked" width="434"><figcaption><p>The inline form for adding coverages</p></figcaption></figure>
 
 Once the event is saved, you see its coverages in other places too:
 
