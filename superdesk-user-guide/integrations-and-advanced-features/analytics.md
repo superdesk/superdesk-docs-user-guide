@@ -81,6 +81,8 @@ In **Content Publishing**, **Group By** and **Subgroup By** also list the custom
 
 Each row of the chart is a story, labelled with its slugline. The bars show when the user had the story open for editing. Hover over a bar to see the slugline, headline, times and the actions taken. Click a bar to open a second chart below with the full timeline of that story, from creation to its last action, with one colour per user who touched it.
 
+<figure><img src="../../.gitbook/assets/analytics/user-activity-report.png" alt="A User Activity report for one user and one day, with a bar per story edited and the timeline of the selected story below it" width="999"><figcaption><p>The User Activity report with the timeline of one story</p></figcaption></figure>
+
 {% hint style="info" %}
 User Activity cannot be scheduled.
 {% endhint %}
