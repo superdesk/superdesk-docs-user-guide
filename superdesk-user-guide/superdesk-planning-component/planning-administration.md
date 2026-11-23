@@ -74,7 +74,7 @@ Event calendars, coverage types and the other lists used in Planning are vocabul
 | Vocabulary | Used for |
 |---|---|
 | Event Calendars | Grouping events, for example Sport, Finance or Entertainment. Users can filter the event list by calendar. |
-| Coverage content types | The coverage types users can add to a planning item (Text, Picture, Video and so on). Each entry says which content item type it stands for, and several entries can stand for text, for example Text and Infographic. There is one coverage profile per entry. |
+| Coverage content types | The coverage types users can add to an event or a planning item (Text, Picture, Video and so on). Each entry says which content item type it stands for, and several entries can stand for text, for example Text and Infographic. There is one coverage profile per entry. |
 | News Coverage Status | The status of a coverage, for example coverage intended or not intended. |
 | Event Occurence Status | How likely an event is to happen. |
 | Assignment Priority | The priority of an assignment. |
@@ -139,13 +139,16 @@ Click a field to open its details on the right. Change the options, then click *
 | Input Type | For text fields: **Single Line**, **Multi Line** or **Editor 3** (formatted text). |
 | Expandable | For multi-line fields: the box grows as users type. |
 | Formatting Options | For Editor 3 fields: the formatting buttons users get. |
-| Show in embedded form | The field is also shown when users create a planning item or a coverage from inside the event form. |
+| Show in embedded form | The field is also shown in the planning item cards inside the event form, and in the event cards inside the planning item form. |
+| Inline Add Coverages form | For the event **Coverages** field: shows a box for adding several coverages at once inside the event form, instead of the plus button. Off by default. See [Coverages on the event](events.md#coverages-on-the-event). |
 | All Day Toggle, Default Duration | For the event **Dates** field. |
 | Default Value | For **Priority**: the value a new item starts with. |
 | Read Only, Post planning items with Event, Cancel planning items with Event | For the event **Related Plannings** field: whether users can edit linked planning items from the event, and whether posting or cancelling the event does the same to its planning items. |
 | Multilingual | See [Multilingual events and planning items](#multilingual-events-and-planning-items). |
 
 Some fields are required by the system and always stay required: **Dates** for events, **Planning Date** and **Coverages** for planning items, and **Content Type** and **Scheduled** for coverages. Their details show "This field is required by the system".
+
+The event **Coverages** field is not required by the system. If you remove it from the event profile, everything about event coverages goes with it: the **Assigned to** filter and **Add to workflow** in the **Events only** view, the **Edit Coverages** action on events, and the coverage options in the **Advanced filters** panel for events (**Without Coverage**, **With Coverages only**, **Coverage Type** and **Coverage Assignment Status**).
 
 <figure><img src="../../.gitbook/assets/planning-administration/event-profile-fields.png" alt="The Manage Event Profile window with a field's details open" width="637"><figcaption><p>Editing a field in the event profile</p></figcaption></figure>
 
@@ -279,7 +282,7 @@ Pick a **Frequency**: **Hourly**, **Weekly** or **Monthly**. For weekly exports 
 {% step %}
 ### Choose where the article goes
 
-Under **Destination**, pick the **Desk**, the **Article Template** used to create the article, and the **Custom Layout** that formats the list of items. Click **Save**. The article is created on the working stage of that desk.
+Under **Destination**, pick the **Desk** (required), the **Article Template** used to create the article, and the **Custom Layout** that formats the list of items. Click **Save**. The article is created on the working stage of that desk.
 {% endstep %}
 {% endstepper %}
 

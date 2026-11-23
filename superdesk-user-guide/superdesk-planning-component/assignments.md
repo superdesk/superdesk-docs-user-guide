@@ -62,7 +62,7 @@ A coverage can be set to **Multiple Content** when several items are expected fo
 Sometimes the content already exists: you wrote the story before the coverage was planned, or you started it from scratch. In Monitoring or in the editor, open the article's action menu and choose:
 
 * **Link to Assignment** to attach the article to an existing assignment. Pick the assignment in the **Select an Assignment** window.
-* **Add to Planning** to add the article as a new coverage of a planning item.
+* **Add to Planning** to add the article as a new coverage of a planning item. It is only offered while the article is not linked to a coverage. To move the article to another coverage, use **Unlink as Coverage** first.
 * **Unlink as Coverage** to remove the link again.
 
 When an article is linked to an assignment, the **Planning Details** widget in the editor's right-hand panel shows the planning item and coverage. Its badge shows how many coverages the planning item has.

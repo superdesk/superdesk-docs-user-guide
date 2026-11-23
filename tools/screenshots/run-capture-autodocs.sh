@@ -11,6 +11,8 @@
 #
 #   SNAPSHOT=autodocs           newsroom and broadcasting pages (default), browser in Europe/London
 #   SNAPSHOT=autodocs-planning  Planning pages, browser in Australia/Sydney
+#   NO_RESTORE=1                capture the instance as it is, without any restore or seed (for data seeded by
+#                               hand, such as seed_analytics.py, whose statistics need an hour to build up)
 #   AUTODOCS_URL                instance URL
 #   E2E_CLIENT                  folder whose node_modules has playwright (capture.mjs --playwright-from);
 #                               SUPERDESK_E2E_CLIENT is accepted as well
@@ -69,7 +71,9 @@ while True:
     time.sleep(20)
 PY
 restore_args=(--restore --snapshot "$SNAPSHOT")
-if [ -n "$FRESH" ]; then
+if [ -n "$NO_RESTORE" ]; then
+  restore_args=()
+elif [ -n "$FRESH" ]; then
   if [ "$SNAPSHOT" = autodocs-planning ]; then
     python3 seed_planning.py --api-url "$API" --reset || exit 1
   else

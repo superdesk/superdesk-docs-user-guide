@@ -161,6 +161,30 @@ EVENTS = [
         "start": (1, "19:30"), "end": (1, "22:30"), "calendar": "entertainment",
         "location": "doc-location-opera-house",
     },
+    # Events with coverages of their own (no planning item), for the event coverage shots. They sit next
+    # week so that this week's list shows only events covered through planning items: a newsroom uses one
+    # way or the other, and the overview should not mix them. `coverages` uses the same shape as the
+    # PLANNING coverage specs below; only the "draft" state is supported here.
+    {
+        "guid": "doc-event-library", "slugline": "Library reopening", "name": "State Library reopens its reading room",
+        "definition_short": "The renovated reading room opens to the public with a tour for the press.",
+        "start": (7, "13:00"), "end": (7, "15:00"), "calendar": "entertainment",
+        "coverages": [
+            {"id": "doc-cov-library-text", "type": "text", "slugline": "Library reopening",
+             "due": (7, "16:00"), "status": "planned", "assign": ("Culture", None, "draft")},
+        ],
+    },
+    {
+        "guid": "doc-event-gallery", "slugline": "Gallery late night", "name": "Late night opening at the Art Gallery",
+        "definition_short": "The gallery stays open until midnight with talks, music and the new wing.",
+        "start": (8, "18:00"), "end": (8, "23:30"), "calendar": "entertainment",
+        "coverages": [
+            {"id": "doc-cov-gallery-picture", "type": "picture", "slugline": "Gallery late night",
+             "due": (8, "20:00"), "status": "planned", "assign": ("Culture", None, "draft")},
+            {"id": "doc-cov-gallery-text", "type": "text", "slugline": "Gallery late night",
+             "due": (8, "21:30"), "status": "planned", "assign": ("Culture", None, "draft")},
+        ],
+    },
 ]
 
 # Coverages: `assign` is (desk, username or None, state). State "draft" keeps the coverage out of the
@@ -557,6 +581,26 @@ class Seeder:
                 event["location"] = [self.location_ref(spec["location"])]
             self.prepopulate("events", [event])
             log("create", "event", spec["slugline"])
+            if spec.get("coverages"):
+                self.add_event_coverages(spec)
+
+    def add_event_coverages(self, spec):
+        """Add an event's own coverages with a PATCH, the way the Edit Coverages action saves them."""
+        path = "/events/" + quote(spec["guid"])
+        event = self.c.get(path)
+        coverages = list(event.get("coverages") or [])
+        for cov in spec["coverages"]:
+            # Same temporary id prefix as in assign_coverages, so the server treats the coverage as new.
+            doc = self.coverage_doc(cov, "draft", "tempId-" + cov["id"])
+            if cov.get("assign"):
+                desk, username, state = cov["assign"]
+                if state != "draft":
+                    raise SeedError("event coverages are only seeded as drafts: {}".format(cov["id"]))
+                doc["assigned_to"] = {"desk": self.desks[desk]["_id"],
+                                      "user": self.user_id(username) if username else None}
+            coverages.append(doc)
+            log("add", "coverage", "{} / {}".format(spec["slugline"], cov["type"]))
+        self.c.patch(path, {"coverages": coverages, "update_method": "single"}, event["_etag"])
 
     @staticmethod
     def coverage_doc(cov, workflow_status="draft", coverage_id=None):
