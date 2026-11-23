@@ -851,7 +851,7 @@ class Seeder:
         log("spike", "story", spec["slugline"])
 
     def ensure_stories(self):
-        specs = [story_spec(s) for s in STORIES]
+        specs = select_slice([story_spec(s) for s in STORIES], self.args.slice)
         items = {spec["key"]: self.ensure_created(spec) for spec in specs}
         for spec in specs:
             items[spec["key"]] = self.ensure_edited(spec, items[spec["key"]])
@@ -898,9 +898,23 @@ class Seeder:
               "run.".format(datetime.datetime.now(datetime.timezone.utc).strftime("%H:%M")))
 
 
+def select_slice(specs, slice_arg):
+    """The stories of slice N of M (`--slice N/M`): every M-th story starting at the N-th, so each slice mixes
+    desks, authors and actions. Without the option, every story."""
+    if not slice_arg:
+        return specs
+    try:
+        n, m = (int(x) for x in slice_arg.split("/"))
+    except ValueError:
+        raise SeedError("--slice expects N/M, for example 2/3, not {!r}".format(slice_arg))
+    if m < 1 or not 1 <= n <= m:
+        raise SeedError("--slice expects 1 <= N <= M, not {!r}".format(slice_arg))
+    return specs[n - 1::m]
+
+
 def print_plan(args):
-    print("API: {}  user: {}".format(args.api_url, args.user))
-    specs = [story_spec(s) for s in STORIES]
+    print("API: {}  user: {}  slice: {}".format(args.api_url, args.user, args.slice or "all"))
+    specs = select_slice([story_spec(s) for s in STORIES], args.slice)
     for spec in specs:
         extra = []
         if spec.get("via"):
@@ -924,6 +938,10 @@ def parse_args(argv):
     parser.add_argument("--user", default="admin", help="administrator username (default: admin)")
     parser.add_argument("--password", default="admin", help="administrator password (default: admin)")
     parser.add_argument("--dry-run", action="store_true", help="print the plan without connecting to the server")
+    parser.add_argument("--slice", metavar="N/M",
+                        help="seed only slice N of M of the stories (every M-th story from the N-th). The server "
+                             "dates everything the day it runs, so one slice a day spreads the desk activity "
+                             "over several days; the other slices are untouched and a slice can be run again")
     return parser.parse_args(argv)
 
 
