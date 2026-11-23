@@ -689,7 +689,7 @@
         "action": "settle"
       }
     ],
-    "padding": 0
+    "padding": 16
   },
   {
     "file": "superdesk-planning-component/planning-editor-coverage.png",
