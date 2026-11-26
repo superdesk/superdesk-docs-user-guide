@@ -110,7 +110,7 @@ def draw_badge(canvas, box, label, s, center=None):
     # By default the badge sits on the top-left corner of an outline drawn around
     # the same box. An explicit centre (input pixels) places it anywhere, for
     # example outside a control so it does not cover it. Either way it is kept
-    # fully inside the screenshot so the frame does not clip it.
+    # fully inside the image.
     if center is not None:
         cx, cy = center
     else:
@@ -135,11 +135,18 @@ def draw_badge(canvas, box, label, s, center=None):
     draw.text((cx - (left + right) / 2, cy - (top + bottom) / 2), text, font=font, fill=(255, 255, 255))
 
 
-def draw_highlights(image, highlights, s):
+def draw_highlights(image, highlights, s, origin=(0, 0)):
+    """Draw highlights on image. Boxes are in screenshot pixels; origin is where
+    the screenshot's top-left corner sits on image."""
+    ox, oy = origin
     for item in highlights:
-        box, kind = item["box"], item.get("style", "outline")
+        x, y, w, h = item["box"]
+        box, kind = (x + ox, y + oy, w, h), item.get("style", "outline")
+        center = item.get("center")
+        if center is not None:
+            center = (center[0] + ox, center[1] + oy)
         if kind == "badge":
-            draw_badge(image, box, item.get("label"), s, item.get("center"))
+            draw_badge(image, box, item.get("label"), s, center)
         elif kind == "outline":
             draw_outline(image, box, s)
         else:
@@ -173,7 +180,6 @@ def shadow_layer(canvas_size, mask, position, offset, blur, opacity):
 def style_screenshot(image, highlights=(), preset="default", scale=2):
     s = scale
     shot = image.convert("RGBA")
-    draw_highlights(shot, highlights, s)
 
     mask = rounded_mask(shot.size, CORNER_RADIUS * s)
     shot.putalpha(ImageChops.multiply(shot.getchannel("A"), mask))
@@ -191,7 +197,13 @@ def style_screenshot(image, highlights=(), preset="default", scale=2):
         canvas = Image.composite(Image.new("RGB", canvas_size, (20, 28, 40)), canvas, shadow)
 
     canvas.paste(shot, position, shot)
-    return canvas
+
+    # Highlights go on last, in canvas space: an outline around an element that
+    # touches the screenshot's edge extends into the padding. Drawn on the
+    # screenshot itself it would be cut off at that edge and by the rounded corners.
+    canvas = canvas.convert("RGBA")
+    draw_highlights(canvas, highlights, s, position)
+    return canvas.convert("RGB")
 
 
 def main(argv=None):
