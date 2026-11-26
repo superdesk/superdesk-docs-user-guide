@@ -28,19 +28,43 @@
       "[data-test-id=\"workspace-navigation\"]",
       "[data-test-id=\"opened-articles-bar\"]"
     ],
-    "highlightStyle": "callout",
+    "highlightStyle": [
+      "badge",
+      "badge",
+      "callout",
+      "callout",
+      "callout"
+    ],
     "appConfig": {
       "isTestEnvironment": false
     },
     "clearLocalStorage": [
       "sd-filter"
     ],
-    "notes": "Numbered callouts 1 to 5 must match the numbered list on the page: 1 main menu button, 2 Desks menu, 3 right part of the top bar (bell and avatar), 4 Workspace Panel, 5 bar at the bottom. isTestEnvironment is switched off so the top bar has its normal colour instead of the e2e test colour. Replaces the legacy 'image336' screenshot. The evaluate step pushes the Workspace Panel and the Monitoring view down by 56 px, so the badges of 1 to 3 sit in an empty band under the top bar instead of on the controls; badge 4 sits on the panel's top-right corner and badge 5 above the bottom bar (badgeAnchor per item).",
+    "notes": "Numbered highlights 1 to 5 must match the numbered list on the page: 1 main menu button, 2 Desks menu, 3 right part of the top bar (bell and avatar), 4 Workspace Panel, 5 bar at the bottom. isTestEnvironment is switched off so the top bar has its normal colour instead of the e2e test colour. Replaces the legacy 'image336' screenshot. The evaluate step pushes the Workspace Panel and the Monitoring view down by 56 px, so the badges of 1 to 3 sit in an empty band under the top bar instead of on the controls: 1 and 2 are plain badges hanging off the bottom edge of their controls, 3 to 5 are callouts, badge 3 below the top bar, badge 4 just below the panel and badge 5 above the bottom bar (highlightStyle and badgeAnchor per item). Five outlines around whole screen regions made the figure too busy, so the two small controls get a badge only.",
     "badgeAnchor": [
+      {
+        "at": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          6
+        ]
+      },
+      {
+        "at": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          6
+        ]
+      },
       "below",
       "below",
-      "below",
-      "top-right",
       "above"
     ]
   },
