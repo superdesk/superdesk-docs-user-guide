@@ -119,7 +119,15 @@
       }
     ],
     "viewport": "1920x1080",
-    "crop": "full",
+    "crop": {
+      "element": "[data-test-id=\"authoring-topbar\"]",
+      "plus": [
+        ".authoring-header",
+        "[data-test-id=\"authoring-field\"][data-test-value=\"abstract\"]",
+        "[data-test-id=\"navigation-tabs\"]"
+      ]
+    },
+    "padding": 0,
     "highlight": [
       "[data-test-id=\"authoring-topbar\"]",
       ".authoring-sticky",
@@ -130,8 +138,57 @@
       ],
       "[data-test-id=\"navigation-tabs\"]"
     ],
-    "highlightStyle": "callout",
-    "notes": "Numbered callouts 1 to 5 must match the numbered list on the page: 1 top bar, 2 status bar (.authoring-sticky: state label, Created, Modified, view controls), 3 header fields (.authoring-header), 4 content fields (body field), 5 widget bar ([data-test-id=navigation-tabs]). Full screen so the monitoring list is visible on the left. If the Info panel covers too much, skip opening it. Capture: 1920x1080 so the header fields and the first content fields (headline, abstract) fit; callout 4 boxes the headline and abstract because the body is below the fold. The Info panel and a click into the body were dropped: both pushed the header out of view."
+    "highlightStyle": [
+      "badge",
+      "badge",
+      "callout",
+      "callout",
+      "badge"
+    ],
+    "badgeAnchor": [
+      {
+        "at": [
+          0,
+          0.5
+        ],
+        "offset": [
+          -20,
+          0
+        ]
+      },
+      {
+        "at": [
+          0,
+          0.5
+        ],
+        "offset": [
+          -20,
+          0
+        ]
+      },
+      {
+        "at": [
+          0,
+          0.5
+        ],
+        "offset": [
+          -20,
+          0
+        ]
+      },
+      {
+        "at": [
+          0,
+          0.5
+        ],
+        "offset": [
+          -20,
+          0
+        ]
+      },
+      "below"
+    ],
+    "notes": "Numbered highlights 1 to 5 must match the numbered list on the page: 1 top bar, 2 status bar (.authoring-sticky: state label, Created, Modified, view controls), 3 header fields (.authoring-header), 4 content fields (body field), 5 widget bar ([data-test-id=navigation-tabs]). Cropped from the editor top bar down to the abstract field, plus the widget bar: the monitoring list and the app bar said nothing about the editor and halved the figure. The top bar, status bar and widget bar are badges only, the header and content fields callouts: the five regions touch, so five outlines collided. Badges 1 to 3 sit in the padding at the left edge of their region, badge 4 in the pane margin, badge 5 under the widget bar. If the Info panel covers too much, skip opening it. Capture: 1920x1080 so the header fields and the first content fields (headline, abstract) fit; callout 4 boxes the headline and abstract because the body is below the fold. The Info panel and a click into the body were dropped: both pushed the header out of view."
   },
   {
     "file": "creating-and-editing-content-items/topbar.png",

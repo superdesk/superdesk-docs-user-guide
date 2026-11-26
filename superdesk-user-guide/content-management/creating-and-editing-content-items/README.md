@@ -141,7 +141,7 @@ Every item you have open appears as a tab in the opened-items bar at the bottom 
 
 The editing screen, also called authoring, opens to the right of the list.
 
-<figure><img src="../../../.gitbook/assets/creating-and-editing-content-items/authoring-overview.png" alt="The authoring screen with the top bar, the status bar, the header fields, the content fields and the widget bar numbered 1 to 5" width="1110"><figcaption><p>The parts of the authoring screen</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/creating-and-editing-content-items/authoring-overview.png" alt="The authoring screen with the top bar, the status bar, the header fields, the content fields and the widget bar numbered 1 to 5" width="629"><figcaption><p>The parts of the authoring screen</p></figcaption></figure>
 
 1. The **top bar**, with the item's desk and stage, the action buttons and the **Send to / Publish** button.
 2. The **status bar**, with the item's state, who created it, when it was last changed, and the view controls.

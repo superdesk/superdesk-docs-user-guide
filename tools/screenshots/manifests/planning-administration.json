@@ -252,11 +252,13 @@
       "element": ".p-dialog"
     },
     "highlight": [
-      "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.multilingual\"]",
-      "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.languages\"]",
-      "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.default_language\"]"
+      [
+        "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.multilingual\"]",
+        "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.languages\"]",
+        "[data-test-id=\"content-field--editor\"] [data-test-id=\"field-schema.default_language\"]"
+      ]
     ],
-    "notes": "multilingual_events.spec.ts is skipped upstream as flaky, so add generous waits after each tree select. The field editor buttons are Cancel / Apply (the page object still says Save). Discard All afterwards.",
+    "notes": "multilingual_events.spec.ts is skipped upstream as flaky, so add generous waits after each tree select. The field editor buttons are Cancel / Apply (the page object still says Save). Discard All afterwards. One box around the three multilingual settings: separate outlines collide.",
     "highlightStyle": "outline",
     "cleanup": [
       {

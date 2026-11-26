@@ -1507,7 +1507,8 @@ async function computeClip(ctx, crop, entry, vp) {
 }
 
 async function computeHighlights(ctx, entry, clip) {
-    const hl = parseHighlight(entry.highlight, entry.highlightStyle ?? null);
+    const styles = Array.isArray(entry.highlightStyle) ? entry.highlightStyle : null;
+    const hl = parseHighlight(entry.highlight, styles ? null : entry.highlightStyle ?? null);
     const out = [];
 
     for (const note of hl.notes) {
@@ -1542,6 +1543,12 @@ async function computeHighlights(ctx, entry, clip) {
             continue;
         }
 
+        // The outline is drawn around the visible part only, so it would frame a piece of the
+        // element as if it were the whole of it.
+        if (x2 - x1 < b.width - 1 || y2 - y1 < b.height - 1) {
+            ctx.warn(`highlight "${item.raw}" is cut by the crop (${Math.round(b.width)}x${Math.round(b.height)} element, ${Math.round(x2 - x1)}x${Math.round(y2 - y1)} visible); expand the crop so the whole element is in the shot`);
+        }
+
         const box = [
             Math.round((x1 - clip.x) * DPR),
             Math.round((y1 - clip.y) * DPR),
@@ -1552,15 +1559,25 @@ async function computeHighlights(ctx, entry, clip) {
         // style.py puts a badge on the top-left corner of its box unless the entry gives an
         // explicit centre. badgeAnchor "above" / "below" centres the badge just outside the
         // control; "rows" picks above for controls in the upper half of the crop and below for
-        // the lower half, which suits a two-row toolbar. "top-right" moves the corner instead.
+        // the lower half, which suits a two-row toolbar. {"at": [fx, fy], "offset": [dx, dy]} centres
+        // it at a fraction of the control's box ([0.5, 1] is the middle of its bottom edge) moved by
+        // an offset in CSS px. "top-right" moves the corner instead.
         // The anchor applies to the badge of a callout too; its outline keeps the full box.
         // An array gives one anchor per highlight item, in highlight order (null keeps the corner).
+        // highlightStyle may be an array too, one style per item, for a figure that mixes plain
+        // badges on small controls with callouts around larger areas.
         let center = null;
         let badgeBox = box;
         const anchor = Array.isArray(entry.badgeAnchor) ? entry.badgeAnchor[item.position - 1] : entry.badgeAnchor;
-        const numbered = hl.style === 'badge' || hl.style === 'callout';
+        const style = styles ? styles[item.position - 1] ?? hl.style : hl.style;
+        const numbered = style === 'badge' || style === 'callout';
 
-        if (numbered && (anchor === 'above' || anchor === 'below' || anchor === 'rows')) {
+        if (numbered && anchor != null && typeof anchor === 'object' && Array.isArray(anchor.at)) {
+            const [fx, fy] = anchor.at;
+            const [dx, dy] = anchor.offset ?? [0, 0];
+
+            center = [Math.round((x1 + (x2 - x1) * fx + dx - clip.x) * DPR), Math.round((y1 + (y2 - y1) * fy + dy - clip.y) * DPR)];
+        } else if (numbered && (anchor === 'above' || anchor === 'below' || anchor === 'rows')) {
             const midY = (y1 + y2) / 2;
             const above = anchor === 'above' || (anchor === 'rows' && midY < clip.y + clip.height / 2);
             const cx = (x1 + x2) / 2;
@@ -1572,7 +1589,7 @@ async function computeHighlights(ctx, entry, clip) {
         }
 
         // "callout" is a numbered outline: style.py draws it as an outline plus a badge on the same box
-        if (hl.style === 'callout') {
+        if (style === 'callout') {
             const badge = {box: badgeBox, label: String(item.position), style: 'badge'};
 
             if (center != null) {
@@ -1582,7 +1599,7 @@ async function computeHighlights(ctx, entry, clip) {
             out.push({box, label: null, style: 'outline'});
             out.push(badge);
         } else {
-            const entryOut = {box: hl.style === 'badge' ? badgeBox : box, label: hl.style === 'badge' ? String(item.position) : null, style: hl.style};
+            const entryOut = {box: style === 'badge' ? badgeBox : box, label: style === 'badge' ? String(item.position) : null, style};
 
             if (center != null) {
                 entryOut.center = center;
@@ -1949,9 +1966,9 @@ function dryRun(shots) {
 
         process.stdout.write(`  crop: ${crop.kind} ${crop.targets.map(describeTarget).join(' + ')}${Object.keys(crop.expand ?? {}).length ? ` expand ${JSON.stringify(crop.expand)}` : ''}${crop.maxHeight ? ` maxHeight ${crop.maxHeight}` : ''}${crop.notes.length ? `  (${crop.notes.join('; ')})` : ''}\n`);
 
-        const hl = parseHighlight(entry.highlight, entry.highlightStyle ?? null);
+        const hl = parseHighlight(entry.highlight, Array.isArray(entry.highlightStyle) ? null : entry.highlightStyle ?? null);
 
-        process.stdout.write(`  highlight (${hl.style}): ${hl.items.map((i) => `${i.position}=${i.target ? describeTarget(i.target) : 'UNREADABLE'}`).join(' | ') || 'none'}\n`);
+        process.stdout.write(`  highlight (${Array.isArray(entry.highlightStyle) ? entry.highlightStyle.join('/') : hl.style}): ${hl.items.map((i) => `${i.position}=${i.target ? describeTarget(i.target) : 'UNREADABLE'}`).join(' | ') || 'none'}\n`);
     }
 
     process.stdout.write(`\n${shots.length} shot(s), ${unknown} step clause(s) with no known shape\n`);

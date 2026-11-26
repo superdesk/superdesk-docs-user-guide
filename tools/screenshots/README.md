@@ -45,8 +45,8 @@ A JSON array; coordinates are in the input image's pixels (2x space for 2x captu
 ]
 ```
 
-- `outline`: a red rounded rectangle around `box`, with a small gap so it does not touch the element.
-- `badge`: a red numbered circle on the top-left corner of `box`. Pair it with an `outline` on the same box to get a numbered callout, or use it alone to mark an area. Badges are kept inside the screenshot when the box touches its edge.
+- `outline`: a red rounded rectangle around `box`, with a small gap so it does not touch the element. Highlights are drawn on the framed image, so an outline around an element at the screenshot's edge runs into the padding instead of being cut off. Two outlines whose elements are closer than twice the outline's reach grow less towards each other and keep a small gap; when there is no room even for the stroke the script warns, and the manifest should box the group as one (a nested list of selectors) or use a badge.
+- `badge`: a red numbered circle on the top-left corner of `box`. Pair it with an `outline` on the same box to get a numbered callout, or use it alone to mark an area. Badges are kept inside the framed image.
 - `center` (badges only, optional): `[x, y]` in the same pixel space as `box`. When present the badge is centred there instead of on the box corner, so it can sit outside a small control (above or below it) without covering it. `box` still names the element the badge refers to. Without `center` the behaviour is unchanged.
 
 ## Example

@@ -284,10 +284,12 @@
     "viewport": "1440x900",
     "crop": "full",
     "highlight": [
-      "#order_button",
-      "#order_selector"
+      [
+        "#order_button",
+        "#order_selector"
+      ]
     ],
-    "notes": "Filter options: All, Personal, Private (needs the personal_template privilege, admin has it), No Desk, then one entry per desk (templates/constants.ts, TemplatesDirective). Cards show Template type, Desk(s), and for scheduled templates Sched. Desk / Stage, Automated item creation and Scheduled Time(s). If the open dropdown covers the cards too much, take the shot with the dropdown closed and highlight #order_button only."
+    "notes": "Filter options: All, Personal, Private (needs the personal_template privilege, admin has it), No Desk, then one entry per desk (templates/constants.ts, TemplatesDirective). Cards show Template type, Desk(s), and for scheduled templates Sched. Desk / Stage, Automated item creation and Scheduled Time(s). If the open dropdown covers the cards too much, take the shot with the dropdown closed and highlight #order_button only. One box around the filter button and its open list: separate outlines collide."
   },
   {
     "file": "content-configuration/template-scheduling.png",

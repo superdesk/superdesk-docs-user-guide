@@ -28,6 +28,9 @@ CONTACT_SHADOW_OPACITY = 0.14
 OUTLINE_WIDTH = 3
 OUTLINE_GAP = 6
 OUTLINE_RADIUS = 8
+# Least space between two neighbouring outlines. Controls closer than twice the
+# outline's reach get outlines that grow less on their facing sides.
+OUTLINE_SEPARATION = 4
 BADGE_RADIUS = 14
 BADGE_RING = 2
 BADGE_FONT_SIZE = 15
@@ -85,17 +88,21 @@ def draw_supersampled(canvas, bounds, paint):
     canvas.alpha_composite(overlay, (left, top))
 
 
-def draw_outline(canvas, box, s):
+def draw_outline(canvas, box, s, grow=None):
+    """grow: how far the outline reaches outside box on each side, in 1x pixels
+    as (left, top, right, bottom). Left out, it is the gap plus the stroke."""
     x, y, w, h = box
     width = OUTLINE_WIDTH * s
     # Pillow strokes inward from the rectangle, so the stroke is added to the gap.
-    grow = (OUTLINE_GAP + OUTLINE_WIDTH) * s
-    rect = (x - grow, y - grow, x + w + grow, y + h + grow)
+    reach = OUTLINE_GAP + OUTLINE_WIDTH
+    left, top, right, bottom = (g * s for g in (grow or (reach,) * 4))
+    rect = (x - left, y - top, x + w + right, y + h + bottom)
+    radius = (OUTLINE_RADIUS + min(reach, left / s, top / s, right / s, bottom / s)) * s
 
     def paint(draw, t):
         draw.rounded_rectangle(
             t(*rect),
-            radius=(OUTLINE_RADIUS + OUTLINE_GAP + OUTLINE_WIDTH) * s * SUPERSAMPLE,
+            radius=radius * SUPERSAMPLE,
             outline=ACCENT,
             width=round(width * SUPERSAMPLE),
         )
@@ -110,7 +117,7 @@ def draw_badge(canvas, box, label, s, center=None):
     # By default the badge sits on the top-left corner of an outline drawn around
     # the same box. An explicit centre (input pixels) places it anywhere, for
     # example outside a control so it does not cover it. Either way it is kept
-    # fully inside the screenshot so the frame does not clip it.
+    # fully inside the image.
     if center is not None:
         cx, cy = center
     else:
@@ -135,13 +142,58 @@ def draw_badge(canvas, box, label, s, center=None):
     draw.text((cx - (left + right) / 2, cy - (top + bottom) / 2), text, font=font, fill=(255, 255, 255))
 
 
-def draw_highlights(image, highlights, s):
+def outline_reach(boxes, s, warn=lambda message: None):
+    """Per-outline reach (left, top, right, bottom) in 1x pixels. Two outlines
+    whose controls are closer than twice the default reach would overlap, so both
+    grow less towards each other and keep OUTLINE_SEPARATION between them. When
+    even that leaves no room for the stroke, the outlines stay as they are and a
+    warning says so: the manifest should box the group as one, or use a badge."""
+    reach = OUTLINE_GAP + OUTLINE_WIDTH
+    grows = [[reach] * 4 for _ in boxes]
+    for i in range(len(boxes)):
+        for j in range(i + 1, len(boxes)):
+            a, b = boxes[i], boxes[j]
+            if a == b:
+                continue
+            # Positive gaps in 1x pixels along each axis; negative means overlap.
+            gap_x = max(b[0] - (a[0] + a[2]), a[0] - (b[0] + b[2])) / s
+            gap_y = max(b[1] - (a[1] + a[3]), a[1] - (b[1] + b[3])) / s
+            gap = max(gap_x, gap_y)
+            if gap >= 2 * reach + OUTLINE_SEPARATION:
+                continue
+            if gap < 0:
+                warn(f"outlines {i + 1} and {j + 1} overlap; box the group as one or use a badge")
+                continue
+            # Index of the facing side on a and on b: 0 left, 1 top, 2 right, 3 bottom.
+            if gap_x >= gap_y:
+                a_side, b_side = (2, 0) if b[0] >= a[0] + a[2] else (0, 2)
+            else:
+                a_side, b_side = (3, 1) if b[1] >= a[1] + a[3] else (1, 3)
+            each = (gap - OUTLINE_SEPARATION) / 2
+            if each < OUTLINE_WIDTH:
+                warn(f"outlines {i + 1} and {j + 1} have no room between them; box the group as one or use a badge")
+                continue
+            grows[i][a_side] = min(grows[i][a_side], each)
+            grows[j][b_side] = min(grows[j][b_side], each)
+    return grows
+
+
+def draw_highlights(image, highlights, s, origin=(0, 0), warn=lambda message: None):
+    """Draw highlights on image. Boxes are in screenshot pixels; origin is where
+    the screenshot's top-left corner sits on image."""
+    ox, oy = origin
+    outlines = [item for item in highlights if item.get("style", "outline") == "outline"]
+    grows = outline_reach([tuple(item["box"]) for item in outlines], s, warn)
     for item in highlights:
-        box, kind = item["box"], item.get("style", "outline")
+        x, y, w, h = item["box"]
+        box, kind = (x + ox, y + oy, w, h), item.get("style", "outline")
+        center = item.get("center")
+        if center is not None:
+            center = (center[0] + ox, center[1] + oy)
         if kind == "badge":
-            draw_badge(image, box, item.get("label"), s, item.get("center"))
+            draw_badge(image, box, item.get("label"), s, center)
         elif kind == "outline":
-            draw_outline(image, box, s)
+            draw_outline(image, box, s, grows[outlines.index(item)])
         else:
             raise ValueError(f"unknown highlight style {kind!r}")
 
@@ -170,10 +222,9 @@ def shadow_layer(canvas_size, mask, position, offset, blur, opacity):
     return layer.filter(ImageFilter.GaussianBlur(blur))
 
 
-def style_screenshot(image, highlights=(), preset="default", scale=2):
+def style_screenshot(image, highlights=(), preset="default", scale=2, warn=lambda message: None):
     s = scale
     shot = image.convert("RGBA")
-    draw_highlights(shot, highlights, s)
 
     mask = rounded_mask(shot.size, CORNER_RADIUS * s)
     shot.putalpha(ImageChops.multiply(shot.getchannel("A"), mask))
@@ -191,7 +242,13 @@ def style_screenshot(image, highlights=(), preset="default", scale=2):
         canvas = Image.composite(Image.new("RGB", canvas_size, (20, 28, 40)), canvas, shadow)
 
     canvas.paste(shot, position, shot)
-    return canvas
+
+    # Highlights go on last, in canvas space: an outline around an element that
+    # touches the screenshot's edge extends into the padding. Drawn on the
+    # screenshot itself it would be cut off at that edge and by the rounded corners.
+    canvas = canvas.convert("RGBA")
+    draw_highlights(canvas, highlights, s, position, warn)
+    return canvas.convert("RGB")
 
 
 def main(argv=None):
@@ -204,7 +261,13 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     with Image.open(args.input) as image:
-        result = style_screenshot(image, load_highlights(args.highlights), args.preset, args.scale)
+        result = style_screenshot(
+            image,
+            load_highlights(args.highlights),
+            args.preset,
+            args.scale,
+            warn=lambda message: print(f"warning: {message}", file=sys.stderr),
+        )
     result.save(args.output, "PNG", optimize=True)
 
 

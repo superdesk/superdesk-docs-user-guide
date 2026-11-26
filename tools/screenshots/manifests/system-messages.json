@@ -112,10 +112,12 @@
     "viewport": "1440x600",
     "crop": "full",
     "highlight": [
-      "[data-test-id=\"list-page--items\"] .sd-list-item:has-text(\"Planned maintenance tonight\") button[aria-label=\"Edit\"]",
-      "[data-test-id=\"list-page--items\"] .sd-list-item:has-text(\"Planned maintenance tonight\") button[aria-label=\"Remove\"]"
+      [
+        "[data-test-id=\"list-page--items\"] .sd-list-item:has-text(\"Planned maintenance tonight\") button[aria-label=\"Edit\"]",
+        "[data-test-id=\"list-page--items\"] .sd-list-item:has-text(\"Planned maintenance tonight\") button[aria-label=\"Remove\"]"
+      ]
     ],
     "highlightStyle": "outline",
-    "notes": "The active warning message also shows as a toast at the top of this page; that is fine and shows the result, or close it before the shot with the toast's close button (button.sd-toast__actions). The list is sorted by title, ascending. Each row shows the title, the message as plain text and a coloured style label (Info, Success, Warning, Alert); Edit (pencil) and Remove (bin) icons appear in the row's action area. The list page uses data-test-ids from the generic list page (scripts/core/ui/components/ListPage/generic-list-page.tsx)."
+    "notes": "The active warning message also shows as a toast at the top of this page; that is fine and shows the result, or close it before the shot with the toast's close button (button.sd-toast__actions). The list is sorted by title, ascending. Each row shows the title, the message as plain text and a coloured style label (Info, Success, Warning, Alert); Edit (pencil) and Remove (bin) icons appear in the row's action area. The list page uses data-test-ids from the generic list page (scripts/core/ui/components/ListPage/generic-list-page.tsx). One box around the Edit and Remove icons: separate outlines collide."
   }
 ]
