@@ -53,7 +53,11 @@ def style_tree(raw_dir, styled_dir, scale, force):
         output.parent.mkdir(parents=True, exist_ok=True)
         with Image.open(png) as image:
             result = style.style_screenshot(
-                image, style.load_highlights(highlights_path), read_preset(meta_path), scale
+                image,
+                style.load_highlights(highlights_path),
+                read_preset(meta_path),
+                scale,
+                warn=lambda message: print(f"warning: {png}: {message}", file=sys.stderr),
             )
         result.save(output, "PNG", optimize=True)
         print(f"styled {output}")

@@ -148,11 +148,13 @@
       ]
     },
     "highlight": [
-      "#send-correction-btn",
-      "#cancelAuthoringBtn"
+      [
+        "#send-correction-btn",
+        "#cancelAuthoringBtn"
+      ]
     ],
     "highlightStyle": "outline",
-    "notes": "Plain correction (action 'correct'): the top bar shows 'Send Correction' (#send-correction-btn) and 'Cancel' (#cancelAuthoringBtn) and no Save or Close button. The editor's note is replaced with 'In the story \"ELECTION-POLL\" sent at: ... This is a corrected repeat.' (OVERRIDE_EDNOTE_FOR_CORRECTIONS default True); include the editor's note field in the crop if it is in view. Never click Send Correction: it publishes a correction and changes the seeded data for later shots.",
+    "notes": "Plain correction (action 'correct'): the top bar shows 'Send Correction' (#send-correction-btn) and 'Cancel' (#cancelAuthoringBtn) and no Save or Close button. The editor's note is replaced with 'In the story \"ELECTION-POLL\" sent at: ... This is a corrected repeat.' (OVERRIDE_EDNOTE_FOR_CORRECTIONS default True); include the editor's note field in the crop if it is in view. Never click Send Correction: it publishes a correction and changes the seeded data for later shots. One box around the two buttons: separate outlines collide.",
     "padding": 0
   },
   {
