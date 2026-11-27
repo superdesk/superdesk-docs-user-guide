@@ -145,6 +145,8 @@ The more complete your metadata is, the easier it will be to search for and upda
 
 **Takekey** - A metadata field, shown as **Take key**, that tells where an item sits in a sequence. When you create an update of a published item, Superdesk fills it in: "update" for the first update, then "2nd update", "3rd update" and so on. See [Updates](../content-management/updates-corrections-kills-and-takedowns/updates.md).
 
+**Update** - A new story that follows on from a published one, for example when news develops. You create it with **Update** in the top bar of the published story, or with **Publishing actions** > **Update** in the item actions menu. The original stays published and subscribers receive the update as the next version of the same story. Some parts of Superdesk, such as the Analytics filters, call an update a **rewrite**. See [Updates](../content-management/updates-corrections-kills-and-takedowns/updates.md).
+
 **User icon** - The round icon in the top-right corner of the Superdesk interface. It shows your picture or, if you have not added one, your initials. Click it to see your name and username and the **Manage profile** and **Sign out** buttons. Your notifications are under the bell icon to its left; a number on the bell shows how many you have not read yet. See [Your profile and preferences](../navigating-superdesk/your-profile-and-preferences.md#the-user-menu).
 
 <figure><img src="../../.gitbook/assets/superdesk-glossary-and-terminology-guide/user-menu.png" alt="The bell icon and the open user menu in the top-right corner, with Manage profile and Sign out" width="620"><figcaption><p>The notifications bell and the user menu</p></figcaption></figure>

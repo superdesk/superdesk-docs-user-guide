@@ -137,3 +137,23 @@ python3 seed_broadcasting.py --dry-run                              # print the 
 - **Locks**: every run releases rundown and rundown item locks left behind by a capture that did not close the rundown (it takes the lock over first, as the Unlock button does).
 
 Rundown names carry the date in the client's `view.dateformat` (DD/MM/YYYY on the e2e client); the date format of a template must be one the template editor offers for that client format. Without `/api/shows` (no `apps.rundowns`) the script logs a `skip` line and exits without changes. Every run is idempotent: shows, templates and rundowns are matched by name, rundown items by title inside their rundown. A snapshot restore removes everything, so run it again after `seed.py`. The rundowns are dated relative to the day the script runs: seed again on the day of the capture.
+
+## Analytics: `seed_analytics.py`
+
+The Analytics page (`analytics`) is captured on the docs instance, which has superdesk-analytics with archive statistics and scheduled reports on. `seed_analytics.py` adds the published content and history the reports draw (standard library only, data at the top of the script, same login and options as `seed_broadcasting.py`). It runs on top of `seed.py` (the `autodocs` snapshot already has that seed):
+
+```bash
+curl -X POST https://sd-autodocs.test.superdesk.org/api/restore_record -H 'Content-Type: application/json' -d '{"name": "autodocs"}'
+python3 seed_analytics.py --api-url https://sd-autodocs.test.superdesk.org/api
+# after the next full hour (archive statistics), capture without a restore:
+NO_RESTORE=1 ./run-capture-autodocs.sh analytics
+python3 seed_analytics.py --dry-run                  # print the plan, no requests
+```
+
+- **Stories**: 41 text stories on Politics (14), Business (10), Sports (9) and Culture (8), written by the seeded users across all six categories. 39 are published; of those, 5 are corrected, 2 killed and 4 updated (rewritten, and the rewrite published), so Content Publishing and Publishing Performance show several groups and every action colour.
+- **Desk Activity** (Politics): besides the stories created and published there, `BORDER-TALKS` and `TRADE-ENVOY` are created on World and sent to Politics, `PENSION-VOTE` and `EMBASSY-MOVE` are sent to World and back before they are published, and `SPEAKER-NOTES` and `PARTY-CONGRESS` are spiked.
+- **User Activity**: `marenholt` opens seven Politics stories one after the other, adds their last paragraph and closes them again after 20 to 40 seconds, before they are published. The report draws one bar per editing session (lock to unlock), so the script sleeps while each story is open: a first run takes at least five minutes, and about 25 against the docs instance with its connection stalls.
+- **Saved report**: the global Desk Activity report `Politics desk, last 7 days` (Politics, Daily, Relative Days 7), which the schedule shot opens.
+- **Email addresses**: every seeded user gets `first.last@example.com` if it has none (seed.py already sets them), so the schedule form's To: field can pick users.
+
+The server cannot backdate anything, so all of it is dated the day the script runs, and the 7- and 30-day charts have one busy day. To spread the activity over several days, run one slice a day: `--slice 1/3` on the first day, `--slice 2/3` on the second, `--slice 3/3` on the third (every third story, so each slice mixes desks, authors and actions; a slice already seeded is skipped). Capture Desk Activity after the last slice and the next full hour. Desk Activity, Production Time and User Activity read archive statistics, which the server builds from item history once an hour, on the hour; until then those reports show "No data found". `run-capture-autodocs.sh` restores the snapshot before the first shot unless `NO_RESTORE=1` is set, and the restore removes everything this script made. A second run only logs `skip` lines: stories are found by guid, updates through the original's `rewritten_by`, editing sessions by the paragraph they add, the saved report by name.
